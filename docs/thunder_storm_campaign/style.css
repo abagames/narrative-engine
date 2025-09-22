@@ -1,0 +1,1353 @@
+/* Thunder Storm Campaign - Universal Styling */
+/* 雷嵐キャンペーン：三勢力による戦略要衝争奪戦 */
+
+/* ==== Reset & Base ==== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Noto Serif JP', '游明朝', 'Yu Mincho', serif;
+  background: linear-gradient(135deg, #1A1A1A 0%, #2D2D2D 100%);
+  color: #E0E0E0;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ==== Typography ==== */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Noto Sans JP', '游ゴシック', 'Yu Gothic', sans-serif;
+  font-weight: 600;
+  margin: 1rem 0 0.5rem 0;
+  color: #F5F5F5;
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.25rem; }
+
+/* 統計データ用フォント */
+.stats, .economy-data, .turn-stats {
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+}
+
+/* ==== Turn Items (Playlog) ==== */
+.turn-item {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin: 1.25rem 0;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+/* ==== Turn Sections (Narrative) ==== */
+.turn-section {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin: 1.25rem 0;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.turn-header {
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.turn-content {
+  line-height: 1.6;
+}
+
+.turn-content h4 {
+  color: #FFD700;
+  margin: 1rem 0 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.turn-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.turn-item h4 {
+  color: #FFD700;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+  padding-bottom: 0.5rem;
+}
+
+.turn-item h5 {
+  color: #B0B0B0;
+  margin: 1rem 0 0.5rem 0;
+  font-size: 1rem;
+}
+
+.turn-item ul {
+  list-style: none;
+  margin: 0.5rem 0;
+}
+
+.turn-item ul li {
+  background: rgba(255, 255, 255, 0.02);
+  padding: 0.5rem 1rem;
+  margin: 0.3rem 0;
+  border-radius: 6px;
+  border-left: 3px solid rgba(255, 215, 0, 0.5);
+}
+
+.turn-item .key-event {
+  background: rgba(255, 215, 0, 0.1);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  color: #FFD700;
+  font-weight: 600;
+}
+
+.turn-item .morale-changes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 0.5rem;
+  margin: 0.5rem 0;
+}
+
+.turn-item .morale-item {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.turn-item .morale-item.ironbound {
+  background: rgba(139, 0, 0, 0.2);
+  border-left: 4px solid #8B0000;
+  color: #FF6B6B;
+}
+
+.turn-item .morale-item.nightglass {
+  background: rgba(75, 0, 130, 0.2);
+  border-left: 4px solid #4B0082;
+  color: #DA70D6;
+}
+
+.turn-item .morale-item.stormveil {
+  background: rgba(30, 144, 255, 0.2);
+  border-left: 4px solid #1E90FF;
+  color: #87CEEB;
+}
+
+/* ==== Tooltips ==== */
+.tooltip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.9);
+  color: #FFF;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.tooltip:hover::after {
+  opacity: 1;
+}
+
+/* ==== Chart Interaction ==== */
+.chart-instructions {
+  text-align: center;
+  margin: 1rem 0;
+  padding: 0.5rem;
+  background: rgba(255, 215, 0, 0.1);
+  border-radius: 6px;
+  color: #FFD700;
+  font-size: 0.9rem;
+}
+
+.chart-turn-info {
+  min-height: 60px;
+  margin: 1rem 0;
+  transition: all 0.3s ease;
+}
+
+.chart-turn-info:empty::before {
+  content: "チャート上の点をクリックしてください";
+  color: #888;
+  font-style: italic;
+  display: block;
+  text-align: center;
+  padding: 1rem;
+}
+
+/* Data point hover effects */
+.data-point {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.data-point:hover {
+  r: 8;
+  opacity: 1;
+  filter: drop-shadow(0 0 8px currentColor);
+}
+
+/* ==== Faction Colors (Thunder Storm) ==== */
+/* ⚔️ Ironbound Covenant - 鉄血盟約 */
+.faction.ironbound, .ironbound {
+  color: #FF6B6B;
+  border-color: #8B0000;
+}
+
+.faction-bg.ironbound {
+  background: linear-gradient(135deg, rgba(139, 0, 0, 0.3) 0%, rgba(74, 74, 74, 0.2) 100%);
+  border: 2px solid rgba(139, 0, 0, 0.5);
+}
+
+.faction-card.ironbound {
+  background: linear-gradient(135deg, rgba(139, 0, 0, 0.2) 0%, rgba(74, 74, 74, 0.1) 100%);
+  border-left: 4px solid #8B0000;
+}
+
+.faction-card.ironbound:hover {
+  box-shadow: 0 0 20px rgba(139, 0, 0, 0.3);
+}
+
+.region.ironbound {
+  fill: #8B0000;
+  stroke: #FF6B6B;
+}
+
+.region-tag.ironbound {
+  background: #8B0000;
+  color: #FFE4E4;
+}
+
+.legend-color.ironbound {
+  background: #8B0000;
+}
+
+.faction-stat.ironbound {
+  border-left: 4px solid #8B0000;
+  background: rgba(139, 0, 0, 0.1);
+}
+
+.faction-control.ironbound {
+  border-left: 4px solid #8B0000;
+}
+
+.award.ironbound {
+  background: rgba(139, 0, 0, 0.2);
+  border: 1px solid #8B0000;
+}
+
+/* 🌙 Nightglass Collective - 夜硝子集団 */
+.faction.nightglass, .nightglass {
+  color: #9370DB;
+  border-color: #4B0082;
+}
+
+.faction-bg.nightglass {
+  background: linear-gradient(135deg, rgba(75, 0, 130, 0.3) 0%, rgba(47, 47, 47, 0.2) 100%);
+  border: 2px solid rgba(75, 0, 130, 0.5);
+}
+
+.faction-card.nightglass {
+  background: linear-gradient(135deg, rgba(75, 0, 130, 0.2) 0%, rgba(47, 47, 47, 0.1) 100%);
+  border-left: 4px solid #4B0082;
+}
+
+.faction-card.nightglass:hover {
+  box-shadow: 0 0 20px rgba(75, 0, 130, 0.3);
+}
+
+.region.nightglass {
+  fill: #4B0082;
+  stroke: #9370DB;
+}
+
+.region-tag.nightglass {
+  background: #4B0082;
+  color: #E6E6FA;
+}
+
+.legend-color.nightglass {
+  background: #4B0082;
+}
+
+.faction-stat.nightglass {
+  border-left: 4px solid #4B0082;
+  background: rgba(75, 0, 130, 0.1);
+}
+
+.faction-control.nightglass {
+  border-left: 4px solid #4B0082;
+}
+
+.award.nightglass {
+  background: rgba(75, 0, 130, 0.2);
+  border: 1px solid #4B0082;
+}
+
+/* ⚡ Stormveil Circle - 嵐幕団 */
+.faction.stormveil, .stormveil {
+  color: #87CEEB;
+  border-color: #1E90FF;
+}
+
+.faction-bg.stormveil {
+  background: linear-gradient(135deg, rgba(30, 144, 255, 0.3) 0%, rgba(255, 215, 0, 0.2) 100%);
+  border: 2px solid rgba(30, 144, 255, 0.5);
+}
+
+.faction-card.stormveil {
+  background: linear-gradient(135deg, rgba(30, 144, 255, 0.2) 0%, rgba(255, 215, 0, 0.1) 100%);
+  border-left: 4px solid #1E90FF;
+}
+
+.faction-card.stormveil:hover {
+  box-shadow: 0 0 20px rgba(30, 144, 255, 0.3);
+}
+
+.region.stormveil {
+  fill: #1E90FF;
+  stroke: #87CEEB;
+}
+
+.region-tag.stormveil {
+  background: #1E90FF;
+  color: #F0F8FF;
+}
+
+.legend-color.stormveil {
+  background: #1E90FF;
+}
+
+.faction-stat.stormveil {
+  border-left: 4px solid #1E90FF;
+  background: rgba(30, 144, 255, 0.1);
+}
+
+.faction-control.stormveil {
+  border-left: 4px solid #1E90FF;
+}
+
+.faction-control.selected-region {
+  border-left: 4px solid #FFD700;
+  background: rgba(255, 215, 0, 0.1);
+}
+
+.award.stormveil {
+  background: rgba(30, 144, 255, 0.2);
+  border: 1px solid #1E90FF;
+}
+
+/* 中立・係争地 */
+.region.neutral {
+  fill: #696969;
+  stroke: #A9A9A9;
+}
+
+.region.contested {
+  fill: #8B4513;
+  stroke: #DAA520;
+}
+
+.region-tag.neutral {
+  background: #696969;
+  color: #F5F5F5;
+}
+
+.region-tag.contested {
+  background: #8B4513;
+  color: #FFE4B5;
+}
+
+/* ==== Layout & Container ==== */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+/* ==== Compact Layout for Narrative Style ==== */
+.main-header {
+  background: rgba(17, 24, 39, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.main-nav {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.main-nav a {
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  color: #E0E0E0;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.main-nav a:hover, .main-nav a.active {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.campaign-overview {
+  text-align: center;
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.campaign-overview h1 {
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(45deg, #FF6B6B, #9370DB, #87CEEB);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.campaign-overview .subtitle {
+  font-size: 1rem;
+  opacity: 0.9;
+  margin: 0;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* ==== Header ==== */
+header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  padding: 1.5rem 0;
+  background: linear-gradient(135deg, rgba(139, 0, 0, 0.1) 0%, rgba(75, 0, 130, 0.1) 50%, rgba(30, 144, 255, 0.1) 100%);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+header h1 {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(45deg, #FF6B6B, #9370DB, #87CEEB);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+}
+
+header h2 {
+  font-size: 1.2rem;
+  opacity: 0.8;
+  margin-bottom: 1.5rem;
+}
+
+/* ==== Navigation ==== */
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+nav a {
+  text-decoration: none;
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 25px;
+  color: #E0E0E0;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+nav a:hover, nav a.active {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* ==== Cards ==== */
+.card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.card.hero {
+  background: linear-gradient(135deg, rgba(139, 0, 0, 0.1) 0%, rgba(75, 0, 130, 0.1) 50%, rgba(30, 144, 255, 0.1) 100%);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ==== Campaign Overview ==== */
+.campaign-intro {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin-bottom: 1rem;
+}
+
+.description {
+  font-size: 1rem;
+  opacity: 0.8;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.campaign-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #87CEEB;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* ==== Faction Grid ==== */
+.faction-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 1.5rem;
+}
+
+.faction-card {
+  padding: 1.25rem;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.faction-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.faction-icon {
+  font-size: 3rem;
+  margin-right: 1rem;
+}
+
+.faction-info h4 {
+  font-size: 1.4rem;
+  margin: 0 0 0.25rem 0;
+}
+
+.faction-info h5 {
+  font-size: 1rem;
+  opacity: 0.8;
+  margin: 0 0 0.5rem 0;
+}
+
+.faction-result {
+  font-weight: bold;
+  padding: 0.25rem 0.5rem;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.faction-details {
+  margin-bottom: 1rem;
+}
+
+.faction-details p {
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.faction-members {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 1rem;
+}
+
+.member {
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+/* ==== Events Timeline ==== */
+.events-timeline {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.event-item {
+  display: flex;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  border-left: 4px solid #87CEEB;
+  transition: all 0.3s ease;
+}
+
+.event-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateX(5px);
+}
+
+.event-turn {
+  font-weight: bold;
+  min-width: 80px;
+  color: #87CEEB;
+  font-size: 0.9rem;
+}
+
+.event-content h4 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.event-content p {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* ==== Navigation Grid ==== */
+.navigation-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.nav-item {
+  transition: all 0.3s ease;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.nav-icon {
+  font-size: 3rem;
+  margin-right: 1.5rem;
+}
+
+.nav-content h4 {
+  margin-bottom: 0.5rem;
+  font-size: 1.3rem;
+}
+
+.nav-content p {
+  opacity: 0.8;
+  font-size: 0.9rem;
+}
+
+/* ==== World Setting ==== */
+.world-info {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.world-section {
+  padding: 1.25rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  border-left: 4px solid #87CEEB;
+}
+
+.world-section h4 {
+  margin-bottom: 1rem;
+  color: #87CEEB;
+}
+
+.region-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.region-tag {
+  padding: 0.25rem 0.75rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+/* ==== Results Summary ==== */
+.results-summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.ranking-list {
+  list-style: none;
+  padding: 0;
+}
+
+.ranking-list li {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  border-left: 4px solid currentColor;
+}
+
+.rank-icon {
+  font-size: 1.5rem;
+}
+
+.faction-name {
+  font-weight: bold;
+}
+
+.score {
+  font-family: 'Consolas', monospace;
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #87CEEB;
+}
+
+.achievement {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.awards-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.award {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+.award-icon {
+  font-size: 1.5rem;
+}
+
+.award-title {
+  font-weight: bold;
+}
+
+.award-recipient {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* ==== Playlog Specific Styles ==== */
+.faction-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+}
+
+.faction-stat {
+  padding: 1.5rem;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stats-table {
+  width: 100%;
+  margin: 1rem 0;
+  border-collapse: collapse;
+}
+
+.stats-table td {
+  padding: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stats-table td:first-child {
+  font-weight: bold;
+  width: 40%;
+}
+
+/* Chart Container */
+.chart-container {
+  width: 100%;
+  overflow-x: auto;
+  margin: 2rem 0;
+}
+
+.axis-label {
+  fill: #E0E0E0;
+  font-size: 12px;
+}
+
+.morale-line {
+  filter: drop-shadow(0 0 3px currentColor);
+}
+
+.data-point {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.data-point:hover {
+  r: 6;
+  filter: drop-shadow(0 0 5px currentColor);
+}
+
+/* Legend */
+.legend {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.legend-color {
+  width: 20px;
+  height: 3px;
+  border-radius: 2px;
+}
+
+/* Turn Selector */
+.turn-selector {
+  margin-bottom: 2rem;
+}
+
+.turn-selector label {
+  font-weight: bold;
+  margin-right: 1rem;
+}
+
+.turn-selector select {
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  color: #E0E0E0;
+  font-size: 0.9rem;
+}
+
+.turn-detail {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  border-left: 4px solid #87CEEB;
+}
+
+.morale-changes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.morale-item {
+  padding: 0.75rem;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.05);
+  border-left: 3px solid currentColor;
+}
+
+.key-event {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: rgba(255, 215, 0, 0.1);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+/* Final Rankings */
+.final-rankings {
+  margin-bottom: 2rem;
+}
+
+.mvp-awards {
+  margin-top: 2rem;
+}
+
+.awards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.award-item {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.award-icon {
+  font-size: 2.5rem;
+  margin-right: 1rem;
+}
+
+.award-content h5 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.award-content p {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* ==== World Map Specific Styles ==== */
+.map-container {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 15px;
+  background: #1a1a2e;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.world-map-svg {
+  width: 100%;
+  height: auto;
+}
+
+.connection {
+  stroke: #444;
+  stroke-width: 2;
+  opacity: 0.6;
+}
+
+.region {
+  cursor: pointer;
+  stroke-width: 2;
+  transition: all 0.3s ease;
+}
+
+.region:hover {
+  stroke-width: 3;
+  filter: drop-shadow(0 0 8px currentColor);
+}
+
+.region.active {
+  stroke-width: 4;
+  filter: drop-shadow(0 0 12px currentColor);
+}
+
+.region-label {
+  fill: #E0E0E0;
+  font-size: 16px;
+  pointer-events: none;
+  text-anchor: middle;
+}
+
+.region-name {
+  fill: #E0E0E0;
+  font-size: 12px;
+  pointer-events: none;
+  text-anchor: middle;
+}
+
+.influence-zone {
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+.legend-title {
+  fill: #F5F5F5;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.legend-text {
+  fill: #E0E0E0;
+  font-size: 12px;
+}
+
+.legend-subtitle {
+  fill: #87CEEB;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.legend-small {
+  fill: #A0A0A0;
+  font-size: 10px;
+}
+
+/* Region Details */
+.region-info {
+  margin-top: 2rem;
+}
+
+.region-details {
+  padding: 1.5rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.region-stats {
+  margin-top: 1rem;
+}
+
+.stat-row {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-row:last-child {
+  border-bottom: none;
+}
+
+.strategic-value {
+  font-weight: bold;
+  color: #FFD700;
+}
+
+/* Faction Control Grid */
+.faction-control-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+}
+
+.faction-control {
+  padding: 1.5rem;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.control-details {
+  margin: 1rem 0;
+}
+
+.controlled-regions {
+  margin-top: 1rem;
+}
+
+/* Supply Lines */
+.supply-lines-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.supply-route, .supply-vulnerabilities {
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  border-left: 4px solid #87CEEB;
+}
+
+.vulnerability-item {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 5px;
+  border-left: 3px solid #FFD700;
+}
+
+/* Event Locations */
+.event-location {
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  border-left: 4px solid #87CEEB;
+}
+
+.event-details {
+  margin-top: 1rem;
+}
+
+.event-details p {
+  margin-bottom: 0.5rem;
+}
+
+/* Strategic Points */
+.strategic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.strategic-point {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.strategic-point:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.priority-high {
+  background: rgba(255, 69, 0, 0.1);
+  border-left: 4px solid #FF4500;
+}
+
+.priority-medium {
+  background: rgba(255, 215, 0, 0.1);
+  border-left: 4px solid #FFD700;
+}
+
+.priority-low {
+  background: rgba(135, 206, 235, 0.1);
+  border-left: 4px solid #87CEEB;
+}
+
+.priority-icon {
+  font-size: 2.5rem;
+  margin-right: 1rem;
+}
+
+.point-content h4 {
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.point-content p {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+
+/* ==== Responsive Design ==== */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .campaign-overview {
+    margin: 1rem 0;
+    padding: 1.25rem;
+  }
+
+  .campaign-overview h1 {
+    font-size: 1.8rem;
+  }
+
+  .card {
+    padding: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+}
+
+  header h1 {
+    font-size: 2rem;
+  }
+
+  .faction-grid,
+  .navigation-grid,
+  .results-summary,
+  .supply-lines-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .campaign-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .nav-icon {
+    font-size: 2rem;
+    margin-right: 1rem;
+  }
+
+  .faction-icon {
+    font-size: 2rem;
+  }
+
+  .map-container {
+    overflow-x: auto;
+  }
+
+  .strategic-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .legend {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0.5rem;
+  }
+
+  .card {
+    padding: 1rem;
+  }
+
+  header h1 {
+    font-size: 1.5rem;
+  }
+
+  nav {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .campaign-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .faction-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .faction-icon {
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* ==== Animations ==== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.card:nth-child(1) { animation-delay: 0.1s; }
+.card:nth-child(2) { animation-delay: 0.2s; }
+.card:nth-child(3) { animation-delay: 0.3s; }
+.card:nth-child(4) { animation-delay: 0.4s; }
+.card:nth-child(5) { animation-delay: 0.5s; }
+
+/* ==== Footer ==== */
+footer {
+  text-align: center;
+  padding: 2rem;
+  margin-top: 3rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: #A0A0A0;
+  font-size: 0.9rem;
+}
+
+footer p {
+  margin: 0;
+}
+
+/* ==== Print Styles ==== */
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+
+  .card {
+    background: white;
+    border: 1px solid #ccc;
+    box-shadow: none;
+  }
+
+  nav, .tooltip {
+    display: none;
+  }
+}

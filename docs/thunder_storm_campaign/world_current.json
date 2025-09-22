@@ -1,0 +1,479 @@
+{
+  "parties": {
+    "ironbound_covenant": {
+      "id": "ironbound_covenant",
+      "name": "Ironbound Covenant",
+      "location": "emberfront_keep",
+      "resources": {
+        "currency": 150,
+        "materials": {
+          "iron": 20,
+          "provisions": 30,
+          "mana_crystals": 4
+        },
+        "provisions": -14,
+        "mana_crystals": 1
+      },
+      "capabilities": {
+        "exploration": 4,
+        "trade": 3,
+        "combat": 9,
+        "diplomacy": 2,
+        "crafting": 5
+      },
+      "morale": 9.299999999999997,
+      "characterProfile": {
+        "leadershipStyle": "experienced_guidance",
+        "decisionMaking": "bold_opportunistic",
+        "communicationStyle": "direct_command",
+        "partyMembers": [
+          {
+            "name": "Commander Serah Vance",
+            "role": "strategist",
+            "personality": "unyielding",
+            "speechStyle": "curt and authoritative",
+            "specialization": "battlefield command"
+          },
+          {
+            "name": "Brother Kael Draken",
+            "role": "vanguard",
+            "personality": "zealous",
+            "speechStyle": "gravelly battle shouts",
+            "specialization": "shield formations"
+          },
+          {
+            "name": "Archivist Leona Hale",
+            "role": "battle mage",
+            "personality": "strategic",
+            "speechStyle": "precise, clipped analysis",
+            "specialization": "chronomancy support"
+          }
+        ],
+        "speechPatterns": {
+          "internal": "command-structured, terse directives",
+          "external": "formal, forceful declarations"
+        }
+      }
+    },
+    "nightglass_collective": {
+      "id": "nightglass_collective",
+      "name": "Nightglass Collective",
+      "location": "emberfront_keep",
+      "resources": {
+        "currency": 80,
+        "materials": {
+          "venom": 9,
+          "obsidian": 7,
+          "provisions": 20
+        },
+        "provisions": -6,
+        "venom": -2
+      },
+      "capabilities": {
+        "exploration": 8,
+        "trade": 5,
+        "combat": 7,
+        "diplomacy": 6,
+        "crafting": 3
+      },
+      "morale": 5.600000000000001,
+      "characterProfile": {
+        "leadershipStyle": "specialization_based",
+        "decisionMaking": "cautious_analytical",
+        "communicationStyle": "diplomatic_direct",
+        "partyMembers": [
+          {
+            "name": "Shadecaller Ilyra",
+            "role": "shadow marshal",
+            "personality": "calculating",
+            "speechStyle": "whispered insinuations",
+            "specialization": "ambush coordination"
+          },
+          {
+            "name": "Vesper Rune",
+            "role": "assassin",
+            "personality": "brooding",
+            "speechStyle": "laconic, cutting remarks",
+            "specialization": "poisoncraft"
+          },
+          {
+            "name": "Sable Myrr",
+            "role": "void witch",
+            "personality": "obsessive",
+            "speechStyle": "soft-spoken theoretical musings",
+            "specialization": "entropy magic"
+          }
+        ],
+        "speechPatterns": {
+          "internal": "hushed consensus using coded phrases",
+          "external": "polite yet veiled threats"
+        }
+      }
+    },
+    "stormveil_circle": {
+      "id": "stormveil_circle",
+      "name": "Stormveil Circle",
+      "location": "emberfront_keep",
+      "resources": {
+        "currency": 147,
+        "materials": {
+          "mana_crystals": 21,
+          "silk": 10,
+          "provisions": 15
+        },
+        "provisions": 4
+      },
+      "capabilities": {
+        "exploration": 5,
+        "trade": 7,
+        "combat": 6,
+        "diplomacy": 8,
+        "crafting": 4
+      },
+      "morale": 9.4,
+      "characterProfile": {
+        "leadershipStyle": "collaborative_democracy",
+        "decisionMaking": "balanced_pragmatic",
+        "communicationStyle": "diplomatic_direct",
+        "partyMembers": [
+          {
+            "name": "Archmage Talan Mir",
+            "role": "archmage",
+            "personality": "measured",
+            "speechStyle": "resonant and instructive",
+            "specialization": "stormcalling"
+          },
+          {
+            "name": "Seer Lysa Orien",
+            "role": "oracle",
+            "personality": "empathetic",
+            "speechStyle": "gentle, prophetic guidance",
+            "specialization": "divination"
+          },
+          {
+            "name": "Bladesinger Corrin Faye",
+            "role": "duelist",
+            "personality": "flamboyant",
+            "speechStyle": "wry, theatrically confident",
+            "specialization": "arcane swordplay"
+          }
+        ],
+        "speechPatterns": {
+          "internal": "measured debate rich with arcane terminology",
+          "external": "eloquent ceremonial diplomacy"
+        }
+      }
+    }
+  },
+  "regions": {
+    "emberfront_keep": {
+      "id": "emberfront_keep",
+      "name": "Emberfront Keep",
+      "type": "stronghold",
+      "capacity": 2,
+      "neighbors": [
+        "auric_market",
+        "ashen_ridge"
+      ],
+      "occupantParties": [
+        "ironbound_covenant",
+        "nightglass_collective",
+        "stormveil_circle"
+      ],
+      "resources": [
+        "armory_forges",
+        "military_contracts"
+      ],
+      "specialEffects": [
+        "legion_lockdown",
+        "infiltration_channels"
+      ],
+      "influence": {
+        "ironbound_covenant": 2
+      }
+    },
+    "ashen_ridge": {
+      "id": "ashen_ridge",
+      "name": "Ashen Ridge",
+      "type": "mountains",
+      "capacity": 2,
+      "neighbors": [
+        "emberfront_keep",
+        "crystal_hollow",
+        "gale_steppe"
+      ],
+      "occupantParties": [],
+      "resources": [
+        "volcanic_ore",
+        "basalt_shards"
+      ],
+      "specialEffects": [
+        "basalt_sentinel_awakening",
+        "ion_echo_fields"
+      ],
+      "influence": {
+        "ironbound_covenant": 1,
+        "nightglass_collective": 2
+      }
+    },
+    "twilight_bog": {
+      "id": "twilight_bog",
+      "name": "Twilight Bog",
+      "type": "swamp",
+      "capacity": 2,
+      "neighbors": [
+        "auric_market",
+        "gale_steppe",
+        "shadowfen_crossing"
+      ],
+      "occupantParties": [],
+      "resources": [
+        "rare_herbs",
+        "venom_sacs"
+      ],
+      "specialEffects": [
+        "stealth_advantage",
+        "movement_penalty"
+      ],
+      "influence": {
+        "nightglass_collective": 5
+      }
+    },
+    "auric_market": {
+      "id": "auric_market",
+      "name": "Auric Market",
+      "type": "settlement",
+      "capacity": 3,
+      "neighbors": [
+        "emberfront_keep",
+        "twilight_bog",
+        "crystal_hollow"
+      ],
+      "occupantParties": [],
+      "resources": [
+        "arcane_supplies",
+        "luxury_trade"
+      ],
+      "specialEffects": [
+        "market_hub",
+        "influence_diplomacy_bonus"
+      ],
+      "influence": {
+        "stormveil_circle": 5
+      }
+    },
+    "crystal_hollow": {
+      "id": "crystal_hollow",
+      "name": "Crystal Hollow",
+      "type": "caverns",
+      "capacity": 2,
+      "neighbors": [
+        "auric_market",
+        "ashen_ridge",
+        "shadowfen_crossing"
+      ],
+      "occupantParties": [],
+      "resources": [
+        "mana_crystals",
+        "ancient_relics"
+      ],
+      "specialEffects": [
+        "unstable_mana",
+        "resonant_echoes",
+        "stormveil_resonance_beacon",
+        "war_engine_pulse"
+      ],
+      "influence": {
+        "stormveil_circle": 2
+      }
+    },
+    "gale_steppe": {
+      "id": "gale_steppe",
+      "name": "Gale Steppe",
+      "type": "plains",
+      "capacity": 2,
+      "neighbors": [
+        "ashen_ridge",
+        "twilight_bog",
+        "shadowfen_crossing"
+      ],
+      "occupantParties": [],
+      "resources": [
+        "wild_stallions",
+        "grain"
+      ],
+      "specialEffects": [
+        "open_battlefield",
+        "wind_tactics",
+        "ionized_crosswinds"
+      ],
+      "influence": {
+        "ironbound_covenant": 1
+      }
+    },
+    "shadowfen_crossing": {
+      "id": "shadowfen_crossing",
+      "name": "Shadowfen Crossing",
+      "type": "ruins",
+      "capacity": 2,
+      "neighbors": [
+        "twilight_bog",
+        "crystal_hollow",
+        "gale_steppe"
+      ],
+      "occupantParties": [],
+      "resources": [
+        "ancient_runestones",
+        "smuggler_routes"
+      ],
+      "specialEffects": [
+        "ambush_bonus",
+        "miasma_debuff",
+        "hostile_warband_patrol",
+        "encircling_thunder_legion",
+        "nightglass_void_traps",
+        "legion_lightning_barrier",
+        "parley_resonance_storm"
+      ],
+      "influence": {
+        "nightglass_collective": 2,
+        "ironbound_covenant": 4
+      }
+    }
+  },
+  "market": {
+    "currentPrices": {
+      "iron_ingot": 12,
+      "mana_crystal": 18,
+      "venom_sac": 9,
+      "provisions": 7,
+      "arcane_texts": 25,
+      "weaponry": 22
+    },
+    "priceHistory": [],
+    "completedTrades": {
+      "0": {
+        "buyer": "stormveil_circle",
+        "item": "provisions",
+        "quantity": 4,
+        "price": 7,
+        "total": 28,
+        "turn": 11
+      }
+    }
+  },
+  "relationships": {
+    "ironbound_covenant": {
+      "nightglass_collective": {
+        "trust": -3.5,
+        "tension": 11.299999999999999,
+        "recentEvents": [
+          "Ambush at Shadowfen ford"
+        ]
+      },
+      "stormveil_circle": {
+        "trust": 0.4,
+        "tension": 6,
+        "recentEvents": [
+          "Disputed artifact sale in Auric Market"
+        ]
+      }
+    },
+    "nightglass_collective": {
+      "ironbound_covenant": {
+        "trust": -4,
+        "tension": 11.6,
+        "recentEvents": [
+          "Ironbound patrol seized smugglers"
+        ]
+      },
+      "stormveil_circle": {
+        "trust": -2.1,
+        "tension": 8.299999999999999,
+        "recentEvents": [
+          "Nightglass intercepted a Stormveil envoy"
+        ]
+      }
+    },
+    "stormveil_circle": {
+      "ironbound_covenant": {
+        "trust": 1.4000000000000001,
+        "tension": 6.8,
+        "recentEvents": [
+          "Covenant sought exclusive garrison rights"
+        ]
+      },
+      "nightglass_collective": {
+        "trust": -1.9,
+        "tension": 9.8,
+        "recentEvents": [
+          "Nightglass sabotage of Stormveil ritual"
+        ]
+      }
+    }
+  },
+  "turn": 20,
+  "worldAge": 1,
+  "narrativeContext": {
+    "season": "late autumn",
+    "weather": "rolling thunderstorms",
+    "globalTension": "Emberfront Keep seals its gates under legion lockdown while hidden canals promise covert entry to anyone daring enough.",
+    "rumors": [
+      "Citizens will crowd the courtyard to hear Vesper's verdict",
+      "Stormveil scribes draft neutral minutes to prevent forged narratives",
+      "Nightglass sympathizers plan to sway the gallery with dramatic testimony"
+    ],
+    "events": {
+      "0": {
+        "name": "Culvert Whispers",
+        "impact": "An ancient sluice chamber amplifies sound—failed stealth rolls alert legion patrols instantly.",
+        "duration": "turn12"
+      },
+      "1": {
+        "name": "Low Tide Window",
+        "impact": "For one night the culvert runs shallow, granting easier access but leaving infiltrators exposed if spotted.",
+        "duration": "turn13"
+      },
+      "name": "Verdict Pronounced",
+      "impact": "Magistrates rule that Vesper remains in Ironbound custody but mandate restorative projects; Nightglass may appeal only through sanctioned negotiations.",
+      "duration": "turn20"
+    },
+    "lastCombat": {
+      "turn": 7,
+      "location": "gale_steppe",
+      "outcome": "Ironbound phalanxes held the convoy line under ionized crosswinds, repelling Nightglass skirmishers and keeping Vesper secured."
+    },
+    "diplomacyLog": {
+      "0": {
+        "turn": 9,
+        "mediator": "stormveil_circle",
+        "summary": "Stormveil brokers the sentinel oath, binding Ironbound to humane custody while warning Nightglass of further reprisals."
+      }
+    },
+    "plots": {
+      "0": {
+        "turn": 13,
+        "orchestrator": "nightglass_collective",
+        "summary": "Culvert raid repelled; Nightglass learns sentinel-echo patterns for a second attempt."
+      },
+      "turn": 18,
+      "orchestrator": "nightglass_collective",
+      "summary": "Nightglass scouts the magistrate’s private chapel, finding a hidden vent that bypasses the culvert echo wards."
+    },
+    "securityPosture": {
+      "turn": 18,
+      "measures": [
+        "Sentinel mirrors assigned to magistrate chamber",
+        "Legion paladins accompany Ironbound escort detail",
+        "Stormveil witness notes cross-filed with Ironbound dossiers"
+      ]
+    },
+    "prisoners": {
+      "turn": 5,
+      "status": {
+        "Ilyra": "exfiltrated to Twilight Bog",
+        "Vesper": "still held under Ironbound chrono-lock"
+      }
+    }
+  }
+}

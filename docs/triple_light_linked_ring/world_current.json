@@ -1,0 +1,403 @@
+{
+  "sessionMeta": {
+    "scenario": "Auric Covenant seeks to complete the Trinity Rite across three ancient temples while the Veilbreak Sentinels attempt to disrupt them.",
+    "themes": [
+      "ritual",
+      "espionage",
+      "sacred sites",
+      "rival parties"
+    ],
+    "calendar": {
+      "era": "Silver Eclipse Cycle",
+      "startingDay": "Day 1 of the Rite",
+      "season": "Late Autumn"
+    }
+  },
+  "parties": {
+    "auric_covenant": {
+      "id": "auric_covenant",
+      "name": "Auric Covenant",
+      "location": "stormspire_temple",
+      "objective": "Complete the Trinity Rite by performing devotions at all three luminous temples within 30 turns.",
+      "resources": {
+        "currency": 120,
+        "materials": {
+          "incense_bundles": 3,
+          "sunshard_relics": 1,
+          "warding_scrolls": 0,
+          "glowbloom_resin": 0
+        }
+      },
+      "capabilities": {
+        "exploration": 6,
+        "trade": 4,
+        "combat": 5,
+        "diplomacy": 8,
+        "ritual": 9
+      },
+      "morale": 9.099999999999998,
+      "characterProfile": {
+        "leadershipStyle": "collaborative_democracy",
+        "decisionMaking": "cautious_analytical",
+        "communicationStyle": "liturgical_calm",
+        "partyMembers": [
+          {
+            "name": "High Cantor Selene",
+            "role": "Ritual Conductor",
+            "personality": "献身的で静謐",
+            "speechStyle": "穏やかで祈りを織り込む言葉遣い",
+            "specialization": "神聖儀式と結界術"
+          },
+          {
+            "name": "Warden Thalen",
+            "role": "Guardian",
+            "personality": "守護的で揺るがない",
+            "speechStyle": "短く断定的、警戒を促す",
+            "specialization": "槍術と守護術式"
+          },
+          {
+            "name": "Oracle Lyra",
+            "role": "Seer",
+            "personality": "洞察的で内省的",
+            "speechStyle": "詠唱のように比喩的",
+            "specialization": "予知と占星観測"
+          },
+          {
+            "name": "Chronicler Iven",
+            "role": "Emissary",
+            "personality": "外交的で誠実",
+            "speechStyle": "丁寧で外交儀礼を重んじる",
+            "specialization": "交渉と儀礼史の記録"
+          }
+        ],
+        "speechPatterns": {
+          "internal": "丁寧語で互いを敬称で呼び、祈願と戦略を結びつける",
+          "external": "神殿儀礼に即した格式ばった口調"
+        }
+      },
+      "alliances": {
+        "duskway_guides": {
+          "status": "pledged",
+          "benefit": "safe_conduit",
+          "fidelity": 7
+        }
+      },
+      "intel": {
+        "veilborn_patterns": "mapped_afterimages",
+        "sentinel_positions": "southern_pillars"
+      },
+      "recovery": {
+        "focus": "stormspire_ready",
+        "healingChants": true
+      },
+      "buffs": {
+        "stormshield": "active",
+        "chantCadence": "synchronized"
+      }
+    },
+    "veilbreak_sentinels": {
+      "id": "veilbreak_sentinels",
+      "name": "Veilbreak Sentinels",
+      "location": "stormspire_temple",
+      "objective": "Prevent the Trinity Rite by disrupting temple access and morale.",
+      "resources": {
+        "currency": 95,
+        "materials": {
+          "shadowbind_charges": 2,
+          "spyglass_tokens": 2,
+          "supply_rations": 5
+        }
+      },
+      "capabilities": {
+        "exploration": 7,
+        "trade": 3,
+        "combat": 7,
+        "diplomacy": 5,
+        "sabotage": 8
+      },
+      "morale": 7.299999999999999,
+      "characterProfile": {
+        "leadershipStyle": "direct_command",
+        "decisionMaking": "calculated_strike",
+        "communicationStyle": "curt_tactical",
+        "partyMembers": [
+          {
+            "name": "Captain Raxen",
+            "role": "Commander",
+            "personality": "冷静で攻撃的",
+            "speechStyle": "短く命令調",
+            "specialization": "戦術指揮と強襲"
+          },
+          {
+            "name": "Shade Operative Nyx",
+            "role": "Saboteur",
+            "personality": "狡猾で静か",
+            "speechStyle": "囁くように要点だけを語る",
+            "specialization": "潜入と罠設置"
+          },
+          {
+            "name": "Oathbreaker Varek",
+            "role": "Enforcer",
+            "personality": "苛烈で挑発的",
+            "speechStyle": "皮肉混じりで威圧的",
+            "specialization": "重装戦闘と封鎖"
+          }
+        ],
+        "speechPatterns": {
+          "internal": "短文で即断、軍事符丁を交える",
+          "external": "抑えた威圧感で冷笑を含んだ口調"
+        }
+      },
+      "intel": {
+        "stormspire_weather": "volatile",
+        "covenant_route_guess": "north_east_window"
+      }
+    }
+  },
+  "regions": {
+    "moonweave_crossroads": {
+      "id": "moonweave_crossroads",
+      "name": "Moonweave Crossroads",
+      "type": "settlement",
+      "capacity": 2,
+      "neighbors": [
+        "solace_sanctum",
+        "verdant_outskirts",
+        "ashen_ramparts"
+      ],
+      "occupantParties": [],
+      "resources": [
+        "market_stalls",
+        "pilgrim_hostels"
+      ],
+      "specialEffects": [
+        "ritual_focus_bonus"
+      ],
+      "influence": {
+        "auric_covenant": 6
+      }
+    },
+    "solace_sanctum": {
+      "id": "solace_sanctum",
+      "name": "Solace Sanctum",
+      "type": "temple",
+      "capacity": 1,
+      "neighbors": [
+        "moonweave_crossroads",
+        "stormspire_temple"
+      ],
+      "occupantParties": [],
+      "resources": [
+        "sunfire_altars"
+      ],
+      "specialEffects": [
+        "prayer_resonance"
+      ],
+      "influence": {
+        "auric_covenant": 9
+      }
+    },
+    "stormspire_temple": {
+      "id": "stormspire_temple",
+      "name": "Stormspire Temple",
+      "type": "temple",
+      "capacity": 1,
+      "neighbors": [
+        "solace_sanctum",
+        "embershroud_basilica",
+        "ashen_ramparts"
+      ],
+      "occupantParties": [
+        "auric_covenant",
+        "veilbreak_sentinels"
+      ],
+      "resources": [
+        "stormsigil_obelisks"
+      ],
+      "specialEffects": [
+        "aerial_barrier",
+        "shadownet_tripwire",
+        "lightning_harpoon",
+        "stormshield_tethers"
+      ],
+      "influence": {
+        "auric_covenant": 9
+      }
+    },
+    "embershroud_basilica": {
+      "id": "embershroud_basilica",
+      "name": "Embershroud Basilica",
+      "type": "temple",
+      "capacity": 1,
+      "neighbors": [
+        "stormspire_temple",
+        "veilborn_way"
+      ],
+      "occupantParties": [],
+      "resources": [
+        "emberwells"
+      ],
+      "specialEffects": [
+        "veilburn_aegis",
+        "leyline_tremor",
+        "phoenix_guidance"
+      ],
+      "influence": {
+        "auric_covenant": 10
+      }
+    },
+    "ashen_ramparts": {
+      "id": "ashen_ramparts",
+      "name": "Ashen Ramparts",
+      "type": "fortress",
+      "capacity": 2,
+      "neighbors": [
+        "moonweave_crossroads",
+        "stormspire_temple",
+        "veilborn_way"
+      ],
+      "occupantParties": [],
+      "resources": [
+        "siege_emplacements"
+      ],
+      "specialEffects": [
+        "fortified_gateways"
+      ],
+      "influence": {
+        "veilbreak_sentinels": 7
+      }
+    },
+    "verdant_outskirts": {
+      "id": "verdant_outskirts",
+      "name": "Verdant Outskirts",
+      "type": "forest",
+      "capacity": 2,
+      "neighbors": [
+        "moonweave_crossroads",
+        "veilborn_way"
+      ],
+      "occupantParties": [],
+      "resources": [
+        "herbal_groves",
+        "hidden_paths",
+        "glowspore_lanterns"
+      ],
+      "specialEffects": [
+        "stealth_routes",
+        "duskway_guides"
+      ],
+      "influence": {
+        "auric_covenant": 4
+      }
+    },
+    "veilborn_way": {
+      "id": "veilborn_way",
+      "name": "Veilborn Way",
+      "type": "ruins",
+      "capacity": 2,
+      "neighbors": [
+        "ashen_ramparts",
+        "embershroud_basilica",
+        "verdant_outskirts"
+      ],
+      "occupantParties": [],
+      "resources": [
+        "leyline_fragments"
+      ],
+      "specialEffects": [
+        "sabotage_channels",
+        "shadowtrace_snares",
+        "warded_lightpaths",
+        "shadowburst_pylons"
+      ],
+      "influence": {
+        "veilbreak_sentinels": 7,
+        "auric_covenant": 3
+      }
+    }
+  },
+  "market": {
+    "currentPrices": {
+      "incense_bundles": 8,
+      "sunshard_relics": 25,
+      "warding_scrolls": 18,
+      "shadowbind_charges": 20,
+      "spyglass_tokens": 12,
+      "supply_rations": 5
+    },
+    "priceHistory": [],
+    "completedTrades": []
+  },
+  "relationships": {
+    "auric_covenant:veilbreak_sentinels": {
+      "tension": 7,
+      "hostility": 6,
+      "respect": 4
+    }
+  },
+  "objectives": {
+    "ritual_temples": [
+      "solace_sanctum",
+      "stormspire_temple",
+      "embershroud_basilica"
+    ],
+    "ritual_progress": {
+      "solace_sanctum": true,
+      "stormspire_temple": true,
+      "embershroud_basilica": true
+    },
+    "ritual_turn_deadline": 30,
+    "sentinel_disruption_threshold": 3,
+    "completed_temples_order": [
+      "solace_sanctum",
+      "embershroud_basilica",
+      "stormspire_temple"
+    ],
+    "sentinel_preparations": 0,
+    "sentinel_disruptions": 2,
+    "last_conflict": {
+      "turn": 14,
+      "location": "stormspire_temple",
+      "outcome": "ambush_dissipated",
+      "details": "Lightning harpoons arced harmlessly across the stormshield while Covenant counter-hymns shattered the shadowburst pylons."
+    },
+    "final_ambush_plan": {
+      "turn": 14,
+      "trigger": "ritual_midpoint",
+      "outcome": "foiled_by_stormshield"
+    },
+    "ritual_completion_turn": 14
+  },
+  "turn": 14,
+  "worldAge": 1,
+  "narrativeContext": {
+    "omen": "A lunar eclipse approaches, amplifying both sanctity and shadow.",
+    "weather": "Flame-laden winds circle the Embershroud Basilica, sparks mingling with eclipse shadow.",
+    "environmentalHazards": [
+      {
+        "regionId": "stormspire_temple",
+        "type": "crosswind_surge",
+        "mobilityPenalty": 3,
+        "description": "Cyclonic gusts slam along the spire platforms, threatening to hurl combatants into the void."
+      },
+      {
+        "regionId": "stormspire_temple",
+        "type": "lightning_node_overload",
+        "ritualDifficulty": 3,
+        "description": "Stormsigil pylons stutter unpredictably, amplifying both chants and shocks."
+      }
+    ],
+    "timeOfDay": "Dusk deepens, the eclipse halo staining clouds violet.",
+    "scoutingReports": [
+      {
+        "source": "ember_watchers",
+        "message": "Stormspire causeways crackle with overcharged sigils; unshielded passage risks lightning burns."
+      },
+      {
+        "source": "duskway_guides",
+        "message": "北東の断崖に短時間開く静風窓が確認された。"
+      }
+    ],
+    "timePressure": "Totality looms within nine turns; the storm screams for resolution now."
+  }
+}

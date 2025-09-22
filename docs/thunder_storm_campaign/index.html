@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thunder Storm Campaign - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="data.js"></script>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="main-header">
+      <div class="container">
+        <nav class="main-nav">
+          <a href="index.html" class="active">🏠 Dashboard</a>
+          <a href="narrative.html">📖 Narrative</a>
+          <a href="playlog.html">📊 Playlog</a>
+          <a href="worldmap.html">🗺️ World Map</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Page Header -->
+        <section class="campaign-overview">
+            <h1>🌩️ Thunder Storm Campaign</h1>
+            <p class="subtitle">三勢力による戦略要衝争奪戦 - 全20ターンのナラティブTRPGキャンペーン<br>
+            雷嵐に包まれた戦場で、鉄血盟約・夜硝子集団・嵐幕団の三勢力が覇権を賭けて激突。</p>
+        </section>
+
+        <!-- キャンペーン統計 -->
+        <section class="card">
+            <h3>📊 キャンペーン統計</h3>
+            <div class="campaign-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">20</div>
+                        <div class="stat-label">ターン</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">勢力</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">7</div>
+                        <div class="stat-label">地域</div>
+                    </div>
+                <div class="stat-item">
+                    <div class="stat-number">9</div>
+                    <div class="stat-label">キャラクター</div>
+                </div>
+            </div>
+        </section>
+
+            <!-- 勢力概要 -->
+            <section id="faction-overview" class="card">
+                <h3>🏛️ 勢力概要</h3>
+                <div class="faction-grid">
+                    <div class="faction-card ironbound">
+                        <div class="faction-header">
+                            <div class="faction-icon">⚔️</div>
+                            <div class="faction-info">
+                                <h4>Ironbound Covenant</h4>
+                                <h5>鉄血盟約</h5>
+                                <p class="faction-result">🏆 軍事・法的勝利</p>
+                            </div>
+                        </div>
+                        <div class="faction-details">
+                            <p><strong>拠点</strong>: Emberfront Keep</p>
+                            <p><strong>専門</strong>: 戦闘・軍事指揮</p>
+                            <p><strong>哲学</strong>: 経験豊富な指導による大胆な機会主義戦略</p>
+                            <p><strong>最終士気</strong>: 9.3 (2位)</p>
+                        </div>
+                        <div class="faction-members">
+                            <div class="member">⚔️ Commander Serah Vance</div>
+                            <div class="member">🛡️ Brother Kael Draken</div>
+                            <div class="member">⏰ Archivist Leona Hale</div>
+                        </div>
+                    </div>
+
+                    <div class="faction-card nightglass">
+                        <div class="faction-header">
+                            <div class="faction-icon">🌙</div>
+                            <div class="faction-info">
+                                <h4>Nightglass Collective</h4>
+                                <h5>夜硝子集団</h5>
+                                <p class="faction-result">⚖️ 政治的敗北だが生存</p>
+                            </div>
+                        </div>
+                        <div class="faction-details">
+                            <p><strong>拠点</strong>: Twilight Bog</p>
+                            <p><strong>専門</strong>: 探索・暗殺術</p>
+                            <p><strong>哲学</strong>: 専門性に基づく慎重な分析的判断</p>
+                            <p><strong>最終士気</strong>: 5.6 (3位)</p>
+                        </div>
+                        <div class="faction-members">
+                            <div class="member">🌙 Shadecaller Ilyra</div>
+                            <div class="member">🗡️ Vesper Rune</div>
+                            <div class="member">🔮 Sable Myrr</div>
+                        </div>
+                    </div>
+
+                    <div class="faction-card stormveil">
+                        <div class="faction-header">
+                            <div class="faction-icon">⚡</div>
+                            <div class="faction-info">
+                                <h4>Stormveil Circle</h4>
+                                <h5>嵐幕団</h5>
+                                <p class="faction-result">🕊️ 仲裁者として大成功</p>
+                            </div>
+                        </div>
+                        <div class="faction-details">
+                            <p><strong>拠点</strong>: Auric Market</p>
+                            <p><strong>専門</strong>: 外交・魔術交易</p>
+                            <p><strong>哲学</strong>: 協調的民主主義による均衡した実用主義</p>
+                            <p><strong>最終士気</strong>: 9.4 (1位)</p>
+                        </div>
+                        <div class="faction-members">
+                            <div class="member">⚡ Archmage Talan Mir</div>
+                            <div class="member">🔮 Seer Lysa Orien</div>
+                            <div class="member">⚔️ Bladesinger Corrin Faye</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- キーイベント -->
+            <section id="key-events" class="card">
+                <h3>🎯 キーイベント</h3>
+                <div class="events-timeline">
+                    <div class="event-item">
+                        <div class="event-turn">ターン 3</div>
+                        <div class="event-content">
+                            <h4>⚡ 雷軍団の最後通牒</h4>
+                            <p>Ironbound 勝利、Nightglass 主力捕獲 - 戦略的転換点</p>
+                        </div>
+                    </div>
+                    <div class="event-item">
+                        <div class="event-turn">ターン 5</div>
+                        <div class="event-content">
+                            <h4>🌪️ 共鳴嵐の救出作戦</h4>
+                            <p>Ilyra 救出成功 - 希望の光</p>
+                        </div>
+                    </div>
+                    <div class="event-item">
+                        <div class="event-turn">ターン 9</div>
+                        <div class="event-content">
+                            <h4>⚖️ 守護者の試練</h4>
+                            <p>Ironbound の正統性確立</p>
+                        </div>
+                    </div>
+                    <div class="event-item">
+                        <div class="event-turn">ターン 13</div>
+                        <div class="event-content">
+                            <h4>🌊 干潮の窓</h4>
+                            <p>地下侵入阻止 - 防御完成</p>
+                        </div>
+                    </div>
+                    <div class="event-item">
+                        <div class="event-turn">ターン 19</div>
+                        <div class="event-content">
+                            <h4>⛪ 礼拝堂通気口からの侵入</h4>
+                            <p>最終防御成功、Ilyra 再捕獲 - 勝利確定</p>
+                        </div>
+                    </div>
+                    <div class="event-item">
+                        <div class="event-turn">ターン 20</div>
+                        <div class="event-content">
+                            <h4>⚖️ 最終判決</h4>
+                            <p>復興契約判決 - 新章開始</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ナビゲーション -->
+            <section id="navigation" class="card">
+                <h3>📚 キャンペーン資料</h3>
+                <div class="navigation-grid">
+                    <div class="nav-item">
+                        <a href="narrative.html" class="nav-link">
+                            <div class="nav-icon">📖</div>
+                            <div class="nav-content">
+                                <h4>ナラティブ</h4>
+                                <p>20ターンの詳細な物語とキャラクター描写</p>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="nav-item">
+                        <a href="playlog.html" class="nav-link">
+                            <div class="nav-icon">📊</div>
+                            <div class="nav-content">
+                                <h4>プレイログ</h4>
+                                <p>統計データと数値分析、士気変動グラフ</p>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="nav-item">
+                        <a href="worldmap.html" class="nav-link">
+                            <div class="nav-icon">🗺️</div>
+                            <div class="nav-content">
+                                <h4>ワールドマップ</h4>
+                                <p>インタラクティブ地図と戦略分析</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 世界設定 -->
+            <section id="world-setting" class="card">
+                <h3>🌍 世界設定</h3>
+                <div class="world-info">
+                    <div class="world-section">
+                        <h4>🗺️ 地理</h4>
+                        <p>七つの地域からなる戦場。軍事要塞・毒沼地・商業都市・古代遺跡など、それぞれ異なる戦略的価値を持つ。</p>
+                        <div class="region-list">
+                            <span class="region-tag ironbound">Emberfront Keep</span>
+                            <span class="region-tag nightglass">Twilight Bog</span>
+                            <span class="region-tag stormveil">Auric Market</span>
+                            <span class="region-tag neutral">Shadowfen Crossing</span>
+                            <span class="region-tag neutral">Ashen Ridge</span>
+                            <span class="region-tag neutral">Crystal Hollow</span>
+                            <span class="region-tag neutral">Gale Steppe</span>
+                        </div>
+                    </div>
+
+                    <div class="world-section">
+                        <h4>⚡ Thunder Legion</h4>
+                        <p>世界の均衡を監視する中立勢力。過度な紛争を抑制し、法と秩序を執行する。</p>
+                    </div>
+
+                    <div class="world-section">
+                        <h4>🔮 古代遺産</h4>
+                        <p>Crystal Hollow の戦争機械、Ashen Ridge の玄武岩守護者など、古代の力が現代の争いに影響を与える。</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 最終結果 -->
+            <section id="final-results" class="card">
+                <h3>🏆 最終結果</h3>
+                <div class="results-summary">
+                    <div class="result-ranking">
+                        <h4>🥇 勢力ランキング（士気順）</h4>
+                        <ol class="ranking-list">
+                            <li class="stormveil">
+                                <span class="rank-icon">⚡</span>
+                                <span class="faction-name">Stormveil Circle</span>
+                                <span class="score">9.4</span>
+                                <span class="achievement">仲裁者として大成功</span>
+                            </li>
+                            <li class="ironbound">
+                                <span class="rank-icon">⚔️</span>
+                                <span class="faction-name">Ironbound Covenant</span>
+                                <span class="score">9.3</span>
+                                <span class="achievement">軍事・法的勝利</span>
+                            </li>
+                            <li class="nightglass">
+                                <span class="rank-icon">🌙</span>
+                                <span class="faction-name">Nightglass Collective</span>
+                                <span class="score">5.6</span>
+                                <span class="achievement">政治的敗北だが生存</span>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <div class="mvp-awards">
+                        <h4>🏅 MVPアワード</h4>
+                        <div class="awards-list">
+                            <div class="award ironbound">
+                                <span class="award-icon">🛡️</span>
+                                <span class="award-title">最優秀防御</span>
+                                <span class="award-recipient">Ironbound Covenant</span>
+                            </div>
+                            <div class="award stormveil">
+                                <span class="award-icon">🕊️</span>
+                                <span class="award-title">最優秀外交</span>
+                                <span class="award-recipient">Stormveil Circle</span>
+                            </div>
+                            <div class="award nightglass">
+                                <span class="award-icon">🌙</span>
+                                <span class="award-title">最優秀粘り強さ</span>
+                                <span class="award-recipient">Nightglass Collective</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer style="text-align: center; padding: 2rem; color: #888; border-top: 1px solid #444; margin-top: 3rem;">
+        <p>Thunder Storm Campaign - Dashboard</p>
+        <p>📖 <a href="narrative.html" style="color: #87CEEB;">ナラティブ版</a> | 📊 <a href="playlog.html" style="color: #87CEEB;">プレイログ</a> | 🗺️ <a href="worldmap.html" style="color: #87CEEB;">世界マップ</a></p>
+    </footer>
+
+    <script>
+        // 簡単なインタラクティブ機能
+        document.addEventListener('DOMContentLoaded', function() {
+            // 勢力カードのホバー効果
+            document.querySelectorAll('.faction-card').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                    this.style.transition = 'transform 0.3s ease';
+                });
+
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+
+            // ナビゲーションアイテムのホバー効果
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.05)';
+                    this.style.transition = 'transform 0.2s ease';
+                });
+
+                item.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+
+            // 数値のアニメーション
+            function animateNumber(element, target) {
+                let current = 0;
+                const increment = target / 30;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    element.textContent = Math.floor(current);
+                }, 50);
+            }
+
+            // ページロード時に数値をアニメーション
+            document.querySelectorAll('.stat-number').forEach(element => {
+                const target = parseInt(element.textContent);
+                element.textContent = '0';
+                setTimeout(() => animateNumber(element, target), 500);
+            });
+        });
+    </script>
+</body>
+</html>

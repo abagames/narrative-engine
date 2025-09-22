@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>三光連環の儀 対立 - 世界マップ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="main-header">
+      <div class="container">
+        <nav class="main-nav">
+          <a href="index.html">🏠 Dashboard</a>
+          <a href="narrative.html">📖 Narrative</a>
+          <a href="playlog.html">📊 Playlog</a>
+          <a href="worldmap.html" class="active">🗺️ World Map</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Page Header -->
+        <section class="campaign-overview">
+            <h1>🗺️ 三光連環の儀 対立 - 世界マップ</h1>
+            <p class="subtitle">インタラクティブ地図と戦略分析 - 七つの地域における神聖儀式争奪戦</p>
+        </section>
+
+        <!-- インタラクティブ世界マップ -->
+        <section id="interactive-map" class="card">
+            <h3>🗺️ 世界マップ</h3>
+            <div style="display: flex; justify-content: center; margin: 2rem 0;">
+                <svg width="100%" height="600" viewBox="0 0 900 600" class="world-map-svg">
+                    <!-- 背景 -->
+                    <rect width="900" height="600" fill="#1a1a2e" stroke="none"/>
+
+                    <!-- 接続線 -->
+                    <g class="connections" stroke="#444" stroke-width="2" fill="none">
+                        <!-- Moonweave の接続 -->
+                        <line x1="150" y1="150" x2="350" y2="50" class="connection"/>
+                        <line x1="150" y1="150" x2="150" y2="250" class="connection"/>
+                        <line x1="150" y1="150" x2="550" y2="250" class="connection"/>
+
+                        <!-- Solace Sanctum の接続 -->
+                        <line x1="350" y1="50" x2="550" y2="150" class="connection"/>
+
+                        <!-- Verdant Outskirts の接続 -->
+                        <line x1="150" y1="250" x2="150" y2="400" class="connection"/>
+                        <line x1="150" y1="250" x2="550" y2="400" class="connection"/>
+
+                        <!-- Ashen Ramparts の接続 -->
+                        <line x1="550" y1="250" x2="550" y2="150" class="connection"/>
+                        <line x1="550" y1="250" x2="150" y2="400" class="connection"/>
+                        <line x1="550" y1="250" x2="550" y2="400" class="connection"/>
+
+                        <!-- Stormspire Temple の接続 -->
+                        <line x1="550" y1="150" x2="550" y2="400" class="connection"/>
+
+                        <!-- Veilborn Way の接続 -->
+                        <line x1="150" y1="400" x2="550" y2="400" class="connection"/>
+
+                        <!-- 隠密路 (霧道) -->
+                        <line x1="150" y1="250" x2="550" y2="400" stroke="#666" stroke-width="2" stroke-dasharray="5,5" class="hidden-path"/>
+                    </g>
+
+                    <!-- 地域ノード -->
+                    <g class="regions">
+                        <!-- Moonweave Crossroads -->
+                        <circle cx="150" cy="150" r="35" class="region auric"/>
+                        <text x="150" y="155" text-anchor="middle" class="region-label">💰</text>
+                        <text x="150" y="190" text-anchor="middle" class="region-name">Moonweave Crossroads</text>
+
+                        <!-- Solace Sanctum -->
+                        <circle cx="350" cy="50" r="30" class="region neutral"/>
+                        <text x="350" y="55" text-anchor="middle" class="region-label">🏛️</text>
+                        <text x="350" y="90" text-anchor="middle" class="region-name">Solace Sanctum</text>
+
+                        <!-- Stormspire Temple -->
+                        <circle cx="550" cy="150" r="30" class="region neutral"/>
+                        <text x="550" y="155" text-anchor="middle" class="region-label">⚡</text>
+                        <text x="550" y="190" text-anchor="middle" class="region-name">Stormspire Temple</text>
+
+                        <!-- Verdant Outskirts -->
+                        <circle cx="150" cy="250" r="30" class="region allied"/>
+                        <text x="150" y="255" text-anchor="middle" class="region-label">🌲</text>
+                        <text x="150" y="290" text-anchor="middle" class="region-name">Verdant Outskirts</text>
+
+                        <!-- Ashen Ramparts -->
+                        <circle cx="550" cy="250" r="35" class="region veilbreak"/>
+                        <text x="550" y="255" text-anchor="middle" class="region-label">🏰</text>
+                        <text x="550" y="295" text-anchor="middle" class="region-name">Ashen Ramparts</text>
+
+                        <!-- Veilborn Way -->
+                        <circle cx="150" cy="400" r="30" class="region contested"/>
+                        <text x="150" y="405" text-anchor="middle" class="region-label">🌫️</text>
+                        <text x="150" y="440" text-anchor="middle" class="region-name">Veilborn Way</text>
+
+                        <!-- Embershroud Basilica -->
+                        <circle cx="550" cy="400" r="30" class="region neutral"/>
+                        <text x="550" y="405" text-anchor="middle" class="region-label">🔥</text>
+                        <text x="550" y="440" text-anchor="middle" class="region-name">Embershroud Basilica</text>
+                    </g>
+
+                    <!-- 勢力圏表示エリア -->
+                    <g class="influence-zones" opacity="0.3">
+                        <!-- Auric 勢力圏 -->
+                        <circle cx="150" cy="150" r="80" fill="#FFD700" class="influence-zone auric"/>
+
+                        <!-- Veilbreak 勢力圏 -->
+                        <circle cx="550" cy="250" r="70" fill="#8A2BE2" class="influence-zone veilbreak"/>
+
+                        <!-- Allied 地域 -->
+                        <circle cx="150" cy="250" r="60" fill="#32CD32" class="influence-zone allied"/>
+                    </g>
+
+                    <!-- 凡例 -->
+                    <g class="legend" transform="translate(700, 50)">
+                        <rect x="0" y="0" width="180" height="200" fill="#2a2a3e" stroke="#555" rx="5"/>
+                        <text x="10" y="20" class="legend-title">勢力分布</text>
+
+                        <!-- 勢力アイコン -->
+                        <circle cx="20" cy="40" r="8" class="region auric"/>
+                        <text x="35" y="45" class="legend-text">🌟 Auric Covenant</text>
+
+                        <circle cx="20" cy="60" r="8" class="region veilbreak"/>
+                        <text x="35" y="65" class="legend-text">⚡ Veilbreak Sentinels</text>
+
+                        <circle cx="20" cy="80" r="8" class="region allied"/>
+                        <text x="35" y="85" class="legend-text">🌲 同盟地域</text>
+
+                        <circle cx="20" cy="100" r="8" class="region neutral"/>
+                        <text x="35" y="105" class="legend-text">🏛️ 中立神殿</text>
+
+                        <circle cx="20" cy="120" r="8" class="region contested"/>
+                        <text x="35" y="125" class="legend-text">⚔️ 係争地</text>
+
+                    </g>
+
+                </svg>
+            </div>
+        </section>
+
+        <!-- 地域詳細 -->
+        <section id="region-details" class="card">
+            <h3>📊 地域一覧</h3>
+            <div class="region-grid">
+                <div class="region-card auric" data-region="moonweave">
+                    <div class="region-header">
+                        <h3>💰 ムーンウィーブ交差路</h3>
+                        <span class="region-type">商業都市</span>
+                    </div>
+                    <div class="region-info">
+                        <p><strong>容量:</strong> 2 | <strong>支配勢力:</strong> <span class="faction auric">オーリック契約団</span> (影響度: 6)</p>
+                        <p><strong>隣接地域:</strong>
+                            <span class="location" data-region="solace">ソレース聖所</span>,
+                            <span class="location" data-region="verdant">ヴァーダント辺境</span>,
+                            <span class="location" data-region="ashen">アッシェン要塞</span>
+                        </p>
+                        <p><strong>資源:</strong> 市場屋台、巡礼宿舎</p>
+                        <p><strong>特殊効果:</strong> <span class="spell" data-type="ritual">儀式集中ボーナス</span></p>
+                        <p><strong>戦略価値:</strong> 三つの神殿への交通の要衝、経済・宗教の中枢</p>
+                    </div>
+                </div>
+
+                <div class="region-card neutral" data-region="solace">
+                    <div class="region-header">
+                        <h3>🏛️ ソレース聖所</h3>
+                        <span class="region-type">神殿 - 三光連環第一神殿</span>
+                    </div>
+                    <div class="region-info">
+                        <p><strong>容量:</strong> 1 | <strong>支配勢力:</strong> 中立</p>
+                        <p><strong>隣接地域:</strong>
+                            <span class="location" data-region="moonweave">ムーンウィーブ交差路</span>,
+                            <span class="location" data-region="stormspire">嵐尖塔神殿</span>
+                        </p>
+                        <p><strong>資源:</strong> <span class="resource" data-type="sacred">陽火祭壇</span></p>
+                        <p><strong>特殊効果:</strong> <span class="spell" data-type="prayer">祈りの共鳴</span></p>
+                        <p><strong>戦略価値:</strong> 儀式の起点、慰めの守護効果</p>
+                    </div>
+                </div>
+
+                <div class="region-card neutral" data-region="stormspire">
+                    <div class="region-header">
+                        <h3>⚔️ 嵐尖塔神殿</h3>
+                        <span class="region-type">神殿 - 三光連環第三神殿</span>
+                    </div>
+                    <div class="region-info">
+                        <p><strong>容量:</strong> 1 | <strong>支配勢力:</strong> 中立</p>
+                        <p><strong>隣接地域:</strong>
+                            <span class="location" data-region="solace">ソレース聖所</span>,
+                            <span class="location" data-region="embershroud">エンバーシュラウド大聖堂</span>,
+                            <span class="location" data-region="ashen">アッシェン要塞</span>
+                        </p>
+                        <p><strong>資源:</strong> <span class="resource" data-type="storm">嵐印オベリスク</span></p>
+                        <p><strong>特殊効果:</strong> <span class="spell" data-type="barrier">空中結界</span></p>
+                        <p><strong>戦略価値:</strong> 最終決戦の舞台、雷の試練場</p>
+                    </div>
+                </div>
+
+                <div class="region-card neutral" data-region="embershroud">
+                    <div class="region-header">
+                        <h3>🔥 エンバーシュラウド大聖堂</h3>
+                        <span class="region-type">神殿 - 三光連環第二神殿</span>
+                    </div>
+                    <div class="region-info">
+                        <p><strong>容量:</strong> 1 | <strong>支配勢力:</strong> 中立</p>
+                        <p><strong>隣接地域:</strong>
+                            <span class="location" data-region="stormspire">嵐尖塔神殿</span>,
+                            <span class="location" data-region="veilborn">ヴェイルボーン街道</span>
+                        </p>
+                        <p><strong>資源:</strong> <span class="resource" data-type="fire">火焔井戸</span></p>
+                        <p><strong>特殊効果:</strong> <span class="spell" data-type="fire">ヴェイル焼却結界</span>, <span class="spell" data-type="earth">地脈震動</span></p>
+                        <p><strong>戦略価値:</strong> 炎の試練場、地脈増幅効果</p>
+                    </div>
+                </div>
+
+                <div class="region-card veilbreak" data-region="ashen">
+                    <div class="region-header">
+                        <h3>🏰 アッシェン要塞</h3>
+                        <span class="region-type">軍事要塞</span>
+                    </div>
+                    <div class="region-info">
+                        <p><strong>容量:</strong> 2 | <strong>支配勢力:</strong> <span class="faction veilbreak">ヴェイルブレイク監視団</span> (影響度: 7)</p>
+                        <p><strong>隣接地域:</strong>
+                            <span class="location" data-region="moonweave">ムーンウィーブ交差路</span>,
+                            <span class="location" data-region="stormspire">嵐尖塔神殿</span>,
+                            <span class="location" data-region="veilborn">ヴェイルボーン街道</span>
+                        </p>
+                        <p><strong>資源:</strong> <span class="resource" data-type="weapon">攻城兵器</span></p>
+                        <p><strong>特殊効果:</strong> <span class="tactic" data-type="defense">要塞化門扉</span></p>
+                        <p><strong>戦略価値:</strong> 軍事拠点、神殿群への封鎖基地</p>
+                    </div>
+                </div>
+
+                <div class="region-card allied" data-region="verdant">
+                    <div class="region-header">
+                        <h3>🌲 ヴァーダント辺境</h3>
+                        <span class="region-type">森林</span>
+                    </div>
+                    <div class="region-info">
+                        <p><strong>容量:</strong> 2 | <strong>支配勢力:</strong> 中立 (<span class="faction auric">契約団同盟</span>)</p>
+                        <p><strong>隣接地域:</strong>
+                            <span class="location" data-region="moonweave">ムーンウィーブ交差路</span>,
+                            <span class="location" data-region="veilborn">ヴェイルボーン街道</span>
+                        </p>
+                        <p><strong>資源:</strong> 薬草林、隠し道、<span class="resource" data-type="magic">光胞子灯台</span></p>
+                        <p><strong>特殊効果:</strong> <span class="tactic" data-type="stealth">隠密経路</span>, 黄昏案内人</p>
+                        <p><strong>戦略価値:</strong> 迂回路確保、補給・情報支援</p>
+                    </div>
+                </div>
+
+                <div class="region-card contested" data-region="veilborn">
+                    <div class="region-header">
+                        <h3>🌫️ ヴェイルボーン街道</h3>
+                        <span class="region-type">古代遺跡</span>
+                    </div>
+                    <div class="region-info">
+                        <p><strong>容量:</strong> 2 | <strong>支配勢力:</strong> 中立 (争奪地域)</p>
+                        <p><strong>隣接地域:</strong>
+                            <span class="location" data-region="ashen">アッシェン要塞</span>,
+                            <span class="location" data-region="embershroud">エンバーシュラウド大聖堂</span>,
+                            <span class="location" data-region="verdant">ヴァーダント辺境</span>
+                        </p>
+                        <p><strong>資源:</strong> <span class="resource" data-type="magic">地脈断片</span></p>
+                        <p><strong>特殊効果:</strong> <span class="tactic" data-type="sabotage">破壊工作経路</span></p>
+                        <p><strong>戦略価値:</strong> 戦略要衝、影縄罠の展開地</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 交通・補給路 -->
+        <section id="supply-lines" class="card">
+            <h3>🛤️ 交通・補給路</h3>
+            <div class="supply-lines-grid">
+                <div class="supply-route">
+                    <h4>🛤️ 主要街道</h4>
+                    <ul>
+                        <li><strong>北部軸</strong>: Ashen Ramparts ↔ Sunken Hold ↔ Cliffwaters</li>
+                        <li><strong>中央軸</strong>: Moonweave Crossroads ↔ Mistwood Shade ↔ Thornhenge</li>
+                        <li><strong>東部軸</strong>: Moonweave Crossroads ↔ Cliffwaters ↔ Thornhenge</li>
+                        <li><strong>神聖路</strong>: Solace Sanctum ↔ Embershroud Basilica ↔ Stormspire Temple</li>
+                    </ul>
+                </div>
+
+                <div class="supply-vulnerabilities">
+                    <h4>🔮 補給線の脆弱性</h4>
+                    <div class="vulnerability-item">
+                        <strong>Moonweave Crossroads</strong>: 全勢力の補給路が交差する最重要地点
+                    </div>
+                    <div class="vulnerability-item">
+                        <strong>Mistwood Shade</strong>: 迂回路と霧路への分岐点、戦略的要衝
+                    </div>
+                    <div class="vulnerability-item">
+                        <strong>Ashen Ramparts</strong>: 監視団の拠点、補給線への脅威源
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 重要イベント地 -->
+        <section id="event-locations" class="card">
+            <h3>🌟 重要イベント発生地</h3>
+            <div class="events-timeline">
+                <div class="event-location">
+                    <h4>🌅 ターン 2: 第一節・慰めの祈り</h4>
+                    <div class="event-details">
+                        <p><strong>場所</strong>: Solace Sanctum</p>
+                        <p><strong>イベント</strong>: 三光連環の第一節奏出</p>
+                        <p><strong>結果</strong>: 儀式進行度1/3達成、迂回路発見</p>
+                    </div>
+                </div>
+
+                <div class="event-location">
+                    <h4>🌫️ ターン 3: 黄昏案内人との誓約</h4>
+                    <div class="event-details">
+                        <p><strong>場所</strong>: Mistwood Shade</p>
+                        <p><strong>イベント</strong>: 霧の森の案内人との同盟締結</p>
+                        <p><strong>結果</strong>: 霧路の安全通行権獲得</p>
+                    </div>
+                </div>
+
+                <div class="event-location">
+                    <h4>🔥 ターン 10: 第二節・炎の試練</h4>
+                    <div class="event-details">
+                        <p><strong>場所</strong>: Embershroud Basilica</p>
+                        <p><strong>イベント</strong>: 監視団突撃を結界で撃退</p>
+                        <p><strong>結果</strong>: 第二節完遂、儀式進行度2/3達成</p>
+                    </div>
+                </div>
+
+                <div class="event-location">
+                    <h4>⚡ ターン 14: 第三節・嵐の結界</h4>
+                    <div class="event-details">
+                        <p><strong>場所</strong>: Stormspire Temple</p>
+                        <p><strong>イベント</strong>: 三光連環の完成、最終決戦</p>
+                        <p><strong>結果</strong>: 光の勝利、神聖なる聖約の確立</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 戦略的要点 -->
+        <section id="strategic-points" class="card">
+            <h3>🎯 戦略的要点まとめ</h3>
+            <div class="strategic-grid">
+                <div class="strategic-point priority-high">
+                    <div class="priority-icon">🌟</div>
+                    <div class="point-content">
+                        <h4>勝利の鍵</h4>
+                        <p>三光連環の儀式完遂</p>
+                    </div>
+                </div>
+
+                <div class="strategic-point priority-high">
+                    <div class="priority-icon">🛤️</div>
+                    <div class="point-content">
+                        <h4>交通支配</h4>
+                        <p>Moonweave Crossroads の制圧</p>
+                    </div>
+                </div>
+
+                <div class="strategic-point priority-medium">
+                    <div class="priority-icon">🌫️</div>
+                    <div class="point-content">
+                        <h4>迂回戦略</h4>
+                        <p>Mistwood Shade 霧路の活用</p>
+                    </div>
+                </div>
+
+                <div class="strategic-point priority-medium">
+                    <div class="priority-icon">🔮</div>
+                    <div class="point-content">
+                        <h4>神殿防衛</h4>
+                        <p>三神殿への儀式妨害阻止</p>
+                    </div>
+                </div>
+
+                <div class="strategic-point priority-low">
+                    <div class="priority-icon">⚔️</div>
+                    <div class="point-content">
+                        <h4>妨害作戦</h4>
+                        <p>監視団による儀式阻止活動</p>
+                    </div>
+                </div>
+
+                <div class="strategic-point priority-low">
+                    <div class="priority-icon">🤝</div>
+                    <div class="point-content">
+                        <h4>外交均衡</h4>
+                        <p>案内人との同盟関係維持</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer style="text-align: center; padding: 2rem; color: #888; border-top: 1px solid #444; margin-top: 3rem;">
+        <p>三光連環の儀 対立 - 世界マップ</p>
+        <p>📖 <a href="index.html" style="color: #87CEEB;">Dashboard</a> | 📖 <a href="narrative.html" style="color: #87CEEB;">ナラティブ</a> | 📊 <a href="playlog.html" style="color: #87CEEB;">プレイログ</a></p>
+    </footer>
+
+    <script src="data.js"></script>
+    <script>
+        // Remove turn selector functionality as it doesn't exist in this version
+        // document.getElementById('turnSelect').addEventListener('change', function() {
+        //     const turnNum = this.value;
+        //     if (turnNum) {
+        //         sessionStorage.setItem('selectedTurn', turnNum);
+        //         window.location.href = `narrative.html#turn-${turnNum}`;
+        //     }
+        // });
+
+        // Simple static map - no interactive features
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Simplified static world map loaded');
+        });
+    </script>
+</body>
+</html>

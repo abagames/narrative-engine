@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thunder Storm Campaign - ナラティブリプレイ</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600&family=Noto+Serif+JP:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Header Navigation -->
+    <header class="main-header">
+      <div class="container">
+        <nav class="main-nav">
+          <a href="index.html">🏠 Dashboard</a>
+          <a href="narrative.html" class="active">📖 Narrative</a>
+          <a href="playlog.html">📊 Playlog</a>
+          <a href="worldmap.html">🗺️ World Map</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+      <!-- Page Header -->
+      <section class="campaign-overview fade-in">
+        <h1>📖 Thunder Storm Campaign - ナラティブリプレイ</h1>
+        <p class="subtitle">
+          三勢力による戦略要衝争奪から法廷決着までの壮大な物語。軍事制圧から政治権威、そして法の支配への20ターンの進化記録。
+        </p>
+      </section>
+
+      <!-- Phase Evolution Visualization -->
+      <section class="phase-evolution">
+        <h2>🌊 三段階の進化</h2>
+        <div class="phase-timeline">
+          <div class="phase military-phase">
+            <h3>⚔️ 軍事制圧期 (T1-3)</h3>
+            <p>Shadowfen Crossing をめぐる武力による要衝争奪</p>
+          </div>
+          <div class="phase political-phase">
+            <h3>⚖️ 政治権威期 (T4-13)</h3>
+            <p>玄武岩守護者の承認と Emberfront での政治的優位確立</p>
+          </div>
+          <div class="phase legal-phase">
+            <h3>📜 法廷戦期 (T14-20)</h3>
+            <p>公開法廷での正義と復讐の対決から復興契約まで</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Turn Navigation -->
+      <section class="turn-navigation">
+        <h2>🧭 ターン選択</h2>
+        <div class="turn-nav" style="flex-wrap: wrap; gap: 0.5rem;">
+          <a href="#turn-1">T1</a><a href="#turn-2">T2</a><a href="#turn-3">T3</a><a href="#turn-4">T4</a><a href="#turn-5">T5</a>
+          <a href="#turn-6">T6</a><a href="#turn-7">T7</a><a href="#turn-8">T8</a><a href="#turn-9">T9</a><a href="#turn-10">T10</a>
+          <a href="#turn-11">T11</a><a href="#turn-12">T12</a><a href="#turn-13">T13</a><a href="#turn-14">T14</a><a href="#turn-15">T15</a>
+          <a href="#turn-16">T16</a><a href="#turn-17">T17</a><a href="#turn-18">T18</a><a href="#turn-19">T19</a><a href="#turn-20">T20</a>
+        </div>
+      </section>
+
+      <!-- Adventurers Introduction -->
+      <section class="adventurers-intro">
+        <h2>🎭 冒険者たちの紹介</h2>
+
+        <div class="turn-section">
+          <h3>⚔️ Ironbound Covenant - 鉄血盟約</h3>
+          <p><strong>拠点</strong>: <span class="location" data-region="emberfront_keep">Emberfront Keep</span> | <strong>専門分野</strong>: 戦闘・軍事指揮</p>
+
+          <ul>
+            <li><strong><span class="character ironbound" data-name="serah_vance">Commander Serah Vance</span></strong> (戦略家): 不屈の性格で、戦場指揮を担当
+              <br>- 口調: 簡潔で権威ある命令口調</li>
+            <li><strong><span class="character ironbound" data-name="kael_draken">Brother Kael Draken</span></strong> (前衛戦士): 熱狂的な性格で、盾陣形成を担当
+              <br>- 口調: しわがれ声での戦闘叫び</li>
+            <li><strong><span class="character ironbound" data-name="leona_hale">Archivist Leona Hale</span></strong> (戦闘魔法使い): 戦略的な性格で、時間魔法支援を担当
+              <br>- 口調: 正確で簡潔な分析</li>
+          </ul>
+
+          <p><strong>🎯 初期目標</strong>: 戦略的要衝 <span class="location" data-region="shadowfen_crossing">Shadowfen Crossing</span> の制圧により <span class="organization" data-org="thunder_legion">Thunder Legion</span> の包囲網を突破</p>
+          <p><strong>活動方針</strong>: 経験豊富な指導による大胆な機会主義戦略</p>
+        </div>
+
+        <div class="turn-section">
+          <h3>🌙 Nightglass Collective - 夜硝子集団</h3>
+          <p><strong>拠点</strong>: <span class="location" data-region="twilight_bog">Twilight Bog</span> | <strong>専門分野</strong>: 探索・暗殺術</p>
+
+          <ul>
+            <li><strong><span class="character nightglass" data-name="ilyra">Shadecaller Ilyra</span></strong> (影の元帥): 計算高い性格で、待ち伏せ調整を担当
+              <br>- 口調: ささやくような暗示</li>
+            <li><strong><span class="character nightglass" data-name="vesper_rune">Vesper Rune</span></strong> (暗殺者): 憂鬱な性格で、毒術を担当
+              <br>- 口調: 簡潔で鋭い発言</li>
+            <li><strong><span class="character nightglass" data-name="sable_myrr">Sable Myrr</span></strong> (虚無の魔女): 強迫観念の強い性格で、エントロピー魔法を担当
+              <br>- 口調: 物静かな理論的思索</li>
+          </ul>
+
+          <p><strong>🎯 初期目標</strong>: <span class="location" data-region="shadowfen_crossing">Shadowfen Crossing</span> の待ち伏せ優位を活用し、鉄血・嵐幕の両勢力を撃退</p>
+          <p><strong>活動方針</strong>: 専門性に基づく慎重な分析的判断</p>
+        </div>
+
+        <div class="turn-section">
+          <h3>⚡ Stormveil Circle - 嵐幕団</h3>
+          <p><strong>拠点</strong>: <span class="location" data-region="auric_market">Auric Market</span> | <strong>専門分野</strong>: 外交・魔術交易</p>
+
+          <ul>
+            <li><strong><span class="character stormveil" data-name="talan_mir">Archmage Talan Mir</span></strong> (大魔法使い): 冷静な性格で、嵐召喚を担当
+              <br>- 口調: 響きのある指導的口調</li>
+            <li><strong><span class="character stormveil" data-name="lysa_orien">Seer Lysa Orien</span></strong> (神託者): 共感的な性格で、占術を担当
+              <br>- 口調: 穏やかで預言的な導き</li>
+            <li><strong><span class="character stormveil" data-name="corrin_faye">Bladesinger Corrin Faye</span></strong> (決闘剣士): 華やかな性格で、魔法剣術を担当
+              <br>- 口調: 皮肉で演劇的に自信満々</li>
+          </ul>
+
+          <p><strong>🎯 初期目標</strong>: <span class="location" data-region="crystal_hollow">Crystal Hollow</span> の戦争機械制御により、三勢力間の力の均衡を調整</p>
+          <p><strong>活動方針</strong>: 協調的民主主義による均衡した実用主義</p>
+        </div>
+      </section>
+
+      <!-- Adventure Record -->
+      <section class="adventure-record">
+        <h2>📜 冒険の記録</h2>
+
+        <!-- Turn 1 -->
+        <section id="turn-1" class="turn-section">
+          <header class="turn-header">
+            <h3>ターン 1: <span class="location" data-region="shadowfen_crossing">Shadowfen Crossing</span>への進軍</h3>
+            <nav class="turn-nav">
+              <a href="playlog.html#turn-1" class="cross-link">📊 データを見る</a>
+              <a href="#turn-2" class="next-turn">次のターン →</a>
+            </nav>
+          </header>
+          <div class="turn-content">
+            <p>雷雲が大地を覆う中、三つの勢力が戦略的要衝 <span class="location" data-region="shadowfen_crossing">Shadowfen Crossing</span> を目指して動き出した。</p>
+
+            <h4>🌙 Nightglass Collective の視点</h4>
+            <p>影の元帥 <span class="character nightglass" data-name="ilyra">Ilyra</span> は霧の中から「⚔️ Ironbound の旗印が稜線に光っているわ。<span class="location" data-region="crystal_hollow">Crystal Hollow</span> からも魔力の波動を感じる」と冷静に分析していた。毒術師 <span class="character nightglass" data-name="vesper_rune">Vesper</span> は正確な計算で「何本の毒瓶を配備すれば撤退ルートを確保できるか」を検討し、虚無の魔女 <span class="character nightglass" data-name="sable_myrr">Sable</span> は「レイライン攪乱を利用して敵戦団を我らのエントロピー網に誘導しよう」と呟いた。</p>
+
+            <p>彼らは鋼鉄や嵐の勢力より先に要衝を制圧することを決意し、<span class="location" data-region="shadowfen_crossing">Shadowfen</span> の待ち伏せボーナスを最大限活用する作戦を立てた。霧に紛れて毒の罠を仕掛け、敵を致命的な殺戮回廊に誘導する計画だった。</p>
+
+            <p>🌙 Nightglass は遺跡に到着すると、燐光塵で侵入経路を標示し、中央アーチに毒のまかれた鉄菱を配置。<span class="character nightglass" data-name="sable_myrr">Sable</span> は虚無の印章を配列して敵戦団の勢いを罠へと誘導する準備を整えた。</p>
+          </div>
+        </section>
+
+        <!-- Turn 2 -->
+        <section id="turn-2" class="turn-section">
+          <header class="turn-header">
+            <h3>ターン 2: ⚔️ Ironbound の強襲</h3>
+            <nav class="turn-nav">
+              <a href="playlog.html#turn-2" class="cross-link">📊 データを見る</a>
+              <a href="#turn-1" class="prev-turn">← 前のターン</a>
+              <a href="#turn-3" class="next-turn">次のターン →</a>
+            </nav>
+          </header>
+          <div class="turn-content">
+            <p><span class="organization" data-org="thunder_legion">Thunder Legion</span> の包囲網が狭まる中、⚔️ Ironbound Covenant が <span class="location" data-region="shadowfen_crossing">Shadowfen Crossing</span> への強襲を開始した。</p>
+
+            <h4>⚔️ Ironbound Covenant の視点</h4>
+            <p>指揮官 <span class="character ironbound" data-name="serah_vance">Serah</span> は時間魔法使い <span class="character ironbound" data-name="leona_hale">Leona</span> の時空格子マッピングと連携し、「盾壁、雷光の周期で踏み込め！」と精密な命令を下した。前衛戦士 <span class="character ironbound" data-name="kael_draken">Kael</span> は聖地を鉄で清める誓いを叫びながら敵の攻撃を正面から受け、<span class="character ironbound" data-name="leona_hale">Leona</span> の<span class="ability" data-spell="time_magic">時間魔法</span>詠唱により Nightglass の斥候を一時停止させた。</p>
+
+            <p>⚔️ Ironbound は重なり合う盾のドームを形成し、捕獲した嵐光の反射で虚無の印章を暴露しながら、敵傭兵を戦団へと誘導する合図を送った。盾壁による組織的な進撃で 🌙 Nightglass の最初の待ち伏せ網を突破し、遺跡の中央広場を確保した。</p>
+
+            <p>戦闘の興奮の中、<span class="character ironbound" data-name="kael_draken">Kael</span> は焼け付く罠の中で笑い声を上げ、<span class="character ironbound" data-name="serah_vance">Serah</span> は冷静に呼吸を整えながら指揮を続けた。</p>
+          </div>
+        </section>
+
+        <!-- Turn 3 - 目標転換点 -->
+        <section id="turn-3" class="turn-section">
+          <header class="turn-header">
+            <h3>ターン 3: 雷軍団の最後通牒 ⚔️【🔄 目標転換点】</h3>
+            <nav class="turn-nav">
+              <a href="playlog.html#turn-3" class="cross-link">📊 データを見る</a>
+              <a href="#turn-2" class="prev-turn">← 前のターン</a>
+              <a href="#turn-4" class="next-turn">次のターン →</a>
+            </nav>
+          </header>
+          <div class="turn-content">
+            <div class="objective-shift">
+              <h4>🔄 転換の契機</h4>
+              <p><span class="organization" data-org="thunder_legion">Thunder Legion</span> が <span class="location" data-region="shadowfen_crossing">Shadowfen Crossing</span> に稲妻の杭を打ち込み、嵐が全てを呑み込む前に公開戦闘での決着を要求した。<span class="organization" data-org="thunder_legion">Legion</span> の稲妻最後通牒により三勢力激突が避けられない状況となり、各勢力が戦略目標を見直す瞬間。</p>
+            </div>
+
+            <h4>三勢力の激突</h4>
+            <p><span class="organization" data-org="thunder_legion">Legion</span> の稲妻最後通牒の下、⚔️ Ironbound Covenant は 🌙 Nightglass の暗殺者たちを粉砕し、<span class="character nightglass" data-name="ilyra">Ilyra</span> と <span class="character nightglass" data-name="vesper_rune">Vesper</span> を捕虜とした。しかし <span class="character nightglass" data-name="sable_myrr">Sable</span> は残存部隊を率いて <span class="location" data-region="twilight_bog">Twilight Bog</span> への撤退を成功させた。</p>
+
+            <p>指揮官 <span class="character ironbound" data-name="serah_vance">Serah</span> は <span class="character ironbound" data-name="kael_draken">Kael</span> の毒傷を確認しながら、<span class="character ironbound" data-name="leona_hale">Leona</span> の時間的縫合で治療を施した。「雷は沈黙した、捕虜を確保せよ」と命じる中、毒で苦悶する <span class="character ironbound" data-name="kael_draken">Kael</span> は「影がついに血を流したな」と勝利を噛みしめた。</p>
+
+            <p><span class="organization" data-org="thunder_legion">Legion</span> の杭が静まる中、⚡ Stormveil の外交官たちが亀裂修復装置を持参して到着。丁寧な口調の裏に隠された熱意で、⚔️ Ironbound との協議を申し出た。</p>
+
+            <div class="new-objectives">
+              <h4>🎯 新たな目標</h4>
+              <ul>
+                <li><strong>⚔️ Ironbound</strong>: 要衝制圧 → <strong>捕虜管理と <span class="organization" data-org="thunder_legion">Legion</span> への対処</strong></li>
+                <li><strong>🌙 Nightglass</strong>: 勢力撃退 → <strong>捕獲された仲間の奪還</strong></li>
+                <li><strong>⚡ Stormveil</strong>: 力の均衡 → <strong>三勢力間の仲裁と平和維持</strong></li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Turn 4 -->
+        <section id="turn-4" class="turn-section">
+          <header class="turn-header">
+            <h3>ターン 4: 戦争機械の脈動</h3>
+            <nav class="turn-nav">
+              <a href="playlog.html#turn-4" class="cross-link">📊 データを見る</a>
+              <a href="#turn-3" class="prev-turn">← 前のターン</a>
+              <a href="#turn-5" class="next-turn">次のターン →</a>
+            </nav>
+          </header>
+          <div class="turn-content">
+            <p><span class="location" data-region="crystal_hollow">Crystal Hollow</span> 地下の古代戦争機械が同期した脈動を発し、共鳴調律を提供する者に力を約束した。</p>
+
+            <h4>⚡ Stormveil Circle の視点</h4>
+            <p>大魔法使い <span class="character stormveil" data-name="talan_mir">Talan Mir</span> は戦争機械の脈動を封じ込め球体に変換しながら、⚔️ Ironbound との仲裁交渉の場を設定した。「共鳴を安定させた。毒も抜き終える」と告げ、外交の枠組みを整えた。</p>
+
+            <p>⚡ Stormveil の職人たちは広場の石に印章を刻み、一方で <span class="location" data-region="twilight_bog">Twilight Bog</span> では 🌙 Nightglass の信徒たちが中空の根に毒瓶を配列していた。<span class="organization" data-org="thunder_legion">Legion</span> が遠方から監視する中、交渉が平和に進むか次の衝突の引き金となるかは微妙なバランスの上にあった。</p>
+          </div>
+        </section>
+
+        <!-- Turn 5 -->
+        <section id="turn-5" class="turn-section">
+          <header class="turn-header">
+            <h3>ターン 5: 共鳴嵐の救出作戦</h3>
+            <nav class="turn-nav">
+              <a href="playlog.html#turn-5" class="cross-link">📊 データを見る</a>
+              <a href="#turn-4" class="prev-turn">← 前のターン</a>
+              <a href="#turn-6" class="next-turn">次のターン →</a>
+            </nav>
+          </header>
+          <div class="turn-content">
+            <p>交渉の場に共鳴弧が走り、刃が交わったり儀式が衝突すれば戦争機械の逆流を引き起こす危険が迫った。</p>
+
+            <h4>🌙 Nightglass の反撃</h4>
+            <p><span class="character nightglass" data-name="sable_myrr">Sable</span> は共鳴稲妻に外套を裂かれながらも、最後の檻の周りで閉じる ⚔️ Ironbound の盾を見据えた。⚡ Stormveil の使者たちが流血しながらも決然としている中、彼女は嵐が爆発する前に虚無の隙間を通って <span class="character nightglass" data-name="ilyra">Ilyra</span> を引きずり出すことを選んだ。</p>
+
+            <p>「影を連れ帰る！」と <span class="character nightglass" data-name="sable_myrr">Sable</span> が嵐の中で叫ぶ中、<span class="character ironbound" data-name="serah_vance">Serah</span> は「捕虜を死守！雷よ、我らに味方せよ！」と応じ、<span class="character stormveil" data-name="talan_mir">Talan Mir</span> は共鳴の対旋律を響かせて稲妻弧を上空に逸らした。</p>
+
+            <p>🌙 Nightglass は沼の霧に溶けて <span class="character nightglass" data-name="ilyra">Ilyra</span> とともに姿を消し、⚔️ Ironbound は危機的封鎖に移行。⚡ Stormveil の錯乱した魔法使いたちは <span class="organization" data-org="thunder_legion">Legion</span> の太鼓手が戻る前に休戦を救おうと懇願した。</p>
+          </div>
+        </section>
+
+        <!-- Turn 6 -->
+        <section id="turn-6" class="turn-section">
+          <header class="turn-header">
+            <h3>ターン 6: 市場の混乱</h3>
+            <nav class="turn-nav">
+              <a href="playlog.html#turn-6" class="cross-link">📊 データを見る</a>
+              <a href="#turn-5" class="prev-turn">← 前のターン</a>
+              <a href="#turn-7" class="next-turn">次のターン →</a>
+            </nav>
+          </header>
+          <div class="turn-content">
+            <p><span class="organization" data-org="thunder_legion">Thunder Legion</span> の徴発が供給線を圧迫し、勢力間で食料と毒の競り合いが始まった。</p>
+
+            <h4>経済戦争の開始</h4>
+            <p>⚔️ Ironbound は <span class="character nightglass" data-name="vesper_rune">Vesper</span> を <span class="location" data-region="gale_steppe">Gale Steppe</span> へ護送する一方、🌙 Nightglass の影が護送隊を追跡し、⚡ Stormveil は共鳴抑制装置を食料と交換していた。</p>
+
+            <p>指揮官 <span class="character ironbound" data-name="serah_vance">Serah</span> は <span class="organization" data-org="thunder_legion">Legion</span> 通信網での急激な物資不足報告を注視し、風吹く草原で護送隊から一投石の距離に 🌙 Nightglass のシルエットが浮かび上がるのを目撃した。「列を乱すな。補給は一歩後ろで受け取れ」と命じながら、盾陣による kill-box を地図に描いた。</p>
+
+            <p><span class="character nightglass" data-name="ilyra">Ilyra</span> の囁きが風に乗って「<span class="character nightglass" data-name="vesper_rune">Vesper</span> の自由を二夜以内に」と約束する中、⚡ Stormveil の書記官 <span class="character stormveil" data-name="talan_mir">Talan Mir</span> は両勢力に <span class="organization" data-org="thunder_legion">Legion</span> が更なる損失に課税することを警告した。</p>
+          </div>
+        </section>
+
+        <!-- Turn 7 -->
+        <section id="turn-7" class="turn-section">
+          <header class="turn-header">
+            <h3>ターン 7: イオン嵐の中の追跡</h3>
+            <nav class="turn-nav">
+              <a href="playlog.html#turn-7" class="cross-link">📊 データを見る</a>
+              <a href="#turn-6" class="prev-turn">← 前のターン</a>
+              <a href="#turn-8" class="next-turn">次のターン →</a>
+            </nav>
+          </header>
+          <div class="turn-content">
+            <p>イオン化した突風が <span class="location" data-region="gale_steppe">Gale Steppe</span> を襲い、迫る護送隊の衝突を稲妻に満ちた混戦に変える恐れがあった。</p>
+
+            <h4>平原での機動戦</h4>
+            <p>⚔️ Ironbound の盾壁は 🌙 Nightglass の小競り合いを撃退し、⚡ Stormveil の使者たちが抑制装置を持って追いつく間、暗殺者たちは <span class="location" data-region="ashen_ridge">Ashen Ridge</span> に向かって滑り落ちていった。</p>
+
+            <p>指揮官 <span class="character ironbound" data-name="serah_vance">Serah</span> は繋がれた盾に稲妻が這うのを見ながら、玄武岩の稜線へ向かって剥がれていく 🌙 Nightglass のシルエットを数えた。「盾壁、稲妻に合わせて歩調を保て！」と命令し、毒傷にもかかわらず全速追撃を望む <span class="character ironbound" data-name="kael_draken">Kael</span> を抑えた。</p>
+
+            <p>稜線の決戦を前に、全ての勢力が次の遭遇で運命が決まることを理解していた。</p>
+          </div>
+        </section>
+
+        <!-- Turn 8 -->
+        <section id="turn-8" class="turn-section">
+          <header class="turn-header">
+            <h3>ターン 8: 玄武岩の守護者の目覚め</h3>
+            <nav class="turn-nav">
+              <a href="playlog.html#turn-8" class="cross-link">📊 データを見る</a>
+              <a href="#turn-7" class="prev-turn">← 前のターン</a>
+              <a href="#turn-9" class="next-turn">次のターン →</a>
+            </nav>
+          </header>
+          <div class="turn-content">
+            <p><span class="location" data-region="ashen_ridge">Ashen Ridge</span> の震動により、Legion 印の枷を持つ者に応答する休眠中の玄武岩の守護者が明らかになった。</p>
+
+            <h4>古代の裁定者</h4>
+            <p>三勢力すべてが <span class="location" data-region="ashen_ridge">Ashen Ridge</span> に収束し、⚡ Stormveil が ⚔️ Ironbound 護送隊を護衛しながら、🌙 Nightglass は守護者を自分たちの意志に捻じ曲げる可能性のある印章を研究していた。</p>
+
+            <p>時間魔法使い <span class="character ironbound" data-name="leona_hale">Leona</span> は護送隊が稜線を越える際に守護者の脈動するルーンを記録し、玄武岩の血管に新しく刻まれた 🌙 Nightglass の印章に気づいた。<span class="character ironbound" data-name="kael_draken">Kael</span> は暗殺者魔法使いたちが儀式を完了する前に突破することを望んだが、<span class="character ironbound" data-name="serah_vance">Serah</span> は ⚡ Stormveil が抑制装置を調整する間、守護者の足元で要塞化された陣営を命じた。</p>
+
+            <p>「守護者よ、契約を思い出せ」と <span class="character ironbound" data-name="serah_vance">Serah</span> が呼びかける中、<span class="character stormveil" data-name="talan_mir">Talan Mir</span> は「双方、刃を収めろ。儀式順を定める」と中立的監督を申し出、<span class="character nightglass" data-name="ilyra">Ilyra</span> は「鎖が不義であれば、守護者は我らの刃となる」と囁いた。</p>
+          </div>
+        </section>
+
+        <!-- Turn 9 - 正統性の確立 -->
+        <section id="turn-9" class="turn-section">
+          <header class="turn-header">
+            <h3>ターン 9: 守護者の試練 ⚖️【⚔️ 正統性の確立】</h3>
+            <nav class="turn-nav">
+              <a href="playlog.html#turn-9" class="cross-link">📊 データを見る</a>
+              <a href="#turn-8" class="prev-turn">← 前のターン</a>
+              <a href="#turn-10" class="next-turn">次のターン →</a>
+            </nav>
+          </header>
+          <div class="turn-content">
+            <div class="legitimacy-establishment">
+              <h4>⚔️ 古代の裁定者による正統性審判</h4>
+              <p>玄武岩の守護者が立ち上がり、イオン反響が不名誉を罰する中、各勢力から代表者を出すよう要求した。守護者の試練により ⚔️ Ironbound の政治的優位が確定、🌙 Nightglass は法的手段への転換を余儀なくされる。</p>
+            </div>
+
+            <h4>儀式的決闘</h4>
+            <p>守護者の試練が稜線を支配し、古代の掟に従って ⚔️ Ironbound と 🌙 Nightglass の代表者による一騎討ちが行われた。鉄血盟約からは毒傷にも屈しない前衛戦士 <span class="character ironbound" data-name="kael_draken">Kael</span> が、夜硝子集団からは影術に長けた代表者が選ばれ、玄武岩の守護者の監視下で剣と魔法による決闘が繰り広げられた。</p>
+
+            <p><span class="character ironbound" data-name="kael_draken">Kael</span> の不屈の戦闘技術と聖地への誓いが勝利し、イオン判決で 🌙 Nightglass の代表者たちを打ち倒した。⚡ Stormveil は誓約を成文化し、🌙 Nightglass は最終救出を企てて <span class="location" data-region="emberfront_keep">Emberfront</span> へ逃れた。</p>
+
+            <p>戦士 <span class="character ironbound" data-name="kael_draken">Kael</span> は毒の血管を通してまだオゾンを味わいながら、守護者の目が薄れるのを見つめた。時間魔法使い <span class="character ironbound" data-name="leona_hale">Leona</span> は 🌙 Nightglass の逃亡者たちが玄武岩を滑り降りて <span class="location" data-region="emberfront_keep">Emberfront</span> の遠い灯りに向かうのを観察した。</p>
+
+            <p>「守護者は我らを認めた。隊列、前進準備！」と <span class="character ironbound" data-name="serah_vance">Serah</span> が宣言し、<span class="character stormveil" data-name="talan_mir">Talan Mir</span> は「判決を明文化し、双方に写本を渡す」と記録した。去り際の <span class="character nightglass" data-name="ilyra">Ilyra</span> の囁き「城塞で会おう、鉄の女」が、最終対決の舞台を予告していた。</p>
+
+            <div class="new-objectives">
+              <h4>🎯 目標の再定義</h4>
+              <ul>
+                <li><strong>⚔️ Ironbound</strong>: 捕虜管理 → <strong>古代承認による政治的権威の確立</strong></li>
+                <li><strong>🌙 Nightglass</strong>: 仲間奪還 → <strong>法廷戦略による復権と復讐</strong></li>
+                <li><strong>⚡ Stormveil</strong>: 三勢力仲裁 → <strong>法的秩序の維持と公正な審判</strong></li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Turn 10 -->
+        <section id="turn-10" class="turn-section">
+          <header class="turn-header">
+            <h3>ターン 10: <span class="location" data-region="emberfront_keep">Emberfront</span> の封鎖</h3>
+            <nav class="turn-nav">
+              <a href="playlog.html#turn-10" class="cross-link">📊 データを見る</a>
+              <a href="#turn-9" class="prev-turn">← 前のターン</a>
+              <a href="#turn-11" class="next-turn">次のターン →</a>
+            </nav>
+          </header>
+          <div class="turn-content">
+            <p><span class="location" data-region="emberfront_keep">Emberfront Keep</span> が Legion 封鎖の下で門を閉ざし、隠された運河が大胆な者に秘密の侵入路を約束した。</p>
+
+            <h4>要塞への到着</h4>
+            <p>⚔️ Ironbound と ⚡ Stormveil は Legion 封鎖の下で <span class="location" data-region="emberfront_keep">Emberfront</span> に到着し、🌙 Nightglass の斥候たちは要塞の下の水没した culvert を偵察していた。</p>
+
+            <p>指揮官 <span class="character ironbound" data-name="serah_vance">Serah</span> は Legion の事務官が全ての箱を列挙する中で落とし格子が閉まるのを見て、保守用運河沿いの湿った足跡に気づいた - 🌙 Nightglass はすでに城壁内にいたのだ。毒で血管を焼かれながらも <span class="character ironbound" data-name="kael_draken">Kael</span> は直接的な独房移送を提案し、<span class="character ironbound" data-name="leona_hale">Leona</span> は ⚡ Stormveil の抑制装置診断を先に実行することを主張した。</p>
+
+            <p>Legion の四分の一軍曹との協力の下、⚡ Stormveil の監督により ⚔️ Ironbound は整然と到着を果たし、一方 🌙 Nightglass の工作員たちは港湾労働者に紛れ込んで culvert 計画のための潮汐周期を測定していた。</p>
+          </div>
+        </section>
+
+        <!-- Turn 11 -->
+        <section id="turn-11" class="turn-section">
+          <header class="turn-header">
+            <h3>ターン 11: 武器没収と闇市場</h3>
+            <nav class="turn-nav">
+              <a href="playlog.html#turn-11" class="cross-link">📊 データを見る</a>
+              <a href="#turn-10" class="prev-turn">← 前のターン</a>
+              <a href="#turn-12" class="next-turn">次のターン →</a>
+            </nav>
+          </header>
+          <div class="turn-content">
+            <p>Legion の検査官が <span class="location" data-region="emberfront_keep">Emberfront</span> の庭園に溢れ、武器価格を急騰させながら Nightglass が将来の運河強盗のために偽造通行証を静かに購入していた。</p>
+
+            <h4>経済圧力の高まり</h4>
+            <p>Ironbound は Stormveil の書記官と共に透明な検査を実施し、Nightglass は夜明けに sentries を買収するための偽造通行証と毒を仲介していた。</p>
+
+            <p>指揮官 <span class="character ironbound" data-name="serah_vance">Serah</span> は Stormveil の公証人がマニフェストに署名する際の Legion 在庫係の槍数えを注視し、密輸業者区域での割引毒瓶についての囁きを耳にした。「物資はこちらで封印済み。二重確認を」と命じ、書類処理を Stormveil に監督させながら culvert の河口監視に斥候を派遣した。</p>
+
+            <p>Legion 当局者の承認を得て、Stormveil は不可欠な存在感を示し、Nightglass は偽造許可証を握りしめて市場の路地に溶け込んでいった。</p>
+          </div>
+        </section>
+
+        <!-- Turn 12 -->
+        <section id="turn-12" class="turn-section">
+          <header class="turn-header">
+            <h3>ターン 12: Culvert の音響発見</h3>
+            <nav class="turn-nav">
+              <a href="playlog.html#turn-12" class="cross-link">📊 データを見る</a>
+              <a href="#turn-11" class="prev-turn">← 前のターン</a>
+              <a href="#turn-13" class="next-turn">次のターン →</a>
+            </nav>
+          </header>
+          <div class="turn-content">
+            <p>古い水門室が音を増幅することが判明 - 隠密失敗は Legion の巡回に即座に警告を発する。</p>
+
+            <h4>音響の罠</h4>
+            <p><span class="location" data-region="emberfront_keep">Emberfront</span> に音響の噂が波紋のように広がる中、Ironbound は Stormveil と共に culvert を地図化し、Nightglass は隠密救出に備えて偽造通行証と毒の備蓄を重ねていた。</p>
+
+            <p>時間魔法使い <span class="character ironbound" data-name="leona_hale">Leona</span> の巡回は全ての水滴が太鼓のように響くことを発見し、水門が音を三倍に増幅することを認識した。「鏡を三箇所に設置、反響で合図を送る」と報告し、<span class="character stormveil" data-name="talan_mir">Talan Mir</span> が「音の結び目は私たちが調律しよう」と応じる中、<span class="character nightglass" data-name="ilyra">Ilyra</span> は「合図が鳴るなら、それを止めればいい…考えておけ」と対策を練った。</p>
+
+            <p>湿った石の回廊で囁きごとに響く中、Stormveil の技術者たちは共鳴和音を奏で、Nightglass の密輸業者たちは検査箱の下に缶を隠し、Legion の守衛たちは新たに発見した音響罠に満足げに微笑んだ。</p>
+          </div>
+        </section>
+
+        <!-- Turn 13 -->
+        <section id="turn-13" class="turn-section">
+          <header class="turn-header">
+            <h3>ターン 13: 干潮の窓</h3>
+            <nav class="turn-nav">
+              <a href="playlog.html#turn-13" class="cross-link">📊 データを見る</a>
+              <a href="#turn-12" class="prev-turn">← 前のターン</a>
+              <a href="#turn-14" class="next-turn">次のターン →</a>
+            </nav>
+          </header>
+          <div class="turn-content">
+            <p>一夜限りで culvert が浅くなり、侵入者には容易なアクセスを提供するが、発見されれば露出する危険もあった。</p>
+
+            <h4>夜襲の決行</h4>
+            <p>Nightglass は干潮 culvert 襲撃を開始したが、Ironbound の鏡警報と Stormveil の封印結界によって撃退され、暗殺者たちは傷つき、守備者たちは毒を受けながらも決意を固めた。</p>
+
+            <p>時間魔法使い <span class="character ironbound" data-name="leona_hale">Leona</span> は <span class="character nightglass" data-name="ilyra">Ilyra</span> と <span class="character nightglass" data-name="vesper_rune">Vesper</span> が水門を跳ね回る際にエコー鏡が光るのを監視し、守護者の光が彼らをトンネルに追い返した。毒が血管を焼く中でも追撃を望む <span class="character ironbound" data-name="kael_draken">Kael</span> を <span class="character ironbound" data-name="leona_hale">Leona</span> は抑え、まず格子を封印して毒素を浄化することを主張。<span class="character ironbound" data-name="serah_vance">Serah</span> は Legion 司令部に誓約がまだ有効であることを保証しながら、Stormveil に結界安定化を命じた。</p>
+
+            <p>「封鎖完了、負傷者は交代だ」と <span class="character ironbound" data-name="serah_vance">Serah</span> が命じ、<span class="character stormveil" data-name="talan_mir">Talan Mir</span> が「共鳴を安定させた。毒も抜き終える」と告げる中、撤退する <span class="character nightglass" data-name="ilyra">Ilyra</span> は「次は音を殺して戻る…覚えておけ」と誓った。</p>
+          </div>
+        </section>
+
+        <!-- Turn 14 - 法廷戦の開始 -->
+        <section id="turn-14" class="turn-section">
+          <header class="turn-header">
+            <h3>ターン 14: 夜明けの法廷 📜【⚖️ 法廷戦の開始】</h3>
+            <nav class="turn-nav">
+              <a href="playlog.html#turn-14" class="cross-link">📊 データを見る</a>
+              <a href="#turn-13" class="prev-turn">← 前のターン</a>
+              <a href="#turn-15" class="next-turn">次のターン →</a>
+            </nav>
+          </header>
+          <div class="turn-content">
+            <div class="legal-battle-begins">
+              <h4>⚖️ 公開法廷による最終決着</h4>
+              <p>日の出時に各勢力が <span class="location" data-region="emberfront_keep">Emberfront</span> の判事の前で <span class="character nightglass" data-name="vesper_rune">Vesper</span> の運命を決定する証言を行わなければならず、失敗すれば民衆の支持が敵対者に向かう。武力から法的手段への完全転換。各勢力が正義と復讐の二元論で激突する決定的な舞台。</p>
+            </div>
+
+            <h4>法廷への準備</h4>
+            <p>夜明けの法廷が発表され、⚔️ Ironbound と ⚡ Stormveil は証言をリハーサルし、🌙 Nightglass は損害証拠のため Legion の軍需将校を買収した。</p>
+
+            <p>指揮官 <span class="character ironbound" data-name="serah_vance">Serah</span> は法廷議事録を研究し、証人ホール近くに潜む 🌙 Nightglass の工作員に注目した。戦士 <span class="character ironbound" data-name="kael_draken">Kael</span> は兵士の証言で法廷を満たすことを望んだが、時間魔法使い <span class="character ironbound" data-name="leona_hale">Leona</span> は正確な法的引用を促し、<span class="character ironbound" data-name="serah_vance">Serah</span> は ⚡ Stormveil にスケジュール調整を委ねながら <span class="character ironbound" data-name="leona_hale">Leona</span> の方針を採用した。</p>
+
+            <p>「証拠はこの順番で。図表も用意しろ」と <span class="character ironbound" data-name="serah_vance">Serah</span> が命じ、<span class="character stormveil" data-name="talan_mir">Talan Mir</span> が「発言枠を整えた。混乱は許さない」と調整する中、<span class="character nightglass" data-name="ilyra">Ilyra</span> は「あの兵站係に銀貨を渡せ。夜の証言を約束させろ」と工作員に指示した。</p>
+
+            <div class="final-objectives">
+              <h4>🎯 最終目標の確定</h4>
+              <p><strong>軍事制圧 → 政治権威 → 法の支配による恒久的解決</strong></p>
+              <ul>
+                <li><strong>⚔️ Ironbound</strong>: 政治権威確立 → <strong>法廷での正義実証と名誉回復</strong></li>
+                <li><strong>🌙 Nightglass</strong>: 法廷復権 → <strong>復讐と政治的巻き返しの最後の賭け</strong></li>
+                <li><strong>⚡ Stormveil</strong>: 法的秩序維持 → <strong>公正な審判と復興事業による和解</strong></li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Turn 15 -->
+        <section id="turn-15" class="turn-section">
+          <header class="turn-header">
+            <h3>ターン 15: 観衆の圧力</h3>
+            <nav class="turn-nav">
+              <a href="playlog.html#turn-15" class="cross-link">📊 データを見る</a>
+              <a href="#turn-14" class="prev-turn">← 前のターン</a>
+              <a href="#turn-16" class="next-turn">次のターン →</a>
+            </nav>
+          </header>
+          <div class="turn-content">
+            <p>観衆で溢れかえる法廷では、説得的証拠による弁論はボーナスを得るが、躊躇には罰則が科せられる。</p>
+
+            <h4>民衆法廷の幕開け</h4>
+            <p>法廷の中庭が市民で満ち溢れる中、⚔️ Ironbound と ⚡ Stormveil は演説を調整し、🌙 Nightglass は買収された軍需将校の証言を練り上げていた。</p>
+
+            <p>指揮官 <span class="character ironbound" data-name="serah_vance">Serah</span> は ⚡ Stormveil から手渡された群衆地図を見ながら、証人台近くの 🌙 Nightglass 支持者の塊を発見した。「嵐の証言と合わせて視覚資料を出す」と計画し、<span class="character stormveil" data-name="talan_mir">Talan Mir</span> は「会場の席順を調整した。敵意の強いギルドは後列だ」と報告。一方 <span class="character nightglass" data-name="ilyra">Ilyra</span> は「泣き崩れるタイミングを忘れるな。拍手を奪うのよ」と軍需将校に最終指導を行った。</p>
+
+            <p>何百もの息づかいが判決を待つ煙と混じり合い、ギルドの旗が頭上に翻る中、Keep 全体が息を潜めて評判が築かれ、砕かれる公開審理を待っていた。</p>
+          </div>
+        </section>
+
+        <!-- Turn 16 -->
+        <section id="turn-16" class="turn-section">
+          <header class="turn-header">
+            <h3>ターン 16: 軍需将校の証言</h3>
+            <nav class="turn-nav">
+              <a href="playlog.html#turn-16" class="cross-link">📊 データを見る</a>
+              <a href="#turn-15" class="prev-turn">← 前のターン</a>
+              <a href="#turn-17" class="next-turn">次のターン →</a>
+            </nav>
+          </header>
+          <div class="turn-content">
+            <p>不満を抱いた Legion の軍需将校が証言台に立ち、⚔️ Ironbound の過度な武力行使を告発。反証により彼の信用を失墜させることが可能だった。</p>
+
+            <h4>法廷での攻防</h4>
+            <p>法廷セッションが始まり、⚔️ Ironbound と ⚡ Stormveil が慎重な陳述を行う中、🌙 Nightglass は買収された軍需将校の感情的告発を展開した。</p>
+
+            <p>軍需将校が粗雑な扱いを描写すると群衆からガスプが漏れ、⚡ Stormveil の書記官があらゆる言葉を記録する中、指揮官 <span class="character ironbound" data-name="serah_vance">Serah</span> は動揺を抑えた。戦士 <span class="character ironbound" data-name="kael_draken">Kael</span> は即座の反駁を熱望したが、時間魔法使い <span class="character ironbound" data-name="leona_hale">Leona</span> が反対尋問まで忍耐を合図し、<span class="character ironbound" data-name="serah_vance">Serah</span> は守護者の誓約と ⚡ Stormveil の中立性を信じて <span class="character ironbound" data-name="kael_draken">Kael</span> を落ち着かせた。</p>
+
+            <p>「鎖は肉を裂くまで締められた！」と軍需将校が叫ぶと、<span class="character ironbound" data-name="serah_vance">Serah</span> は「その医師の記録をご覧ください—治療済みです」と冷静に応じ、<span class="character stormveil" data-name="talan_mir">Talan Mir</span> は「双方、順番を守るように。観衆も静粛に」と秩序を維持した。</p>
+          </div>
+        </section>
+
+        <!-- Turn 17 -->
+        <section id="turn-17" class="turn-section">
+          <header class="turn-header">
+            <h3>ターン 17: 反対尋問の展開</h3>
+            <nav class="turn-nav">
+              <a href="playlog.html#turn-17" class="cross-link">📊 データを見る</a>
+              <a href="#turn-16" class="prev-turn">← 前のターン</a>
+              <a href="#turn-18" class="next-turn">次のターン →</a>
+            </nav>
+          </header>
+          <div class="turn-content">
+            <p>判事が ⚔️ Ironbound と ⚡ Stormveil に 🌙 Nightglass の証人を厳しく問い詰めることを許可。弁論技術の失敗は群衆の支持を失う。</p>
+
+            <h4>証言の解体</h4>
+            <p>反対尋問が炸裂し、⚔️ Ironbound と ⚡ Stormveil が軍需将校の証言を解体する中、🌙 Nightglass は組織的な声援で群衆を結集させた。</p>
+
+            <p>時間魔法使い <span class="character ironbound" data-name="leona_hale">Leona</span> は署名された医療記録を強調し、数字が証人の主張と矛盾する際に波紋のような呟きが広がるのを見守った。指揮官 <span class="character ironbound" data-name="serah_vance">Serah</span> はより強く追及することを考えたが ⚡ Stormveil のタイミング指示に従い、戦士 <span class="character ironbound" data-name="kael_draken">Kael</span> は事実が定着した時点で兵士の誓約を述べる準備を整えて演壇を握りしめた。</p>
+
+            <p>「質問に答えよ—治療記録に署名したのは貴官では？」と <span class="character ironbound" data-name="serah_vance">Serah</span> が問うと、軍需将校は「……署名はした、だが無理やりだった！」と答え、<span class="character nightglass" data-name="ilyra">Ilyra</span> は「見ろ、彼の震えを！」と叫んだ。</p>
+
+            <p>群衆の感情が揺れ動く中、⚡ Stormveil の中立的口調が議事進行の脱線を防いでいた。</p>
+          </div>
+        </section>
+
+        <!-- Turn 18 -->
+        <section id="turn-18" class="turn-section">
+          <header class="turn-header">
+            <h3>ターン 18: 判事の熟議</h3>
+            <nav class="turn-nav">
+              <a href="playlog.html#turn-18" class="cross-link">📊 データを見る</a>
+              <a href="#turn-17" class="prev-turn">← 前のターン</a>
+              <a href="#turn-19" class="next-turn">次のターン →</a>
+            </nav>
+          </header>
+          <div class="turn-content">
+            <p>法廷が私的熟議のため休廷。勢力には一夜で合法的または秘密の手段により判決に影響を与える機会がある。</p>
+
+            <h4>最後の工作</h4>
+            <p>法廷休廷により各勢力に一夜の工作機会が与えられ、⚔️ Ironbound と ⚡ Stormveil は記録庫を確保し、🌙 Nightglass は第二の救出試行のため礼拝堂通気口を発見した。</p>
+
+            <p>指揮官 <span class="character ironbound" data-name="serah_vance">Serah</span> は判事室掃討報告を検討し、守護者の鏡が全角度をカバーしていることに満足していた。戦士 <span class="character ironbound" data-name="kael_draken">Kael</span> は休息を望んだが、時間魔法使い <span class="character ironbound" data-name="leona_hale">Leona</span> は継続的警戒を促し、<span class="character ironbound" data-name="serah_vance">Serah</span> は同意して ⚡ Stormveil に判事管理を委ねながら新鮮な守衛を交代させた。</p>
+
+            <p>「鏡の配置を確認。交代制を厳守」と <span class="character ironbound" data-name="serah_vance">Serah</span> が命じ、<span class="character stormveil" data-name="talan_mir">Talan Mir</span> は「各陣営には十五分ずつ面談時間を配分した」と調整する中、<span class="character nightglass" data-name="ilyra">Ilyra</span> は「換気口は狭いが使える…次はそこからだ」と新たな侵入路に微笑んだ。</p>
+          </div>
+        </section>
+
+        <!-- Turn 19 -->
+        <section id="turn-19" class="turn-section">
+          <header class="turn-header">
+            <h3>ターン 19: 礼拝堂通気口からの侵入</h3>
+            <nav class="turn-nav">
+              <a href="playlog.html#turn-19" class="cross-link">📊 データを見る</a>
+              <a href="#turn-18" class="prev-turn">← 前のターン</a>
+              <a href="#turn-20" class="next-turn">次のターン →</a>
+            </nav>
+          </header>
+          <div class="turn-content">
+            <p>夜間の礼拝堂通気口を通じた隠密行動により近接戦闘が発生。エコー結界は依然として適用されるが、罰則は軽減される。</p>
+
+            <h4>最後の救出試行</h4>
+            <p>🌙 Nightglass は休廷中に礼拝堂通気口救出を試行したが、⚔️ Ironbound と ⚡ Stormveil がこの攻撃を撃退し、<span class="character nightglass" data-name="ilyra">Ilyra</span> を捕獲する一方で <span class="character nightglass" data-name="sable_myrr">Sable</span> は負傷して逃走した。</p>
+
+            <p>戦士 <span class="character ironbound" data-name="kael_draken">Kael</span> は通気口から闘う束縛された <span class="character nightglass" data-name="ilyra">Ilyra</span> を引きずり出し、守護者のルーンが薄れる中、時間魔法使い <span class="character ironbound" data-name="leona_hale">Leona</span> は判事のため侵入を記録した。指揮官 <span class="character ironbound" data-name="serah_vance">Serah</span> は 🌙 Nightglass の背信の証拠として捕虜を行進させることを検討したが、法廷を汚染しないため抑制を選んだ。</p>
+
+            <p>「捕縛者を静かに処遇せよ。明朝、判事に報告する」と <span class="character ironbound" data-name="serah_vance">Serah</span> が命じ、<span class="character stormveil" data-name="talan_mir">Talan Mir</span> は「侵入の記録はここに。判事への副写を用意した」と応じる中、撤退する <span class="character nightglass" data-name="sable_myrr">Sable</span> は「痛みは覚えた…次は静かに取る」と誓った。</p>
+          </div>
+        </section>
+
+        <!-- Turn 20 - Final Resolution -->
+        <section id="turn-20" class="turn-section">
+          <header class="turn-header">
+            <h3>ターン 20: 最終判決 🌅【📜 復興契約判決】</h3>
+            <nav class="turn-nav">
+              <a href="playlog.html#turn-20" class="cross-link">📊 データを見る</a>
+              <a href="#turn-19" class="prev-turn">← 前のターン</a>
+            </nav>
+          </header>
+          <div class="turn-content">
+            <div class="reconstruction-contract">
+              <h4>📜 復興事業による和解</h4>
+              <p>判事が <span class="character nightglass" data-name="vesper_rune">Vesper</span> を ⚔️ Ironbound の監護下に残すが復興事業を義務付ける判決を言い渡し、🌙 Nightglass は正式な交渉を通じてのみ上訴可能と宣言。法廷戦から協力的再建への転換。正義と復讐の対立を乗り越え、建設的な未来への道筋が示される。</p>
+            </div>
+
+            <h4>新たな始まり</h4>
+            <p>判事が判決を言い渡し、<span class="character nightglass" data-name="vesper_rune">Vesper</span> は ⚔️ Ironbound の監護下に残されるが共有復興契約の下で、⚡ Stormveil が再建努力を仲介し、🌙 Nightglass が上訴を準備することとなった。</p>
+
+            <p>判決が読み上げられる中、指揮官 <span class="character ironbound" data-name="serah_vance">Serah</span> は群衆からの歓声と不満の両方を聞きながら毅然として立ち、<span class="character nightglass" data-name="ilyra">Ilyra</span> は浅いお辞儀で挫折を隠した。戦士 <span class="character ironbound" data-name="kael_draken">Kael</span> は祝いたい気持ちを抑え、時間魔法使い <span class="character ironbound" data-name="leona_hale">Leona</span> は復興作業が直ちに始まることを思い起こし、<span class="character ironbound" data-name="serah_vance">Serah</span> は ⚔️ Ironbound の名誉を示すため誓約履行を約束した。</p>
+
+            <p>「判決に従い、聖堂を直ちに修復する」と <span class="character ironbound" data-name="serah_vance">Serah</span> が公式に受け入れ、<span class="character stormveil" data-name="talan_mir">Talan Mir</span> が「復興班は三派混成で編成します」と責任を分担し、<span class="character nightglass" data-name="ilyra">Ilyra</span> は「我らも手を貸す…だが再審の場を求める」と今後の長期戦を示唆した。</p>
+
+            <p><span class="location" data-region="emberfront_keep">Emberfront</span> の雲間に陽光が差し込み、作業班が足場と共鳴道具を集める中、慎重な平和が訪れたが、来るべき政治的陰謀と再建の日々への舞台が整えられた。</p>
+          </div>
+        </section>
+      </section>
+
+      <!-- Epilogue -->
+      <section class="epilogue">
+        <h2>🏆 エピローグ</h2>
+
+        <div class="objective-evolution">
+          <h3>📈 目標の進化：三段階の戦い</h3>
+
+          <div class="phase-section">
+            <h4>第一段階（ターン 1-3）: 軍事制圧期 ⚔️</h4>
+            <ul>
+              <li><strong>目標</strong>: 戦略要衝 <span class="location" data-region="shadowfen_crossing">Shadowfen Crossing</span> をめぐる三勢力による軍事制圧</li>
+              <li><strong>成果</strong>: ⚔️ Ironbound の軍事的勝利、🌙 Nightglass の捕虜化、⚡ Stormveil の仲裁者確立</li>
+              <li><strong>象徴</strong>: 「雷は沈黙した、捕虜を確保せよ」</li>
+            </ul>
+          </div>
+
+          <div class="phase-section">
+            <h4>第二段階（ターン 4-13）: 政治権威期 ⚖️</h4>
+            <ul>
+              <li><strong>転換点</strong>: 守護者の試練による古代承認（ターン 9）</li>
+              <li><strong>目標</strong>: 玄武岩守護者の正統性審判と <span class="location" data-region="emberfront_keep">Emberfront</span> での政治的優位確立</li>
+              <li><strong>成果</strong>: ⚔️ Ironbound の古代承認獲得、🌙 Nightglass の法的手段転換</li>
+              <li><strong>象徴</strong>: 「守護者は我らを認めた」</li>
+            </ul>
+          </div>
+
+          <div class="phase-section">
+            <h4>第三段階（ターン 14-20）: 法廷戦期 📜</h4>
+            <ul>
+              <li><strong>転換点</strong>: 夜明けの法廷開始（ターン 14）</li>
+              <li><strong>目標</strong>: 公開法廷での正義と復讐の対決</li>
+              <li><strong>成果</strong>: 復興契約による建設的和解、三勢力協力体制確立</li>
+              <li><strong>象徴</strong>: 「判決に従い、聖堂を直ちに修復する」</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="faction-evolution">
+          <h3>🌟 三勢力の役割変化</h3>
+          <p>雷雲が晴れた <span class="location" data-region="emberfront_keep">Emberfront</span> で、三つの勢力は一時的な共存を見出した。目標の三段階進化を通じて、各勢力は根本的な変貌を遂げた。</p>
+
+          <ul>
+            <li><strong>⚔️ Ironbound Covenant</strong>: 軍事制圧者 → 政治権威者 → 法の守護者</li>
+            <li><strong>🌙 Nightglass Collective</strong>: 暗殺集団 → 復讐勢力 → 政治的上訴者</li>
+            <li><strong>⚡ Stormveil Circle</strong>: 均衡調整者 → 法的仲裁者 → 復興事業統括者</li>
+          </ul>
+
+          <p>復興事業は新たな協力の枠組みを提供するが、その裏では各勢力が次なる覇権争いへの布石を着々と打ち続けている。Thunder Storm Campaign の第一章は終わったが、真の決着はまだ遠い先にある。</p>
+
+          <blockquote class="final-quote">
+            <p><em>「判決に従い、聖堂を直ちに修復する」</em> - <span class="character ironbound" data-name="serah_vance">Commander Serah Vance</span> の言葉が、この複雑な政治劇の真髄を表している。</p>
+          </blockquote>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer style="text-align: center; padding: 2rem; color: #888; border-top: 1px solid #444; margin-top: 3rem;">
+      <p>Thunder Storm Campaign - Narrative Replay</p>
+      <p>📖 <a href="playlog.html" style="color: #87CEEB;">統計データ版</a> | 🗺️ <a href="worldmap.html" style="color: #87CEEB;">世界マップ</a></p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="data.js"></script>
+    <script>
+      // インタラクティブ機能の実装
+      document.addEventListener('DOMContentLoaded', function() {
+        // 三勢力のカラーテーマ設定
+        const factionColors = {
+          'ironbound': '#dc3545',
+          'nightglass': '#6f42c1',
+          'stormveil': '#ffd700'
+        };
+
+        // キャラクター情報ツールチップ
+        document.querySelectorAll('.character').forEach(el => {
+          el.addEventListener('mouseenter', function() {
+            const name = this.dataset.name;
+            const factionClass = Array.from(this.classList).find(cls =>
+              cls === 'ironbound' || cls === 'nightglass' || cls === 'stormveil'
+            );
+
+            // キャラクター情報の設定
+            const characterInfo = {
+              'serah_vance': 'Commander Serah Vance (戦略家): 不屈の性格で、戦場指揮を担当',
+              'kael_draken': 'Brother Kael Draken (前衛戦士): 熱狂的な性格で、盾陣形成を担当',
+              'leona_hale': 'Archivist Leona Hale (戦闘魔法使い): 戦略的な性格で、時間魔法支援を担当',
+              'ilyra': 'Shadecaller Ilyra (影の元帥): 計算高い性格で、待ち伏せ調整を担当',
+              'vesper_rune': 'Vesper Rune (暗殺者): 憂鬱な性格で、毒術を担当',
+              'sable_myrr': 'Sable Myrr (虚無の魔女): 強迫観念の強い性格で、エントロピー魔法を担当',
+              'talan_mir': 'Archmage Talan Mir (大魔法使い): 冷静な性格で、嵐召喚を担当',
+              'lysa_orien': 'Seer Lysa Orien (神託者): 共感的な性格で、占術を担当',
+              'corrin_faye': 'Bladesinger Corrin Faye (決闘剣士): 華やかな性格で、魔法剣術を担当'
+            };
+
+            if (characterInfo[name]) {
+              this.setAttribute('data-tooltip', characterInfo[name]);
+              this.classList.add('tooltip');
+            }
+          });
+        });
+
+        // 地名情報ツールチップ
+        document.querySelectorAll('.location').forEach(el => {
+          el.addEventListener('mouseenter', function() {
+            const region = this.dataset.region;
+            const locationInfo = {
+              'shadowfen_crossing': 'Shadowfen Crossing: 三勢力が争奪した戦略要衝',
+              'emberfront_keep': 'Emberfront Keep: Ironbound Covenant の拠点、最終法廷の舞台',
+              'twilight_bog': 'Twilight Bog: Nightglass Collective の神秘的拠点',
+              'auric_market': 'Auric Market: Stormveil Circle の外交・交易拠点',
+              'crystal_hollow': 'Crystal Hollow: 古代戦争機械の眠る地下要塞',
+              'gale_steppe': 'Gale Steppe: イオン嵐が吹き荒れる平原',
+              'ashen_ridge': 'Ashen Ridge: 玄武岩の守護者が眠る古代の稜線'
+            };
+
+            if (locationInfo[region]) {
+              this.setAttribute('data-tooltip', locationInfo[region]);
+              this.classList.add('tooltip');
+            }
+          });
+        });
+
+        // 魔法・戦術用語ツールチップ
+        document.querySelectorAll('.ability').forEach(el => {
+          el.addEventListener('mouseenter', function() {
+            const spell = this.dataset.spell;
+            const descriptions = {
+              'time_magic': 'Leona Hale の専門魔術。時空格子をマッピングし、敵を一時停止させる',
+              'entropy_magic': 'Sable Myrr の虚無魔術。レイライン攪乱と敵勢力の誘導',
+              'storm_summoning': 'Talan Mir の大魔法。戦争機械の脈動制御と共鳴調律',
+              'poison_arts': 'Vesper Rune の暗殺技術。毒瓶配備と撤退ルート確保'
+            };
+
+            if (descriptions[spell]) {
+              this.setAttribute('data-tooltip', descriptions[spell]);
+              this.classList.add('tooltip');
+            }
+          });
+        });
+
+        // 組織・勢力ツールチップ
+        document.querySelectorAll('.organization').forEach(el => {
+          el.addEventListener('mouseenter', function() {
+            const org = this.dataset.org;
+            const organizationInfo = {
+              'thunder_legion': 'Thunder Legion: 三勢力を包囲・監視する強大な軍事組織。稲妻の力を操り、最後通牒や経済制裁を通じて地域を統制する'
+            };
+
+            if (organizationInfo[org]) {
+              this.setAttribute('data-tooltip', organizationInfo[org]);
+              this.classList.add('tooltip');
+            }
+          });
+        });
+
+        // スムーズスクロール
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+          anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+              target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+              });
+            }
+          });
+        });
+
+        // 段階進化の可視化効果
+        const phases = document.querySelectorAll('.phase');
+        phases.forEach((phase, index) => {
+          phase.addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.02)';
+            this.style.boxShadow = '0 8px 25px rgba(0,0,0,0.3)';
+          });
+
+          phase.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1)';
+            this.style.boxShadow = '0 4px 15px rgba(0,0,0,0.2)';
+          });
+        });
+      });
+    </script>
+
+    <!-- CSS Styling for Thunder Storm theme -->
+    <style>
+      /* Thunder Storm Campaign specific styling */
+      .character.ironbound {
+        color: #dc3545;
+        font-weight: 600;
+        text-shadow: 0 0 3px rgba(220, 53, 69, 0.3);
+      }
+      .character.nightglass {
+        color: #6f42c1;
+        font-weight: 600;
+        text-shadow: 0 0 3px rgba(111, 66, 193, 0.3);
+      }
+      .character.stormveil {
+        color: #ffd700;
+        font-weight: 600;
+        text-shadow: 0 0 3px rgba(255, 215, 0, 0.3);
+      }
+
+      .phase-evolution {
+        background: linear-gradient(135deg, #1a1a2e, #16213e);
+        padding: 2rem;
+        border-radius: 15px;
+        margin: 2rem 0;
+        border: 2px solid #4a5568;
+      }
+
+      .phase-timeline {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+      }
+
+      .phase {
+        padding: 1.5rem;
+        border-radius: 12px;
+        text-align: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .phase::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, transparent, currentColor, transparent);
+      }
+
+      .military-phase {
+        background: linear-gradient(135deg, #dc3545, #b02a37);
+        color: white;
+      }
+
+      .political-phase {
+        background: linear-gradient(135deg, #6f42c1, #5a2d91);
+        color: white;
+      }
+
+      .legal-phase {
+        background: linear-gradient(135deg, #ffd700, #ccac00);
+        color: #333;
+      }
+
+      .objective-shift {
+        background: linear-gradient(135deg, #2d1b00, #854d0e);
+        color: #fbbf24;
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin: 1.5rem 0;
+        border-left: 6px solid #f59e0b;
+        box-shadow: 0 4px 15px rgba(245, 158, 11, 0.2);
+      }
+
+      .legitimacy-establishment, .legal-battle-begins, .reconstruction-contract {
+        background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(37, 99, 235, 0.1));
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin: 1.5rem 0;
+        border-left: 6px solid #3b82f6;
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.2);
+      }
+
+      .new-objectives, .final-objectives {
+        background: rgba(34, 197, 94, 0.1);
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin: 1.5rem 0;
+        border-left: 6px solid #22c55e;
+        box-shadow: 0 4px 15px rgba(34, 197, 94, 0.2);
+      }
+
+      .phase-section {
+        margin: 2rem 0;
+        padding: 1.5rem;
+        background: rgba(17, 24, 39, 0.7);
+        border-radius: 12px;
+        border-left: 6px solid #6366f1;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      }
+
+      .final-quote {
+        background: linear-gradient(135deg, #1f2937, #374151);
+        padding: 2.5rem;
+        border-radius: 15px;
+        text-align: center;
+        font-style: italic;
+        margin: 2rem 0;
+        border: 3px solid #6366f1;
+        box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+      }
+
+      .location {
+        color: #87ceeb;
+        font-weight: 500;
+        text-decoration: underline;
+        text-decoration-style: dotted;
+        cursor: help;
+      }
+
+      .location:hover {
+        color: #b0e0e6;
+        text-shadow: 0 0 5px rgba(135, 206, 235, 0.5);
+      }
+
+      .ability {
+        color: #ffa500;
+        font-weight: 500;
+        cursor: help;
+      }
+
+      .ability:hover {
+        color: #ffb347;
+        text-shadow: 0 0 3px rgba(255, 165, 0, 0.5);
+      }
+
+      .organization {
+        color: #ff6b6b;
+        font-weight: 600;
+        cursor: help;
+        text-decoration: underline;
+        text-decoration-style: dotted;
+      }
+
+      .organization:hover {
+        color: #ff8e8e;
+        text-shadow: 0 0 3px rgba(255, 107, 107, 0.5);
+      }
+
+      .tooltip {
+        position: relative;
+        cursor: help;
+      }
+
+      .tooltip::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.9);
+        color: white;
+        padding: 0.5rem;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        white-space: nowrap;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s;
+        pointer-events: none;
+      }
+
+      .tooltip:hover::after {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .turn-nav {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 1rem 0;
+      }
+
+      .turn-nav a {
+        padding: 0.5rem 1rem;
+        background: rgba(75, 85, 99, 0.8);
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        border: 1px solid transparent;
+      }
+
+      .turn-nav a:hover {
+        background: rgba(99, 102, 241, 0.8);
+        border-color: #6366f1;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+      }
+
+      .cross-link {
+        background: rgba(34, 197, 94, 0.8) !important;
+      }
+
+      .cross-link:hover {
+        background: rgba(34, 197, 94, 1) !important;
+      }
+
+      /* 三段階進化アニメーション */
+      @keyframes phaseEvolution {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+      }
+
+      .phase:hover {
+        animation: phaseEvolution 2s infinite;
+      }
+
+      /* レスポンシブ対応 */
+      @media (max-width: 768px) {
+        .phase-timeline {
+          grid-template-columns: 1fr;
+        }
+
+        .turn-nav {
+          gap: 0.5rem;
+        }
+
+        .turn-nav a {
+          padding: 0.4rem 0.8rem;
+          font-size: 0.9rem;
+        }
+      }
+    </style>
+  </body>
+</html>
