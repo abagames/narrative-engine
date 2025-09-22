@@ -4,6 +4,7 @@ node_modules/
 .serena/
 coverage/
 tmp/
+autonomous_sessions/
 .env
 package-lock.json
 npm-debug.log
