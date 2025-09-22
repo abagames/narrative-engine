@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thunder Storm Campaign - 世界マップ</title>
+    <title>Thunder Storm Campaign - World Map</title>
     <link rel="stylesheet" href="style.css">
     <script src="data.js"></script>
 </head>
@@ -22,52 +22,50 @@
 
     <!-- Main Content -->
     <main class="container">
-        <!-- Page Header -->
         <section class="campaign-overview">
-            <h1>🗺️ Thunder Storm Campaign - 世界マップ</h1>
-            <p class="subtitle">インタラクティブ地図と戦略分析 - 七つの地域における勢力争い</p>
+            <h1>🗺️ Thunder Storm Campaign - World Map</h1>
+            <p class="subtitle">Interactive map and strategic analysis - Power struggle across seven regions</p>
         </section>
-            <!-- インタラクティブ世界マップ -->
-            <section id="interactive-map" class="card">
-                <h3>🗺️ インタラクティブ世界マップ</h3>
+
+        <section id="interactive-map" class="card">
+            <h3>🗺️ Interactive World Map</h3>
                 <div class="map-container">
                     <svg width="100%" height="600" viewBox="0 0 900 600" class="world-map-svg">
-                        <!-- 背景 -->
+                        <!-- Background -->
                         <rect width="900" height="600" fill="#1a1a2e" stroke="none"/>
 
-                        <!-- 接続線 -->
+                        <!-- Connection Lines -->
                         <g class="connections" stroke="#444" stroke-width="2" fill="none">
-                            <!-- Emberfront Keep の接続 -->
+                            <!-- Emberfront Keep  Connections -->
                             <line x1="150" y1="200" x2="300" y2="150" class="connection"/>
                             <line x1="150" y1="200" x2="300" y2="300" class="connection"/>
 
-                            <!-- Ashen Ridge の接続 -->
+                            <!-- Ashen Ridge  Connections -->
                             <line x1="300" y1="150" x2="450" y2="200" class="connection"/>
                             <line x1="300" y1="150" x2="450" y2="350" class="connection"/>
 
-                            <!-- Auric Market の接続 -->
+                            <!-- Auric Market  Connections -->
                             <line x1="300" y1="300" x2="450" y2="350" class="connection"/>
                             <line x1="300" y1="300" x2="450" y2="450" class="connection"/>
 
-                            <!-- Twilight Bog の接続 -->
+                            <!-- Twilight Bog  Connections -->
                             <line x1="150" y1="450" x2="300" y2="300" class="connection"/>
                             <line x1="150" y1="450" x2="450" y2="450" class="connection"/>
                             <line x1="150" y1="450" x2="600" y2="400" class="connection"/>
 
-                            <!-- Crystal Hollow の接続 -->
+                            <!-- Crystal Hollow  Connections -->
                             <line x1="450" y1="350" x2="600" y2="300" class="connection"/>
                             <line x1="450" y1="350" x2="600" y2="400" class="connection"/>
 
-                            <!-- Gale Steppe の接続 -->
+                            <!-- Gale Steppe  Connections -->
                             <line x1="450" y1="200" x2="600" y2="150" class="connection"/>
                             <line x1="450" y1="200" x2="600" y2="400" class="connection"/>
 
-                            <!-- Shadowfen Crossing の接続 -->
+                            <!-- Shadowfen Crossing  Connections -->
                             <line x1="600" y1="400" x2="600" y2="300" class="connection"/>
                             <line x1="600" y1="400" x2="450" y2="450" class="connection"/>
                         </g>
 
-                        <!-- 地域ノード -->
                         <g class="regions">
                             <!-- Emberfront Keep -->
                             <circle cx="150" cy="200" r="30" class="region ironbound" data-region="emberfront_keep"/>
@@ -105,24 +103,18 @@
                             <text x="600" y="445" text-anchor="middle" class="region-name">Shadowfen Crossing</text>
                         </g>
 
-                        <!-- 勢力圏表示エリア -->
                         <g class="influence-zones" opacity="0.3">
-                            <!-- Ironbound 勢力圏 -->
                             <circle cx="150" cy="200" r="80" fill="#8B0000" class="influence-zone ironbound"/>
 
-                            <!-- Nightglass 勢力圏 -->
                             <circle cx="150" cy="450" r="70" fill="#4B0082" class="influence-zone nightglass"/>
 
-                            <!-- Stormveil 勢力圏 -->
                             <circle cx="300" cy="300" r="90" fill="#1E90FF" class="influence-zone stormveil"/>
                         </g>
 
-                        <!-- 凡例 -->
                         <g class="legend" transform="translate(700, 50)">
                             <rect x="0" y="0" width="180" height="200" fill="#2a2a3e" stroke="#555" rx="5"/>
-                            <text x="10" y="20" class="legend-title">勢力分布</text>
+                            <text x="10" y="20" class="legend-title">Faction Distribution</text>
 
-                            <!-- 勢力アイコン -->
                             <circle cx="20" cy="40" r="8" class="region ironbound"/>
                             <text x="35" y="45" class="legend-text">⚔️ Ironbound</text>
 
@@ -133,453 +125,184 @@
                             <text x="35" y="85" class="legend-text">⚡ Stormveil</text>
 
                             <circle cx="20" cy="100" r="8" class="region neutral"/>
-                            <text x="35" y="105" class="legend-text">🗿 中立地域</text>
+                            <text x="35" y="105" class="legend-text">🗿 Neutral Region</text>
 
                             <circle cx="20" cy="120" r="8" class="region contested"/>
-                            <text x="35" y="125" class="legend-text">⚔️ 係争地</text>
-
-                            <text x="10" y="150" class="legend-subtitle">操作方法</text>
-                            <text x="10" y="165" class="legend-small">地域をクリックで詳細表示</text>
-                            <text x="10" y="180" class="legend-small">マウスオーバーで情報表示</text>
-                        </g>
-
-                        <!-- 地域詳細情報 -->
-                        <g class="region-detail-panel" transform="translate(700, 270)">
-                            <rect x="0" y="0" width="180" height="280" fill="#2a2a3e" stroke="#FFD700" stroke-width="2" rx="5"/>
-                            <text x="10" y="20" class="legend-title" id="svg-region-title">📍 地域を選択</text>
-                            <foreignObject x="10" y="30" width="160" height="240">
-                                <div xmlns="http://www.w3.org/1999/xhtml" id="svg-region-info" style="color: #E0E0E0; font-size: 11px; line-height: 1.3;">
-                                    <p style="margin: 5px 0; color: #A0A0A0;">地域をクリックして詳細を表示</p>
-                                </div>
-                            </foreignObject>
+                            <text x="35" y="125" class="legend-text">⚔️ Contested Area</text>
                         </g>
                     </svg>
                 </div>
-            </section>
+        </section>
 
-
-            <!-- 勢力圏分析 -->
-            <section id="faction-control" class="card">
-                <h3>🏛️ 勢力圏分析</h3>
-                <div class="faction-control-grid">
-                    <div class="faction-control ironbound">
-                        <h4>⚔️ Ironbound Covenant</h4>
-                        <div class="control-details">
-                            <p><strong>🏠 本拠地</strong>: Emberfront Keep</p>
-                            <p><strong>🎯 制圧目標</strong>: Shadowfen Crossing (要衝確保)</p>
-                            <p><strong>🛡️ 戦略</strong>: 軍事力による直接支配</p>
-                            <div class="controlled-regions">
-                                <strong>支配地域:</strong>
-                                <span class="region-tag ironbound">Emberfront Keep</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="faction-control nightglass">
-                        <h4>🌙 Nightglass Collective</h4>
-                        <div class="control-details">
-                            <p><strong>🏠 本拠地</strong>: Twilight Bog</p>
-                            <p><strong>🎯 制圧目標</strong>: Shadowfen Crossing (暗殺拠点化)</p>
-                            <p><strong>🗡️ 戦略</strong>: 隠密・暗殺・毒による間接支配</p>
-                            <div class="controlled-regions">
-                                <strong>支配地域:</strong>
-                                <span class="region-tag nightglass">Twilight Bog</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="faction-control stormveil">
-                        <h4>⚡ Stormveil Circle</h4>
-                        <div class="control-details">
-                            <p><strong>🏠 本拠地</strong>: Auric Market</p>
-                            <p><strong>🎯 制圧目標</strong>: Crystal Hollow (魔術研究)</p>
-                            <p><strong>🕊️ 戦略</strong>: 外交・経済・魔術による平和的影響力</p>
-                            <div class="controlled-regions">
-                                <strong>支配地域:</strong>
-                                <span class="region-tag stormveil">Auric Market</span>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </section>
-
-            <!-- 交通・補給路 -->
-            <section id="supply-lines" class="card">
-                <h3>🛤️ 交通・補給路</h3>
-                <div class="supply-lines-grid">
-                    <div class="supply-route">
-                        <h4>🛤️ 主要街道</h4>
-                        <ul>
-                            <li><strong>北東軸</strong>: Emberfront Keep ↔ Ashen Ridge ↔ Gale Steppe</li>
-                            <li><strong>中央軸</strong>: Auric Market ↔ Shadowfen Crossing ↔ Crystal Hollow</li>
-                            <li><strong>西部軸</strong>: Twilight Bog ↔ Auric Market</li>
-                            <li><strong>南部軸</strong>: Twilight Bog ↔ Shadowfen Crossing ↔ Crystal Hollow</li>
-                        </ul>
-                    </div>
-
-                    <div class="supply-vulnerabilities">
-                        <h4>🚛 補給線の脆弱性</h4>
-                        <div class="vulnerability-item">
-                            <strong>Shadowfen Crossing</strong>: 全勢力の補給路が交差する最重要地点
-                        </div>
-                        <div class="vulnerability-item">
-                            <strong>Auric Market</strong>: 経済活動の中枢、物資流通のハブ
-                        </div>
-                        <div class="vulnerability-item">
-                            <strong>Ashen Ridge</strong>: 鉱物資源の供給源、工業生産の要
+        <section id="faction-control" class="card">
+            <h3>🏛️ Faction Influence Analysis</h3>
+            <div class="faction-control-grid">
+                <div class="faction-control ironbound">
+                    <h4>⚔️ Ironbound Covenant</h4>
+                    <div class="control-details">
+                        <p><strong>🏠 Headquarters</strong>: Emberfront Keep</p>
+                        <p><strong>🎯 Target Objective</strong>: Shadowfen Crossing (secure key stronghold)</p>
+                        <p><strong>🛡️ Strategy</strong>: Direct control through military power</p>
+                        <div class="controlled-regions">
+                            <strong>Controlled Region:</strong>
+                            <span class="region-tag ironbound">Emberfront Keep</span>
                         </div>
                     </div>
                 </div>
-            </section>
 
-            <!-- 重要イベント地 -->
-            <section id="event-locations" class="card">
-                <h3>🎭 重要イベント発生地</h3>
-                <div class="events-timeline">
-                    <div class="event-location">
-                        <h4>⚔️ ターン 1-3: Shadowfen Crossing の大戦</h4>
-                        <div class="event-details">
-                            <p><strong>場所</strong>: Shadowfen Crossing</p>
-                            <p><strong>イベント</strong>: 三勢力による要衝争奪戦</p>
-                            <p><strong>結果</strong>: Ironbound 勝利、Nightglass 主力捕獲</p>
-                        </div>
-                    </div>
-
-                    <div class="event-location">
-                        <h4>🗿 ターン 8-9: 玄武岩守護者の試練</h4>
-                        <div class="event-details">
-                            <p><strong>場所</strong>: Ashen Ridge</p>
-                            <p><strong>イベント</strong>: 古代守護者による正統性審判</p>
-                            <p><strong>結果</strong>: Ironbound の主張が承認される</p>
-                        </div>
-                    </div>
-
-                    <div class="event-location">
-                        <h4>⚖️ ターン 14-20: Emberfront 法廷戦</h4>
-                        <div class="event-details">
-                            <p><strong>場所</strong>: Emberfront Keep</p>
-                            <p><strong>イベント</strong>: 公開法廷での正義と復讐の対決</p>
-                            <p><strong>結果</strong>: 復興事業による和解への道筋</p>
-                        </div>
-                    </div>
-
-                    <div class="event-location">
-                        <h4>🔮 ターン 4-5: 戦争機械の脈動</h4>
-                        <div class="event-details">
-                            <p><strong>場所</strong>: Crystal Hollow</p>
-                            <p><strong>イベント</strong>: 古代技術の覚醒と共鳴嵐</p>
-                            <p><strong>結果</strong>: Stormveil の技術的優位確立</p>
+                <div class="faction-control nightglass">
+                    <h4>🌙 Nightglass Collective</h4>
+                    <div class="control-details">
+                        <p><strong>🏠 Headquarters</strong>: Twilight Bog</p>
+                        <p><strong>🎯 Target Objective</strong>: Shadowfen Crossing (establish assassination base)</p>
+                        <p><strong>🗡️ Strategy</strong>: Indirect control through stealth, assassination, and poison</p>
+                        <div class="controlled-regions">
+                            <strong>Controlled Region:</strong>
+                            <span class="region-tag nightglass">Twilight Bog</span>
                         </div>
                     </div>
                 </div>
-            </section>
 
-            <!-- 戦略的要点 -->
-            <section id="strategic-points" class="card">
-                <h3>🎯 戦略的要点まとめ</h3>
-                <div class="strategic-grid">
-                    <div class="strategic-point priority-high">
-                        <div class="priority-icon">🏆</div>
-                        <div class="point-content">
-                            <h4>勝利の鍵</h4>
-                            <p>Shadowfen Crossing の長期支配</p>
-                        </div>
-                    </div>
-
-                    <div class="strategic-point priority-high">
-                        <div class="priority-icon">💰</div>
-                        <div class="point-content">
-                            <h4>経済支配</h4>
-                            <p>Auric Market の市場価格操作</p>
-                        </div>
-                    </div>
-
-                    <div class="strategic-point priority-medium">
-                        <div class="priority-icon">🔮</div>
-                        <div class="point-content">
-                            <h4>技術優位</h4>
-                            <p>Crystal Hollow の古代技術獲得</p>
-                        </div>
-                    </div>
-
-                    <div class="strategic-point priority-medium">
-                        <div class="priority-icon">🗿</div>
-                        <div class="point-content">
-                            <h4>正統性</h4>
-                            <p>Ashen Ridge 守護者からの承認</p>
-                        </div>
-                    </div>
-
-                    <div class="strategic-point priority-low">
-                        <div class="priority-icon">🛡️</div>
-                        <div class="point-content">
-                            <h4>防御拠点</h4>
-                            <p>各勢力の本拠地要塞化</p>
-                        </div>
-                    </div>
-
-                    <div class="strategic-point priority-low">
-                        <div class="priority-icon">🤝</div>
-                        <div class="point-content">
-                            <h4>外交均衡</h4>
-                            <p>Thunder Legion との関係維持</p>
+                <div class="faction-control stormveil">
+                    <h4>⚡ Stormveil Circle</h4>
+                    <div class="control-details">
+                        <p><strong>🏠 Headquarters</strong>: Auric Market</p>
+                        <p><strong>🎯 Target Objective</strong>: Crystal Hollow (magical research)</p>
+                        <p><strong>🕊️ Strategy</strong>: Peaceful influence through diplomacy, economy, and magic</p>
+                        <div class="controlled-regions">
+                            <strong>Controlled Region:</strong>
+                            <span class="region-tag stormveil">Auric Market</span>
                         </div>
                     </div>
                 </div>
-            </section>
-        </main>
+            </div>
+        </section>
 
-        <footer>
-            <p>&copy; 2024 Universal Narrative Engine - Thunder Storm Campaign</p>
-        </footer>
-    </div>
-
-    <script>
-        // 地域データ
-        const regionData = {
-            emberfront_keep: {
-                name: "Emberfront Keep",
-                type: "軍事要塞",
-                capacity: 2,
-                faction: "ironbound",
-                adjacentAreas: ["Auric Market", "Ashen Ridge"],
-                resources: "武器工房、軍事契約",
-                specialEffect: "防御陣地、影響力増加ボーナス",
-                controlledBy: "Ironbound Covenant (影響度: 6)",
-                strategicValue: "北東部の軍事拠点、Ashen Ridge への玄関口"
-            },
-            ashen_ridge: {
-                name: "Ashen Ridge",
-                type: "火山山脈",
-                capacity: 2,
-                faction: "neutral",
-                adjacentAreas: ["Emberfront Keep", "Crystal Hollow", "Gale Steppe"],
-                resources: "火山鉱石、玄武岩の破片",
-                specialEffect: "火災危険、鉱石豊富",
-                controlledBy: "中立（玄武岩守護者が存在）",
-                strategicValue: "三地域への要衝、古代守護者の審判地"
-            },
-            twilight_bog: {
-                name: "Twilight Bog",
-                type: "毒沼地",
-                capacity: 2,
-                faction: "nightglass",
-                adjacentAreas: ["Auric Market", "Gale Steppe", "Shadowfen Crossing"],
-                resources: "稀少薬草、毒嚢",
-                specialEffect: "隠密優位、移動ペナルティ",
-                controlledBy: "Nightglass Collective (影響度: 5)",
-                strategicValue: "暗殺者の聖域、毒製造拠点"
-            },
-            auric_market: {
-                name: "Auric Market",
-                type: "商業都市",
-                capacity: 3,
-                faction: "stormveil",
-                adjacentAreas: ["Emberfront Keep", "Twilight Bog", "Crystal Hollow"],
-                resources: "魔術用品、高級取引品",
-                specialEffect: "市場ハブ、外交影響力ボーナス",
-                controlledBy: "Stormveil Circle (影響度: 5)",
-                strategicValue: "経済の中心、外交の要衝"
-            },
-            crystal_hollow: {
-                name: "Crystal Hollow",
-                type: "魔法洞窟",
-                capacity: 2,
-                faction: "neutral",
-                adjacentAreas: ["Auric Market", "Ashen Ridge", "Shadowfen Crossing"],
-                resources: "マナクリスタル、古代遺物",
-                specialEffect: "不安定マナ、共鳴エコー",
-                controlledBy: "中立（古代戦争機械が存在）",
-                strategicValue: "魔力の源泉、古代技術の宝庫"
-            },
-            gale_steppe: {
-                name: "Gale Steppe",
-                type: "風吹く平原",
-                capacity: 2,
-                faction: "neutral",
-                adjacentAreas: ["Ashen Ridge", "Twilight Bog", "Shadowfen Crossing"],
-                resources: "野生馬、穀物",
-                specialEffect: "開放戦場、風戦術",
-                controlledBy: "中立（遊牧地帯）",
-                strategicValue: "大規模戦闘に適した平原、騎兵戦の舞台"
-            },
-            shadowfen_crossing: {
-                name: "Shadowfen Crossing",
-                type: "古代遺跡",
-                capacity: 2,
-                faction: "contested",
-                adjacentAreas: ["Twilight Bog", "Crystal Hollow", "Gale Steppe"],
-                resources: "古代ルーン石、密輸ルート",
-                specialEffect: "待ち伏せボーナス、瘴気デバフ",
-                controlledBy: "係争地（Thunder Legion が監視）",
-                strategicValue: "**最重要要衝** - 三地域への交通の要"
-            }
-        };
-
-        // インタラクティブ機能
-        document.addEventListener('DOMContentLoaded', function() {
-            // 地域クリックイベント
-            document.querySelectorAll('.region').forEach(region => {
-                region.addEventListener('click', function() {
-                    const regionKey = this.dataset.region;
-                    showRegionInfo(regionKey);
-
-                    // アクティブ状態の更新
-                    document.querySelectorAll('.region').forEach(r => r.classList.remove('active'));
-                    this.classList.add('active');
-                });
-
-                // ホバーエフェクト - 半径変更 + 情報表示
-                region.addEventListener('mouseenter', function() {
-                    const originalR = this.getAttribute('r');
-                    this.setAttribute('data-original-r', originalR);
-                    this.setAttribute('r', parseFloat(originalR) * 1.1);
-
-                    // マウスオーバー時の情報表示
-                    const regionKey = this.dataset.region;
-                    showRegionTooltip(regionKey, this);
-                });
-
-                region.addEventListener('mouseleave', function() {
-                    const originalR = this.getAttribute('data-original-r');
-                    if (originalR) {
-                        this.setAttribute('r', originalR);
-                    }
-
-                    // ツールチップを非表示
-                    hideRegionTooltip();
-                });
-            });
-
-            // 初期表示
-            showRegionInfo('shadowfen_crossing');
-        });
-
-        function showRegionInfo(regionKey) {
-            const region = regionData[regionKey];
-            const titleDiv = document.getElementById('svg-region-title');
-            const infoDiv = document.getElementById('svg-region-info');
-
-            let factionIcon = '';
-            switch(region.faction) {
-                case 'ironbound':
-                    factionIcon = '⚔️';
-                    break;
-                case 'nightglass':
-                    factionIcon = '🌙';
-                    break;
-                case 'stormveil':
-                    factionIcon = '⚡';
-                    break;
-                case 'neutral':
-                    factionIcon = '🗿';
-                    break;
-                case 'contested':
-                    factionIcon = '⚔️';
-                    break;
-            }
-
-            titleDiv.textContent = `${factionIcon} ${region.name}`;
-
-            infoDiv.innerHTML = `
-                <p style="margin: 3px 0;"><strong>タイプ:</strong><br/>${region.type}</p>
-                <p style="margin: 3px 0;"><strong>容量:</strong> ${region.capacity}</p>
-                <p style="margin: 3px 0;"><strong>隣接:</strong><br/>${region.adjacentAreas.join(', ')}</p>
-                <p style="margin: 3px 0;"><strong>資源:</strong><br/>${region.resources}</p>
-                <p style="margin: 3px 0;"><strong>特殊効果:</strong><br/>${region.specialEffect}</p>
-                <p style="margin: 3px 0;"><strong>支配勢力:</strong><br/>${region.controlledBy}</p>
-                <p style="margin: 3px 0; color: #FFD700;"><strong>戦略価値:</strong><br/>${region.strategicValue}</p>
-            `;
-        }
-
-        // 勢力圏切り替え
-        function toggleInfluenceZones() {
-            const zones = document.querySelectorAll('.influence-zone');
-            zones.forEach(zone => {
-                zone.style.opacity = zone.style.opacity === '0' ? '0.3' : '0';
-            });
-        }
-
-        // 接続線のハイライト
-        function highlightConnections(regionKey) {
-            const region = regionData[regionKey];
-            document.querySelectorAll('.connection').forEach(line => {
-                line.style.stroke = '#444';
-                line.style.strokeWidth = '2';
-            });
-        }
-
-        // ツールチップ表示
-        function showRegionTooltip(regionKey, element) {
-            const region = regionData[regionKey];
-            let tooltip = document.getElementById('region-tooltip');
-
-            if (!tooltip) {
-                tooltip = document.createElement('div');
-                tooltip.id = 'region-tooltip';
-                tooltip.style.cssText = `
-                    position: absolute;
-                    background: rgba(0, 0, 0, 0.9);
-                    color: #E0E0E0;
-                    padding: 0.75rem;
-                    border-radius: 8px;
-                    font-size: 0.8rem;
-                    pointer-events: none;
-                    z-index: 1000;
-                    max-width: 250px;
-                    border: 1px solid rgba(255, 255, 255, 0.2);
-                    backdrop-filter: blur(10px);
-                `;
-                document.body.appendChild(tooltip);
-            }
-
-            let factionIcon = '';
-            switch(region.faction) {
-                case 'ironbound': factionIcon = '⚔️'; break;
-                case 'nightglass': factionIcon = '🌙'; break;
-                case 'stormveil': factionIcon = '⚡'; break;
-                case 'neutral': factionIcon = '🗿'; break;
-                case 'contested': factionIcon = '⚔️'; break;
-            }
-
-            tooltip.innerHTML = `
-                <div style="font-weight: bold; margin-bottom: 0.5rem; color: #FFD700;">
-                    ${factionIcon} ${region.name}
+        <section id="supply-lines" class="card">
+            <h3>🛤️ Transportation & Supply Routes</h3>
+            <div class="supply-lines-grid">
+                <div class="supply-route">
+                    <h4>🛤️ Main Roads</h4>
+                    <ul>
+                        <li><strong>Northeast Axis</strong>: Emberfront Keep ↔ Ashen Ridge ↔ Gale Steppe</li>
+                        <li><strong>Central Axis</strong>: Auric Market ↔ Shadowfen Crossing ↔ Crystal Hollow</li>
+                        <li><strong>Western Axis</strong>: Twilight Bog ↔ Auric Market</li>
+                        <li><strong>Southern Axis</strong>: Twilight Bog ↔ Shadowfen Crossing ↔ Crystal Hollow</li>
+                    </ul>
                 </div>
-                <div style="margin-bottom: 0.25rem;">
-                    <strong>タイプ:</strong> ${region.type}
-                </div>
-                <div style="margin-bottom: 0.25rem;">
-                    <strong>支配:</strong> ${region.controlledBy}
-                </div>
-                <div style="margin-bottom: 0.25rem;">
-                    <strong>資源:</strong> ${region.resources}
-                </div>
-                <div style="color: #87CEEB; font-size: 0.75rem;">
-                    クリックで詳細表示
-                </div>
-            `;
 
-            tooltip.style.display = 'block';
-        }
+                <div class="supply-vulnerabilities">
+                    <h4>🚛 Supply Line Vulnerabilities</h4>
+                    <div class="vulnerability-item">
+                        <strong>Shadowfen Crossing</strong>: The most critical point where all factions' supply routes intersect
+                    </div>
+                    <div class="vulnerability-item">
+                        <strong>Auric Market</strong>: Economic hub and center of material distribution
+                    </div>
+                    <div class="vulnerability-item">
+                        <strong>Ashen Ridge</strong>: Source of mineral resources and industrial production
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        // ツールチップ非表示
-        function hideRegionTooltip() {
-            const tooltip = document.getElementById('region-tooltip');
-            if (tooltip) {
-                tooltip.style.display = 'none';
-            }
-        }
+        <section id="event-locations" class="card">
+            <h3>🎭 Key Event Locations</h3>
+            <div class="events-timeline">
+                <div class="event-location">
+                    <h4>⚔️ Turns 1–3: Great Battle of Shadowfen Crossing</h4>
+                    <div class="event-details">
+                        <p><strong>Location</strong>: Shadowfen Crossing</p>
+                        <p><strong>Event</strong>: Three-faction struggle for the key stronghold</p>
+                        <p><strong>Outcome</strong>: Ironbound victory; Nightglass main force captured</p>
+                    </div>
+                </div>
 
-        // マウス位置でツールチップを追従
-        document.addEventListener('mousemove', function(e) {
-            const tooltip = document.getElementById('region-tooltip');
-            if (tooltip && tooltip.style.display === 'block') {
-                tooltip.style.left = (e.pageX + 15) + 'px';
-                tooltip.style.top = (e.pageY - 10) + 'px';
-            }
-        });
-    </script>
+                <div class="event-location">
+                    <h4>🗿 Turns 8–9: Trial of the Basalt Guardian</h4>
+                    <div class="event-details">
+                        <p><strong>Location</strong>: Ashen Ridge</p>
+                        <p><strong>Event</strong>: Judgment of legitimacy by the Ancient Guardian</p>
+                        <p><strong>Outcome</strong>: Ironbound's claim approved</p>
+                    </div>
+                </div>
+
+                <div class="event-location">
+                    <h4>⚖️ Turns 14–20: Emberfront Courtroom Battle</h4>
+                    <div class="event-details">
+                        <p><strong>Location</strong>: Emberfront Keep</p>
+                        <p><strong>Event</strong>: Public trial of justice versus revenge</p>
+                        <p><strong>Outcome</strong>: Path toward reconciliation through reconstruction project</p>
+                    </div>
+                </div>
+
+                <div class="event-location">
+                    <h4>🔮 Turns 4–5: War Machine Resonance</h4>
+                    <div class="event-details">
+                        <p><strong>Location</strong>: Crystal Hollow</p>
+                        <p><strong>Event</strong>: Awakening of ancient technology and resonant storm</p>
+                        <p><strong>Outcome</strong>: Stormveil secures technological advantage</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="strategic-points" class="card">
+            <h3>🎯 Strategic Key Points Summary</h3>
+            <div class="strategic-grid">
+                <div class="strategic-point priority-high">
+                    <div class="priority-icon">🏆</div>
+                    <div class="point-content">
+                        <h4>Key to Victory</h4>
+                        <p>Long-term control of Shadowfen Crossing</p>
+                    </div>
+                </div>
+
+                <div class="strategic-point priority-high">
+                    <div class="priority-icon">💰</div>
+                    <div class="point-content">
+                        <h4>Economic Domination</h4>
+                        <p>Manipulation of market prices at Auric Market</p>
+                    </div>
+                </div>
+
+                <div class="strategic-point priority-medium">
+                    <div class="priority-icon">🔮</div>
+                    <div class="point-content">
+                        <h4>Technological Superiority</h4>
+                        <p>Acquisition of ancient technology in Crystal Hollow</p>
+                    </div>
+                </div>
+
+                <div class="strategic-point priority-medium">
+                    <div class="priority-icon">🗿</div>
+                    <div class="point-content">
+                        <h4>Legitimacy</h4>
+                        <p>Approval from the Basalt Guardian of Ashen Ridge</p>
+                    </div>
+                </div>
+
+                <div class="strategic-point priority-low">
+                    <div class="priority-icon">🛡️</div>
+                    <div class="point-content">
+                        <h4>Defensive Stronghold</h4>
+                        <p>Fortification of each faction’s headquarters</p>
+                    </div>
+                </div>
+
+                <div class="strategic-point priority-low">
+                    <div class="priority-icon">🤝</div>
+                    <div class="point-content">
+                        <h4>Diplomatic Balance</h4>
+                        <p>Maintaining relations with the Thunder Legion</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Universal Narrative Engine - Thunder Storm Campaign</p>
+    </footer>
 </body>
 </html>

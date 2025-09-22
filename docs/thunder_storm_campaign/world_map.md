@@ -1,188 +1,188 @@
-# Thunder Storm Campaign - 世界マップ
+# Thunder Storm Campaign - World Map
 
-## 🗺️ 地域配置図
+## 🗺️ Regional Layout Map
 
 ```
                     ⛰️ Ashen Ridge ⛰️
-                   (火山山脈・鉱石地帯)
+                   (Volcanic Range & Ore Zone)
                           |
     🏰 Emberfront Keep ───┴─── 🌪️ Gale Steppe 🌪️
-      (軍事要塞)              (風吹く平原)
-          |                     |
-          |                     |
-      💰 Auric Market          ⚔️ Shadowfen Crossing ⚔️
-      (商業都市中央)       ←───┼───→ (戦略要衝遺跡)
-          |                     |
-          |                     |
+      (Military Fortress)          (Wind-swept Plains)
+          |                             |
+          |                             |
+      💰 Auric Market                 ⚔️ Shadowfen Crossing ⚔️
+      (Central Commercial City)  ←───┼───→ (Strategic Ancient Ruins)
+          |                             |
+          |                             |
     🌙 Twilight Bog ───────── 🔮 Crystal Hollow 🔮
-      (毒の沼地)            (魔法洞窟・地下)
+      (Poisonous Swamp)        (Magical Cave & Underground)
 ```
 
-## 📊 地域一覧
+## 📊 Regional List
 
 ### 🏰 Emberfront Keep
-**タイプ**: 軍事要塞 | **容量**: 2 | **⚔️ Ironbound 拠点**
+**Type**: Military Fortress | **Capacity**: 2 | **⚔️ Ironbound Base**
 
-| 要素 | 詳細 |
-|------|------|
-| 📍 **隣接地域** | Auric Market, Ashen Ridge |
-| 🎒 **資源** | 武器工房、軍事契約 |
-| ⭐ **特殊効果** | 防御陣地、影響力増加ボーナス |
-| 👑 **支配勢力** | Ironbound Covenant (影響度: 6) |
-| 🎯 **戦略価値** | 北東部の軍事拠点、Ashen Ridge への玄関口 |
+| Item | Details |
+|------|---------|
+| 📍 **Adjacent Regions** | Auric Market, Ashen Ridge |
+| 🎒 **Resources** | Weapon workshops, military contracts |
+| ⭐ **Special Effects** | Defensive stronghold, influence bonus |
+| 👑 **Controlling Faction** | Ironbound Covenant (Influence: 6) |
+| 🎯 **Strategic Value** | Northeastern military base and gateway to Ashen Ridge |
 
 ### ⛰️ Ashen Ridge
-**タイプ**: 火山山脈 | **容量**: 2 | **🗿 古代守護者の地**
+**Type**: Volcanic Mountain Range | **Capacity**: 2 | **🗿 Land of the Ancient Guardian**
 
-| 要素 | 詳細 |
-|------|------|
-| 📍 **隣接地域** | Emberfront Keep, Crystal Hollow, Gale Steppe |
-| 🎒 **資源** | 火山鉱石、玄武岩の破片 |
-| ⭐ **特殊効果** | 火災危険、鉱石豊富 |
-| 👑 **支配勢力** | 中立（玄武岩守護者が存在） |
-| 🎯 **戦略価値** | 三地域への要衝、古代守護者の審判地 |
+| Item | Details |
+|------|---------|
+| 📍 **Adjacent Regions** | Emberfront Keep, Crystal Hollow, Gale Steppe |
+| 🎒 **Resources** | Volcanic ore, basalt fragments |
+| ⭐ **Special Effects** | Fire hazard, rich in ore |
+| 👑 **Controlling Faction** | Neutral (home of the Basalt Guardian) |
+| 🎯 **Strategic Value** | Junction of three regions and the site of the Ancient Guardian's judgment |
 
 ### 🌙 Twilight Bog
-**タイプ**: 毒沼地 | **容量**: 2 | **🌙 Nightglass 拠点**
+**Type**: Poisonous Swamp | **Capacity**: 2 | **🌙 Nightglass Base**
 
-| 要素 | 詳細 |
-|------|------|
-| 📍 **隣接地域** | Auric Market, Gale Steppe, Shadowfen Crossing |
-| 🎒 **資源** | 稀少薬草、毒嚢 |
-| ⭐ **特殊効果** | 隠密優位、移動ペナルティ |
-| 👑 **支配勢力** | Nightglass Collective (影響度: 5) |
-| 🎯 **戦略価値** | 暗殺者の聖域、毒製造拠点 |
+| Item | Details |
+|------|---------|
+| 📍 **Adjacent Regions** | Auric Market, Gale Steppe, Shadowfen Crossing |
+| 🎒 **Resources** | Rare medicinal herbs, poison sacs |
+| ⭐ **Special Effects** | Stealth advantage, movement penalty |
+| 👑 **Controlling Faction** | Nightglass Collective (Influence: 5) |
+| 🎯 **Strategic Value** | Sanctuary for assassins and poison production hub |
 
 ### 💰 Auric Market
-**タイプ**: 商業都市 | **容量**: 3 | **⚡ Stormveil 拠点**
+**Type**: Commercial City | **Capacity**: 3 | **⚡ Stormveil Base**
 
-| 要素 | 詳細 |
-|------|------|
-| 📍 **隣接地域** | Emberfront Keep, Twilight Bog, Crystal Hollow |
-| 🎒 **資源** | 魔術用品、高級取引品 |
-| ⭐ **特殊効果** | 市場ハブ、外交影響力ボーナス |
-| 👑 **支配勢力** | Stormveil Circle (影響度: 5) |
-| 🎯 **戦略価値** | 経済の中心、外交の要衝 |
+| Item | Details |
+|------|---------|
+| 📍 **Adjacent Regions** | Emberfront Keep, Twilight Bog, Crystal Hollow |
+| 🎒 **Resources** | Magical supplies, luxury trade goods |
+| ⭐ **Special Effects** | Market hub, diplomatic influence bonus |
+| 👑 **Controlling Faction** | Stormveil Circle (Influence: 5) |
+| 🎯 **Strategic Value** | Economic center and key hub of diplomacy |
 
 ### 🔮 Crystal Hollow
-**タイプ**: 魔法洞窟 | **容量**: 2 | **🔮 古代戦争機械の地**
+**Type**: Magical Cave | **Capacity**: 2 | **🔮 Site of Ancient War Machines**
 
-| 要素 | 詳細 |
-|------|------|
-| 📍 **隣接地域** | Auric Market, Ashen Ridge, Shadowfen Crossing |
-| 🎒 **資源** | マナクリスタル、古代遺物 |
-| ⭐ **特殊効果** | 不安定マナ、共鳴エコー |
-| 👑 **支配勢力** | 中立（古代戦争機械が存在） |
-| 🎯 **戦略価値** | 魔力の源泉、古代技術の宝庫 |
+| Item | Details |
+|------|---------|
+| 📍 **Adjacent Regions** | Auric Market, Ashen Ridge, Shadowfen Crossing |
+| 🎒 **Resources** | Mana crystals, ancient relics |
+| ⭐ **Special Effects** | Unstable mana, resonant echoes |
+| 👑 **Controlling Faction** | Neutral (ancient war machines present) |
+| 🎯 **Strategic Value** | Source of magical power and repository of ancient technology |
 
 ### 🌪️ Gale Steppe
-**タイプ**: 風吹く平原 | **容量**: 2 | **⚔️ 開放戦場**
+**Type**: Wind-swept Plains | **Capacity**: 2 | **⚔️ Open Battlefield**
 
-| 要素 | 詳細 |
-|------|------|
-| 📍 **隣接地域** | Ashen Ridge, Twilight Bog, Shadowfen Crossing |
-| 🎒 **資源** | 野生馬、穀物 |
-| ⭐ **特殊効果** | 開放戦場、風戦術 |
-| 👑 **支配勢力** | 中立（遊牧地帯） |
-| 🎯 **戦略価値** | 大規模戦闘に適した平原、騎兵戦の舞台 |
+| Item | Details |
+|------|---------|
+| 📍 **Adjacent Regions** | Ashen Ridge, Twilight Bog, Shadowfen Crossing |
+| 🎒 **Resources** | Wild horses, grain |
+| ⭐ **Special Effects** | Open battlefield, wind tactics |
+| 👑 **Controlling Faction** | Neutral (nomadic territory) |
+| 🎯 **Strategic Value** | Ideal plains for large-scale battles and cavalry warfare |
 
 ### ⚔️ Shadowfen Crossing
-**タイプ**: 古代遺跡 | **容量**: 2 | **🎯 戦略要衝**
+**Type**: Ancient Ruins | **Capacity**: 2 | **🎯 Strategic Key Point**
 
-| 要素 | 詳細 |
-|------|------|
-| 📍 **隣接地域** | Twilight Bog, Crystal Hollow, Gale Steppe |
-| 🎒 **資源** | 古代ルーン石、密輸ルート |
-| ⭐ **特殊効果** | 待ち伏せボーナス、瘴気デバフ |
-| 👑 **支配勢力** | 係争地（Thunder Legion が監視） |
-| 🎯 **戦略価値** | **最重要要衝** - 三地域への交通の要 |
-
----
-
-## 🏛️ 勢力圏分析
-
-### ⚔️ Ironbound Covenant (鉄血盟約)
-- **🏠 本拠地**: Emberfront Keep
-- **🎯 制圧目標**: Shadowfen Crossing (要衝確保)
-- **🛡️ 戦略**: 軍事力による直接支配
-
-### 🌙 Nightglass Collective (夜硝子集団)
-- **🏠 本拠地**: Twilight Bog
-- **🎯 制圧目標**: Shadowfen Crossing (暗殺拠点化)
-- **🗡️ 戦略**: 隠密・暗殺・毒による間接支配
-
-### ⚡ Stormveil Circle (嵐幕団)
-- **🏠 本拠地**: Auric Market
-- **🎯 制圧目標**: Crystal Hollow (魔術研究)
-- **🕊️ 戦略**: 外交・経済・魔術による平和的影響力
+| Item | Details |
+|------|---------|
+| 📍 **Adjacent Regions** | Twilight Bog, Crystal Hollow, Gale Steppe |
+| 🎒 **Resources** | Ancient rune stones, smuggling routes |
+| ⭐ **Special Effects** | Ambush bonus, miasma debuff |
+| 👑 **Controlling Faction** | Disputed (monitored by Thunder Legion) |
+| 🎯 **Strategic Value** | **Most important junction** - key crossroads of three regions |
 
 ---
 
-## 📈 交通・補給路
+## 🏛️ Sphere of Influence Analysis
 
-### 🛤️ 主要街道
-1. **北東軸**: Emberfront Keep ↔ Ashen Ridge ↔ Gale Steppe
-2. **中央軸**: Auric Market ↔ Shadowfen Crossing ↔ Crystal Hollow
-3. **西部軸**: Twilight Bog ↔ Auric Market
-4. **南部軸**: Twilight Bog ↔ Shadowfen Crossing ↔ Crystal Hollow
+### ⚔️ Ironbound Covenant
+- **🏠 Headquarters**: Emberfront Keep
+- **🎯 Target Objective**: Shadowfen Crossing (to secure the key stronghold)
+- **🛡️ Strategy**: Direct control through military power
 
-### 🚛 補給線の脆弱性
-- **Shadowfen Crossing**: 全勢力の補給路が交差する最重要地点
-- **Auric Market**: 経済活動の中枢、物資流通のハブ
-- **Ashen Ridge**: 鉱物資源の供給源、工業生産の要
+### 🌙 Nightglass Collective
+- **🏠 Headquarters**: Twilight Bog
+- **🎯 Target Objective**: Shadowfen Crossing (to turn it into an assassination hub)
+- **🗡️ Strategy**: Indirect control through stealth, assassination, and poison
 
----
-
-## 🎭 Thunder Storm Campaign 重要イベント地
-
-### ⚔️ ターン 1-3: Shadowfen Crossing の大戦
-- **場所**: Shadowfen Crossing
-- **イベント**: 三勢力による要衝争奪戦
-- **結果**: Ironbound 勝利、Nightglass 主力捕獲
-
-### 🗿 ターン 8-9: 玄武岩守護者の試練
-- **場所**: Ashen Ridge
-- **イベント**: 古代守護者による正統性審判
-- **結果**: Ironbound の主張が承認される
-
-### ⚖️ ターン 14-20: Emberfront 法廷戦
-- **場所**: Emberfront Keep
-- **イベント**: 公開法廷での正義と復讐の対決
-- **結果**: 復興事業による和解への道筋
-
-### 🔮 ターン 4-5: 戦争機械の脈動
-- **場所**: Crystal Hollow
-- **イベント**: 古代技術の覚醒と共鳴嵐
-- **結果**: Stormveil の技術的優位確立
+### ⚡ Stormveil Circle
+- **🏠 Headquarters**: Auric Market
+- **🎯 Target Objective**: Crystal Hollow (for magical research)
+- **🕊️ Strategy**: Peaceful influence through diplomacy, economy, and magic
 
 ---
 
-## 🌩️ 世界の脅威と機会
+## 📈 Transportation & Supply Routes
 
-### ⚡ Thunder Legion (雷軍団)
-- **性質**: 世界の均衡を監視する中立勢力
-- **影響**: 過度な紛争を抑制、法と秩序の執行
-- **活動地**: 主にShadowfen Crossing 周辺を巡回
+### 🛤️ Main Roads
+1. **Northeast Axis**: Emberfront Keep ↔ Ashen Ridge ↔ Gale Steppe
+2. **Central Axis**: Auric Market ↔ Shadowfen Crossing ↔ Crystal Hollow
+3. **Western Axis**: Twilight Bog ↔ Auric Market
+4. **Southern Axis**: Twilight Bog ↔ Shadowfen Crossing ↔ Crystal Hollow
 
-### 🔮 古代遺産
-- **Crystal Hollow の戦争機械**: 計り知れない魔術的力
-- **Ashen Ridge の玄武岩守護者**: 正義の裁定者
-- **Shadowfen Crossing のルーン石**: 密輸と情報の源泉
-
-### 💹 市場経済
-- **中心**: Auric Market の価格設定
-- **主要商品**: 武器、毒、マナクリスタル、食料
-- **価格変動**: 戦乱と供給不足に敏感に反応
+### 🚛 Supply Line Vulnerabilities
+- **Shadowfen Crossing**: The most critical point where all factions' supply routes intersect
+- **Auric Market**: Economic hub and center of material distribution
+- **Ashen Ridge**: Source of mineral resources and industrial production
 
 ---
 
-## 🎯 戦略的要点まとめ
+## 🎭 Key Thunder Storm Campaign Event Sites
 
-1. **🏆 勝利の鍵**: Shadowfen Crossing の長期支配
-2. **💰 経済支配**: Auric Market の市場価格操作
-3. **🔮 技術優位**: Crystal Hollow の古代技術獲得
-4. **🗿 正統性**: Ashen Ridge 守護者からの承認
-5. **🛡️ 防御拠点**: 各勢力の本拠地要塞化
-6. **🤝 外交均衡**: Thunder Legion との関係維持
+### ⚔️ Turns 1–3: Great Battle of Shadowfen Crossing
+- **Location**: Shadowfen Crossing
+- **Event**: Three-faction struggle for the key stronghold
+- **Outcome**: Ironbound victory; Nightglass main force captured
 
-この世界では軍事力、経済力、魔術力、そして正統性のバランスが勝負を分ける。真の覇者となるには、単純な武力だけでなく、複合的な戦略と外交手腕が求められる。
+### 🗿 Turns 8–9: Trial of the Basalt Guardian
+- **Location**: Ashen Ridge
+- **Event**: Judgment of legitimacy by the Ancient Guardian
+- **Outcome**: Ironbound's claim approved
+
+### ⚖️ Turns 14–20: Emberfront Courtroom Battle
+- **Location**: Emberfront Keep
+- **Event**: Public trial of justice versus revenge
+- **Outcome**: Path toward reconciliation through reconstruction project
+
+### 🔮 Turns 4–5: War Machine Resonance
+- **Location**: Crystal Hollow
+- **Event**: Awakening of ancient technology and resonant storm
+- **Outcome**: Stormveil secures technological advantage
+
+---
+
+## 🌩️ World Threats & Opportunities
+
+### ⚡ Thunder Legion
+- **Nature**: Neutral force monitoring the balance of the world
+- **Impact**: Suppresses excessive conflict and enforces law and order
+- **Area of Activity**: Mainly patrols around Shadowfen Crossing
+
+### 🔮 Ancient Heritage
+- **War Machines of Crystal Hollow**: Immeasurable magical power
+- **Basalt Guardian of Ashen Ridge**: Arbiter of justice
+- **Rune Stones of Shadowfen Crossing**: Sources of smuggling and intelligence
+
+### 💹 Market Economy
+- **Center**: Price-setting at Auric Market
+- **Main Goods**: Weapons, poison, mana crystals, food
+- **Price Fluctuations**: Highly sensitive to war and supply shortages
+
+---
+
+## 🎯 Strategic Key Points Summary
+
+1. **🏆 Key to Victory**: Long-term control of Shadowfen Crossing
+2. **💰 Economic Domination**: Manipulation of market prices at Auric Market
+3. **🔮 Technological Superiority**: Acquisition of ancient technology in Crystal Hollow
+4. **🗿 Legitimacy**: Approval from the Basalt Guardian of Ashen Ridge
+5. **🛡️ Defensive Stronghold**: Fortification of each faction’s headquarters
+6. **🤝 Diplomatic Balance**: Maintaining relations with the Thunder Legion
+
+In this world, the balance of military power, economic strength, magical ability, and legitimacy determines the ultimate victor. To become the true ruler, one must master not only raw force but also complex strategy and diplomacy.

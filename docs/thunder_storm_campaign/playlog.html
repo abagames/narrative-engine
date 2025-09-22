@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thunder Storm Campaign - プレイログ分析</title>
+    <title>Thunder Storm Campaign - Playlog Analysis</title>
     <link rel="stylesheet" href="style.css">
     <script src="data.js"></script>
 </head>
@@ -24,63 +24,63 @@
     <main class="container">
         <!-- Page Header -->
         <section class="campaign-overview">
-            <h1>📊 Thunder Storm Campaign - プレイログ分析</h1>
-            <p class="subtitle">三勢力による20ターンの戦略シミュレーション - 統計データと数値分析</p>
+            <h1>📊 Thunder Storm Campaign - Playlog Analysis</h1>
+            <p class="subtitle">20-turn strategic simulation by three factions - Statistical data and numerical analysis</p>
         </section>
-            <!-- 初期パーティー状態 -->
+            <!-- Initial Party Status -->
             <section id="initial-stats" class="card">
-                <h3>📊 初期パーティー状態</h3>
+                <h3>📊 Initial Party Status</h3>
                 <div class="faction-stats-grid">
                     <div class="faction-stat ironbound">
                         <h4>⚔️ Ironbound Covenant</h4>
-                        <p><strong>拠点</strong>: Emberfront Keep | <strong>専門</strong>: 戦闘・軍事</p>
+                        <p><strong>Base</strong>: Emberfront Keep | <strong>Specialty</strong>: Combat & Military</p>
                         <table class="stats-table">
-                            <tr><td>💰 通貨</td><td>150</td></tr>
-                            <tr><td>🗡️ 戦闘力</td><td>9</td></tr>
-                            <tr><td>🏃 探索力</td><td>4</td></tr>
-                            <tr><td>🤝 外交力</td><td>2</td></tr>
-                            <tr><td>📈 士気</td><td>7</td></tr>
-                            <tr><td>📍 位置</td><td>Emberfront Keep</td></tr>
+                            <tr><td>💰 Currency</td><td>150</td></tr>
+                            <tr><td>🗡️ Combat Power</td><td>9</td></tr>
+                            <tr><td>🏃 Exploration</td><td>4</td></tr>
+                            <tr><td>🤝 Diplomacy</td><td>2</td></tr>
+                            <tr><td>📈 Morale</td><td>7</td></tr>
+                            <tr><td>📍 Location</td><td>Emberfront Keep</td></tr>
                         </table>
-                        <p><strong>リソース</strong>: 鉄20, 食料30, マナクリスタル4</p>
+                        <p><strong>Resources</strong>: Iron 20, Provisions 30, Mana Crystals 4</p>
                     </div>
 
                     <div class="faction-stat nightglass">
                         <h4>🌙 Nightglass Collective</h4>
-                        <p><strong>拠点</strong>: Twilight Bog | <strong>専門</strong>: 探索・暗殺</p>
+                        <p><strong>Base</strong>: Twilight Bog | <strong>Specialty</strong>: Exploration & Assassination</p>
                         <table class="stats-table">
-                            <tr><td>💰 通貨</td><td>130</td></tr>
-                            <tr><td>🗡️ 戦闘力</td><td>7</td></tr>
-                            <tr><td>🏃 探索力</td><td>8</td></tr>
-                            <tr><td>🤝 外交力</td><td>6</td></tr>
-                            <tr><td>📈 士気</td><td>6</td></tr>
-                            <tr><td>📍 位置</td><td>Twilight Bog</td></tr>
+                            <tr><td>💰 Currency</td><td>130</td></tr>
+                            <tr><td>🗡️ Combat Power</td><td>7</td></tr>
+                            <tr><td>🏃 Exploration</td><td>8</td></tr>
+                            <tr><td>🤝 Diplomacy</td><td>6</td></tr>
+                            <tr><td>📈 Morale</td><td>6</td></tr>
+                            <tr><td>📍 Location</td><td>Twilight Bog</td></tr>
                         </table>
-                        <p><strong>リソース</strong>: 毒12, 黒曜石8, 食料20</p>
+                        <p><strong>Resources</strong>: Poison12, Obsidian8, Provisions20</p>
                     </div>
 
                     <div class="faction-stat stormveil">
                         <h4>⚡ Stormveil Circle</h4>
-                        <p><strong>拠点</strong>: Auric Market | <strong>専門</strong>: 外交・魔術</p>
+                        <p><strong>Base</strong>: Auric Market | <strong>Specialty</strong>: DiplomacyMagic</p>
                         <table class="stats-table">
-                            <tr><td>💰 通貨</td><td>140</td></tr>
-                            <tr><td>🗡️ 戦闘力</td><td>6</td></tr>
-                            <tr><td>🏃 探索力</td><td>5</td></tr>
-                            <tr><td>🤝 外交力</td><td>8</td></tr>
-                            <tr><td>📈 士気</td><td>8</td></tr>
-                            <tr><td>📍 位置</td><td>Auric Market</td></tr>
+                            <tr><td>💰 Currency</td><td>140</td></tr>
+                            <tr><td>🗡️ Combat Power</td><td>6</td></tr>
+                            <tr><td>🏃 Exploration</td><td>5</td></tr>
+                            <tr><td>🤝 Diplomacy</td><td>8</td></tr>
+                            <tr><td>📈 Morale</td><td>8</td></tr>
+                            <tr><td>📍 Location</td><td>Auric Market</td></tr>
                         </table>
-                        <p><strong>リソース</strong>: マナクリスタル18, シルク10, 食料15</p>
+                        <p><strong>Resources</strong>: Mana Crystals18, Silk10, Provisions15</p>
                     </div>
                 </div>
             </section>
 
-            <!-- 士気変動グラフ -->
+            <!-- Morale -->
             <section id="morale-chart" class="card">
-                <h3>📈 士気変動チャート</h3>
+                <h3>📈 Morale Variation Chart</h3>
                 <div class="chart-container">
                     <svg width="100%" height="400" viewBox="0 0 800 400">
-                        <!-- グリッド線 -->
+                        <!--  -->
                         <defs>
                             <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
                                 <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e0e0e0" stroke-width="1"/>
@@ -88,7 +88,7 @@
                         </defs>
                         <rect width="100%" height="100%" fill="url(#grid)" />
 
-                        <!-- Y軸ラベル -->
+                        <!-- Y -->
                         <g class="y-axis">
                             <text x="30" y="50" text-anchor="middle" class="axis-label">10.0</text>
                             <text x="30" y="90" text-anchor="middle" class="axis-label">9.5</text>
@@ -101,19 +101,19 @@
                             <text x="30" y="370" text-anchor="middle" class="axis-label">6.0</text>
                         </g>
 
-                        <!-- Ironbound ラインチャート -->
+                        <!-- Ironbound  -->
                         <polyline points="60,210 95,170 130,166 165,162 200,178 235,186 270,174 305,170 340,154 375,150 410,142 445,138 480,138 515,134 550,138 585,134 620,138 655,138 690,130 725,130"
                                   fill="none" stroke="#8B0000" stroke-width="3" class="morale-line ironbound"/>
 
-                        <!-- Nightglass ラインチャート -->
+                        <!-- Nightglass  -->
                         <polyline points="60,330 95,322 130,378 165,306 200,290 235,266 270,318 305,306 340,362 375,338 410,330 445,334 480,338 515,334 550,322 585,334 620,334 655,334 690,350 725,370"
                                   fill="none" stroke="#4B0082" stroke-width="3" class="morale-line nightglass"/>
 
-                        <!-- Stormveil ラインチャート -->
+                        <!-- Stormveil  -->
                         <polyline points="60,250 95,230 130,218 165,214 200,214 235,214 270,214 305,214 340,214 375,214 410,214 445,214 480,214 515,214 550,214 585,214 620,214 655,214 690,214 725,214"
                                   fill="none" stroke="#1E90FF" stroke-width="3" class="morale-line stormveil"/>
 
-                        <!-- データポイント -->
+                        <!--  -->
                         <g class="data-points">
                             <!-- Ironbound points -->
                             <circle cx="60" cy="210" r="4" fill="#8B0000" class="data-point" data-turn="1" data-faction="ironbound" data-morale="7.0→8.0"/>
@@ -150,7 +150,7 @@
                             <circle cx="340" cy="214" r="4" fill="#1E90FF" class="data-point" data-turn="9" data-faction="stormveil" data-morale="9.4→9.4"/>
                         </g>
 
-                        <!-- X軸ラベル -->
+                        <!-- X -->
                         <g class="x-axis">
                             <text x="60" y="395" text-anchor="middle" class="axis-label">1</text>
                             <text x="95" y="395" text-anchor="middle" class="axis-label">2</text>
@@ -185,854 +185,854 @@
                 </div>
 
                 <div class="chart-instructions">
-                    <p>💡 <strong>操作方法:</strong> チャート上の点をホバーで拡大、クリックで詳細表示</p>
+                    <p>💡 <strong>How to Use:</strong> Hover over points to magnify; click to show details</p>
                 </div>
 
                 <div id="chart-turn-info" class="chart-turn-info">
-                    <!-- クリック時にターン詳細が表示される -->
+                    <!--  -->
                 </div>
             </section>
 
-            <!-- ターン別ログ -->
+            <!--  -->
             <section id="turn-logs" class="card">
-                <h3>🌩️ ターン別変化ログ</h3>
+                <h3>🌩️ Turn-by-Turn Change Log</h3>
 
-                <!-- ターン 1 -->
+                <!-- Turn 1 -->
                 <section id="turn-1" class="turn-section">
                     <header class="turn-header">
-                        <h3>ターン 1: Shadowfen Crossing への進軍 🏰</h3>
+                        <h3>Turn 1: Shadowfen Crossing  🏰</h3>
                         <nav class="turn-nav">
-                            <a href="narrative.html#turn-1" class="cross-link">📖 ナラティブを見る</a>
-                            <a href="#turn-2" class="next-turn">次のターン →</a>
+                            <a href="narrative.html#turn-1" class="cross-link">📖 View Narrative</a>
+                            <a href="#turn-2" class="next-turn">Next Turn →</a>
                         </nav>
                     </header>
                     <div class="turn-content">
-                        <p><strong>GMアクション</strong>: 環境変化</p>
+                        <p><strong>GM Action</strong>: Environmental Change</p>
 
-                        <h4>📍 位置変更</h4>
+                        <h4>📍 Location</h4>
                         <ul>
                             <li>⚔️ Ironbound: Emberfront Keep → Ashen Ridge</li>
                             <li>🌙 Nightglass: Twilight Bog → Shadowfen Crossing</li>
                             <li>⚡ Stormveil: Auric Market → Crystal Hollow</li>
                         </ul>
 
-                        <h4>🎭 パーティー間イベント</h4>
+                        <h4>🎭 Inter-Party Events</h4>
                         <ul>
-                            <li>🌙⚔️ Nightglass vs Ironbound: 視認・威嚇段階（直接交戦なし）</li>
-                            <li>🌙⚡ Nightglass vs Stormveil: 魔力探知による相互警戒</li>
-                            <li>⚔️⚡ Ironbound vs Stormveil: 遠距離での戦略的配置確認</li>
+                            <li>🌙⚔️ Nightglass vs Ironbound: Visual contact & intimidation (no direct combat)</li>
+                            <li>🌙⚡ Nightglass vs Stormveil: Mutual vigilance via mana sensing</li>
+                            <li>⚔️⚡ Ironbound vs Stormveil: Strategic positioning check at range</li>
                         </ul>
 
-                        <h4>📈 士気変化</h4>
+                        <h4>📈 Morale</h4>
                         <div class="morale-changes">
                             <div class="morale-item ironbound">Ironbound: 7.0 → 8.0 (+1.0) ⬆️</div>
                             <div class="morale-item nightglass">Nightglass: 6.0 → 6.5 (+0.5) ⬆️</div>
                             <div class="morale-item stormveil">Stormveil: 8.0 → 8.5 (+0.5) ⬆️</div>
                         </div>
 
-                        <h4>🎒 リソース変化</h4>
+                        <h4>🎒 Resources</h4>
                         <ul>
-                            <li>🌙 Nightglass: 毒 12→11 (-1) - 罠設置に使用</li>
-                            <li>⚡ Stormveil: マナクリスタル 18→16 (-2) - 共鳴標識調律</li>
+                            <li>🌙 Nightglass: Poison 12→11 (-1) - </li>
+                            <li>⚡ Stormveil: Mana Crystals 18→16 (-2) - Resonance beacon tuning</li>
                         </ul>
                     </div>
                 </section>
 
-                <!-- ターン 2 -->
+                <!-- Turn 2 -->
                 <section id="turn-2" class="turn-section">
                     <header class="turn-header">
-                        <h3>ターン 2: Ironbound の強襲 ⚔️</h3>
+                        <h3>Turn 2: Ironbound  ⚔️</h3>
                         <nav class="turn-nav">
-                            <a href="narrative.html#turn-2" class="cross-link">📖 ナラティブを見る</a>
-                            <a href="#turn-1" class="prev-turn">← 前のターン</a>
-                            <a href="#turn-3" class="next-turn">次のターン →</a>
+                            <a href="narrative.html#turn-2" class="cross-link">📖 View Narrative</a>
+                            <a href="#turn-1" class="prev-turn">← Previous Turn</a>
+                            <a href="#turn-3" class="next-turn">Next Turn →</a>
                         </nav>
                     </header>
                     <div class="turn-content">
-                        <p><strong>GMアクション</strong>: 戦術機会</p>
+                        <p><strong>GM Action</strong>: Tactical Opportunity</p>
 
-                        <h4>🎭 パーティー間イベント</h4>
+                        <h4>🎭 Inter-Party Events</h4>
                         <ul>
-                            <li>⚔️🌙 Ironbound vs Nightglass: 🗡️ 中規模戦闘 - 盾壁 vs 影術</li>
-                            <li>🏆 結果: Ironbound 有利、Nightglass 戦術的撤退</li>
-                            <li>⚡ Stormveil: 🌩️ 遠距離魔術支援 - 戦場の均衡維持</li>
+                            <li>⚔️🌙 Ironbound vs Nightglass: 🗡️ Mid-scale battle - shield wall vs shadow arts</li>
+                            <li>🏆 Result: Ironbound , Nightglass </li>
+                            <li>⚡ Stormveil: 🌩️ Long-range magical support - maintain battlefield balance</li>
                         </ul>
 
-                        <h4>📈 士気変化</h4>
+                        <h4>📈 Morale</h4>
                         <div class="morale-changes">
                             <div class="morale-item ironbound">Ironbound: 8.0 → 8.5 (+0.5) ⬆️</div>
                             <div class="morale-item nightglass">Nightglass: 6.5 → 6.9 (+0.4) ⬆️</div>
                             <div class="morale-item stormveil">Stormveil: 8.5 → 8.9 (+0.4) ⬆️</div>
                         </div>
 
-                        <h4>🍖 食料消耗（戦闘コスト）</h4>
+                        <h4>🍖 Provisions()</h4>
                         <ul>
-                            <li>Ironbound: → -3 食料</li>
-                            <li>Nightglass: → -2 食料</li>
-                            <li>Stormveil: → -1 食料</li>
+                            <li>Ironbound: → -3 Provisions</li>
+                            <li>Nightglass: → -2 Provisions</li>
+                            <li>Stormveil: → -1 Provisions</li>
                         </ul>
                     </div>
                 </section>
 
-                <!-- ターン 3 -->
+                <!-- Turn 3 -->
                 <section id="turn-3" class="turn-section">
                     <header class="turn-header">
-                        <h3>ターン 3: 雷軍団の最後通牒 ⚡【🔄 目標転換点】</h3>
+                        <h3>Turn 3: Ultimatum of the Thunder Legion ⚡【🔄 】</h3>
                         <nav class="turn-nav">
-                            <a href="narrative.html#turn-3" class="cross-link">📖 ナラティブを見る</a>
-                            <a href="#turn-2" class="prev-turn">← 前のターン</a>
-                            <a href="#turn-4" class="next-turn">次のターン →</a>
+                            <a href="narrative.html#turn-3" class="cross-link">📖 View Narrative</a>
+                            <a href="#turn-2" class="prev-turn">← Previous Turn</a>
+                            <a href="#turn-4" class="next-turn">Next Turn →</a>
                         </nav>
                     </header>
                     <div class="turn-content">
-                        <p><strong>GMアクション</strong>: 環境変化（稲妻最後通牒）</p>
+                        <p><strong>GM Action</strong>: Environmental Change(Lightning Ultimatum)</p>
 
-                        <h4>🎭 パーティー間イベント</h4>
+                        <h4>🎭 Inter-Party Events</h4>
                         <ul>
-                            <li>⚔️🌙 Ironbound vs Nightglass: ⚔️ 大規模戦闘 - 盾壁突破 vs 毒の待ち伏せ</li>
-                            <li>🏆 結果: Ironbound 勝利、Ilyra & Vesper 捕獲</li>
-                            <li>⚡🌙 Stormveil vs Nightglass: 🚑 戦闘仲裁 - 共鳴装置で被害軽減</li>
-                            <li>⚔️⚡ Ironbound vs Stormveil: 🤝 協力強化 - 捕虜処理の法的枠組み協議</li>
+                            <li>⚔️🌙 Ironbound vs Nightglass: ⚔️  -  vs Poison</li>
+                            <li>🏆 Result: Ironbound Victory, Ilyra & Vesper </li>
+                            <li>⚡🌙 Stormveil vs Nightglass: 🚑 Arbitration - Device</li>
+                            <li>⚔️⚡ Ironbound vs Stormveil: 🤝 Cooperation strengthened - legal framework for handling prisoners</li>
                         </ul>
 
-                        <h4>📈 士気変化</h4>
+                        <h4>📈 Morale</h4>
                         <div class="morale-changes">
-                            <div class="morale-item ironbound">Ironbound: 8.5 → 8.7 (+0.2) ⬆️ [勝利]</div>
-                            <div class="morale-item nightglass">Nightglass: 6.9 → 5.8 (-1.1) ⬇️ [敗北・捕虜]</div>
-                            <div class="morale-item stormveil">Stormveil: 8.9 → 9.2 (+0.3) ⬆️ [仲裁成功]</div>
+                            <div class="morale-item ironbound">Ironbound: 8.5 → 8.7 (+0.2) ⬆️ [Victory]</div>
+                            <div class="morale-item nightglass">Nightglass: 6.9 → 5.8 (-1.1) ⬇️ [Defeat]</div>
+                            <div class="morale-item stormveil">Stormveil: 8.9 → 9.2 (+0.3) ⬆️ [ArbitrationSuccess]</div>
                         </div>
 
-                        <h4>🍖 食料消耗（戦闘コスト）</h4>
+                        <h4>🍖 Provisions()</h4>
                         <ul>
-                            <li>Ironbound: → -2 食料</li>
-                            <li>Nightglass: → -5 食料 [重傷]</li>
-                            <li>Stormveil: → -1 食料</li>
+                            <li>Ironbound: → -2 Provisions</li>
+                            <li>Nightglass: → -5 Provisions []</li>
+                            <li>Stormveil: → -1 Provisions</li>
                         </ul>
 
-                        <p class="key-event">🎯 重要イベント: Ilyra & Vesper 捕獲、Sable は Twilight Bog へ撤退</p>
+                        <p class="key-event">🎯 Key Event: Ilyra & Vesper , Sable  Twilight Bog </p>
                     </div>
                 </section>
 
-                <!-- ターン 4 -->
+                <!-- Turn 4 -->
                 <section id="turn-4" class="turn-section">
                     <header class="turn-header">
-                        <h3>ターン 4: 戦争機械の脈動 🤖</h3>
+                        <h3>Turn 4: War Machine 🤖</h3>
                         <nav class="turn-nav">
-                            <a href="narrative.html#turn-4" class="cross-link">📖 ナラティブを見る</a>
-                            <a href="#turn-3" class="prev-turn">← 前のターン</a>
-                            <a href="#turn-5" class="next-turn">次のターン →</a>
+                            <a href="narrative.html#turn-4" class="cross-link">📖 View Narrative</a>
+                            <a href="#turn-3" class="prev-turn">← Previous Turn</a>
+                            <a href="#turn-5" class="next-turn">Next Turn →</a>
                         </nav>
                     </header>
                     <div class="turn-content">
-                        <p><strong>GMアクション</strong>: 発見イベント（古代技術活性化）</p>
+                        <p><strong>GM Action</strong>: Discovery Event()</p>
 
-                        <h4>🎭 パーティー間イベント</h4>
+                        <h4>🎭 Inter-Party Events</h4>
                         <ul>
-                            <li>⚡🤖 Stormveil vs 戦争機械: 🔧 技術解析 - 古代システムとの共鳴</li>
-                            <li>⚔️🤖 Ironbound vs 戦争機械: 🛡️ 防御警戒 - 機械の脅威評価</li>
-                            <li>🌙 Nightglass: 🕳️ 地下潜伏 - Sable による単独偵察</li>
+                            <li>⚡🤖 Stormveil vs War Machine: 🔧  - </li>
+                            <li>⚔️🤖 Ironbound vs War Machine: 🛡️ Defensive alert - assess machine threat</li>
+                            <li>🌙 Nightglass: 🕳️ Underground hiding - solo recon by Sable</li>
                         </ul>
 
-                        <h4>📈 士気変化</h4>
+                        <h4>📈 Morale</h4>
                         <div class="morale-changes">
                             <div class="morale-item ironbound">Ironbound: 8.7 → 8.6 (-0.1) ⬇️</div>
                             <div class="morale-item nightglass">Nightglass: 5.8 → 6.2 (+0.4) ⬆️</div>
                             <div class="morale-item stormveil">Stormveil: 9.2 → 9.4 (+0.2) ⬆️</div>
                         </div>
 
-                        <h4>🎒 リソース変化</h4>
+                        <h4>🎒 Resources</h4>
                         <ul>
-                            <li>⚡ Stormveil: マナクリスタル 16→14 (-2) - 機械共鳴調律</li>
-                            <li>🌙 Nightglass: 毒 11→10 (-1) - 地下探索用罠</li>
+                            <li>⚡ Stormveil: Mana Crystals 16→14 (-2) - Machine resonance tuning</li>
+                            <li>🌙 Nightglass: Poison 11→10 (-1) - Subterranean exploration traps</li>
                         </ul>
                     </div>
                 </section>
 
-                <!-- ターン 5 -->
+                <!-- Turn 5 -->
                 <section id="turn-5" class="turn-section">
                     <header class="turn-header">
-                        <h3>ターン 5: 共鳴嵐の救出作戦 🌙</h3>
+                        <h3>Turn 5: Rescue Operation in the Resonance Storm 🌙</h3>
                         <nav class="turn-nav">
-                            <a href="narrative.html#turn-5" class="cross-link">📖 ナラティブを見る</a>
-                            <a href="#turn-4" class="prev-turn">← 前のターン</a>
-                            <a href="#turn-6" class="next-turn">次のターン →</a>
+                            <a href="narrative.html#turn-5" class="cross-link">📖 View Narrative</a>
+                            <a href="#turn-4" class="prev-turn">← Previous Turn</a>
+                            <a href="#turn-6" class="next-turn">Next Turn →</a>
                         </nav>
                     </header>
                     <div class="turn-content">
-                        <p><strong>GMアクション</strong>: 戦術機会</p>
+                        <p><strong>GM Action</strong>: Tactical Opportunity</p>
 
-                        <h4>🎭 パーティー間イベント</h4>
+                        <h4>🎭 Inter-Party Events</h4>
                         <ul>
-                            <li>🌙⚔️ Nightglass vs Ironbound: 🌪️ 救出作戦 - 共鳴嵐による強行突破</li>
-                            <li>🏆 結果: Ilyra 救出成功、Vesper は依然捕虜</li>
-                            <li>⚡🌙 Stormveil vs Nightglass: 🤝 秘密協力 - 共鳴装置による脱出支援</li>
-                            <li>⚔️⚡ Ironbound vs Stormveil: 🛡️ 表面的中立維持</li>
+                            <li>🌙⚔️ Nightglass vs Ironbound: 🌪️ Rescue operation - storm resonance forced breakthrough</li>
+                            <li>🏆 Result: Ilyra Rescue successful, Vesper </li>
+                            <li>⚡🌙 Stormveil vs Nightglass: 🤝 Secret cooperation - escape aided by resonance devices</li>
+                            <li>⚔️⚡ Ironbound vs Stormveil: 🛡️ Maintain surface neutrality</li>
                         </ul>
 
-                        <h4>📈 士気変化</h4>
+                        <h4>📈 Morale</h4>
                         <div class="morale-changes">
                             <div class="morale-item ironbound">Ironbound: 8.6 → 8.5 (-0.1) ⬇️</div>
-                            <div class="morale-item nightglass">Nightglass: 6.2 → 6.8 (+0.6) ⬆️ [救出成功]</div>
+                            <div class="morale-item nightglass">Nightglass: 6.2 → 6.8 (+0.6) ⬆️ [Rescue successful]</div>
                             <div class="morale-item stormveil">Stormveil: 9.4 → 9.4 (±0.0) ➖</div>
                         </div>
 
-                        <h4>🍖 食料消耗（戦闘コスト）</h4>
+                        <h4>🍖 Provisions()</h4>
                         <ul>
-                            <li>Ironbound: → -4 食料 [防御戦]</li>
-                            <li>Nightglass: → -3 食料 [救出作戦]</li>
-                            <li>Stormveil: → -1 食料</li>
+                            <li>Ironbound: → -4 Provisions []</li>
+                            <li>Nightglass: → -3 Provisions [Rescue]</li>
+                            <li>Stormveil: → -1 Provisions</li>
                         </ul>
 
-                        <p class="key-event">🎯 重要イベント: Ilyra 救出成功、希望の光</p>
+                        <p class="key-event">🎯 Key Event: Ilyra Rescue successful, </p>
                     </div>
                 </section>
 
-                <!-- ターン 6 -->
+                <!-- Turn 6 -->
                 <section id="turn-6" class="turn-section">
                     <header class="turn-header">
-                        <h3>ターン 6: 市場の混乱 📊</h3>
+                        <h3>Turn 6: Market 📊</h3>
                         <nav class="turn-nav">
-                            <a href="narrative.html#turn-6" class="cross-link">📖 ナラティブを見る</a>
-                            <a href="#turn-5" class="prev-turn">← 前のターン</a>
-                            <a href="#turn-7" class="next-turn">次のターン →</a>
+                            <a href="narrative.html#turn-6" class="cross-link">📖 View Narrative</a>
+                            <a href="#turn-5" class="prev-turn">← Previous Turn</a>
+                            <a href="#turn-7" class="next-turn">Next Turn →</a>
                         </nav>
                     </header>
                     <div class="turn-content">
-                        <p><strong>GMアクション</strong>: 環境変化（商業活動混乱）</p>
+                        <p><strong>GM Action</strong>: Environmental Change(Commerce)</p>
 
-                        <h4>🎭 パーティー間イベント</h4>
+                        <h4>🎭 Inter-Party Events</h4>
                         <ul>
-                            <li>⚡🌙 Stormveil vs Nightglass: 🤝 市場仲裁 - 正当な商取引の確保</li>
-                            <li>⚔️📊 Ironbound vs 市場: 🛡️ 治安維持 - 軍事的秩序強化</li>
-                            <li>🌙📊 Nightglass vs 市場: 🕳️ 地下経済 - 闇取引ネットワーク</li>
-                            <li>⚡📊 Stormveil vs 市場: 📜 法整備 - 商業法の再編成</li>
+                            <li>⚡🌙 Stormveil vs Nightglass: 🤝 MarketArbitration - </li>
+                            <li>⚔️📊 Ironbound vs Market: 🛡️  - </li>
+                            <li>🌙📊 Nightglass vs Market: 🕳️ Underground - </li>
+                            <li>⚡📊 Stormveil vs Market: 📜  - Commerce</li>
                         </ul>
 
-                        <h4>📈 士気変化</h4>
+                        <h4>📈 Morale</h4>
                         <div class="morale-changes">
                             <div class="morale-item ironbound">Ironbound: 8.5 → 8.4 (-0.1) ⬇️</div>
                             <div class="morale-item nightglass">Nightglass: 6.8 → 6.7 (-0.1) ⬇️</div>
                             <div class="morale-item stormveil">Stormveil: 9.4 → 9.4 (±0.0) ➖</div>
                         </div>
 
-                        <h4>🎒 リソース変化</h4>
+                        <h4>🎒 Resources</h4>
                         <ul>
-                            <li>⚔️ Ironbound: 食料 21→19 (-2) - 治安維持活動</li>
-                            <li>🌙 Nightglass: 毒 10→9 (-1) - 地下活動</li>
-                            <li>⚡ Stormveil: シルク 10→8 (-2) - 商業調停</li>
+                            <li>⚔️ Ironbound: Provisions 21→19 (-2) - </li>
+                            <li>🌙 Nightglass: Poison 10→9 (-1) - Underground</li>
+                            <li>⚡ Stormveil: Silk 10→8 (-2) - Commerce</li>
                         </ul>
                     </div>
                 </section>
 
-                <!-- ターン 7 -->
+                <!-- Turn 7 -->
                 <section id="turn-7" class="turn-section">
                     <header class="turn-header">
-                        <h3>ターン 7: イオン嵐の中の追跡 ⚡</h3>
+                        <h3>Turn 7: Pursuit in the Ion Storm ⚡</h3>
                         <nav class="turn-nav">
-                            <a href="narrative.html#turn-7" class="cross-link">📖 ナラティブを見る</a>
-                            <a href="#turn-6" class="prev-turn">← 前のターン</a>
-                            <a href="#turn-8" class="next-turn">次のターン →</a>
+                            <a href="narrative.html#turn-7" class="cross-link">📖 View Narrative</a>
+                            <a href="#turn-6" class="prev-turn">← Previous Turn</a>
+                            <a href="#turn-8" class="next-turn">Next Turn →</a>
                         </nav>
                     </header>
                     <div class="turn-content">
-                        <p><strong>GMアクション</strong>: 環境変化（イオン嵐発生）</p>
+                        <p><strong>GM Action</strong>: Environmental Change()</p>
 
-                        <h4>🎭 パーティー間イベント</h4>
+                        <h4>🎭 Inter-Party Events</h4>
                         <ul>
-                            <li>⚔️🌙 Ironbound vs Nightglass: 🌩️ 嵐中追跡 - イオン放電を利用した探知</li>
-                            <li>🏆 結果: Ironbound 追跡継続、Nightglass 隠密維持</li>
-                            <li>⚡⚔️ Stormveil vs Ironbound: 🤝 嵐制御支援 - 共鳴装置で追跡援助</li>
-                            <li>🌙⚡ Nightglass vs Stormveil: 🌪️ 嵐利用 - 電磁妨害による逃避</li>
+                            <li>⚔️🌙 Ironbound vs Nightglass: 🌩️  - </li>
+                            <li>🏆 Result: Ironbound , Nightglass </li>
+                            <li>⚡⚔️ Stormveil vs Ironbound: 🤝  - Device</li>
+                            <li>🌙⚡ Nightglass vs Stormveil: 🌪️  - </li>
                         </ul>
 
-                        <h4>📈 士気変化</h4>
+                        <h4>📈 Morale</h4>
                         <div class="morale-changes">
                             <div class="morale-item ironbound">Ironbound: 8.4 → 8.4 (±0.0) ➖</div>
                             <div class="morale-item nightglass">Nightglass: 6.7 → 6.7 (±0.0) ➖</div>
                             <div class="morale-item stormveil">Stormveil: 9.4 → 9.4 (±0.0) ➖</div>
                         </div>
 
-                        <h4>🎒 リソース変化</h4>
+                        <h4>🎒 Resources</h4>
                         <ul>
-                            <li>⚔️ Ironbound: 鉄 20→18 (-2) - 追跡装備強化</li>
-                            <li>🌙 Nightglass: 黒曜石 8→6 (-2) - 電磁防御</li>
-                            <li>⚡ Stormveil: マナクリスタル 14→12 (-2) - 嵐制御</li>
+                            <li>⚔️ Ironbound: Iron 20→18 (-2) - </li>
+                            <li>🌙 Nightglass: Obsidian 8→6 (-2) - </li>
+                            <li>⚡ Stormveil: Mana Crystals 14→12 (-2) - </li>
                         </ul>
                     </div>
                 </section>
 
-                <!-- ターン 8 -->
+                <!-- Turn 8 -->
                 <section id="turn-8" class="turn-section">
                     <header class="turn-header">
-                        <h3>ターン 8: 玄武岩の守護者の目覚め 🗿</h3>
+                        <h3>Turn 8: Awakening of the Basalt Guardian 🗿</h3>
                         <nav class="turn-nav">
-                            <a href="narrative.html#turn-8" class="cross-link">📖 ナラティブを見る</a>
-                            <a href="#turn-7" class="prev-turn">← 前のターン</a>
-                            <a href="#turn-9" class="next-turn">次のターン →</a>
+                            <a href="narrative.html#turn-8" class="cross-link">📖 View Narrative</a>
+                            <a href="#turn-7" class="prev-turn">← Previous Turn</a>
+                            <a href="#turn-9" class="next-turn">Next Turn →</a>
                         </nav>
                     </header>
                     <div class="turn-content">
-                        <p><strong>GMアクション</strong>: 発見イベント（古代守護者の覚醒）</p>
+                        <p><strong>GM Action</strong>: Discovery Event()</p>
 
-                        <h4>🎭 パーティー間イベント</h4>
+                        <h4>🎭 Inter-Party Events</h4>
                         <ul>
-                            <li>⚔️🗿 Ironbound vs 玄武岩守護者: ⚖️ 資格試験 - 軍事指導の正統性テスト</li>
-                            <li>🌙🗿 Nightglass vs 玄武岩守護者: 🕳️ 隠密回避 - 守護者の審判を避ける</li>
-                            <li>⚡🗿 Stormveil vs 玄武岩守護者: 🤝 仲裁準備 - 古代の契約解読</li>
-                            <li>🗿⚔️🌙⚡ 守護者 vs 三勢力: 📜 審判準備 - 正統性評価の基準設定</li>
+                            <li>⚔️🗿 Ironbound vs Basalt Guardian: ⚖️  - Legitimacy</li>
+                            <li>🌙🗿 Nightglass vs Basalt Guardian: 🕳️  - Judgment</li>
+                            <li>⚡🗿 Stormveil vs Basalt Guardian: 🤝 ArbitrationPreparation - </li>
+                            <li>🗿⚔️🌙⚡  vs : 📜 JudgmentPreparation - Legitimacy</li>
                         </ul>
 
-                        <h4>📈 士気変化</h4>
+                        <h4>📈 Morale</h4>
                         <div class="morale-changes">
                             <div class="morale-item ironbound">Ironbound: 8.4 → 8.4 (±0.0) ➖</div>
                             <div class="morale-item nightglass">Nightglass: 6.7 → 6.7 (±0.0) ➖</div>
                             <div class="morale-item stormveil">Stormveil: 9.4 → 9.4 (±0.0) ➖</div>
                         </div>
 
-                        <h4>🎒 リソース変化</h4>
+                        <h4>🎒 Resources</h4>
                         <ul>
-                            <li>⚔️ Ironbound: 食料 19→18 (-1) - 守護者対応</li>
-                            <li>🌙 Nightglass: 食料 10→9 (-1) - 回避行動</li>
-                            <li>⚡ Stormveil: 食料 0→0 (±0) - 資源枯渇状態</li>
+                            <li>⚔️ Ironbound: Provisions 19→18 (-1) - </li>
+                            <li>🌙 Nightglass: Provisions 10→9 (-1) - </li>
+                            <li>⚡ Stormveil: Provisions 0→0 (±0) - </li>
                         </ul>
 
-                        <p class="key-event">🎯 重要イベント: 古代守護者の目覚め、次ターンでの審判予告</p>
+                        <p class="key-event">🎯 Key Event: , Judgment</p>
                     </div>
                 </section>
 
-                <!-- ターン 9 -->
+                <!-- Turn 9 -->
                 <section id="turn-9" class="turn-section">
                     <header class="turn-header">
-                        <h3>ターン 9: 守護者の試練 ⚖️【⚔️ 正統性の確立】</h3>
+                        <h3>Turn 9: Trial of the Guardian ⚖️【⚔️ Legitimacy】</h3>
                         <nav class="turn-nav">
-                            <a href="narrative.html#turn-9" class="cross-link">📖 ナラティブを見る</a>
-                            <a href="#turn-8" class="prev-turn">← 前のターン</a>
-                            <a href="#turn-10" class="next-turn">次のターン →</a>
+                            <a href="narrative.html#turn-9" class="cross-link">📖 View Narrative</a>
+                            <a href="#turn-8" class="prev-turn">← Previous Turn</a>
+                            <a href="#turn-10" class="next-turn">Next Turn →</a>
                         </nav>
                     </header>
                     <div class="turn-content">
-                        <p><strong>GMアクション</strong>: 環境変化（守護者審判）</p>
+                        <p><strong>GM Action</strong>: Environmental Change(Judgment)</p>
 
-                        <h4>🎭 パーティー間イベント</h4>
+                        <h4>🎭 Inter-Party Events</h4>
                         <ul>
-                            <li>⚔️🌙 Ironbound vs Nightglass: ⚖️ 儀式的決闘 - Kael vs Nightglass 代表者</li>
-                            <li>🏆 結果: Ironbound 勝利、守護者の承認獲得</li>
-                            <li>⚡⚔️🌙 Stormveil 仲裁: 📜 誓約成文化 - 法的枠組みの記録</li>
-                            <li>🌙⚔️ Nightglass vs Ironbound: 🏃 敗北撤退 - Emberfront への最終突進</li>
+                            <li>⚔️🌙 Ironbound vs Nightglass: ⚖️  - Kael vs Nightglass </li>
+                            <li>🏆 Result: Ironbound Victory, Approval</li>
+                            <li>⚡⚔️🌙 Stormveil Arbitration: 📜  - Legal</li>
+                            <li>🌙⚔️ Nightglass vs Ironbound: 🏃 Defeat - Emberfront Final</li>
                         </ul>
 
-                        <h4>📈 士気変化</h4>
+                        <h4>📈 Morale</h4>
                         <div class="morale-changes">
-                            <div class="morale-item ironbound">Ironbound: 8.4 → 8.8 (+0.4) ⬆️ [試練勝利]</div>
-                            <div class="morale-item nightglass">Nightglass: 6.7 → 5.9 (-0.8) ⬇️ [試練敗北]</div>
-                            <div class="morale-item stormveil">Stormveil: 9.4 → 9.4 (±0.0) ➖ [記録役]</div>
+                            <div class="morale-item ironbound">Ironbound: 8.4 → 8.8 (+0.4) ⬆️ [Victory]</div>
+                            <div class="morale-item nightglass">Nightglass: 6.7 → 5.9 (-0.8) ⬇️ [Defeat]</div>
+                            <div class="morale-item stormveil">Stormveil: 9.4 → 9.4 (±0.0) ➖ []</div>
                         </div>
 
-                        <h4>🎒 リソース変化</h4>
+                        <h4>🎒 Resources</h4>
                         <ul>
-                            <li>⚔️ Ironbound: マナクリスタル 4→5 (+1) - 守護者の加護</li>
-                            <li>🌙 Nightglass: 毒 9→8 (-1) - 試練での消耗</li>
-                            <li>⚡ Stormveil: 食料 1→0 (-1) - 記録作業</li>
+                            <li>⚔️ Ironbound: Mana Crystals 4→5 (+1) - </li>
+                            <li>🌙 Nightglass: Poison 9→8 (-1) - </li>
+                            <li>⚡ Stormveil: Provisions 1→0 (-1) - </li>
                         </ul>
 
-                        <p class="key-event">🎯 重要イベント: Ironbound が守護者の認定獲得</p>
+                        <p class="key-event">🎯 Key Event: Ironbound </p>
                     </div>
                 </section>
 
-                <!-- ターン 10 -->
+                <!-- Turn 10 -->
                 <section id="turn-10" class="turn-section">
                     <header class="turn-header">
-                        <h3>ターン 10: Emberfront の封鎖 🏰</h3>
+                        <h3>Turn 10: Emberfront Blockade 🏰</h3>
                         <nav class="turn-nav">
-                            <a href="narrative.html#turn-10" class="cross-link">📖 ナラティブを見る</a>
-                            <a href="#turn-9" class="prev-turn">← 前のターン</a>
-                            <a href="#turn-11" class="next-turn">次のターン →</a>
+                            <a href="narrative.html#turn-10" class="cross-link">📖 View Narrative</a>
+                            <a href="#turn-9" class="prev-turn">← Previous Turn</a>
+                            <a href="#turn-11" class="next-turn">Next Turn →</a>
                         </nav>
                     </header>
                     <div class="turn-content">
-                        <p><strong>GMアクション</strong>: 戦術機会（要塞封鎖）</p>
+                        <p><strong>GM Action</strong>: Tactical Opportunity(Fortress Blockade)</p>
 
-                        <h4>🎭 パーティー間イベント</h4>
+                        <h4>🎭 Inter-Party Events</h4>
                         <ul>
-                            <li>⚔️🛡️ Ironbound 防御陣: 🏰 要塞封鎖 - 全進入路の完全遮断</li>
-                            <li>🌙🗡️ Nightglass 包囲: 🔍 弱点探索 - 隠密による偵察活動</li>
-                            <li>⚡🤝 Stormveil 仲裁: 📡 中立監視 - 封鎖状況の公正記録</li>
-                            <li>⚔️🌙 Ironbound vs Nightglass: 🛡️ 心理戦 - 持久戦の準備</li>
+                            <li>⚔️🛡️ Ironbound Defensive line: 🏰 Fortress Blockade - </li>
+                            <li>🌙🗡️ Nightglass Siege: 🔍  - </li>
+                            <li>⚡🤝 Stormveil Arbitration: 📡 Neutral observation - Blockade</li>
+                            <li>⚔️🌙 Ironbound vs Nightglass: 🛡️ Psychological warfare - prepare for attrition</li>
                         </ul>
 
-                        <h4>📈 士気変化</h4>
+                        <h4>📈 Morale</h4>
                         <div class="morale-changes">
-                            <div class="morale-item ironbound">Ironbound: 8.8 → 9.0 (+0.2) ⬆️ [防御成功]</div>
+                            <div class="morale-item ironbound">Ironbound: 8.8 → 9.0 (+0.2) ⬆️ [Defense success]</div>
                             <div class="morale-item nightglass">Nightglass: 5.9 → 6.0 (+0.1) ⬆️</div>
                             <div class="morale-item stormveil">Stormveil: 9.4 → 9.4 (±0.0) ➖</div>
                         </div>
 
-                        <h4>🎒 リソース変化</h4>
+                        <h4>🎒 Resources</h4>
                         <ul>
-                            <li>⚔️ Ironbound: 鉄 18→16 (-2) - 防御工事強化</li>
-                            <li>🌙 Nightglass: 食料 9→7 (-2) - 包囲継続</li>
-                            <li>⚡ Stormveil: マナクリスタル 12→11 (-1) - 監視活動</li>
+                            <li>⚔️ Ironbound: Iron 18→16 (-2) - </li>
+                            <li>🌙 Nightglass: Provisions 9→7 (-2) - Siege</li>
+                            <li>⚡ Stormveil: Mana Crystals 12→11 (-1) - Surveillance</li>
                         </ul>
                     </div>
                 </section>
 
-                <!-- ターン 11 -->
+                <!-- Turn 11 -->
                 <section id="turn-11" class="turn-section">
                     <header class="turn-header">
-                        <h3>ターン 11: 武器没収と闇市場 ⚔️</h3>
+                        <h3>Turn 11: WeaponsMarket ⚔️</h3>
                         <nav class="turn-nav">
-                            <a href="narrative.html#turn-11" class="cross-link">📖 ナラティブを見る</a>
-                            <a href="#turn-10" class="prev-turn">← 前のターン</a>
-                            <a href="#turn-12" class="next-turn">次のターン →</a>
+                            <a href="narrative.html#turn-11" class="cross-link">📖 View Narrative</a>
+                            <a href="#turn-10" class="prev-turn">← Previous Turn</a>
+                            <a href="#turn-12" class="next-turn">Next Turn →</a>
                         </nav>
                     </header>
                     <div class="turn-content">
-                        <p><strong>GMアクション</strong>: 環境変化（武器規制強化）</p>
+                        <p><strong>GM Action</strong>: Environmental Change(Weapons)</p>
 
-                        <h4>🎭 パーティー間イベント</h4>
+                        <h4>🎭 Inter-Party Events</h4>
                         <ul>
-                            <li>🌙🔪 Nightglass vs 闇市場: 💰 武器調達 - 違法ルートでの装備確保</li>
-                            <li>⚔️👮 Ironbound vs 闇市場: 🚫 取締強化 - 不法武器の没収</li>
-                            <li>⚡📜 Stormveil vs 闇市場: ⚖️ 法的措置 - 商取引規制の強化</li>
-                            <li>🌙⚔️ Nightglass vs Ironbound: 🕳️ 補給戦 - 隠密補給 vs 遮断作戦</li>
+                            <li>🌙🔪 Nightglass vs Market: 💰 Weapons - </li>
+                            <li>⚔️👮 Ironbound vs Market: 🚫 Crackdown intensified - seize illegal weapons</li>
+                            <li>⚡📜 Stormveil vs Market: ⚖️ Legal measures - strengthen trade regulations</li>
+                            <li>🌙⚔️ Nightglass vs Ironbound: 🕳️ Supply war - covert supply vs interdiction</li>
                         </ul>
 
-                        <h4>📈 士気変化</h4>
+                        <h4>📈 Morale</h4>
                         <div class="morale-changes">
                             <div class="morale-item ironbound">Ironbound: 9.0 → 9.1 (+0.1) ⬆️</div>
                             <div class="morale-item nightglass">Nightglass: 6.0 → 5.9 (-0.1) ⬇️</div>
                             <div class="morale-item stormveil">Stormveil: 9.4 → 9.4 (±0.0) ➖</div>
                         </div>
 
-                        <h4>💰 通貨変化</h4>
+                        <h4>💰 Currency Changes</h4>
                         <ul>
-                            <li>🌙 Nightglass: 通貨 115→105 (-10) - 闇市場調達</li>
-                            <li>⚔️ Ironbound: 通貨 140→135 (-5) - 取締費用</li>
-                            <li>⚡ Stormveil: 通貨 125→125 (±0) - 中立維持</li>
+                            <li>🌙 Nightglass: Currency 115→105 (-10) - Market</li>
+                            <li>⚔️ Ironbound: Currency 140→135 (-5) - Crackdown</li>
+                            <li>⚡ Stormveil: Currency 125→125 (±0) - Neutral</li>
                         </ul>
                     </div>
                 </section>
 
-                <!-- ターン 12 -->
+                <!-- Turn 12 -->
                 <section id="turn-12" class="turn-section">
                     <header class="turn-header">
-                        <h3>ターン 12: Culvert の音響発見 🔊</h3>
+                        <h3>Turn 12: Culvert Acoustic Discovery 🔊</h3>
                         <nav class="turn-nav">
-                            <a href="narrative.html#turn-12" class="cross-link">📖 ナラティブを見る</a>
-                            <a href="#turn-11" class="prev-turn">← 前のターン</a>
-                            <a href="#turn-13" class="next-turn">次のターン →</a>
+                            <a href="narrative.html#turn-12" class="cross-link">📖 View Narrative</a>
+                            <a href="#turn-11" class="prev-turn">← Previous Turn</a>
+                            <a href="#turn-13" class="next-turn">Next Turn →</a>
                         </nav>
                     </header>
                     <div class="turn-content">
-                        <p><strong>GMアクション</strong>: 発見イベント（地下水路発見）</p>
+                        <p><strong>GM Action</strong>: Discovery Event(Culvert)</p>
 
-                        <h4>🎭 パーティー間イベント</h4>
+                        <h4>🎭 Inter-Party Events</h4>
                         <ul>
-                            <li>🌙🕳️ Nightglass vs 地下水路: 🔍 経路発見 - 隠密侵入ルートの発見</li>
-                            <li>⚔️🔊 Ironbound vs 音響探知: 👂 監視強化 - 地下音響の検知システム</li>
-                            <li>⚡🌊 Stormveil vs 地下水路: 📡 魔術探知 - 共鳴による地下構造解析</li>
-                            <li>🌙⚔️ Nightglass vs Ironbound: 🤫 隠密 vs 🔍 探知 - 地下戦の前哨戦</li>
+                            <li>🌙🕳️ Nightglass vs Culvert: 🔍 Route discovery - stealth entry path found</li>
+                            <li>⚔️🔊 Ironbound vs Acoustic Detection: 👂 Enhanced surveillance - subterranean acoustic detection system</li>
+                            <li>⚡🌊 Stormveil vs Culvert: 📡 Magical sensing - resonance-based analysis of underground structures</li>
+                            <li>🌙⚔️ Nightglass vs Ironbound: 🤫 Stealth vs 🔍 Detection - prelude to underground battle</li>
                         </ul>
 
-                        <h4>📈 士気変化</h4>
+                        <h4>📈 Morale</h4>
                         <div class="morale-changes">
                             <div class="morale-item ironbound">Ironbound: 9.1 → 9.1 (±0.0) ➖</div>
                             <div class="morale-item nightglass">Nightglass: 5.9 → 5.9 (±0.0) ➖</div>
                             <div class="morale-item stormveil">Stormveil: 9.4 → 9.4 (±0.0) ➖</div>
                         </div>
 
-                        <h4>🎒 リソース変化</h4>
+                        <h4>🎒 Resources</h4>
                         <ul>
-                            <li>⚔️ Ironbound: 鉄 16→14 (-2) - 音響探知装置</li>
-                            <li>🌙 Nightglass: 黒曜石 6→4 (-2) - 地下探索装備</li>
-                            <li>⚡ Stormveil: マナクリスタル 11→10 (-1) - 魔術探知</li>
+                            <li>⚔️ Ironbound: Iron 16→14 (-2) - Acoustic DetectionDevice</li>
+                            <li>🌙 Nightglass: Obsidian 6→4 (-2) - Underground</li>
+                            <li>⚡ Stormveil: Mana Crystals 11→10 (-1) - Magic</li>
                         </ul>
 
-                        <p class="key-event">🎯 重要イベント: 地下水路発見、次ターンでの本格侵入準備</p>
+                        <p class="key-event">🎯 Key Event: Culvert, IncursionPreparation</p>
                     </div>
                 </section>
 
-                <!-- ターン 13 -->
+                <!-- Turn 13 -->
                 <section id="turn-13" class="turn-section">
                     <header class="turn-header">
-                        <h3>ターン 13: 干潮の窓 🌊</h3>
+                        <h3>Turn 13: Window of Low Tide 🌊</h3>
                         <nav class="turn-nav">
-                            <a href="narrative.html#turn-13" class="cross-link">📖 ナラティブを見る</a>
-                            <a href="#turn-12" class="prev-turn">← 前のターン</a>
-                            <a href="#turn-14" class="next-turn">次のターン →</a>
+                            <a href="narrative.html#turn-13" class="cross-link">📖 View Narrative</a>
+                            <a href="#turn-12" class="prev-turn">← Previous Turn</a>
+                            <a href="#turn-14" class="next-turn">Next Turn →</a>
                         </nav>
                     </header>
                     <div class="turn-content">
-                        <p><strong>GMアクション</strong>: 戦術機会（地形変化）</p>
+                        <p><strong>GM Action</strong>: Tactical Opportunity()</p>
 
-                        <h4>🎭 パーティー間イベント</h4>
+                        <h4>🎭 Inter-Party Events</h4>
                         <ul>
-                            <li>🌙⚔️ Nightglass vs Ironbound: 🕳️ 地下侵入試行 - 干潮時の秘密通路利用</li>
-                            <li>🏆 結果: Ironbound 防御成功、侵入阻止</li>
-                            <li>⚔️🛡️ Ironbound 防御陣: 🔍 監視強化 - 全通路の封鎖完了</li>
-                            <li>⚡ Stormveil: 📡 遠隔監視 - 中立的観察継続</li>
+                            <li>🌙⚔️ Nightglass vs Ironbound: 🕳️ Subterranean incursion attempt - use secret passage at low tide</li>
+                            <li>🏆 Result: Ironbound Defense successful, incursion stopped</li>
+                            <li>⚔️🛡️ Ironbound Defensive line: 🔍 Surveillance - Blockade</li>
+                            <li>⚡ Stormveil: 📡 Remote Surveillance - Continued neutral observation</li>
                         </ul>
 
-                        <h4>📈 士気変化</h4>
+                        <h4>📈 Morale</h4>
                         <div class="morale-changes">
-                            <div class="morale-item ironbound">Ironbound: 9.1 → 9.2 (+0.1) ⬆️ [防御成功]</div>
-                            <div class="morale-item nightglass">Nightglass: 5.9 → 5.8 (-0.1) ⬇️ [侵入失敗]</div>
+                            <div class="morale-item ironbound">Ironbound: 9.1 → 9.2 (+0.1) ⬆️ [Defense success]</div>
+                            <div class="morale-item nightglass">Nightglass: 5.9 → 5.8 (-0.1) ⬇️ [Incursion failed]</div>
                             <div class="morale-item stormveil">Stormveil: 9.4 → 9.4 (±0.0) ➖</div>
                         </div>
 
-                        <h4>🍖 食料消耗（戦闘コスト）</h4>
+                        <h4>🍖 Provisions()</h4>
                         <ul>
-                            <li>Ironbound: → -2 食料 [警備強化]</li>
-                            <li>Nightglass: → -4 食料 [侵入作戦]</li>
-                            <li>Stormveil: → -1 食料</li>
+                            <li>Ironbound: → -2 Provisions []</li>
+                            <li>Nightglass: → -4 Provisions [Incursion]</li>
+                            <li>Stormveil: → -1 Provisions</li>
                         </ul>
 
-                        <p class="key-event">🎯 重要イベント: 地下侵入阻止、防御完成</p>
+                        <p class="key-event">🎯 Key Event: UndergroundIncursion, </p>
                     </div>
                 </section>
 
-                <!-- ターン 14 -->
+                <!-- Turn 14 -->
                 <section id="turn-14" class="turn-section">
                     <header class="turn-header">
-                        <h3>ターン 14: 夜明けの法廷 ⚖️</h3>
+                        <h3>Turn 14: Court ⚖️</h3>
                         <nav class="turn-nav">
-                            <a href="narrative.html#turn-14" class="cross-link">📖 ナラティブを見る</a>
-                            <a href="#turn-13" class="prev-turn">← 前のターン</a>
-                            <a href="#turn-15" class="next-turn">次のターン →</a>
+                            <a href="narrative.html#turn-14" class="cross-link">📖 View Narrative</a>
+                            <a href="#turn-13" class="prev-turn">← Previous Turn</a>
+                            <a href="#turn-15" class="next-turn">Next Turn →</a>
                         </nav>
                     </header>
                     <div class="turn-content">
-                        <p><strong>GMアクション</strong>: 環境変化（法廷召集）</p>
+                        <p><strong>GM Action</strong>: Environmental Change(Court)</p>
 
-                        <h4>🎭 パーティー間イベント</h4>
+                        <h4>🎭 Inter-Party Events</h4>
                         <ul>
-                            <li>⚡⚖️ Stormveil vs 法廷: 📜 法廷設立 - 正式な調停機関の創設</li>
-                            <li>⚔️⚖️ Ironbound vs 法廷: 🛡️ 正当性主張 - 軍事行動の法的根拠</li>
-                            <li>🌙⚖️ Nightglass vs 法廷: 📄 異議申立 - 法的手続きへの参加</li>
-                            <li>⚖️⚔️🌙⚡ 法廷 vs 三勢力: 📋 証拠収集 - 公正な審理準備</li>
+                            <li>⚡⚖️ Stormveil vs Court: 📜 CourtEstablishment - </li>
+                            <li>⚔️⚖️ Ironbound vs Court: 🛡️ Assert legitimacy - legal basis for military actions</li>
+                            <li>🌙⚖️ Nightglass vs Court: 📄 File objections - participation in legal process</li>
+                            <li>⚖️⚔️🌙⚡ Court vs : 📋 Evidence collection - prepare for fair hearing</li>
                         </ul>
 
-                        <h4>📈 士気変化</h4>
+                        <h4>📈 Morale</h4>
                         <div class="morale-changes">
                             <div class="morale-item ironbound">Ironbound: 9.2 → 9.1 (-0.1) ⬇️</div>
                             <div class="morale-item nightglass">Nightglass: 5.8 → 5.9 (+0.1) ⬆️</div>
                             <div class="morale-item stormveil">Stormveil: 9.4 → 9.4 (±0.0) ➖</div>
                         </div>
 
-                        <h4>💰 通貨変化</h4>
+                        <h4>💰 Currency Changes</h4>
                         <ul>
-                            <li>⚡ Stormveil: 通貨 125→120 (-5) - 法廷設立費用</li>
-                            <li>⚔️ Ironbound: 通貨 135→130 (-5) - 法的準備</li>
-                            <li>🌙 Nightglass: 通貨 105→100 (-5) - 弁護費用</li>
+                            <li>⚡ Stormveil: Currency 125→120 (-5) - CourtEstablishment</li>
+                            <li>⚔️ Ironbound: Currency 135→130 (-5) - LegalPreparation</li>
+                            <li>🌙 Nightglass: Currency 105→100 (-5) - </li>
                         </ul>
                     </div>
                 </section>
 
-                <!-- ターン 15 -->
+                <!-- Turn 15 -->
                 <section id="turn-15" class="turn-section">
                     <header class="turn-header">
-                        <h3>ターン 15: 観衆の圧力 👥</h3>
+                        <h3>Turn 15: Pressure of the Crowd 👥</h3>
                         <nav class="turn-nav">
-                            <a href="narrative.html#turn-15" class="cross-link">📖 ナラティブを見る</a>
-                            <a href="#turn-14" class="prev-turn">← 前のターン</a>
-                            <a href="#turn-16" class="next-turn">次のターン →</a>
+                            <a href="narrative.html#turn-15" class="cross-link">📖 View Narrative</a>
+                            <a href="#turn-14" class="prev-turn">← Previous Turn</a>
+                            <a href="#turn-16" class="next-turn">Next Turn →</a>
                         </nav>
                     </header>
                     <div class="turn-content">
-                        <p><strong>GMアクション</strong>: 環境変化（世論形成）</p>
+                        <p><strong>GM Action</strong>: Environmental Change(Public Opinion Shaping)</p>
 
-                        <h4>🎭 パーティー間イベント</h4>
+                        <h4>🎭 Inter-Party Events</h4>
                         <ul>
-                            <li>⚔️👥 Ironbound vs 民衆: 📢 支持集結 - 軍事的安定の価値宣伝</li>
-                            <li>🌙👥 Nightglass vs 民衆: 🤝 同情獲得 - 弱者の正義をアピール</li>
-                            <li>⚡👥 Stormveil vs 民衆: ⚖️ 中立宣言 - 公正な審理の重要性</li>
-                            <li>👥⚖️ 民衆 vs 法廷: 📊 世論調査 - 各勢力への支持率測定</li>
+                            <li>⚔️👥 Ironbound vs People: 📢  - </li>
+                            <li>🌙👥 Nightglass vs People: 🤝  - </li>
+                            <li>⚡👥 Stormveil vs People: ⚖️ Neutral - </li>
+                            <li>👥⚖️ People vs Court: 📊 Public polling - measure support for each faction</li>
                         </ul>
 
-                        <h4>📈 士気変化</h4>
+                        <h4>📈 Morale</h4>
                         <div class="morale-changes">
-                            <div class="morale-item ironbound">Ironbound: 9.1 → 9.2 (+0.1) ⬆️ [民衆支持]</div>
+                            <div class="morale-item ironbound">Ironbound: 9.1 → 9.2 (+0.1) ⬆️ [People]</div>
                             <div class="morale-item nightglass">Nightglass: 5.9 → 5.8 (-0.1) ⬇️</div>
                             <div class="morale-item stormveil">Stormveil: 9.4 → 9.4 (±0.0) ➖</div>
                         </div>
 
-                        <h4>🎒 リソース変化</h4>
+                        <h4>🎒 Resources</h4>
                         <ul>
-                            <li>⚔️ Ironbound: 食料 18→16 (-2) - 支持者への配給</li>
-                            <li>🌙 Nightglass: 食料 7→5 (-2) - 同情獲得活動</li>
-                            <li>⚡ Stormveil: シルク 8→7 (-1) - 中立維持費用</li>
+                            <li>⚔️ Ironbound: Provisions 18→16 (-2) - </li>
+                            <li>🌙 Nightglass: Provisions 7→5 (-2) - </li>
+                            <li>⚡ Stormveil: Silk 8→7 (-1) - Neutral</li>
                         </ul>
                     </div>
                 </section>
 
-                <!-- ターン 16 -->
+                <!-- Turn 16 -->
                 <section id="turn-16" class="turn-section">
                     <header class="turn-header">
-                        <h3>ターン 16: 軍需将校の証言 🎖️</h3>
+                        <h3>Turn 16: Quartermaster's Testimony 🎖️</h3>
                         <nav class="turn-nav">
-                            <a href="narrative.html#turn-16" class="cross-link">📖 ナラティブを見る</a>
-                            <a href="#turn-15" class="prev-turn">← 前のターン</a>
-                            <a href="#turn-17" class="next-turn">次のターン →</a>
+                            <a href="narrative.html#turn-16" class="cross-link">📖 View Narrative</a>
+                            <a href="#turn-15" class="prev-turn">← Previous Turn</a>
+                            <a href="#turn-17" class="next-turn">Next Turn →</a>
                         </nav>
                     </header>
                     <div class="turn-content">
-                        <p><strong>GMアクション</strong>: 戦術機会（証言機会）</p>
+                        <p><strong>GM Action</strong>: Tactical Opportunity()</p>
 
-                        <h4>🎭 パーティー間イベント</h4>
+                        <h4>🎭 Inter-Party Events</h4>
                         <ul>
-                            <li>⚔️⚖️ Ironbound vs 法廷: 🎖️ 軍事証言 - 指揮官としての正当性立証</li>
-                            <li>🌙⚖️ Nightglass vs 法廷: 🗣️ 反証提出 - 軍事行動の問題点指摘</li>
-                            <li>⚡⚖️ Stormveil vs 法廷: 📝 記録管理 - 客観的事実の整理</li>
-                            <li>⚖️👥 法廷 vs 民衆: 📺 公開審理 - 透明性の確保</li>
+                            <li>⚔️⚖️ Ironbound vs Court: 🎖️  - </li>
+                            <li>🌙⚖️ Nightglass vs Court: 🗣️  - </li>
+                            <li>⚡⚖️ Stormveil vs Court: 📝  - </li>
+                            <li>⚖️👥 Court vs People: 📺  - </li>
                         </ul>
 
-                        <h4>📈 士気変化</h4>
+                        <h4>📈 Morale</h4>
                         <div class="morale-changes">
                             <div class="morale-item ironbound">Ironbound: 9.2 → 9.1 (-0.1) ⬇️</div>
-                            <div class="morale-item nightglass">Nightglass: 5.8 → 5.9 (+0.1) ⬆️ [反証成功]</div>
+                            <div class="morale-item nightglass">Nightglass: 5.8 → 5.9 (+0.1) ⬆️ [Success]</div>
                             <div class="morale-item stormveil">Stormveil: 9.4 → 9.4 (±0.0) ➖</div>
                         </div>
 
-                        <h4>🎒 リソース変化</h4>
+                        <h4>🎒 Resources</h4>
                         <ul>
-                            <li>⚔️ Ironbound: 鉄 14→13 (-1) - 証拠資料作成</li>
-                            <li>🌙 Nightglass: 毒 8→7 (-1) - 反証活動</li>
-                            <li>⚡ Stormveil: マナクリスタル 10→9 (-1) - 記録魔法</li>
+                            <li>⚔️ Ironbound: Iron 14→13 (-1) - </li>
+                            <li>🌙 Nightglass: Poison 8→7 (-1) - </li>
+                            <li>⚡ Stormveil: Mana Crystals 10→9 (-1) - </li>
                         </ul>
                     </div>
                 </section>
 
-                <!-- ターン 17 -->
+                <!-- Turn 17 -->
                 <section id="turn-17" class="turn-section">
                     <header class="turn-header">
-                        <h3>ターン 17: 反対尋問の展開 🤔</h3>
+                        <h3>Turn 17: Development of Cross-Examination 🤔</h3>
                         <nav class="turn-nav">
-                            <a href="narrative.html#turn-17" class="cross-link">📖 ナラティブを見る</a>
-                            <a href="#turn-16" class="prev-turn">← 前のターン</a>
-                            <a href="#turn-18" class="next-turn">次のターン →</a>
+                            <a href="narrative.html#turn-17" class="cross-link">📖 View Narrative</a>
+                            <a href="#turn-16" class="prev-turn">← Previous Turn</a>
+                            <a href="#turn-18" class="next-turn">Next Turn →</a>
                         </nav>
                     </header>
                     <div class="turn-content">
-                        <p><strong>GMアクション</strong>: 戦術機会（尋問戦）</p>
+                        <p><strong>GM Action</strong>: Tactical Opportunity(Interrogation Battle)</p>
 
-                        <h4>🎭 パーティー間イベント</h4>
+                        <h4>🎭 Inter-Party Events</h4>
                         <ul>
-                            <li>🌙⚖️ Nightglass vs 法廷: 🗯️ 反対尋問 - 証言の矛盾点追及</li>
-                            <li>⚔️⚖️ Ironbound vs 法廷: 🛡️ 証言防御 - 一貫性の維持</li>
-                            <li>⚡⚖️ Stormveil vs 法廷: ⚖️ 手続管理 - 公正な尋問進行</li>
-                            <li>⚖️⚔️🌙 法廷 vs 当事者: 🔍 真実追求 - 事実の解明</li>
+                            <li>🌙⚖️ Nightglass vs Court: 🗯️  - </li>
+                            <li>⚔️⚖️ Ironbound vs Court: 🛡️  - </li>
+                            <li>⚡⚖️ Stormveil vs Court: ⚖️  - </li>
+                            <li>⚖️⚔️🌙 Court vs : 🔍  - </li>
                         </ul>
 
-                        <h4>📈 士気変化</h4>
+                        <h4>📈 Morale</h4>
                         <div class="morale-changes">
                             <div class="morale-item ironbound">Ironbound: 9.1 → 9.1 (±0.0) ➖</div>
                             <div class="morale-item nightglass">Nightglass: 5.9 → 5.9 (±0.0) ➖</div>
                             <div class="morale-item stormveil">Stormveil: 9.4 → 9.4 (±0.0) ➖</div>
                         </div>
 
-                        <h4>💰 通貨変化</h4>
+                        <h4>💰 Currency Changes</h4>
                         <ul>
-                            <li>🌙 Nightglass: 通貨 100→95 (-5) - 法廷戦術費用</li>
-                            <li>⚔️ Ironbound: 通貨 130→125 (-5) - 弁護強化</li>
-                            <li>⚡ Stormveil: 通貨 120→115 (-5) - 手続管理</li>
+                            <li>🌙 Nightglass: Currency 100→95 (-5) - Court</li>
+                            <li>⚔️ Ironbound: Currency 130→125 (-5) - </li>
+                            <li>⚡ Stormveil: Currency 120→115 (-5) - </li>
                         </ul>
                     </div>
                 </section>
 
-                <!-- ターン 18 -->
+                <!-- Turn 18 -->
                 <section id="turn-18" class="turn-section">
                     <header class="turn-header">
-                        <h3>ターン 18: 判事の熟議 🧑‍⚖️</h3>
+                        <h3>Turn 18: Judge 🧑‍⚖️</h3>
                         <nav class="turn-nav">
-                            <a href="narrative.html#turn-18" class="cross-link">📖 ナラティブを見る</a>
-                            <a href="#turn-17" class="prev-turn">← 前のターン</a>
-                            <a href="#turn-19" class="next-turn">次のターン →</a>
+                            <a href="narrative.html#turn-18" class="cross-link">📖 View Narrative</a>
+                            <a href="#turn-17" class="prev-turn">← Previous Turn</a>
+                            <a href="#turn-19" class="next-turn">Next Turn →</a>
                         </nav>
                     </header>
                     <div class="turn-content">
-                        <p><strong>GMアクション</strong>: 環境変化（判決準備）</p>
+                        <p><strong>GM Action</strong>: Environmental Change(Judgment Preparation)</p>
 
-                        <h4>🎭 パーティー間イベント</h4>
+                        <h4>🎭 Inter-Party Events</h4>
                         <ul>
-                            <li>⚖️🧑‍⚖️ 法廷 vs 判事: 📚 判例研究 - 過去の事例との比較検討</li>
-                            <li>⚔️⚖️ Ironbound vs 法廷: 🙏 最終弁論 - 監護権の正当性主張</li>
-                            <li>🌙⚖️ Nightglass vs 法廷: 📢 最終抗弁 - 復帰の権利主張</li>
-                            <li>⚡⚖️ Stormveil vs 法廷: 📋 最終報告 - 中立的観察結果</li>
+                            <li>⚖️🧑‍⚖️ Court vs Judge: 📚  - </li>
+                            <li>⚔️⚖️ Ironbound vs Court: 🙏 Final - </li>
+                            <li>🌙⚖️ Nightglass vs Court: 📢 Final - </li>
+                            <li>⚡⚖️ Stormveil vs Court: 📋 Final - NeutralResult</li>
                         </ul>
 
-                        <h4>📈 士気変化</h4>
+                        <h4>📈 Morale</h4>
                         <div class="morale-changes">
                             <div class="morale-item ironbound">Ironbound: 9.1 → 9.1 (±0.0) ➖</div>
                             <div class="morale-item nightglass">Nightglass: 5.9 → 5.9 (±0.0) ➖</div>
                             <div class="morale-item stormveil">Stormveil: 9.4 → 9.4 (±0.0) ➖</div>
                         </div>
 
-                        <h4>🎒 リソース変化</h4>
+                        <h4>🎒 Resources</h4>
                         <ul>
-                            <li>⚔️ Ironbound: 食料 16→15 (-1) - 最終準備</li>
-                            <li>🌙 Nightglass: 食料 5→4 (-1) - 最終抗弁</li>
-                            <li>⚡ Stormveil: 食料 0→0 (±0) - 資源枯渇継続</li>
+                            <li>⚔️ Ironbound: Provisions 16→15 (-1) - FinalPreparation</li>
+                            <li>🌙 Nightglass: Provisions 5→4 (-1) - Final</li>
+                            <li>⚡ Stormveil: Provisions 0→0 (±0) - </li>
                         </ul>
 
-                        <p class="key-event">🎯 重要イベント: 判決準備完了、次ターンで最終決着</p>
+                        <p class="key-event">🎯 Key Event: Judgment Preparation, Final Resolution</p>
                     </div>
                 </section>
 
-                <!-- ターン 19 -->
+                <!-- Turn 19 -->
                 <section id="turn-19" class="turn-section">
                     <header class="turn-header">
-                        <h3>ターン 19: 礼拝堂通気口からの侵入 ⛪</h3>
+                        <h3>Turn 19: Infiltration through Chapel Vent ⛪</h3>
                         <nav class="turn-nav">
-                            <a href="narrative.html#turn-19" class="cross-link">📖 ナラティブを見る</a>
-                            <a href="#turn-18" class="prev-turn">← 前のターン</a>
-                            <a href="#turn-20" class="next-turn">次のターン →</a>
+                            <a href="narrative.html#turn-19" class="cross-link">📖 View Narrative</a>
+                            <a href="#turn-18" class="prev-turn">← Previous Turn</a>
+                            <a href="#turn-20" class="next-turn">Next Turn →</a>
                         </nav>
                     </header>
                     <div class="turn-content">
-                        <p><strong>GMアクション</strong>: 戦術機会（最終突入）</p>
+                        <p><strong>GM Action</strong>: Tactical Opportunity(Final Infiltration)</p>
 
-                        <h4>🎭 パーティー間イベント</h4>
+                        <h4>🎭 Inter-Party Events</h4>
                         <ul>
-                            <li>🌙⚔️ Nightglass vs Ironbound: ⛪ 最終侵入 - 礼拝堂通気口からの奇襲</li>
-                            <li>🏆 結果: Ironbound 最終防御成功、Ilyra 再捕獲</li>
-                            <li>⚔️🛡️ Ironbound 決戦: 🏆 完全勝利 - 全侵入ルート封鎖</li>
-                            <li>⚡ Stormveil: 📜 最終記録 - 勝敗確定の公式記録</li>
+                            <li>🌙⚔️ Nightglass vs Ironbound: ⛪ FinalIncursion - </li>
+                            <li>🏆 Result: Ironbound FinalDefense success, Ilyra recaptured</li>
+                            <li>⚔️🛡️ Ironbound : 🏆 Victory - IncursionBlockade</li>
+                            <li>⚡ Stormveil: 📜 Final - </li>
                         </ul>
 
-                        <h4>📈 士気変化</h4>
+                        <h4>📈 Morale</h4>
                         <div class="morale-changes">
-                            <div class="morale-item ironbound">Ironbound: 9.1 → 9.3 (+0.2) ⬆️ [最終勝利]</div>
-                            <div class="morale-item nightglass">Nightglass: 5.9 → 5.6 (-0.3) ⬇️ [最終敗北]</div>
-                            <div class="morale-item stormveil">Stormveil: 9.4 → 9.4 (±0.0) ➖ [記録完了]</div>
+                            <div class="morale-item ironbound">Ironbound: 9.1 → 9.3 (+0.2) ⬆️ [FinalVictory]</div>
+                            <div class="morale-item nightglass">Nightglass: 5.9 → 5.6 (-0.3) ⬇️ [FinalDefeat]</div>
+                            <div class="morale-item stormveil">Stormveil: 9.4 → 9.4 (±0.0) ➖ [Record completed]</div>
                         </div>
 
-                        <h4>🍖 食料消耗（戦闘コスト）</h4>
+                        <h4>🍖 Provisions()</h4>
                         <ul>
-                            <li>Ironbound: → -5 食料 [最終決戦]</li>
-                            <li>Nightglass: → -7 食料 [総力戦]</li>
-                            <li>Stormveil: → -1 食料</li>
+                            <li>Ironbound: → -5 Provisions [Final]</li>
+                            <li>Nightglass: → -7 Provisions []</li>
+                            <li>Stormveil: → -1 Provisions</li>
                         </ul>
 
-                        <p class="key-event">🎯 重要イベント: 最終防御成功、Ilyra 再捕獲、勝利確定</p>
+                        <p class="key-event">🎯 Key Event: Final defense successful, Ilyra recaptured, victory secured</p>
                     </div>
                 </section>
 
-                <!-- ターン 20 -->
+                <!-- Turn 20 -->
                 <section id="turn-20" class="turn-section">
                     <header class="turn-header">
-                        <h3>ターン 20: 最終判決 ⚖️✨【📜 復興契約判決】</h3>
+                        <h3>Turn 20: Final Verdict ⚖️✨【📜 Reconstruction-Contract Judgment】</h3>
                         <nav class="turn-nav">
-                            <a href="narrative.html#turn-20" class="cross-link">📖 ナラティブを見る</a>
-                            <a href="#turn-19" class="prev-turn">← 前のターン</a>
+                            <a href="narrative.html#turn-20" class="cross-link">📖 View Narrative</a>
+                            <a href="#turn-19" class="prev-turn">← Previous Turn</a>
                         </nav>
                     </header>
                     <div class="turn-content">
-                        <p><strong>GMアクション</strong>: 発見イベント（判決宣告）</p>
+                        <p><strong>GM Action</strong>: Discovery Event(Judgment Pronouncement)</p>
 
-                        <h4>🎭 パーティー間イベント</h4>
+                        <h4>🎭 Inter-Party Events</h4>
                         <ul>
-                            <li>⚔️⚖️ Ironbound vs 法廷: 🏆 法的勝利 - 正統な監護権の確立</li>
-                            <li>⚡⚖️ Stormveil vs 法廷: 📜 仲裁成功 - 中立仲裁者としての地位確立</li>
-                            <li>🌙⚖️ Nightglass vs 法廷: 📄 上訴権獲得 - 正式商議での再挑戦機会</li>
-                            <li>⚔️⚡🌙 三勢力合意: 🏢 復興事業 - 混成班での共同再建</li>
+                            <li>⚔️⚖️ Ironbound vs Court: 🏆 LegalVictory - </li>
+                            <li>⚡⚖️ Stormveil vs Court: 📜 ArbitrationSuccess - NeutralArbitration</li>
+                            <li>🌙⚖️ Nightglass vs Court: 📄 Right of appeal secured - retry only via formal negotiations</li>
+                            <li>⚔️⚡🌙 : 🏢 Reconstruction project - joint rebuilding with mixed teams</li>
                         </ul>
 
-                        <h4>📈 士気変化</h4>
+                        <h4>📈 Morale</h4>
                         <div class="morale-changes">
-                            <div class="morale-item ironbound">Ironbound: 9.3 → 9.3 (±0.0) ➖ [勝利確定]</div>
-                            <div class="morale-item nightglass">Nightglass: 5.6 → 5.6 (±0.0) ➖ [敗北受入]</div>
-                            <div class="morale-item stormveil">Stormveil: 9.4 → 9.4 (±0.0) ➖ [仲裁完了]</div>
+                            <div class="morale-item ironbound">Ironbound: 9.3 → 9.3 (±0.0) ➖ [Victory]</div>
+                            <div class="morale-item nightglass">Nightglass: 5.6 → 5.6 (±0.0) ➖ [Defeat]</div>
+                            <div class="morale-item stormveil">Stormveil: 9.4 → 9.4 (±0.0) ➖ [Arbitration]</div>
                         </div>
 
-                        <p class="key-event">🎯 最終判決: Vesper は Ironbound 監護下で復興事業参加</p>
+                        <p class="key-event">🎯 Final Verdict: Vesper  Ironbound </p>
                     </div>
                 </section>
             </section>
 
-            <!-- キーイベント要約 -->
+            <!-- Key Events Summary -->
             <section id="key-events" class="card">
-                <h3>🎯 キーイベント要約</h3>
+                <h3>🎯 Key Events Summary</h3>
                 <div class="events-timeline">
                     <div class="event-item">
-                        <div class="event-turn">ターン 3</div>
+                        <div class="event-turn">Turn 3</div>
                         <div class="event-content">
-                            <h4>⚔️ 雷軍団の最後通牒</h4>
-                            <p>Ironbound 勝利、Ilyra & Vesper 捕獲 - 戦略的転換点</p>
+                            <h4>⚔️ Ultimatum of the Thunder Legion</h4>
+                            <p>Ironbound Victory, Ilyra & Vesper  - </p>
                         </div>
                     </div>
                     <div class="event-item">
-                        <div class="event-turn">ターン 5</div>
+                        <div class="event-turn">Turn 5</div>
                         <div class="event-content">
-                            <h4>🌙 共鳴嵐の救出作戦</h4>
-                            <p>Ilyra 救出成功 - 希望の光</p>
+                            <h4>🌙 Rescue Operation in the Resonance Storm</h4>
+                            <p>Ilyra Rescue successful - </p>
                         </div>
                     </div>
                     <div class="event-item">
-                        <div class="event-turn">ターン 9</div>
+                        <div class="event-turn">Turn 9</div>
                         <div class="event-content">
-                            <h4>⚖️ 守護者の試練</h4>
-                            <p>Ironbound の正統性確立</p>
+                            <h4>⚖️ Trial of the Guardian</h4>
+                            <p>Ironbound Legitimacy</p>
                         </div>
                     </div>
                     <div class="event-item">
-                        <div class="event-turn">ターン 13</div>
+                        <div class="event-turn">Turn 13</div>
                         <div class="event-content">
-                            <h4>🛡️ 干潮の窓</h4>
-                            <p>地下侵入阻止 - 防御完成</p>
+                            <h4>🛡️ Window of Low Tide</h4>
+                            <p>UndergroundIncursion - </p>
                         </div>
                     </div>
                     <div class="event-item">
-                        <div class="event-turn">ターン 19</div>
+                        <div class="event-turn">Turn 19</div>
                         <div class="event-content">
-                            <h4>🏆 礼拝堂通気口からの侵入</h4>
-                            <p>最終防御成功、Ilyra 再捕獲 - 勝利確定</p>
+                            <h4>🏆 Infiltration through Chapel Vent</h4>
+                            <p>FinalDefense success, Ilyra recaptured - Victory</p>
                         </div>
                     </div>
                     <div class="event-item">
-                        <div class="event-turn">ターン 20</div>
+                        <div class="event-turn">Turn 20</div>
                         <div class="event-content">
-                            <h4>⚖️ 最終判決</h4>
-                            <p>復興契約判決 - 新章開始</p>
+                            <h4>⚖️ Final Verdict</h4>
+                            <p>Reconstruction-Contract Judgment - New Chapter Begins</p>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- 最終統計 -->
+            <!-- Final Statistics -->
             <section id="final-stats" class="card">
-                <h3>📊 最終統計</h3>
+                <h3>📊 Final Statistics</h3>
 
                 <div class="final-rankings">
-                    <h4>🏆 勢力ランキング（士気順）</h4>
+                    <h4>🏆 (Morale)</h4>
                     <ol class="ranking-list">
-                        <li class="stormveil">⚡ <strong>Stormveil Circle</strong>: 9.4 → 仲裁者として大成功</li>
-                        <li class="ironbound">⚔️ <strong>Ironbound Covenant</strong>: 9.3 → 軍事・法的勝利</li>
-                        <li class="nightglass">🌙 <strong>Nightglass Collective</strong>: 5.6 → 政治的敗北だが生存</li>
+                        <li class="stormveil">⚡ <strong>Stormveil Circle</strong>: 9.4 → ArbitrationSuccess</li>
+                        <li class="ironbound">⚔️ <strong>Ironbound Covenant</strong>: 9.3 → LegalVictory</li>
+                        <li class="nightglass">🌙 <strong>Nightglass Collective</strong>: 5.6 → Defeat</li>
                     </ol>
                 </div>
 
                 <div class="mvp-awards">
-                    <h4>🏅 MVPアワード</h4>
+                    <h4>🏅 MVP</h4>
                     <div class="awards-grid">
                         <div class="award-item ironbound">
                             <div class="award-icon">🛡️</div>
                             <div class="award-content">
-                                <h5>最優秀防御</h5>
-                                <p>Ironbound Covenant<br>（全侵入阻止）</p>
+                                <h5></h5>
+                                <p>Ironbound Covenant<br>(Incursion)</p>
                             </div>
                         </div>
                         <div class="award-item stormveil">
                             <div class="award-icon">🕊️</div>
                             <div class="award-content">
-                                <h5>最優秀外交</h5>
-                                <p>Stormveil Circle<br>（中立仲裁維持）</p>
+                                <h5>Diplomacy</h5>
+                                <p>Stormveil Circle<br>(NeutralArbitration)</p>
                             </div>
                         </div>
                         <div class="award-item nightglass">
                             <div class="award-icon">🌙</div>
                             <div class="award-content">
-                                <h5>最優秀粘り強さ</h5>
-                                <p>Nightglass Collective<br>（最後まで諦めず）</p>
+                                <h5></h5>
+                                <p>Nightglass Collective<br>()</p>
                             </div>
                         </div>
                     </div>
@@ -1046,20 +1046,20 @@
     </div>
 
     <script>
-        // ツールチップ機能（シンプル実装）
+        // ()
         document.addEventListener('DOMContentLoaded', function() {
             const dataPoints = document.querySelectorAll('.data-point');
 
             dataPoints.forEach(point => {
-                // ホバー効果（Sengoku Veil方式）
+                // (Sengoku Veil)
                 point.addEventListener('mouseenter', function() {
                     this.style.r = '8';
                     this.style.opacity = '1';
                     this.style.filter = 'drop-shadow(0 0 8px currentColor)';
                     this.style.transition = 'all 0.3s ease';
 
-                    // コンソールでデータを表示（デバッグ用）
-                    console.log(`ターン ${this.dataset.turn} - ${this.dataset.faction} - 士気: ${this.dataset.morale}`);
+                    // ()
+                    console.log(`Turn ${this.dataset.turn} - ${this.dataset.faction} - Morale: ${this.dataset.morale}`);
                 });
 
                 point.addEventListener('mouseleave', function() {
@@ -1068,15 +1068,15 @@
                     this.style.filter = 'none';
                 });
 
-                // クリックでデータ表示
+                // 
                 point.addEventListener('click', function() {
                     const turnInfo = document.getElementById('chart-turn-info');
                     if (turnInfo) {
                         turnInfo.innerHTML = `
                             <div style="background: rgba(0,0,0,0.8); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
-                                <h4 style="color: #FFD700;">ターン ${this.dataset.turn} データ</h4>
-                                <p><strong>勢力:</strong> ${this.dataset.faction}</p>
-                                <p><strong>士気変化:</strong> ${this.dataset.morale}</p>
+                                <h4 style="color: #FFD700;">Turn ${this.dataset.turn} </h4>
+                                <p><strong>:</strong> ${this.dataset.faction}</p>
+                                <p><strong>Morale:</strong> ${this.dataset.morale}</p>
                             </div>
                         `;
                     }
@@ -1084,7 +1084,7 @@
             });
         });
 
-        // ターンアイテムのホバー効果
+        // 
         document.querySelectorAll('.turn-item').forEach(item => {
             item.addEventListener('mouseenter', function() {
                 this.style.transform = 'translateY(-2px)';
