@@ -1,0 +1,21 @@
+{
+  "name": "universal-narrative-engine",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --coverage",
+    "build": "tsc -p tsconfig.build.json"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.3",
+    "@vitest/coverage-v8": "^1.6.0",
+    "tsx": "^4.20.5",
+    "typescript": "^5.5.4",
+    "vitest": "^1.6.0"
+  }
+}
