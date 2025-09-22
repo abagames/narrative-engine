@@ -6,29 +6,29 @@ This repo hosts the Universal Narrative Engine (UNE). It implements a region gra
 
 - `prompts/` — AI decision framework files (all documents used by AI agents)
   - **AI Agent Workflow:**
-    - `AI_AGENT_FILE_WORKFLOW.md` - AI Coding Agent 用ファイルベース自律実行ワークフロー（ファイル I/O のみでの完全自律セッション実行手順）
+    - `AI_AGENT_FILE_WORKFLOW.md` - File-based autonomous execution workflow for AI coding agents (complete autonomous session execution procedures using file I/O only)
   - **Core Decision Frameworks:**
-    - `GM_CORE_MIND.md` - GM 思考フレームワーク (NPC actions, environmental control)
-    - `PLAYER_MIND.md` - プレイヤー思考フレームワーク (character decisions, tactical evaluation)
+    - `GM_CORE_MIND.md` - GM thinking framework (NPC actions, environmental control)
+    - `PLAYER_MIND.md` - Player thinking framework (character decisions, tactical evaluation)
   - **Combat & Interaction Systems:**
-    - `INDIVIDUAL_COMBAT_SYSTEM.md` - 個人戦闘システムフレームワーク
-    - `TACTICAL_PATTERNS.md` - 戦術パターン定義
-    - `DIALOGUE_SYSTEM.md` - キャラクター対話システム
-    - `NPC_PERSONALITIES.md` - NPC 個性パターン
+    - `INDIVIDUAL_COMBAT_SYSTEM.md` - Individual combat system framework
+    - `TACTICAL_PATTERNS.md` - Tactical pattern definitions
+    - `DIALOGUE_SYSTEM.md` - Character dialogue system
+    - `NPC_PERSONALITIES.md` - NPC personality patterns
   - **Multi-Party & Social Systems:**
-    - `GUILD_MANAGEMENT.md` - ギルド管理システム
-    - `ALLIANCE_STRATEGY.md` - 同盟戦略
-    - `QUEST_MANAGEMENT.md` - クエスト管理システム
-    - `ACHIEVEMENT_PURSUIT.md` - 実績追求システム
-    - `COMPETITIVE_EVENTS.md` - 競争イベント
+    - `GUILD_MANAGEMENT.md` - Guild management system
+    - `ALLIANCE_STRATEGY.md` - Alliance strategy
+    - `QUEST_MANAGEMENT.md` - Quest management system
+    - `ACHIEVEMENT_PURSUIT.md` - Achievement pursuit system
+    - `COMPETITIVE_EVENTS.md` - Competitive events
   - **Novel Generation System:**
-    - `PARTY_PERSPECTIVE_NOVEL_CONVERSION.md` - パーティー視点小説変換（メインプロセス）
-    - `CHARACTER_PERSONALITY_TEMPLATES.md` - キャラクター性格テンプレート（マルチパーティー戦略・交渉パターン統合）
-    - `NOVEL_CONVERSION_EXAMPLES.md` - 小説変換例と品質チェックリスト
-- `autonomous_sessions/` — AI Agent ファイルベース自律実行用標準ディレクトリ
+    - `PARTY_PERSPECTIVE_NOVEL_CONVERSION.md` - Party perspective novel conversion (main process)
+    - `CHARACTER_PERSONALITY_TEMPLATES.md` - Character personality templates (integrated multi-party strategy and negotiation patterns)
+    - `NOVEL_CONVERSION_EXAMPLES.md` - Novel conversion examples and quality checklist
+- `autonomous_sessions/` — Standard directory for AI agent file-based autonomous execution
 
-  - `sessions/session_YYYYMMDD_HHMMSS/` — セッション管理（世界状態、プレイログ、ナラティブ）
-  - `ai_workspace/` — AI Agent 作業領域（決定要求・応答ファイル、世界状態スナップショット）
+  - `sessions/session_YYYYMMDD_HHMMSS/` — Session management (world state, play logs, narratives)
+  - `ai_workspace/` — AI agent workspace (decision request/response files, world state snapshots)
 
 - `src/` — tools source code
 - `test/` — unit tests
@@ -44,43 +44,43 @@ AI coding agents must **actively consult and apply** the appropriate decision fr
 
 **Before each action, determine your perspective:**
 
-- **NPC が行動する時**: `prompts/GM_CORE_MIND.md`を読み、GM 思考フレームワークを適用
-- **プレイヤーキャラクターが行動する時**: `prompts/PLAYER_MIND.md`を読み、キャラクター固有の判断基準を適用
-- **個人戦闘が発生する時**: `prompts/INDIVIDUAL_COMBAT_SYSTEM.md`を読み、パーティメンバー個人の剣と魔法の戦闘を詳細処理
-- **戦闘中の戦術判断**: `prompts/TACTICAL_PATTERNS.md`で戦術パターンを選択し、状況に応じた最適な行動を決定
-- **戦闘中の台詞生成**: `prompts/DIALOGUE_SYSTEM.md`でキャラクター個性に応じた戦闘台詞を生成
-- **社会システム**: `prompts/GUILD_MANAGEMENT.md`, `prompts/ALLIANCE_STRATEGY.md`, `prompts/QUEST_MANAGEMENT.md`, `prompts/ACHIEVEMENT_PURSUIT.md`, `prompts/COMPETITIVE_EVENTS.md` でギルド・同盟・クエスト・実績・競争システムを管理
-- **マルチパーティー戦略**: `prompts/CHARACTER_PERSONALITY_TEMPLATES.md` に統合されたマルチパーティー戦略・交渉パターン・信頼管理を参照
-- **探索協調**: `prompts/GM_CORE_MIND.md` に統合された探索協調管理を参照
+- **When NPCs act**: Read `prompts/GM_CORE_MIND.md` and apply the GM thinking framework
+- **When player characters act**: Read `prompts/PLAYER_MIND.md` and apply character-specific judgment criteria
+- **When individual combat occurs**: Read `prompts/INDIVIDUAL_COMBAT_SYSTEM.md` and process detailed sword and magic combat at the individual party member level
+- **For tactical decisions in combat**: Use `prompts/TACTICAL_PATTERNS.md` to select tactical patterns and determine optimal actions based on the situation
+- **For dialogue generation in combat**: Use `prompts/DIALOGUE_SYSTEM.md` to generate combat dialogue appropriate to character personalities
+- **For social systems**: Manage guild, alliance, quest, achievement, and competitive systems using `prompts/GUILD_MANAGEMENT.md`, `prompts/ALLIANCE_STRATEGY.md`, `prompts/QUEST_MANAGEMENT.md`, `prompts/ACHIEVEMENT_PURSUIT.md`, `prompts/COMPETITIVE_EVENTS.md`
+- **For multi-party strategy**: Reference multi-party strategy, negotiation patterns, and trust management integrated in `prompts/CHARACTER_PERSONALITY_TEMPLATES.md`
+- **For exploration coordination**: Reference exploration coordination management integrated in `prompts/GM_CORE_MIND.md`
 
 ### Core Execution Principles
 
 #### Framework Application
 
-- **MUST READ FRAMEWORKS**: 各ターンで必ず`prompts/GM_CORE_MIND.md`または`prompts/PLAYER_MIND.md`を読み込んで適用。必要に応じて関連する補助文書も併用
-- **AI AGENT DECISION MAKING**: AI agent が各ターンでフレームワークを読み込み、評価軸・計算式を実際に適用して意思決定
-- **FRAMEWORK-DRIVEN EVALUATION**: 各プロンプトの判断フレームワークに従って数値的評価を行い、最も高いスコアの行動を選択
-- **DECISION ISOLATION**: AI Agent の思考・判断プロセスはツールによって自動化されず、AI Agent が直接フレームワークを適用して実行
+- **MUST READ FRAMEWORKS**: Always read and apply either `prompts/GM_CORE_MIND.md` or `prompts/PLAYER_MIND.md` each turn. Use related supplementary documents as needed
+- **AI AGENT DECISION MAKING**: AI agents read frameworks each turn and actually apply evaluation criteria and calculation formulas for decision-making
+- **FRAMEWORK-DRIVEN EVALUATION**: Perform numerical evaluations according to the judgment frameworks in each prompt and select the action with the highest score
+- **DECISION ISOLATION**: AI agent thinking and judgment processes are not automated by tools; AI agents directly apply frameworks for execution
 
 #### Combat & Interaction Systems
 
-- **INDIVIDUAL COMBAT**: `conflict`アクション時は`prompts/INDIVIDUAL_COMBAT_SYSTEM.md`を読み、パーティメンバー個人レベルでの剣と魔法の戦闘を完全実行
-- **TACTICAL COMBAT**: 戦闘中は`prompts/TACTICAL_PATTERNS.md`で戦術パターンを評価・選択し、`prompts/DIALOGUE_SYSTEM.md`で個性に応じた台詞生成
-- **COMBAT DETAIL REQUIREMENT**: 戦闘時は抽象的な結果ではなく、個人の剣撃・魔法詠唱・ダメージを完全記録
+- **INDIVIDUAL COMBAT**: During `conflict` actions, read `prompts/INDIVIDUAL_COMBAT_SYSTEM.md` and fully execute sword and magic combat at the individual party member level
+- **TACTICAL COMBAT**: During combat, evaluate and select tactical patterns using `prompts/TACTICAL_PATTERNS.md` and generate dialogue appropriate to personalities using `prompts/DIALOGUE_SYSTEM.md`
+- **COMBAT DETAIL REQUIREMENT**: During combat, fully record individual sword strikes, magic incantations, and damage rather than abstract results
 
 #### Life Simulation & Social Systems
 
-- **LIFE SIMULATION**: 地域ベースシステムでは`prompts/GUILD_MANAGEMENT.md`等の社会システム文書を活用し、経済・外交・探索活動を実行
-- **PERSISTENT STATE MANAGEMENT**: 全ての状態・決定をファイルに永続化し、`autonomous_sessions/` ディレクトリ構造で管理
+- **LIFE SIMULATION**: In region-based systems, utilize social system documents like `prompts/GUILD_MANAGEMENT.md` to execute economic, diplomatic, and exploration activities
+- **PERSISTENT STATE MANAGEMENT**: Persist all states and decisions to files and manage them using the `autonomous_sessions/` directory structure
 
 ### Tool Usage Policy
 
 #### Allowed Tools
 
-- **ファイルベース永続化ツール**: `start_session.ts`, `process_ai_responses.ts`, `append_playlog.ts`, `generate_next_turn.ts`, `finalize_session.ts` は世界状態・プレイログ記録用として許可
+- **File-based persistence tools**: `start_session.ts`, `process_ai_responses.ts`, `append_playlog.ts`, `generate_next_turn.ts`, `finalize_session.ts` are permitted for world state and play log recording
 
 #### Forbidden Tools & Practices
 
-- **事前プログラムされた AI 決定ロジック**: makeGMDecision、executePlayerPhase 等の使用禁止
-- **自動化ゲームループ**: demo_session.js 等の使用禁止
-- **デモ用コード生成**: 新たな自動化スクリプトの実装禁止
+- **Pre-programmed AI decision logic**: Prohibited use of makeGMDecision, executePlayerPhase, etc.
+- **Automated game loops**: Prohibited use of demo_session.js, etc.
+- **Demo code generation**: Prohibited implementation of new automation scripts
