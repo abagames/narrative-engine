@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>三光連環の儀 対立 - プレイログ分析</title>
+    <title>Triple‑Light Linked Ring – Playlog Analysis</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -23,51 +23,51 @@
     <main class="container">
         <!-- Page Header -->
         <section class="campaign-overview">
-            <h1>📊 三光連環の儀 対立 - プレイログ分析</h1>
-            <p class="subtitle">二勢力による14ターンの神聖儀式争奪戦 - 統計データと数値分析</p>
+            <h1>📊 Triple‑Light Linked Ring – Playlog Analysis</h1>
+            <p class="subtitle">14‑turn sacred ritual conflict between two factions – statistical and numerical analysis</p>
         </section>
 
-        <!-- 初期パーティー状態 -->
+        <!-- Initial Party Status -->
         <section id="initial-stats" class="card">
-            <h3>📊 初期パーティー状態</h3>
+            <h3>📊 Initial Party Status</h3>
             <div class="faction-stats-grid">
                 <div class="faction-stat auric">
                     <h4>🌟 Auric Covenant</h4>
-                    <p><strong>拠点</strong>: <span class="location" data-region="moonweave">Moonweave Crossroads</span> | <strong>専門</strong>: 神聖儀式と外交</p>
+                    <p><strong>Base</strong>: <span class="location" data-region="moonweave">Moonweave Crossroads</span> | <strong>Specialty</strong>: Sacred rituals and diplomacy</p>
                     <table class="stats-table">
-                        <tr><td>💰 通貨</td><td>120</td></tr>
-                        <tr><td>⚔️ 戦闘力</td><td>5</td></tr>
-                        <tr><td>🏃 探索力</td><td>6</td></tr>
-                        <tr><td>🤝 外交力</td><td>8</td></tr>
-                        <tr><td>🔮 儀式力</td><td>9</td></tr>
-                        <tr><td>📈 士気</td><td>7</td></tr>
-                        <tr><td>📍 位置</td><td><span class="location" data-region="moonweave">Moonweave Crossroads</span></td></tr>
+                        <tr><td>💰 Currency</td><td>120</td></tr>
+                        <tr><td>⚔️ Combat Power</td><td>5</td></tr>
+                        <tr><td>🏃 Exploration Power</td><td>6</td></tr>
+                        <tr><td>🤝 Diplomacy</td><td>8</td></tr>
+                        <tr><td>🔮 Ritual Power</td><td>9</td></tr>
+                        <tr><td>📈 Morale</td><td>7</td></tr>
+                        <tr><td>📍 Location</td><td><span class="location" data-region="moonweave">Moonweave Crossroads</span></td></tr>
                     </table>
-                    <p><strong>リソース</strong>: 香束×6, 太陽欠片×3, 守護巻物×2</p>
-                    <p><strong>使命</strong>: 三光連環の儀を完遂し、三つの古代神殿に聖約を刻む</p>
+                    <p><strong>Resources</strong>: Incense×6, Sun Fragments×3, Guardian Scrolls×2</p>
+                    <p><strong>Objective</strong>: Complete the Triple Light Linked Ring ritual and inscribe the sacred covenant on three ancient temples</p>
                 </div>
 
                 <div class="faction-stat veilbreak">
                     <h4>⚡ Veilbreak Sentinels</h4>
-                    <p><strong>拠点</strong>: <span class="location" data-region="ashen">Ashen Ramparts</span> | <strong>専門</strong>: 戦術妨害と封鎖</p>
+                    <p><strong>Base</strong>: <span class="location" data-region="ashen">Ashen Ramparts</span> | <strong>Specialty</strong>: Tactical disruption and blockade</p>
                     <table class="stats-table">
-                        <tr><td>💰 通貨</td><td>95</td></tr>
-                        <tr><td>⚔️ 戦闘力</td><td>7</td></tr>
-                        <tr><td>🏃 探索力</td><td>7</td></tr>
-                        <tr><td>🤝 外交力</td><td>5</td></tr>
-                        <tr><td>🔧 妨害力</td><td>8</td></tr>
-                        <tr><td>📈 士気</td><td>7</td></tr>
-                        <tr><td>📍 位置</td><td><span class="location" data-region="ashen">Ashen Ramparts</span></td></tr>
+                        <tr><td>💰 Currency</td><td>95</td></tr>
+                        <tr><td>⚔️ Combat Power</td><td>7</td></tr>
+                        <tr><td>🏃 Exploration Power</td><td>7</td></tr>
+                        <tr><td>🤝 Diplomacy</td><td>5</td></tr>
+                        <tr><td>🔧 Sabotage Power</td><td>8</td></tr>
+                        <tr><td>📈 Morale</td><td>7</td></tr>
+                        <tr><td>📍 Location</td><td><span class="location" data-region="ashen">Ashen Ramparts</span></td></tr>
                     </table>
-                    <p><strong>リソース</strong>: 影縛薬×4, 遠見鏡×3, 補給糧×5</p>
-                    <p><strong>使命</strong>: 三光連環の儀を阻止し、神殿への接近を断つ</p>
+                    <p><strong>Resources</strong>: Shadow Poison×4, Far-sight Mirrors×3, Supply Rations×5</p>
+                    <p><strong>Objective</strong>: Stop the Triple Light Linked Ring ritual and cut off access to the temples</p>
                 </div>
             </div>
         </section>
 
-        <!-- 士気変動グラフ -->
+        <!-- Morale Fluctuation Chart -->
         <section id="morale-chart" class="card">
-            <h3>📈 士気変動チャート</h3>
+            <h3>📈 Morale Fluctuation Chart</h3>
             <div class="chart-container">
                 <canvas id="moraleChart" width="800" height="400"></canvas>
             </div>
@@ -79,889 +79,889 @@
 
         <section id="turn-1" class="turn-log">
             <header class="turn-header">
-                <h2>ターン 1: 嵐前夜の布陣 ⛈️</h2>
+                <h2>Turn 1: Pre-Storm Deployment ⛈️</h2>
                 <nav class="turn-nav">
-                    <a href="narrative.html#turn-1" class="cross-link">📖 ナラティブを見る</a>
-                    <a href="#turn-2" class="next-turn">次のターン →</a>
+                    <a href="narrative.html#turn-1" class="cross-link">📖 View Narrative</a>
+                    <a href="#turn-2" class="next-turn">Next Turn →</a>
                 </nav>
             </header>
             <div class="turn-content">
                 <div class="gm-action">
-                    <h4>🎯 GM アクション: environmental_change</h4>
+                    <h4>🎯 GM Action: environmental_change</h4>
                 </div>
 
                 <div class="event-grid">
                     <div class="event-section">
-                        <h4>📍 位置変更</h4>
+                        <h4>📍 Location Changes</h4>
                         <ul class="movement-list">
-                            <li class="auric">🌟 <strong>Auric Covenant</strong>: <span class="location" data-region="moonweave">Moonweave Crossroads</span> → <span class="location" data-region="solace">Solace Sanctum</span>（慰めの聖所への移動）</li>
-                            <li class="veilbreak">⚡ <strong>Veilbreak Sentinels</strong>: <span class="location" data-region="ashen">Ashen Ramparts</span> → <span class="location" data-region="stormspire">Stormspire Temple</span>（嵐尖塔の封鎖）</li>
+                            <li class="auric">🌟 <strong>Auric Covenant</strong>: <span class="location" data-region="moonweave">Moonweave Crossroads</span> → <span class="location" data-region="solace">Solace Sanctum</span>(Movement to Solace Sanctum)</li>
+                            <li class="veilbreak">⚡ <strong>Veilbreak Sentinels</strong>: <span class="location" data-region="ashen">Ashen Ramparts</span> → <span class="location" data-region="stormspire">Stormspire Temple</span>(Stormspire blockade)</li>
                         </ul>
                     </div>
 
                     <div class="event-section">
-                        <h4>🌍 環境変化</h4>
+                        <h4>🌍 Environmental Change</h4>
                         <ul>
-                            <li><strong>天候</strong>: 嵐尖塔上空に嵐雲が渦巻き、突風が吹き荒れる</li>
-                            <li><strong>地形危険</strong>: 嵐尖塔に横風による移動阻害（ペナルティ2）</li>
+                            <li><strong>Weather</strong>: Storm clouds swirl above Stormspire, violent winds rage</li>
+                            <li><strong>Terrain Hazard</strong>: Movement obstruction due to crosswinds at Stormspire (Penalty 2)</li>
                         </ul>
                     </div>
 
                     <div class="event-section">
-                        <h4>📈 士気変化</h4>
+                        <h4>📈 Morale Changes</h4>
                         <div class="morale-changes">
                             <div class="morale-item auric">
-                                🌟 <strong>Auric Covenant</strong>: 7 → 7 (維持) ➡️ 祈りの行進を守り抜いた結束
+                                🌟 <strong>Auric Covenant</strong>: 7 → 7 (Maintained) ➡️ Unity that protected the prayer march
                             </div>
                             <div class="morale-item veilbreak">
-                                ⚡ <strong>Veilbreak Sentinels</strong>: 7 → 7 (維持) ➡️ 戦略的要衝の確保
+                                ⚡ <strong>Veilbreak Sentinels</strong>: 7 → 7 (Maintained) ➡️ Secured strategic stronghold
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="key-event">
-                    <h4>🎯 重要イベント</h4>
-                    <p>中央ルートの封鎖により、迂回路の重要性が浮上</p>
+                    <h4>🎯 Key Event</h4>
+                    <p>Central route blockade highlights the importance of bypass routes</p>
                 </div>
             </div>
         </section>
 
         <section id="turn-2" class="turn-log">
             <header class="turn-header">
-                <h2>ターン 2: 第一節完遂と黄昏の導き 🌅</h2>
+                <h2>Turn 2: First Canto Completed and Twilight Guidance 🌅</h2>
                 <nav class="turn-nav">
-                    <a href="#turn-1" class="prev-turn">← 前のターン</a>
-                    <a href="narrative.html#turn-2" class="cross-link">📖 ナラティブを見る</a>
-                    <a href="#turn-3" class="next-turn">次のターン →</a>
+                    <a href="#turn-1" class="prev-turn">← Previous Turn</a>
+                    <a href="narrative.html#turn-2" class="cross-link">📖 View Narrative</a>
+                    <a href="#turn-3" class="next-turn">Next Turn →</a>
                 </nav>
             </header>
             <div class="turn-content">
                 <div class="gm-action">
-                    <h4>🎯 GM アクション: discovery_event</h4>
+                    <h4>🎯 GM Action: discovery_event</h4>
                 </div>
 
                 <div class="event-grid">
                     <div class="event-section">
-                        <h4>🎭 パーティー間イベント</h4>
+                        <h4>🎭 Inter‑party Events</h4>
                         <ul class="party-events">
-                            <li class="auric">🌟🏛️ <strong>Auric Covenant vs Solace Sanctum</strong>: ⚡ <strong>外交成功</strong> - 第一節の祈り完遂、霧路案内人の獲得</li>
-                            <li class="veilbreak">⚡🏰 <strong>Veilbreak Sentinels vs Stormspire</strong>: 🛡️ <strong>封鎖作戦</strong> - 中央ルートの完全遮断、影網罠設置</li>
+                            <li class="auric">🌟🏛️ <strong>Auric Covenant vs Solace Sanctum</strong>: ⚡ <strong>Diplomatic Success</strong> - First canto completed; acquired mist‑road guides</li>
+                            <li class="veilbreak">⚡🏰 <strong>Veilbreak Sentinels vs Stormspire</strong>: 🛡️ <strong>Blockade Operation</strong> - Central route fully sealed; shadow‑web traps deployed</li>
                         </ul>
                     </div>
 
                     <div class="event-section">
-                        <h4>📈 士気変化</h4>
+                        <h4>📈 Morale Changes</h4>
                         <div class="morale-detailed">
                             <div class="morale-item auric">
                                 <strong>Auric Covenant</strong>: 7 → 8 (+1) ⬆️<br>
-                                <em>三光連環の達成が現実味</em>
+                                <em>Triple‑Light completion feels within reach</em>
                             </div>
                             <div class="morale-item veilbreak">
                                 <strong>Veilbreak Sentinels</strong>: 7 → 7.5 (+0.5) ⬆️<br>
-                                <em>防衛線確立への自信</em>
+                                <em>Confidence in established defense line</em>
                             </div>
                         </div>
                     </div>
 
                     <div class="event-section">
-                        <h4>🎒 リソース変化</h4>
+                        <h4>🎒 Resource Changes</h4>
                         <ul class="resource-changes">
-                            <li class="auric">🌟 <strong>Auric Covenant</strong>: <span class="resource" data-type="sacred">香束</span> 6→5 (儀式消費) - 第一節の祈りで使用</li>
-                            <li class="veilbreak">⚡ <strong>Veilbreak Sentinels</strong>: <span class="resource" data-type="poison">影縛薬</span> 4→3 (罠設置) - 嵐尖塔防衛強化</li>
+                            <li class="auric">🌟 <strong>Auric Covenant</strong>: <span class="resource" data-type="sacred">Incense</span> 6→5 (Used in the ritual) - Used in the first movement prayer</li>
+                            <li class="veilbreak">⚡ <strong>Veilbreak Sentinels</strong>: <span class="resource" data-type="poison">Shadow Poison</span> 4→3 (Trap Deployment) - Stormspire Reinforced Defense</li>
                         </ul>
                     </div>
 
                     <div class="event-section">
-                        <h4>🌍 世界発見</h4>
-                        <p><strong>新地域効果</strong>: <span class="location" data-region="verdant">Verdant Outskirts</span> に隠密路と黄昏案内人が出現</p>
+                        <h4>🌍 World Discovery</h4>
+                        <p><strong>New Regional Effect</strong>: <span class="location" data-region="verdant">Verdant Outskirts</span>  where stealth routes and Twilight Guides emerge</p>
                     </div>
                 </div>
 
                 <div class="ritual-progress">
-                    <h4>🔮 儀式進行度: 1/3 達成</h4>
+                    <h4>🔮 Ritual Progress: 1/3 Achieved</h4>
                     <div class="progress-bar">
                         <div class="progress-fill" style="width: 33.33%"></div>
                     </div>
                 </div>
 
                 <div class="key-event">
-                    <h4>🎯 重要イベント</h4>
-                    <p>迂回路の発見により戦略的選択肢が拡大</p>
+                    <h4>🎯 Key Event</h4>
+                    <p>Discovery of bypass expands strategic options</p>
                 </div>
             </div>
         </section>
 
         <section id="turn-3" class="turn-log">
             <header class="turn-header">
-                <h2>ターン 3: 黄昏案内人との誓約 🌫️</h2>
+                <h2>Turn 3: Pact with the Twilight Guides 🌫️</h2>
                 <nav class="turn-nav">
-                    <a href="#turn-2" class="prev-turn">← 前のターン</a>
-                    <a href="narrative.html#turn-3" class="cross-link">📖 ナラティブを見る</a>
-                    <a href="#turn-4" class="next-turn">次のターン →</a>
+                    <a href="#turn-2" class="prev-turn">← Previous Turn</a>
+                    <a href="narrative.html#turn-3" class="cross-link">📖 View Narrative</a>
+                    <a href="#turn-4" class="next-turn">Next Turn →</a>
                 </nav>
             </header>
             <div class="turn-content">
                 <div class="gm-action">
-                    <h4>🎯 GM アクション: weather_change</h4>
+                    <h4>🎯 GM Action: weather_change</h4>
                 </div>
 
                 <div class="alliance-highlight">
-                    <h4>🤝 同盟締結</h4>
+                    <h4>🤝 Alliance Formed</h4>
                     <div class="alliance-details">
                         <strong>🌟💫 Auric Covenant + Duskway Guides</strong><br>
-                        <span class="alliance-result">⭐ 同盟成立</span> - 霧路の安全通行権獲得（忠誠度7）
+                        <span class="alliance-result">⭐ Alliance formed</span> - Secured safe passage through mist‑roads(Loyalty 7)
                     </div>
                 </div>
 
                 <div class="event-grid">
                     <div class="event-section">
-                        <h4>📈 士気変化</h4>
+                        <h4>📈 Morale Changes</h4>
                         <div class="morale-detailed">
                             <div class="morale-item auric">
                                 <strong>Auric Covenant</strong>: 8 → 8.2 (+0.2) ⬆️<br>
-                                <em>支援者獲得による前進自信</em>
+                                <em>Gained allies, bolstering confidence to advance</em>
                             </div>
                             <div class="morale-item veilbreak">
                                 <strong>Veilbreak Sentinels</strong>: 7.5 → 7.6 (+0.1) ⬆️<br>
-                                <em>罠網拡張による優位感</em>
+                                <em>Advantage from expanding trap network</em>
                             </div>
                         </div>
                     </div>
 
                     <div class="event-section">
-                        <h4>🎒 リソース変化</h4>
+                        <h4>🎒 Resource Changes</h4>
                         <ul class="resource-changes">
-                            <li class="auric">🌟 <strong>Auric Covenant</strong>: <span class="resource" data-type="magic">守護巻物</span> 2→1 (誓約材料) - 信頼の証として提供</li>
-                            <li class="veilbreak">⚡ <strong>Veilbreak Sentinels</strong>: <span class="resource" data-type="tool">遠見鏡</span> 3→2 (監視強化) - <span class="location" data-region="veilborn">ヴェイルボーン街道</span>監視</li>
+                            <li class="auric">🌟 <strong>Auric Covenant</strong>: <span class="resource" data-type="magic">Guardian Scrolls</span> 2→1 (Pledge Material) - Offered as token of trust</li>
+                            <li class="veilbreak">⚡ <strong>Veilbreak Sentinels</strong>: <span class="resource" data-type="tool">Far-sight Mirrors</span> 3→2 (Enhanced Surveillance) - <span class="location" data-region="veilborn">Veilborn Way</span>Surveillance</li>
                         </ul>
                     </div>
 
                     <div class="event-section">
-                        <h4>🌍 環境変化</h4>
+                        <h4>🌍 Environmental Change</h4>
                         <ul>
-                            <li><strong>天候</strong>: 生体発光霧が<span class="location" data-region="verdant">Verdant Outskirts</span>を覆い、隠された道を照らす</li>
-                            <li><strong>新資源</strong>: 薬草林、隠し道、胞子灯籠が利用可能に</li>
+                            <li><strong>Weather</strong>: Bioluminescent mist covers<span class="location" data-region="verdant">Verdant Outskirts</span> covering it, illuminating hidden paths</li>
+                            <li><strong>New Resources</strong>: Herb Groves, Hidden Paths, Spore Lanterns become available</li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="key-event">
-                    <h4>🎯 重要イベント</h4>
-                    <p>迂回路の確保と現地協力者の獲得により戦略的優位を確立</p>
+                    <h4>🎯 Key Event</h4>
+                    <p>Secured bypass and local allies, establishing strategic advantage</p>
                 </div>
             </div>
         </section>
 
-        <!-- ターン 4: 夕闇の森辺境移動 -->
+        <!-- Turn 4: Dusk Forest Border Movement -->
         <section id="turn-4" class="turn-log">
             <header class="turn-header">
-                <h2>ターン 4: 夕闇の森辺境移動 🌲</h2>
+                <h2>Turn 4: Dusk Forest Border Movement 🌲</h2>
                 <nav class="turn-nav">
-                    <a href="#turn-3" class="prev-turn">← 前のターン</a>
-                    <a href="narrative.html#turn-4" class="cross-link">📖 ナラティブを見る</a>
-                    <a href="#turn-5" class="next-turn">次のターン →</a>
+                    <a href="#turn-3" class="prev-turn">← Previous Turn</a>
+                    <a href="narrative.html#turn-4" class="cross-link">📖 View Narrative</a>
+                    <a href="#turn-5" class="next-turn">Next Turn →</a>
                 </nav>
             </header>
             <div class="turn-content">
                 <div class="gm-action">
-                    <h4>🎯 GM アクション: environmental_change</h4>
+                    <h4>🎯 GM Action: environmental_change</h4>
                 </div>
 
                 <div class="event-grid">
                     <div class="event-section">
-                        <h4>📍 位置変更</h4>
+                        <h4>📍 Location Changes</h4>
                         <ul class="movement-list">
-                            <li class="auric">🌟 <strong>Auric Covenant</strong>: <span class="location" data-region="solace">Solace Sanctum</span> → <span class="location" data-region="verdant">Verdant Outskirts</span>（森林外周移動）</li>
+                            <li class="auric">🌟 <strong>Auric Covenant</strong>: <span class="location" data-region="solace">Solace Sanctum</span> → <span class="location" data-region="verdant">Verdant Outskirts</span>（Moved to forest outskirts）</li>
                         </ul>
                     </div>
 
                     <div class="event-section">
-                        <h4>📈 士気変化</h4>
+                        <h4>📈 Morale Changes</h4>
                         <div class="morale-changes">
                             <div class="morale-item auric">
-                                🌟 <strong>Auric Covenant</strong>: 8.2 → 8.1 (-0.1) ⬇️ 森林移動の疲労
+                                🌟 <strong>Auric Covenant</strong>: 8.2 → 8.1 (-0.1) ⬇️ Fatigue from forest movement
                             </div>
                             <div class="morale-item veilbreak">
-                                ⚡ <strong>Veilbreak Sentinels</strong>: 7.6 → 7.6 (+0.3) ⬆️ 封鎖網強化成功
+                                ⚡ <strong>Veilbreak Sentinels</strong>: 7.6 → 7.6 (+0.3) ⬆️ Blockade strengthened successfully
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="key-event">
-                    <h4>🎯 重要イベント</h4>
-                    <p>監視団の封鎖網強化、契約団迂回路探索開始</p>
+                    <h4>🎯 Key Event</h4>
+                    <p>Sentinel blockade network strengthened, Covenant begins bypass exploration</p>
                 </div>
             </div>
         </section>
 
-        <!-- ターン 5: 光花樹脂の採集 -->
+        <!-- Turn 5: Light-Flower Resin Gathering -->
         <section id="turn-5" class="turn-log">
             <header class="turn-header">
-                <h2>ターン 5: 光花樹脂の採集 ✨</h2>
+                <h2>Turn 5: Light-Flower Resin Gathering ✨</h2>
                 <nav class="turn-nav">
-                    <a href="#turn-4" class="prev-turn">← 前のターン</a>
-                    <a href="narrative.html#turn-5" class="cross-link">📖 ナラティブを見る</a>
-                    <a href="#turn-6" class="next-turn">次のターン →</a>
+                    <a href="#turn-4" class="prev-turn">← Previous Turn</a>
+                    <a href="narrative.html#turn-5" class="cross-link">📖 View Narrative</a>
+                    <a href="#turn-6" class="next-turn">Next Turn →</a>
                 </nav>
             </header>
             <div class="turn-content">
                 <div class="gm-action">
-                    <h4>🎯 GM アクション: discovery_event</h4>
+                    <h4>🎯 GM Action: discovery_event</h4>
                 </div>
 
                 <div class="event-grid">
                     <div class="event-section">
-                        <h4>🌍 重大発見</h4>
+                        <h4>🌍 Major Discovery</h4>
                         <ul>
-                            <li><strong>Embershroud Basilica</strong>: 地脈震動により特殊効果「Leyline Tremor」発生</li>
-                            <li><strong>偵察情報</strong>: 大聖堂の玄武岩床に亀裂、儀式共鳴の可能性</li>
+                            <li><strong>Embershroud Basilica</strong>: Leyline Tremor causing Special Effect 'Leyline Tremor'</li>
+                            <li><strong>Reconnaissance Info</strong>: Basilica's basalt floor cracks, possible ritual resonance</li>
                         </ul>
                     </div>
 
                     <div class="event-section">
-                        <h4>🎒 リソース変化</h4>
+                        <h4>🎒 Resource Changes</h4>
                         <ul class="resource-changes">
-                            <li class="auric">🌟 <strong>Auric Covenant</strong>: <span class="resource" data-type="resin">光花樹脂</span> 0→2 (+2) - 森林採集成功</li>
+                            <li class="auric">🌟 <strong>Auric Covenant</strong>: <span class="resource" data-type="resin">Light-Flower Resin</span> 0→2 (+2) - Forest gathering success</li>
                         </ul>
                     </div>
 
                     <div class="event-section">
-                        <h4>📈 士気変化</h4>
+                        <h4>📈 Morale Changes</h4>
                         <div class="morale-changes">
                             <div class="morale-item auric">
-                                🌟 <strong>Auric Covenant</strong>: 8.1 → 8.3 (+0.2) ⬆️ 準備進展への安心感
+                                🌟 <strong>Auric Covenant</strong>: 8.1 → 8.3 (+0.2) ⬆️ Reassurance from progress in preparations
                             </div>
                             <div class="morale-item veilbreak">
-                                ⚡ <strong>Veilbreak Sentinels</strong>: 7.6 → 7.65 (+0.05) ⬆️ 情報収集成功
+                                ⚡ <strong>Veilbreak Sentinels</strong>: 7.6 → 7.65 (+0.05) ⬆️ Successful information gathering
                             </div>
                         </div>
                     </div>
 
                     <div class="event-section">
-                        <h4>🕵️ 諜報活動</h4>
-                        <p><strong>⚡ Veilbreak Sentinels</strong>: 影跡網較正完了、光花の痕跡探知</p>
+                        <h4>🕵️ Intelligence Activity</h4>
+                        <p><strong>⚡ Veilbreak Sentinels</strong>: Shadow network calibrated; light‑flower traces detected</p>
                     </div>
                 </div>
 
                 <div class="key-event">
-                    <h4>🎯 重要イベント</h4>
-                    <p>次の戦場での地脈異常を事前察知</p>
+                    <h4>🎯 Key Event</h4>
+                    <p>Detected leyline anomaly at next battlefield in advance</p>
                 </div>
             </div>
         </section>
 
-        <!-- ターン 6: ヴェイルボーン街道突入 -->
+        <!-- Turn 6: Veilborn Way Incursion -->
         <section id="turn-6" class="turn-log">
             <header class="turn-header">
-                <h2>ターン 6: ヴェイルボーン街道突入 🏛️</h2>
+                <h2>Turn 6: Veilborn Way Incursion 🏛️</h2>
                 <nav class="turn-nav">
-                    <a href="#turn-5" class="prev-turn">← 前のターン</a>
-                    <a href="narrative.html#turn-6" class="cross-link">📖 ナラティブを見る</a>
-                    <a href="#turn-7" class="next-turn">次のターン →</a>
+                    <a href="#turn-5" class="prev-turn">← Previous Turn</a>
+                    <a href="narrative.html#turn-6" class="cross-link">📖 View Narrative</a>
+                    <a href="#turn-7" class="next-turn">Next Turn →</a>
                 </nav>
             </header>
             <div class="turn-content">
                 <div class="gm-action">
-                    <h4>🎯 GM アクション: environmental_change</h4>
+                    <h4>🎯 GM Action: environmental_change</h4>
                 </div>
 
                 <div class="event-grid">
                     <div class="event-section">
-                        <h4>📍 位置変更</h4>
+                        <h4>📍 Location Changes</h4>
                         <ul class="movement-list">
-                            <li class="auric">🌟 <strong>Auric Covenant</strong>: <span class="location" data-region="verdant">Verdant Outskirts</span> → <span class="location" data-region="veilborn">Veilborn Way</span>（廃墟への突入）</li>
+                            <li class="auric">🌟 <strong>Auric Covenant</strong>: <span class="location" data-region="verdant">Verdant Outskirts</span> → <span class="location" data-region="veilborn">Veilborn Way</span>(Incursion into the ruins)</li>
                         </ul>
                     </div>
 
                     <div class="event-section">
-                        <h4>🌍 新たな地形危険</h4>
+                        <h4>🌍 New Terrain Hazard</h4>
                         <ul>
-                            <li><strong>影像残響</strong>: Veilborn Wayに知覚ペナルティ2の残像罠設置</li>
-                            <li><strong>廃墟</strong>: 影と光の二重像が侵入者を惑わす</li>
+                            <li><strong>Shadow Afterimage</strong>: Veilborn Way with perception penalty 2 afterimage trap deployment</li>
+                            <li><strong>Ruins</strong>: Shadow and light double images confuse intruders</li>
                         </ul>
                     </div>
 
                     <div class="event-section">
-                        <h4>📈 士気変化</h4>
+                        <h4>📈 Morale Changes</h4>
                         <div class="morale-changes">
                             <div class="morale-item auric">
-                                🌟 <strong>Auric Covenant</strong>: 8.3 → 8.0 (-0.3) ⬇️ 直接衝突への緊張
+                                🌟 <strong>Auric Covenant</strong>: 8.3 → 8.0 (-0.3) ⬇️ Tension from imminent confrontation
                             </div>
                             <div class="morale-item veilbreak">
-                                ⚡ <strong>Veilbreak Sentinels</strong>: 7.65 → 7.65 (維持) ➡️ 罠展開への自信
+                                ⚡ <strong>Veilbreak Sentinels</strong>: 7.65 → 7.65 (Maintained) ➡️ Confidence in trap deployment
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="key-event">
-                    <h4>🎯 重要イベント</h4>
-                    <p>ついに両陣営が同一地点で直接対峙</p>
+                    <h4>🎯 Key Event</h4>
+                    <p>Both factions finally face off at the same location</p>
                 </div>
             </div>
         </section>
 
-        <!-- ターン 7: 日蝕の影と時間圧迫 -->
+        <!-- Turn 7: Eclipse Shadows and Time Pressure -->
         <section id="turn-7" class="turn-log">
             <header class="turn-header">
-                <h2>ターン 7: 日蝕の影と時間圧迫 🌑</h2>
+                <h2>Turn 7: Eclipse Shadows and Time Pressure 🌑</h2>
                 <nav class="turn-nav">
-                    <a href="#turn-6" class="prev-turn">← 前のターン</a>
-                    <a href="narrative.html#turn-7" class="cross-link">📖 ナラティブを見る</a>
-                    <a href="#turn-8" class="next-turn">次のターン →</a>
+                    <a href="#turn-6" class="prev-turn">← Previous Turn</a>
+                    <a href="narrative.html#turn-7" class="cross-link">📖 View Narrative</a>
+                    <a href="#turn-8" class="next-turn">Next Turn →</a>
                 </nav>
             </header>
             <div class="turn-content">
                 <div class="gm-action">
-                    <h4>🎯 GM アクション: weather_change</h4>
+                    <h4>🎯 GM Action: weather_change</h4>
                 </div>
 
                 <div class="event-grid">
                     <div class="event-section">
-                        <h4>⏰ 時間制限</h4>
-                        <p><strong>日蝕進行</strong>: 皆既まで12ターン、時間圧迫が本格化</p>
+                        <h4>⏰ Time Limit</h4>
+                        <p><strong>Eclipse Progress</strong>: 12 turns until totality, time pressure intensifies</p>
                     </div>
 
                     <div class="event-section">
-                        <h4>🎒 リソース変化</h4>
+                        <h4>🎒 Resource Changes</h4>
                         <ul class="resource-changes">
-                            <li class="auric">🌟 <strong>Auric Covenant</strong>: <span class="resource" data-type="resin">光花樹脂</span> 2→1 (-1) - 光路構築（廃墟突破用の光紋作成）</li>
+                            <li class="auric">🌟 <strong>Auric Covenant</strong>: <span class="resource" data-type="resin">Light-Flower Resin</span> 2→1 (-1) - Light path construction (creating light patterns for ruin breakthrough)</li>
                         </ul>
                     </div>
 
                     <div class="event-section">
-                        <h4>📈 士気変化</h4>
+                        <h4>📈 Morale Changes</h4>
                         <div class="morale-changes">
                             <div class="morale-item auric">
-                                🌟 <strong>Auric Covenant</strong>: 8.0 → 7.9 (-0.1) ⬇️ 時間制限への焦り
+                                🌟 <strong>Auric Covenant</strong>: 8.0 → 7.9 (-0.1) ⬇️ Anxiety about time limit
                             </div>
                             <div class="morale-item veilbreak">
-                                ⚡ <strong>Veilbreak Sentinels</strong>: 7.65 → 7.7 (+0.05) ⬆️ 妨害カウント増加への期待
+                                ⚡ <strong>Veilbreak Sentinels</strong>: 7.65 → 7.7 (+0.05) ⬆️ Expectation of increased disruption count
                             </div>
                         </div>
                     </div>
 
                     <div class="event-section">
-                        <h4>🎯 戦略状況</h4>
-                        <p><strong>妨害カウント</strong>: 2/3に到達、監視団があと1回で勝利条件</p>
+                        <h4>🎯 Strategic Situation</h4>
+                        <p><strong>Disruption Count</strong>: Reached 2/3, Surveillance team needs one more for victory condition</p>
                     </div>
                 </div>
 
                 <div class="key-event">
-                    <h4>🎯 重要イベント</h4>
-                    <p>勝敗の分水嶺、契約団に反撃の緊急性</p>
+                    <h4>🎯 Key Event</h4>
+                    <p>Turning point of victory and defeat, urgent need for Covenant counterattack</p>
                 </div>
             </div>
         </section>
 
-        <!-- ターン 8: 残像罠解析と決戦準備 -->
+        <!-- Turn 8: Afterimage Trap Analysis and Battle Preparation -->
         <section id="turn-8" class="turn-log">
             <header class="turn-header">
-                <h2>ターン 8: 残像罠解析と決戦準備 🔍</h2>
+                <h2>Turn 8: Afterimage Trap Analysis and Battle Preparation 🔍</h2>
                 <nav class="turn-nav">
-                    <a href="#turn-7" class="prev-turn">← 前のターン</a>
-                    <a href="narrative.html#turn-8" class="cross-link">📖 ナラティブを見る</a>
-                    <a href="#turn-9" class="next-turn">次のターン →</a>
+                    <a href="#turn-7" class="prev-turn">← Previous Turn</a>
+                    <a href="narrative.html#turn-8" class="cross-link">📖 View Narrative</a>
+                    <a href="#turn-9" class="next-turn">Next Turn →</a>
                 </nav>
             </header>
             <div class="turn-content">
                 <div class="gm-action">
-                    <h4>🎯 GM アクション: environmental_change</h4>
+                    <h4>🎯 GM Action: environmental_change</h4>
                 </div>
 
                 <div class="event-grid">
                     <div class="event-section">
-                        <h4>🕵️ 諜報戦激化</h4>
+                        <h4>🕵️ Intelligence War Intensifies</h4>
                         <div class="intel-grid">
                             <div class="intel-auric">
-                                <strong>🌟 Auric Covenant 情報収集</strong>
+                                <strong>🌟 Auric Covenant Intelligence Gathering</strong>
                                 <ul>
-                                    <li>残像パターン解析完了</li>
-                                    <li>監視団南柱配置の把握</li>
+                                    <li>Afterimage pattern analysis complete</li>
+                                    <li>Identified Surveillance team's south pillar deployment</li>
                                 </ul>
                             </div>
                             <div class="intel-veilbreak">
-                                <strong>⚡ Veilbreak Sentinels 情報収集</strong>
+                                <strong>⚡ Veilbreak Sentinels Intelligence Gathering</strong>
                                 <ul>
-                                    <li>契約団隊形「柱囲み配置」確認</li>
-                                    <li>光路結節点「東尾根」特定</li>
+                                    <li>Confirmed Covenant formation 'pillar encirclement deployment'</li>
+                                    <li>Identified light path junction 'East Ridge'</li>
                                 </ul>
                             </div>
                         </div>
                     </div>
 
                     <div class="event-section">
-                        <h4>🎒 リソース変化</h4>
+                        <h4>🎒 Resource Changes</h4>
                         <ul class="resource-changes">
-                            <li class="veilbreak">⚡ <strong>Veilbreak Sentinels</strong>: <span class="resource" data-type="poison">影縛薬</span> 3→2 (-1) - 影爆杭追加（決戦準備強化）</li>
+                            <li class="veilbreak">⚡ <strong>Veilbreak Sentinels</strong>: <span class="resource" data-type="poison">Shadow Poison</span> 3→2 (-1) - Added shadow explosion stakes (battle preparation enhancement)</li>
                         </ul>
                     </div>
 
                     <div class="event-section">
-                        <h4>📈 士気変化</h4>
+                        <h4>📈 Morale Changes</h4>
                         <div class="morale-changes">
                             <div class="morale-item auric">
-                                🌟 <strong>Auric Covenant</strong>: 7.9 → 7.95 (+0.05) ⬆️ 突破戦術への自信
+                                🌟 <strong>Auric Covenant</strong>: 7.9 → 7.95 (+0.05) ⬆️ Confidence in breakthrough tactics
                             </div>
                             <div class="morale-item veilbreak">
-                                ⚡ <strong>Veilbreak Sentinels</strong>: 7.7 → 7.7 (維持) ➡️ 決戦布陣完了
+                                ⚡ <strong>Veilbreak Sentinels</strong>: 7.7 → 7.7 (Maintained) ➡️ Battle formation complete
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="key-event">
-                    <h4>🎯 重要イベント</h4>
-                    <p>両陣営の偵察が交錯、次ターン衝突不可避</p>
+                    <h4>🎯 Key Event</h4>
+                    <p>Both sides' reconnaissance intersect, next turn collision inevitable</p>
                 </div>
             </div>
         </section>
 
-        <!-- ターン 9: エンバーシュラウド突入 -->
+        <!-- Turn 9: Embershroud Incursion -->
         <section id="turn-9" class="turn-log">
             <header class="turn-header">
-                <h2>ターン 9: エンバーシュラウド突入 🔥</h2>
+                <h2>Turn 9: Embershroud Incursion 🔥</h2>
                 <nav class="turn-nav">
-                    <a href="#turn-8" class="prev-turn">← 前のターン</a>
-                    <a href="narrative.html#turn-9" class="cross-link">📖 ナラティブを見る</a>
-                    <a href="#turn-10" class="next-turn">次のターン →</a>
+                    <a href="#turn-8" class="prev-turn">← Previous Turn</a>
+                    <a href="narrative.html#turn-9" class="cross-link">📖 View Narrative</a>
+                    <a href="#turn-10" class="next-turn">Next Turn →</a>
                 </nav>
             </header>
             <div class="turn-content">
                 <div class="gm-action">
-                    <h4>🎯 GM アクション: environmental_change</h4>
+                    <h4>🎯 GM Action: environmental_change</h4>
                 </div>
 
                 <div class="event-grid">
                     <div class="event-section">
-                        <h4>📍 位置変更</h4>
+                        <h4>📍 Location Changes</h4>
                         <ul class="movement-list">
-                            <li class="auric">🌟 <strong>Auric Covenant</strong>: <span class="location" data-region="veilborn">Veilborn Way</span> → <span class="location" data-region="embershroud">Embershroud Basilica</span>（大聖堂突入）</li>
-                            <li class="veilbreak">⚡ <strong>Veilbreak Sentinels</strong>: <span class="location" data-region="veilborn">Veilborn Way</span> → <span class="location" data-region="embershroud">Embershroud Basilica</span>（追跡・包囲）</li>
+                            <li class="auric">🌟 <strong>Auric Covenant</strong>: <span class="location" data-region="veilborn">Veilborn Way</span> → <span class="location" data-region="embershroud">Embershroud Basilica</span>(Basilica incursion)</li>
+                            <li class="veilbreak">⚡ <strong>Veilbreak Sentinels</strong>: <span class="location" data-region="veilborn">Veilborn Way</span> → <span class="location" data-region="embershroud">Embershroud Basilica</span>(Pursuit and encirclement)</li>
                         </ul>
                     </div>
 
                     <div class="event-section">
-                        <h4>🌍 新たな地形危険</h4>
+                        <h4>🌍 New Terrain Hazard</h4>
                         <ul>
-                            <li><strong>地脈反響</strong>: 儀式難易度2の不安定な炎流が聖堂に発生</li>
-                            <li><strong>三重危険地帯</strong>: 嵐尖塔、廃墟、大聖堂すべてに危険要素</li>
+                            <li><strong>Leyline Resonance</strong>: Unstable flame flows with ritual difficulty 2 occur in the sanctuary</li>
+                            <li><strong>Triple Danger Zone</strong>: Dangerous elements at all three: Stormspire, ruins, and basilica</li>
                         </ul>
                     </div>
 
                     <div class="event-section">
-                        <h4>📈 士気変化</h4>
+                        <h4>📈 Morale Changes</h4>
                         <div class="morale-changes">
                             <div class="morale-item auric">
-                                🌟 <strong>Auric Covenant</strong>: 7.95 → 8.1 (+0.15) ⬆️ 聖堂到達の誇り
+                                🌟 <strong>Auric Covenant</strong>: 7.95 → 8.1 (+0.15) ⬆️ Pride in reaching the sanctuary
                             </div>
                             <div class="morale-item veilbreak">
-                                ⚡ <strong>Veilbreak Sentinels</strong>: 7.7 → 7.7 (維持) ➡️ 包囲態勢完成
+                                ⚡ <strong>Veilbreak Sentinels</strong>: 7.7 → 7.7 (Maintained) ➡️ Encirclement formation complete
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="key-event">
-                    <h4>🎯 重要イベント</h4>
-                    <p>第二神殿での決戦舞台設定、監視団準備度5到達</p>
+                    <h4>🎯 Key Event</h4>
+                    <p>Battle stage set at the second temple, Surveillance team readiness level 5 reached</p>
                 </div>
             </div>
         </section>
 
-        <!-- ターン 10: 第二節完遂と炎風攻防 -->
+        <!-- Turn 10: Second Movement Completion and Flame-Wind Battle -->
         <section id="turn-10" class="turn-log combat-turn">
             <header class="turn-header">
-                <h2>ターン 10: 第二節完遂と炎風攻防 ⚔️</h2>
+                <h2>Turn 10: Second Movement Completion and Flame-Wind Battle ⚔️</h2>
                 <nav class="turn-nav">
-                    <a href="#turn-9" class="prev-turn">← 前のターン</a>
-                    <a href="narrative.html#turn-10" class="cross-link">📖 ナラティブを見る</a>
-                    <a href="#turn-11" class="next-turn">次のターン →</a>
+                    <a href="#turn-9" class="prev-turn">← Previous Turn</a>
+                    <a href="narrative.html#turn-10" class="cross-link">📖 View Narrative</a>
+                    <a href="#turn-11" class="next-turn">Next Turn →</a>
                 </nav>
             </header>
             <div class="turn-content">
                 <div class="gm-action">
-                    <h4>🎯 GM アクション: environmental_change</h4>
+                    <h4>🎯 GM Action: environmental_change</h4>
                 </div>
 
                 <div class="combat-highlight">
-                    <h4>⚔️ パーティー間イベント - 直接戦闘</h4>
+                    <h4>⚔️ Inter‑party Events - Direct Combat</h4>
                     <div class="battle-details">
                         <strong>🌟⚡ Auric Covenant vs Veilbreak Sentinels</strong><br>
-                        <span class="battle-result" data-turn="10">監視団の突撃を結界で撃退</span><br>
-                        <strong>🏆 結果:</strong> 契約団防御成功（第二節祈り完遂）、監視団攻撃失敗
+                        <span class="battle-result" data-turn="10">Repelled Surveillance team's assault with barrier</span><br>
+                        <strong>🏆 Result:</strong> Covenant defense successful (second movement prayer completed), Surveillance team attack failed
                     </div>
                 </div>
 
                 <div class="event-grid">
                     <div class="event-section">
-                        <h4>🎒 リソース変化</h4>
+                        <h4>🎒 Resource Changes</h4>
                         <ul class="resource-changes">
                             <li class="auric">🌟 <strong>Auric Covenant</strong>:
-                                <span class="resource" data-type="sacred">香束</span> 5→4 (-1) - 第二節儀式
-                                <br><span class="resource" data-type="resin">光花樹脂</span> 1→0 (-1) - 完全消費
+                                <span class="resource" data-type="sacred">Incense</span> 5→4 (-1) - Second movement ritual
+                                <br><span class="resource" data-type="resin">Light-Flower Resin</span> 1→0 (-1) - Complete consumption
                             </li>
-                            <li class="veilbreak">⚡ <strong>Veilbreak Sentinels</strong>: リソース変化なし（攻撃失敗）</li>
+                            <li class="veilbreak">⚡ <strong>Veilbreak Sentinels</strong>: No resource changes (attack failed)</li>
                         </ul>
                     </div>
 
                     <div class="event-section">
-                        <h4>📈 士気変化</h4>
+                        <h4>📈 Morale Changes</h4>
                         <div class="morale-changes">
                             <div class="morale-item auric">
-                                🌟 <strong>Auric Covenant</strong>: 8.1 → 8.1 (維持) ➡️ 達成感と疲弊の混在
+                                🌟 <strong>Auric Covenant</strong>: 8.1 → 8.1 (Maintained) ➡️ Mix of achievement and exhaustion
                             </div>
                             <div class="morale-item veilbreak">
-                                ⚡ <strong>Veilbreak Sentinels</strong>: 7.7 → 7.9 (+0.2) ⬆️ 次回攻撃への意欲
+                                ⚡ <strong>Veilbreak Sentinels</strong>: 7.7 → 7.9 (+0.2) ⬆️ Desire for next attack
                             </div>
                         </div>
                     </div>
 
                     <div class="event-section">
-                        <h4>🏆 儀式進捗</h4>
+                        <h4>🏆 Ritual Progress</h4>
                         <div class="ritual-progress">
                             <div class="progress-bar">
                                 <div class="progress-fill" style="width: 66.7%"></div>
-                                <span class="progress-text">2/3完了 - 残り一つの神殿</span>
+                                <span class="progress-text">2/3 complete - one temple remaining</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="key-event">
-                    <h4>🎯 重要イベント</h4>
-                    <p>儀式進行度2段階目到達、監視団準備度6</p>
+                    <h4>🎯 Key Event</h4>
+                    <p>Ritual Progress stage 2 reached, Surveillance team readiness level 6</p>
                 </div>
             </div>
         </section>
 
-        <!-- ターン 11: 炎守護僧協定と静風窓 -->
+        <!-- Turn 11: Fire Guardian Pact and Still Wind Window -->
         <section id="turn-11" class="turn-log">
             <header class="turn-header">
-                <h2>ターン 11: 炎守護僧協定と静風窓 🕊️</h2>
+                <h2>Turn 11: Fire Guardian Pact and Still Wind Window 🕊️</h2>
                 <nav class="turn-nav">
-                    <a href="#turn-10" class="prev-turn">← 前のターン</a>
-                    <a href="narrative.html#turn-11" class="cross-link">📖 ナラティブを見る</a>
-                    <a href="#turn-12" class="next-turn">次のターン →</a>
+                    <a href="#turn-10" class="prev-turn">← Previous Turn</a>
+                    <a href="narrative.html#turn-11" class="cross-link">📖 View Narrative</a>
+                    <a href="#turn-12" class="next-turn">Next Turn →</a>
                 </nav>
             </header>
             <div class="turn-content">
                 <div class="gm-action">
-                    <h4>🎯 GM アクション: discovery_event</h4>
+                    <h4>🎯 GM Action: discovery_event</h4>
                 </div>
 
                 <div class="alliance-highlight">
-                    <h4>🤝 パーティー間イベント</h4>
+                    <h4>🤝 Inter‑party Events</h4>
                     <div class="event-grid">
                         <div class="alliance-event auric">
                             <strong>🌟🔥 Auric Covenant + Ember Guardians</strong><br>
-                            <span class="alliance-result">⭐ 協定締結</span> - 炎の導きと静風窓情報
+                            <span class="alliance-result">⭐ Pact concluded</span> - Fire guidance and still wind window information
                         </div>
                         <div class="defense-event veilbreak">
                             <strong>⚡⚡ Veilbreak Sentinels vs Stormspire</strong><br>
-                            <span class="defense-result">🛡️ 最終防衛</span> - 雷槍陣完成、三重防衛網構築
+                            <span class="defense-result">🛡️ Final Defense</span> - Lightning spear formation complete, triple defense network constructed
                         </div>
                     </div>
                 </div>
 
                 <div class="event-grid">
                     <div class="event-section">
-                        <h4>🎒 リソース変化</h4>
+                        <h4>🎒 Resource Changes</h4>
                         <ul class="resource-changes">
-                            <li class="auric">🌟 <strong>Auric Covenant</strong>: <span class="resource" data-type="magic">守護巻物</span> 1→0 (-1) - 協定材料（最後の外交資源）</li>
+                            <li class="auric">🌟 <strong>Auric Covenant</strong>: <span class="resource" data-type="magic">Guardian Scrolls</span> 1→0 (-1) - Pact materials (final diplomatic resource)</li>
                         </ul>
                     </div>
 
                     <div class="event-section">
-                        <h4>🛡️ 特殊効果獲得</h4>
+                        <h4>🛡️ Special Effect Acquired</h4>
                         <ul>
-                            <li><strong>回復</strong>: 嵐尖塔準備完了、癒しの聖歌効果</li>
-                            <li><strong>戦術情報</strong>: 北東静風窓の発見</li>
+                            <li><strong>Recovery</strong>: Stormspire preparation complete, healing hymn effect</li>
+                            <li><strong>Tactical Information</strong>: Discovery of northeast still wind window</li>
                         </ul>
                     </div>
 
                     <div class="event-section">
-                        <h4>📈 士気変化</h4>
+                        <h4>📈 Morale Changes</h4>
                         <div class="morale-changes">
                             <div class="morale-item auric">
-                                🌟 <strong>Auric Covenant</strong>: 8.1 → 8.4 (+0.3) ⬆️ 最終神殿への希望明確化
+                                🌟 <strong>Auric Covenant</strong>: 8.1 → 8.4 (+0.3) ⬆️ Hope for final temple clarified
                             </div>
                             <div class="morale-item veilbreak">
-                                ⚡ <strong>Veilbreak Sentinels</strong>: 7.9 → 7.9 (維持) ➡️ 最終防衛準備
+                                ⚡ <strong>Veilbreak Sentinels</strong>: 7.9 → 7.9 (Maintained) ➡️ Final Defense preparations
                             </div>
                         </div>
                     </div>
 
                     <div class="event-section">
-                        <h4>🕵️ 諜報活動</h4>
-                        <p><strong>⚡ 監視団情報網</strong>: 契約団ルート予測「北東窓」、天候「不安定」</p>
+                        <h4>🕵️ Intelligence Activity</h4>
+                        <p><strong>⚡ Surveillance team intelligence network</strong>: Covenant route prediction 'Northeast Window', Weather 'Unstable'</p>
                     </div>
                 </div>
 
                 <div class="key-event">
-                    <h4>🎯 重要イベント</h4>
-                    <p>最終決戦への準備完了、監視団準備度7</p>
+                    <h4>🎯 Key Event</h4>
+                    <p>Final battle preparation complete, Surveillance team readiness level 7</p>
                 </div>
             </div>
         </section>
 
-        <!-- ターン 12: 嵐尖塔突入 -->
+        <!-- Turn 12: Stormspire Incursion -->
         <section id="turn-12" class="turn-log">
             <header class="turn-header">
-                <h2>ターン 12: 嵐尖塔突入 ⚡</h2>
+                <h2>Turn 12: Stormspire Incursion ⚡</h2>
                 <nav class="turn-nav">
-                    <a href="#turn-11" class="prev-turn">← 前のターン</a>
-                    <a href="narrative.html#turn-12" class="cross-link">📖 ナラティブを見る</a>
-                    <a href="#turn-13" class="next-turn">次のターン →</a>
+                    <a href="#turn-11" class="prev-turn">← Previous Turn</a>
+                    <a href="narrative.html#turn-12" class="cross-link">📖 View Narrative</a>
+                    <a href="#turn-13" class="next-turn">Next Turn →</a>
                 </nav>
             </header>
             <div class="turn-content">
                 <div class="gm-action">
-                    <h4>🎯 GM アクション: weather_change</h4>
+                    <h4>🎯 GM Action: weather_change</h4>
                 </div>
 
                 <div class="event-grid">
                     <div class="event-section">
-                        <h4>📍 位置変更</h4>
+                        <h4>📍 Location Changes</h4>
                         <ul class="movement-list">
-                            <li class="auric">🌟 <strong>Auric Covenant</strong>: <span class="location" data-region="embershroud">Embershroud Basilica</span> → <span class="location" data-region="stormspire">Stormspire Temple</span>（最終神殿到達）</li>
-                            <li class="veilbreak">⚡ <strong>Veilbreak Sentinels</strong>: <span class="location" data-region="embershroud">Embershroud Basilica</span> → <span class="location" data-region="stormspire">Stormspire Temple</span>（最終包囲）</li>
+                            <li class="auric">🌟 <strong>Auric Covenant</strong>: <span class="location" data-region="embershroud">Embershroud Basilica</span> → <span class="location" data-region="stormspire">Stormspire Temple</span>(Final temple reached)</li>
+                            <li class="veilbreak">⚡ <strong>Veilbreak Sentinels</strong>: <span class="location" data-region="embershroud">Embershroud Basilica</span> → <span class="location" data-region="stormspire">Stormspire Temple</span>(Final encirclement)</li>
                         </ul>
                     </div>
 
                     <div class="event-section">
-                        <h4>⏰ 時間制限</h4>
-                        <p><strong>日蝕進行</strong>: 皆既まで10ターン、決戦待ったなし</p>
+                        <h4>⏰ Time Limit</h4>
+                        <p><strong>Eclipse Progress</strong>: 10 turns until totality, battle inevitable</p>
                     </div>
 
                     <div class="event-section">
-                        <h4>📈 士気変化</h4>
+                        <h4>📈 Morale Changes</h4>
                         <div class="morale-changes">
                             <div class="morale-item auric">
-                                🌟 <strong>Auric Covenant</strong>: 8.4 → 8.0 (-0.4) ⬇️ 包囲下での緊張
+                                🌟 <strong>Auric Covenant</strong>: 8.4 → 8.0 (-0.4) ⬇️ Tension under siege
                             </div>
                             <div class="morale-item veilbreak">
-                                ⚡ <strong>Veilbreak Sentinels</strong>: 7.9 → 7.9 (維持) ➡️ 最終決戦への集中
+                                ⚡ <strong>Veilbreak Sentinels</strong>: 7.9 → 7.9 (Maintained) ➡️ Focus on final battle
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="key-event">
-                    <h4>🎯 重要イベント</h4>
-                    <p>最終舞台設定完了、残り一節での勝負</p>
+                    <h4>🎯 Key Event</h4>
+                    <p>Final stage set, victory or defeat with one movement remaining</p>
                 </div>
             </div>
         </section>
 
-        <!-- ターン 13: 嵐盾結界と奇襲準備 -->
+        <!-- Turn 13: Storm Shield Barrier and Ambush Preparation -->
         <section id="turn-13" class="turn-log">
             <header class="turn-header">
-                <h2>ターン 13: 嵐盾結界と奇襲準備 🛡️</h2>
+                <h2>Turn 13: Storm Shield Barrier and Ambush Preparation 🛡️</h2>
                 <nav class="turn-nav">
-                    <a href="#turn-12" class="prev-turn">← 前のターン</a>
-                    <a href="narrative.html#turn-13" class="cross-link">📖 ナラティブを見る</a>
-                    <a href="#turn-14" class="next-turn">次のターン →</a>
+                    <a href="#turn-12" class="prev-turn">← Previous Turn</a>
+                    <a href="narrative.html#turn-13" class="cross-link">📖 View Narrative</a>
+                    <a href="#turn-14" class="next-turn">Next Turn →</a>
                 </nav>
             </header>
             <div class="turn-content">
                 <div class="gm-action">
-                    <h4>🎯 GM アクション: environmental_change</h4>
+                    <h4>🎯 GM Action: environmental_change</h4>
                 </div>
 
                 <div class="event-grid">
                     <div class="event-section">
-                        <h4>🌍 環境危険激化</h4>
+                        <h4>🌍 Environmental Danger Intensifies</h4>
                         <ul>
-                            <li><strong>竜巻突風</strong>: 移動ペナルティ3（最高レベル）</li>
-                            <li><strong>雷結節過負荷</strong>: 儀式難易度3（最高レベル）</li>
+                            <li><strong>Tornado Gusts</strong>: Movement penalty 3 (maximum level)</li>
+                            <li><strong>Lightning Junction Overload</strong>: Ritual difficulty 3 (maximum level)</li>
                         </ul>
                     </div>
 
                     <div class="event-section">
-                        <h4>🎒 リソース変化</h4>
+                        <h4>🎒 Resource Changes</h4>
                         <ul class="resource-changes">
-                            <li class="auric">🌟 <strong>Auric Covenant</strong>: <span class="resource" data-type="sacred">太陽欠片</span> 3→2 (-1) - 嵐盾結界（最大防御展開）</li>
+                            <li class="auric">🌟 <strong>Auric Covenant</strong>: <span class="resource" data-type="sacred">Sun Fragments</span> 3→2 (-1) - Storm shield barrier (maximum defense deployment)</li>
                         </ul>
                     </div>
 
                     <div class="event-section">
-                        <h4>🛡️ 特殊効果</h4>
-                        <p><strong>嵐盾</strong>: アクティブ状態、詠唱同期化完了</p>
+                        <h4>🛡️ Special Effect</h4>
+                        <p><strong>Storm Shield</strong>: Active state, chanting synchronization complete</p>
                     </div>
 
                     <div class="event-section">
-                        <h4>📈 士気変化</h4>
+                        <h4>📈 Morale Changes</h4>
                         <div class="morale-changes">
                             <div class="morale-item auric">
-                                🌟 <strong>Auric Covenant</strong>: 8.0 → 8.6 (+0.6) ⬆️ 嵐盾成功への自信
+                                🌟 <strong>Auric Covenant</strong>: 8.0 → 8.6 (+0.6) ⬆️ Confidence in Storm Shield success
                             </div>
                             <div class="morale-item veilbreak">
-                                ⚡ <strong>Veilbreak Sentinels</strong>: 7.9 → 8.0 (+0.1) ⬆️ 奇襲準備完了
+                                ⚡ <strong>Veilbreak Sentinels</strong>: 7.9 → 8.0 (+0.1) ⬆️ Ambush preparation complete
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="key-event">
-                    <h4>🎯 重要イベント</h4>
-                    <p>監視団準備度8、決定打目前の緊迫状態</p>
+                    <h4>🎯 Key Event</h4>
+                    <p>Surveillance team readiness level 8, tense state before decisive strike</p>
                 </div>
             </div>
         </section>
 
-        <!-- ターン 14: 三光連環完成と光の勝利 -->
+        <!-- Turn 14: Triple Light Ring Completion and Victory of Light -->
         <section id="turn-14" class="turn-log final-turn">
             <header class="turn-header">
-                <h2>ターン 14: 三光連環完成と光の勝利 🏆</h2>
+                <h2>Turn 14: Triple Light Ring Completion and Victory of Light 🏆</h2>
                 <nav class="turn-nav">
-                    <a href="#turn-13" class="prev-turn">← 前のターン</a>
-                    <a href="narrative.html#turn-14" class="cross-link">📖 ナラティブを見る</a>
-                    <span class="final-note">最終ターン</span>
+                    <a href="#turn-13" class="prev-turn">← Previous Turn</a>
+                    <a href="narrative.html#turn-14" class="cross-link">📖 View Narrative</a>
+                    <span class="final-note">Final Turn</span>
                 </nav>
             </header>
             <div class="turn-content">
                 <div class="gm-action">
-                    <h4>🎯 GM アクション: environmental_change</h4>
+                    <h4>🎯 GM Action: environmental_change</h4>
                 </div>
 
                 <div class="final-battle-highlight">
-                    <h4>⚡ パーティー間イベント - 最終決戦</h4>
+                    <h4>⚡ Inter‑party Events - Final Battle</h4>
                     <div class="battle-details">
                         <strong>🌟⚡ Auric Covenant vs Veilbreak Sentinels</strong><br>
-                        <span class="victory-result">⚡ 契約団勝利</span> - 三光連環の儀完成、監視団奇襲失敗<br>
+                        <span class="victory-result">⚡ Covenant Victory</span> - Triple Light Ring ritual completed, Surveillance team ambush failed<br>
                         <div class="victory-details">
-                            <strong>🏆 結果:</strong> 光の結界が雷槍を完全無効化、影爆杭の逆流自壊<br>
-                            <strong>📉 監視団敗北:</strong> 撤退号令、影縄切り離し
+                            <strong>🏆 Result:</strong> Light barrier completely nullified lightning spears, shadow explosion stakes backfired and self-destructed<br>
+                            <strong>📉 Surveillance Team Defeat:</strong> Retreat order, shadow cords severed
                         </div>
                     </div>
                 </div>
 
                 <div class="event-grid">
                     <div class="event-section">
-                        <h4>🎒 リソース変化</h4>
+                        <h4>🎒 Resource Changes</h4>
                         <ul class="resource-changes">
                             <li class="auric">🌟 <strong>Auric Covenant</strong>:
-                                <span class="resource" data-type="sacred">香束</span> 4→3 (-1) - 最終儀式
-                                <br><span class="resource" data-type="sacred">太陽欠片</span> 2→1 (-1) - 儀式完遂
+                                <span class="resource" data-type="sacred">Incense</span> 4→3 (-1) - Final ritual
+                                <br><span class="resource" data-type="sacred">Sun Fragments</span> 2→1 (-1) - Ritual completion
                             </li>
                         </ul>
                     </div>
 
                     <div class="event-section">
-                        <h4>🏆 儀式進捗</h4>
+                        <h4>🏆 Ritual Progress</h4>
                         <div class="ritual-progress completed">
                             <div class="progress-bar">
                                 <div class="progress-fill" style="width: 100%"></div>
-                                <span class="progress-text">3/3完了 - 三光連環の儀完成！</span>
+                                <span class="progress-text">3/3 complete - Triple Light Ring ritual completed!</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="event-section">
-                        <h4>⏰ 最終時間</h4>
-                        <p><strong>日蝕進行</strong>: 皆既まで9ターン残し、儀式完了</p>
+                        <h4>⏰ Final Time</h4>
+                        <p><strong>Eclipse Progress</strong>: 9 turns remaining until totality, ritual completed</p>
                     </div>
 
                     <div class="event-section">
-                        <h4>📈 士気変化</h4>
+                        <h4>📈 Morale Changes</h4>
                         <div class="morale-changes">
                             <div class="morale-item auric winner">
-                                🌟 <strong>Auric Covenant</strong>: 8.6 → 9.1 (+0.5) ⬆️ 使命完遂の達成感
+                                🌟 <strong>Auric Covenant</strong>: 8.6 → 9.1 (+0.5) ⬆️ Sense of achievement from objective completion
                             </div>
                             <div class="morale-item veilbreak defeated">
-                                ⚡ <strong>Veilbreak Sentinels</strong>: 8.0 → 7.3 (-0.7) ⬇️ 敗北と撤退
+                                ⚡ <strong>Veilbreak Sentinels</strong>: 8.0 → 7.3 (-0.7) ⬇️ Defeat and retreat
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="key-event victory">
-                    <h4>🎯 重要イベント</h4>
-                    <p>三神殿儀式完了、妨害カウント2で停止、契約団完全勝利</p>
+                    <h4>🎯 Key Event</h4>
+                    <p>Three temple ritual completed, Disruption Count stopped at 2, Covenant complete victory</p>
                 </div>
             </div>
         </section>
 
         <section class="final-statistics">
-            <h2>📊 最終統計</h2>
+            <h2>📊 Final Statistics</h2>
 
             <div class="ranking">
-                <h3>🏆 勢力ランキング（士気順）</h3>
+                <h3>🏆 Faction Ranking (by Morale)</h3>
                 <ol class="ranking-list">
                     <li class="rank-item auric">
                         <span class="rank">1.</span>
                         <span class="faction-name">🌟 Auric Covenant</span>
                         <span class="final-score">9.1</span>
-                        <span class="achievement">三光連環の儀完遂</span>
+                        <span class="achievement">Triple Light Linked Ring Completed</span>
                     </li>
                     <li class="rank-item veilbreak">
                         <span class="rank">2.</span>
                         <span class="faction-name">⚡ Veilbreak Sentinels</span>
                         <span class="final-score">7.3</span>
-                        <span class="achievement">善戦するも阻止失敗</span>
+                        <span class="achievement">Fought well but failed to prevent</span>
                     </li>
                 </ol>
             </div>
 
             <div class="key-events-summary">
-                <h3>🎯 キーイベント要約</h3>
+                <h3>🎯 Key Event Summary</h3>
                 <ul class="event-summary-list">
-                    <li><strong>ターン 2</strong>: 第一節完遂、迂回路発見、聖所との外交成功</li>
-                    <li><strong>ターン 3</strong>: 黄昏案内人同盟、霧路確保、監視団罠網拡張</li>
-                    <li><strong>ターン 6</strong>: 廃墟直接対峙開始、両陣営同一地点</li>
-                    <li><strong>ターン 7</strong>: 時間制限本格化、妨害カウント2</li>
-                    <li><strong>ターン 10</strong>: 第二節完遂、初回直接戦闘で契約団勝利</li>
-                    <li><strong>ターン 11</strong>: 炎守護僧協定、最終準備完了、監視団雷槍陣</li>
-                    <li><strong>ターン 14</strong>: 三光連環完成、最終決戦で光の勝利</li>
+                    <li><strong>Turn 2</strong>: First movement completed, bypass route discovered, diplomatic success with sanctuary</li>
+                    <li><strong>Turn 3</strong>: Twilight guide alliance, mist path secured, Surveillance team trap network expansion</li>
+                    <li><strong>Turn 6</strong>: Direct confrontation at ruins begins, both factions at same location</li>
+                    <li><strong>Turn 7</strong>: Time limit intensifies, Disruption Count reaches 2</li>
+                    <li><strong>Turn 10</strong>: Second movement completed, first direct combat with Covenant victory</li>
+                    <li><strong>Turn 11</strong>: Fire guardian pact, final preparations complete, Sentinel lightning spear formation</li>
+                    <li><strong>Turn 14</strong>: Triple Light Ring completed, victory of light in final battle</li>
                 </ul>
             </div>
 
             <div class="mvp-awards">
-                <h3>🏅 MVPアワード</h3>
+                <h3>🏅 MVP Awards</h3>
                 <div class="award-grid">
                     <div class="award-item auric">
                         <div class="award-icon">🛡️</div>
-                        <h4>最優秀防御</h4>
-                        <p>Auric Covenant<br>（嵐盾結界で監視団奇襲完全阻止）</p>
+                        <h4>Best Defense</h4>
+                        <p>Auric Covenant<br>(Complete prevention of Sentinel ambush with Storm Shield barrier)</p>
                     </div>
                     <div class="award-item auric">
                         <div class="award-icon">🕊️</div>
-                        <h4>最優秀外交</h4>
-                        <p>Auric Covenant<br>（黄昏案内人・炎守護僧との同盟締結）</p>
+                        <h4>Best Diplomacy</h4>
+                        <p>Auric Covenant<br>(Alliance formed with Twilight Guides and Fire Guardians)</p>
                     </div>
                     <div class="award-item veilbreak">
                         <div class="award-icon">🌙</div>
-                        <h4>最優秀粘り強さ</h4>
-                        <p>Veilbreak Sentinels<br>（3つの神殿すべてで阻止活動を継続）</p>
+                        <h4>Best Perseverance</h4>
+                        <p>Veilbreak Sentinels<br>(Continued disruption activities at all three temples)</p>
                     </div>
                 </div>
             </div>
 
             <div class="strategic-analysis">
-                <h3>💎 戦略的要点</h3>
+                <h3>💎 Strategic Key Points</h3>
                 <div class="analysis-grid">
                     <div class="analysis-item success">
-                        <h4>契約団成功要因</h4>
+                        <h4>Covenant Success Factors</h4>
                         <ul>
-                            <li>慎重な外交と迂回路確保</li>
-                            <li>協調的意思決定</li>
-                            <li>時間管理の徹底</li>
+                            <li>Careful diplomacy and bypass route securing</li>
+                            <li>Cooperative decision-making</li>
+                            <li>Thorough time management</li>
                         </ul>
                     </div>
                     <div class="analysis-item effort">
-                        <h4>監視団善戦要因</h4>
+                        <h4>Surveillance Team Good Fight Factors</h4>
                         <ul>
-                            <li>戦術的封鎖と残像罠</li>
-                            <li>時間制限活用</li>
-                            <li>連携した妨害作戦</li>
+                            <li>Tactical blockade and afterimage traps</li>
+                            <li>Time limit utilization</li>
+                            <li>Coordinated disruption operations</li>
                         </ul>
                     </div>
                     <div class="analysis-item decisive">
-                        <h4>決定的瞬間</h4>
-                        <p>嵐盾結界の成功が最終勝利の鍵となった</p>
+                        <h4>Decisive Moment</h4>
+                        <p>Success of the Storm Shield barrier was the key to final victory</p>
                     </div>
                 </div>
             </div>
@@ -970,8 +970,8 @@
 
     <!-- Footer -->
     <footer style="text-align: center; padding: 2rem; color: #888; border-top: 1px solid #444; margin-top: 3rem;">
-        <p>三光連環の儀 対立 - プレイログ分析</p>
-        <p>📖 <a href="index.html" style="color: #87CEEB;">Dashboard</a> | 📖 <a href="narrative.html" style="color: #87CEEB;">ナラティブ</a> | 🗺️ <a href="worldmap.html" style="color: #87CEEB;">世界マップ</a></p>
+        <p>Triple‑Light Linked Ring – Playlog Analysis</p>
+        <p>📖 <a href="index.html" style="color: #87CEEB;">Dashboard</a> | 📖 <a href="narrative.html" style="color: #87CEEB;">Narrative</a> | 🗺️ <a href="worldmap.html" style="color: #87CEEB;">World Map</a></p>
     </footer>
 
     <script src="data.js"></script>
@@ -1088,7 +1088,7 @@
                     if (campaignData.locations[region]) {
                         const loc = campaignData.locations[region];
                         this.setAttribute('data-tooltip',
-                            `${loc.name} (${loc.type}): 容量${loc.capacity}、${loc.specialEffect}`);
+                            `${loc.name} (${loc.type}): Capacity${loc.capacity}、${loc.specialEffect}`);
                         this.classList.add('tooltip');
                     }
                 });
@@ -1099,13 +1099,13 @@
                 el.addEventListener('mouseenter', function() {
                     const text = this.textContent.trim();
                     let resourceKey = null;
-                    if (text.includes('香束')) resourceKey = 'incense';
-                    else if (text.includes('太陽欠片')) resourceKey = 'sun_fragment';
-                    else if (text.includes('守護巻物')) resourceKey = 'guardian_scroll';
-                    else if (text.includes('光花樹脂')) resourceKey = 'light_resin';
-                    else if (text.includes('影縛薬')) resourceKey = 'shadow_poison';
-                    else if (text.includes('遠見鏡')) resourceKey = 'far_sight';
-                    else if (text.includes('補給糧')) resourceKey = 'supply_ration';
+                    if (text.includes('Incense')) resourceKey = 'incense';
+                    else if (text.includes('Sun Fragments')) resourceKey = 'sun_fragment';
+                    else if (text.includes('Guardian Scrolls')) resourceKey = 'guardian_scroll';
+                    else if (text.includes('Light-Flower Resin')) resourceKey = 'light_resin';
+                    else if (text.includes('Shadow Poison')) resourceKey = 'shadow_poison';
+                    else if (text.includes('Far-sight Mirrors')) resourceKey = 'far_sight';
+                    else if (text.includes('Supply Rations')) resourceKey = 'supply_ration';
 
                     if (resourceKey && campaignData.resources[resourceKey]) {
                         const resource = campaignData.resources[resourceKey];
@@ -1123,7 +1123,7 @@
                     if (turnNum && campaignData.keyEvents[turnNum]) {
                         const event = campaignData.keyEvents[turnNum];
                         this.setAttribute('data-tooltip',
-                            `${event.title}: ${event.result}。影響: ${event.impact}`);
+                            `${event.title}: ${event.result}. Impact: ${event.impact}`);
                         this.classList.add('tooltip');
                     }
                 });

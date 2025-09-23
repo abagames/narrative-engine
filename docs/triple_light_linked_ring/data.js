@@ -1,372 +1,428 @@
-// 三光連環の儀 対立 - Data Dictionary
-// 自動生成されたデータ辞書：地名、キャラクター、戦術用語、イベント等
+// Triple‑Light Linked Ring – Data Dictionary
+// Auto-generated data dictionary: locations, characters, tactics, events etc.
 
 const campaignData = {
-  // メタ情報
+  // Meta Information
   meta: {
-    title: "三光連環の儀 対立",
-    subtitle: "Silver Eclipse Cycle の壮大な物語",
+    title: "Triple Light Linked Ring",
+    titleJa: "Triple Light Linked Ring Conflict",
+    subtitle: "Epic tale of the Silver Eclipse Cycle",
+    subtitleJa: "Epic tale of the Silver Eclipse Cycle",
     totalTurns: 14,
     factions: ["auric", "veilbreak"],
     startDate: "2024",
-    endDate: "2024"
+    endDate: "2024",
   },
 
-  // 勢力データ
+  // Faction Data
   factions: {
     auric: {
       name: "Auric Covenant",
-      nameJa: "オーリック契約団",
+      nameJa: "Auric Covenant",
       icon: "🌟",
       emoji: "🌟",
       primaryColor: "#ffd700",
       secondaryColor: "#b8860b",
-      speciality: "神聖儀式と外交",
+      speciality: "Sacred rituals and diplomacy",
+      specialityJa: "Sacred rituals and diplomacy",
       homeBase: "Moonweave Crossroads",
-      philosophy: "慎重な分析に基づく協調的民主制による意思決定、神殿儀礼に即した格式ばった外交"
+      philosophy:
+        "Cooperative democratic decision-making based on careful analysis, formal diplomacy aligned with temple protocols",
+      philosophyJa:
+        "Cooperative democratic decision-making based on careful analysis, formal diplomacy aligned with temple protocols",
     },
     veilbreak: {
       name: "Veilbreak Sentinels",
-      nameJa: "ヴェイルブレイク監視団",
+      nameJa: "Veilbreak Sentinels",
       icon: "⚡",
       emoji: "⚡",
       primaryColor: "#8a2be2",
       secondaryColor: "#4b0082",
-      speciality: "戦術妨害と封鎖作戦",
+      speciality: "Tactical disruption and blockade operations",
+      specialityJa: "Tactical disruption and blockade operations",
       homeBase: "Ashen Ramparts",
-      philosophy: "直接指揮による計算された奇襲、軍事符丁を交えた短文での即断即決"
-    }
+      philosophy:
+        "Calculated ambushes under direct command, quick decisive action with military codes",
+      philosophyJa:
+        "Calculated ambushes under direct command, quick decisive action with military codes",
+    },
   },
 
-  // キャラクターデータ
+  // Character Data
   characters: {
     // Auric Covenant
     selene: {
       name: "High Cantor Selene",
-      nameJa: "ハイ・カントール セレネ",
+      nameJa: "High Cantor Selene",
       faction: "auric",
-      role: "儀式指揮者",
-      description: "献身的で静謐な性格で、神聖儀式と結界術を担当",
-      speech: "穏やかで祈りを織り込む言葉遣い",
-      specialties: ["神聖儀式", "結界術", "祈りの詠唱"]
+      role: "Ritual Conductor",
+      roleJa: "Ritual Conductor",
+      description:
+        "Devoted and serene personality, oversees sacred rituals and barrier magic",
+      descriptionJa:
+        "Devoted and serene personality, oversees sacred rituals and barrier magic",
+      speech: "Gentle tone with prayers woven into words",
+      speechJa: "Gentle tone with prayers woven into words",
+      specialties: ["Sacred rituals", "Barrier magic", "Prayer chanting"],
+      specialtiesJa: ["Sacred rituals", "Barrier magic", "Prayer chanting"],
     },
     thalen: {
       name: "Warden Thalen",
-      nameJa: "守護官 ターレン",
+      nameJa: "Warden Thalen",
       faction: "auric",
-      role: "守護者",
-      description: "守護的で揺るがない性格で、槍術と守護術式を担当",
-      speech: "短く断定的、警戒を促す",
-      specialties: ["槍術", "守護術式", "隊列指揮"]
+      role: "Guardian",
+      description:
+        "Protective and steadfast personality, specializes in spear combat and guardian techniques",
+      speech: "Brief and decisive, urges vigilance",
+      specialties: ["Spear combat", "Guardian techniques", "Formation command"],
     },
     lyra: {
       name: "Oracle Lyra",
-      nameJa: "神託者 リラ",
+      nameJa: "Oracle Lyra",
       faction: "auric",
-      role: "予見者",
-      description: "洞察的で内省的な性格で、予知と占星観測を担当",
-      speech: "詠唱のように比喩的",
-      specialties: ["予知", "占星観測", "霧路読解"]
+      role: "Seer",
+      description:
+        "Insightful and introspective personality, specializes in divination and star observation",
+      speech: "Metaphorical like chanting",
+      specialties: ["Divination", "Star observation", "Mist path reading"],
     },
     iven: {
       name: "Chronicler Iven",
-      nameJa: "記録官 イヴェン",
+      nameJa: "Chronicler Iven",
       faction: "auric",
-      role: "外交官",
-      description: "外交的で誠実な性格で、交渉と儀礼史の記録を担当",
-      speech: "丁寧で外交儀礼を重んじる",
-      specialties: ["外交交渉", "儀礼史", "同盟締結"]
+      role: "Diplomat",
+      description:
+        "Diplomatic and sincere personality, handles negotiations and ceremonial records",
+      speech: "Polite and values diplomatic etiquette",
+      specialties: [
+        "Diplomatic negotiation",
+        "Ceremonial history",
+        "Alliance formation",
+      ],
     },
     // Veilbreak Sentinels
     raxen: {
       name: "Captain Raxen",
-      nameJa: "キャプテン ラクセン",
+      nameJa: "Captain Raxen",
       faction: "veilbreak",
-      role: "指揮官",
-      description: "冷静で攻撃的な性格で、戦術指揮と強襲を担当",
-      speech: "短く命令調",
-      specialties: ["戦術指揮", "強襲作戦", "封鎖戦略"]
+      role: "Commander",
+      description:
+        "Calm and aggressive personality, handles tactical command and assault operations",
+      speech: "Brief and commanding",
+      specialties: [
+        "Tactical command",
+        "Assault operations",
+        "Blockade strategy",
+      ],
     },
     nyx: {
       name: "Shade Operative Nyx",
-      nameJa: "影の工作員 ニクス",
+      nameJa: "Shade Operative Nyx",
       faction: "veilbreak",
-      role: "破壊工作員",
-      description: "狡猾で静かな性格で、潜入と罠設置を担当",
-      speech: "囁くように要点だけを語る",
-      specialties: ["潜入術", "罠設置", "影糸操作"]
+      role: "Saboteur",
+      description:
+        "Cunning and quiet personality, handles infiltration and trap deployment",
+      speech: "Whispers only key points",
+      specialties: [
+        "Infiltration",
+        "Trap deployment",
+        "Shadow thread manipulation",
+      ],
     },
     varek: {
       name: "Oathbreaker Varek",
-      nameJa: "誓約破り ヴァレク",
+      nameJa: "Oathbreaker Varek",
       faction: "veilbreak",
-      role: "強制執行者",
-      description: "苛烈で挑発的な性格で、重装戦闘と封鎖を担当",
-      speech: "皮肉混じりで威圧的",
-      specialties: ["重装戦闘", "封鎖作戦", "影爆術"]
-    }
+      role: "Enforcer",
+      description:
+        "Fierce and provocative personality, handles heavy combat and blockades",
+      speech: "Sarcastic and intimidating",
+      specialties: [
+        "Heavy combat",
+        "Blockade operations",
+        "Shadow explosion techniques",
+      ],
+    },
   },
 
-  // 地名・場所データ
+  // Location Data
   locations: {
-    "moonweave": {
+    moonweave: {
       name: "Moonweave Crossroads",
-      nameJa: "ムーンウィーブ交差路",
-      type: "商業都市",
+      nameJa: "Moonweave Crossroads",
+      type: "Trade City",
       capacity: 2,
-      specialEffect: "儀式集中ボーナス",
-      strategicValue: "三つの神殿への交通の要衝、経済・宗教の中枢",
+      specialEffect: "Ritual Focus Bonus",
+      strategicValue:
+        "Transportation hub to three temples, economic and religious center",
       controlledBy: "auric",
-      adjacentAreas: ["ソレース聖所", "ヴァーダント辺境", "アッシェン要塞"],
-      resources: ["市場屋台", "巡礼宿舎"]
+      adjacentAreas: ["Solace Sanctum", "Verdant Outskirts", "Ashen Ramparts"],
+      resources: ["Market Stalls", "Pilgrim Hostelry"],
     },
-    "solace": {
+    solace: {
       name: "Solace Sanctum",
-      nameJa: "ソレース聖所",
-      type: "神殿 - 三光連環第一神殿",
+      nameJa: "Solace Sanctum",
+      type: "Temple - Triple Light First Temple",
       capacity: 1,
-      specialEffect: "祈りの共鳴",
-      strategicValue: "儀式の起点、慰めの守護効果",
-      controlledBy: "中立",
-      adjacentAreas: ["ムーンウィーブ交差路", "嵐尖塔神殿"],
-      resources: ["陽火祭壇"]
+      specialEffect: "Prayer Resonance",
+      strategicValue: "Ritual starting point, Solace guardian effect",
+      controlledBy: "Neutral",
+      adjacentAreas: ["Moonweave Crossroads", "Stormspire Temple"],
+      resources: ["Sun-Fire Altar"],
     },
-    "stormspire": {
+    stormspire: {
       name: "Stormspire Temple",
-      nameJa: "嵐尖塔神殿",
-      type: "神殿 - 三光連環第三神殿",
+      nameJa: "Stormspire Temple",
+      type: "Temple - Triple Light Third Temple",
       capacity: 1,
-      specialEffect: "空中結界",
-      strategicValue: "最終決戦の舞台、雷の試練場",
-      controlledBy: "中立",
-      adjacentAreas: ["ソレース聖所", "エンバーシュラウド大聖堂", "アッシェン要塞"],
-      resources: ["嵐印オベリスク"]
+      specialEffect: "Aerial Ward",
+      strategicValue: "Final battle stage, lightning trial ground",
+      controlledBy: "Neutral",
+      adjacentAreas: [
+        "Solace Sanctum",
+        "Embershroud Basilica",
+        "Ashen Ramparts",
+      ],
+      resources: ["Storm-Marked Obelisk"],
     },
-    "embershroud": {
+    embershroud: {
       name: "Embershroud Basilica",
-      nameJa: "エンバーシュラウド大聖堂",
-      type: "神殿 - 三光連環第二神殿",
+      nameJa: "Embershroud Basilica",
+      type: "Temple - Triple Light Second Temple",
       capacity: 1,
-      specialEffect: "ヴェイル焼却結界、地脈震動",
-      strategicValue: "炎の試練場、地脈増幅効果",
-      controlledBy: "中立",
-      adjacentAreas: ["嵐尖塔神殿", "ヴェイルボーン街道"],
-      resources: ["火焔井戸"]
+      specialEffect: "Veil-Burn Ward, Leyline Tremor",
+      strategicValue: "Fire trial ground, leyline amplification effect",
+      controlledBy: "Neutral",
+      adjacentAreas: ["Stormspire Temple", "Veilborn Way"],
+      resources: ["火焔井戸"],
     },
-    "ashen": {
+    ashen: {
       name: "Ashen Ramparts",
-      nameJa: "アッシェン要塞",
-      type: "軍事要塞",
+      nameJa: "Ashen Ramparts",
+      type: "Military Fortress",
       capacity: 2,
-      specialEffect: "要塞化門扉",
-      strategicValue: "軍事拠点、神殿群への封鎖基地",
+      specialEffect: "Fortified Gates",
+      strategicValue:
+        "Military stronghold, blockade base against temple clusters",
       controlledBy: "veilbreak",
-      adjacentAreas: ["ムーンウィーブ交差路", "嵐尖塔神殿", "ヴェイルボーン街道"],
-      resources: ["攻城兵器"]
+      adjacentAreas: [
+        "Moonweave Crossroads",
+        "Stormspire Temple",
+        "Veilborn Way",
+      ],
+      resources: ["Siege Engines"],
     },
-    "verdant": {
+    verdant: {
       name: "Verdant Outskirts",
-      nameJa: "ヴァーダント辺境",
-      type: "森林",
+      nameJa: "Verdant Outskirts",
+      type: "Forest",
       capacity: 2,
-      specialEffect: "隠密経路、黄昏案内人",
-      strategicValue: "迂回路確保、補給・情報支援",
-      controlledBy: "中立（契約団同盟）",
-      adjacentAreas: ["ムーンウィーブ交差路", "ヴェイルボーン街道"],
-      resources: ["薬草林", "隠し道", "光胞子灯台"]
+      specialEffect: "Stealth Routes, Twilight Guides",
+      strategicValue: "Detour route security, supply and intelligence support",
+      controlledBy: "Neutral (Covenant-Allied)",
+      adjacentAreas: ["Moonweave Crossroads", "Veilborn Way"],
+      resources: ["Herb Groves", "Hidden Paths", "Lumen-Spore Beacon"],
     },
-    "veilborn": {
+    veilborn: {
       name: "Veilborn Way",
-      nameJa: "ヴェイルボーン街道",
-      type: "古代遺跡",
+      nameJa: "Veilborn Way",
+      type: "Ancient Ruins",
       capacity: 2,
-      specialEffect: "破壊工作経路",
-      strategicValue: "戦略要衝、影縄罠の展開地",
-      controlledBy: "中立（争奪地域）",
-      adjacentAreas: ["アッシェン要塞", "エンバーシュラウド大聖堂", "ヴァーダント辺境"],
-      resources: ["地脈断片"]
-    }
+      specialEffect: "Sabotage Route",
+      strategicValue: "Strategic stronghold, shadow snare deployment zone",
+      controlledBy: "Neutral (Contested)",
+      adjacentAreas: [
+        "Ashen Ramparts",
+        "Embershroud Basilica",
+        "Verdant Outskirts",
+      ],
+      resources: ["Ley Shards"],
+    },
   },
 
-  // 戦術・魔法用語
+  // Tactics & Magic Terms
   tacticsAndMagic: {
-    "ritual_chanting": {
-      name: "儀式詠唱",
-      nameJa: "儀式詠唱",
+    ritual_chanting: {
+      name: "Ritual Chanting",
+      nameJa: "Ritual Chanting",
       faction: "auric",
-      description: "三光連環の儀を構成する神聖なる祈りの詠唱",
-      user: "selene, lyra"
+      description:
+        "Sacred prayer chanting that forms the Triple Light Linked Ring ritual",
+      user: "selene, lyra",
     },
-    "guardian_formation": {
-      name: "守護陣形",
-      nameJa: "守護陣形",
+    guardian_formation: {
+      name: "Guardian Formation",
+      nameJa: "Guardian Formation",
       faction: "auric",
-      description: "Thalen の槍術を核とした防御フォーメーション",
-      user: "thalen"
+      description: "Defensive formation centered on Thalen's spear techniques",
+      user: "thalen",
     },
-    "light_barrier": {
-      name: "光の結界",
-      nameJa: "光の結界",
+    light_barrier: {
+      name: "Light Barrier",
+      nameJa: "Light Barrier",
       faction: "auric",
-      description: "神聖魔法による防護結界術",
-      user: "selene"
+      description: "Protective barrier technique using sacred magic",
+      user: "selene",
     },
-    "storm_shield": {
-      name: "嵐盾",
-      nameJa: "嵐盾",
+    storm_shield: {
+      name: "Storm Shield",
+      nameJa: "Storm Shield",
       faction: "auric",
-      description: "最終決戦で使用された究極の防御術",
-      user: "selene, thalen"
+      description: "Ultimate defensive technique used in the final battle",
+      user: "selene, thalen",
     },
-    "shadow_snare": {
-      name: "影縄",
+    shadow_snare: {
+      name: "Shadow Snare",
       nameJa: "影縄",
       faction: "veilbreak",
-      description: "Veilbreak の影術による封鎖・拘束技術",
-      user: "nyx"
+      description: "Veilbreak's shadow art blockade and restraint techniques",
+      user: "nyx",
     },
-    "shadow_stakes": {
-      name: "影の杭",
+    shadow_stakes: {
+      name: "Shadow Stakes",
       nameJa: "影の杭",
       faction: "veilbreak",
-      description: "影術による地形制御・封鎖技術",
-      user: "nyx"
+      description: "Shadow art terrain control and blockade techniques",
+      user: "nyx",
     },
-    "lightning_spear": {
-      name: "雷槍",
+    lightning_spear: {
+      name: "Lightning Spear",
       nameJa: "雷槍",
       faction: "veilbreak",
-      description: "雷の力を宿した遠距離攻撃兵器",
-      user: "raxen, varek"
+      description: "Long-range attack weapon imbued with lightning power",
+      user: "raxen, varek",
     },
-    "shadow_explosion": {
-      name: "影爆",
+    shadow_explosion: {
+      name: "Shadow Explosion",
       nameJa: "影爆",
       faction: "veilbreak",
-      description: "影術による爆発攻撃技術",
-      user: "varek"
-    }
+      description: "Explosive attack technique using shadow arts",
+      user: "varek",
+    },
   },
 
-  // リソース・アイテム
+  // Resources & Items
   resources: {
-    "incense": {
-      name: "香束",
-      nameJa: "香束",
+    incense: {
+      name: "Incense",
+      nameJa: "Incense",
       type: "sacred",
-      description: "神聖儀式に使用される薫香。三光連環の儀に必須",
-      faction: "auric"
+      description:
+        "Incense used in sacred rituals. Essential for the Triple Light Linked Ring ceremony",
+      faction: "auric",
     },
-    "sun_fragment": {
-      name: "太陽欠片",
-      nameJa: "太陽欠片",
+    sun_fragment: {
+      name: "Sun Fragments",
+      nameJa: "Sun Fragments",
       type: "sacred",
-      description: "古代の聖遺物。強力な神聖魔法の触媒",
-      faction: "auric"
+      description: "Ancient sacred relic. Powerful catalyst for sacred magic",
+      faction: "auric",
     },
-    "guardian_scroll": {
-      name: "守護巻物",
-      nameJa: "守護巻物",
+    guardian_scroll: {
+      name: "Guardian Scrolls",
+      nameJa: "Guardian Scrolls",
       type: "magic",
-      description: "守護術式が記された魔法の巻物",
-      faction: "auric"
+      description: "Magic scrolls inscribed with guardian techniques",
+      faction: "auric",
     },
-    "light_resin": {
-      name: "光花樹脂",
-      nameJa: "光花樹脂",
+    light_resin: {
+      name: "Light-Flower Resin",
+      nameJa: "Light-Flower Resin",
       type: "magic",
-      description: "光る樹脂。対影戦術の護符材料",
-      faction: "auric"
+      description: "Luminous resin. Talisman material for anti-shadow tactics",
+      faction: "auric",
     },
-    "shadow_poison": {
-      name: "影縛薬",
-      nameJa: "影縛薬",
+    shadow_poison: {
+      name: "Shadow Poison",
+      nameJa: "Shadow Poison",
       type: "poison",
-      description: "影術に使用される特殊薬剤",
-      faction: "veilbreak"
+      description: "Special agent used in shadow arts",
+      faction: "veilbreak",
     },
-    "far_sight": {
-      name: "遠見鏡",
-      nameJa: "遠見鏡",
+    far_sight: {
+      name: "Far-sight Mirrors",
+      nameJa: "Far-sight Mirrors",
       type: "tool",
-      description: "遠距離監視用の光学機器",
-      faction: "veilbreak"
+      description: "Optical devices for long-range surveillance",
+      faction: "veilbreak",
     },
-    "supply_ration": {
-      name: "補給糧",
-      nameJa: "補給糧",
+    supply_ration: {
+      name: "Supply Rations",
+      nameJa: "Supply Rations",
       type: "food",
-      description: "軍事行動用の保存食料",
-      faction: "veilbreak"
-    }
+      description: "Preserved food for military operations",
+      faction: "veilbreak",
+    },
   },
 
-  // ターン別重要イベント
+  // Key Events per Turn
   keyEvents: {
     2: {
-      title: "第一節完遂",
+      title: "First Movement Completed",
       type: "ritual_success",
-      result: "儀式進行度1/3達成、迂回路発見",
+      result: "Achieved 1/3 ritual progress, discovered bypass route",
       participants: ["auric"],
-      impact: "三光連環への第一歩"
+      impact: "First step toward the Triple Light Linked Ring",
     },
     3: {
-      title: "黄昏案内人との誓約",
+      title: "Pact with the Twilight Guide",
       type: "alliance",
-      result: "霧路の安全通行権獲得",
+      result: "Gained safe passage rights through the mist paths",
       participants: ["auric", "duskway_guides"],
-      impact: "迂回路確保の成功"
+      impact: "Successfully secured detour route",
     },
     6: {
-      title: "ヴェイルボーン街道突入",
+      title: "Breakthrough into Veilborn Way",
       type: "direct_confrontation",
-      result: "両陣営同一地点で対峙開始",
+      result: "Both factions begin confrontation at the same location",
       participants: ["auric", "veilbreak"],
-      impact: "直接衝突の始まり"
+      impact: "Beginning of direct conflict",
     },
     10: {
-      title: "第二節完遂と炎風攻防",
+      title: "Second Movement Completed and Flame-Wind Battle",
       type: "combat_ritual",
-      result: "監視団突撃を結界で撃退、第二節完遂",
+      result:
+        "Repelled Sentinels' assault with barrier, completed second movement",
       participants: ["auric", "veilbreak"],
-      impact: "儀式進行度2/3達成"
+      impact: "Achieved 2/3 ritual progress",
     },
     11: {
-      title: "炎守護僧との協定",
+      title: "Pact with the Ember Guardians",
       type: "alliance",
-      result: "静風窓情報獲得、最終準備完了",
+      result:
+        "Obtained calm wind window information, final preparations complete",
       participants: ["auric", "ember_guardians"],
-      impact: "最終決戦への道筋確保"
+      impact: "Secured path to final battle",
     },
     14: {
-      title: "三光連環の完成",
+      title: "Completion of the Triple Light Linked Ring",
       type: "final_victory",
-      result: "光の勝利、聖約の完成",
+      result: "Victory of light, completion of sacred covenant",
       participants: ["auric", "veilbreak"],
-      impact: "キャンペーン完了、光の守護確立"
-    }
+      impact: "Campaign completed, establishment of light's protection",
+    },
   },
 
-  // ターン別タイトル
+  // Turn Titles
   turnTitles: [
-    "", // インデックス0は空
-    "嵐前夜の布陣と月光の交差路",
-    "慰めの聖所での第一節完遂",
-    "黄昏案内人との誓約",
-    "夕闇の森辺境移動",
-    "光花樹脂の採集と地脈の震え",
-    "ヴェイルボーン街道への突入",
-    "日蝕の影と光路の構築",
-    "残像罠の解析と決戦準備",
-    "エンバーシュラウド大聖堂への突入",
-    "第二節の祈りと炎風の攻防",
-    "炎守護僧との協定と静風窓の発見",
-    "嵐尖塔への突入",
-    "嵐盾の結界と最終準備",
-    "三光連環の完成と光の勝利"
+    "", // Index 0 is empty
+    "Storm's Eve Deployment and the Moonweave Crossroads",
+    "First Movement Completion at Solace Sanctum",
+    "Pact with the Twilight Guide",
+    "Movement to the Verdant Outskirts",
+    "Light-Flower Resin Collection and Leyline Tremors",
+    "Breakthrough into Veilborn Way",
+    "Eclipse Shadows and Light Path Construction",
+    "Afterimage Trap Analysis and Battle Preparation",
+    "Breakthrough into Embershroud Basilica",
+    "Second Movement Prayer and Flame-Wind Battle",
+    "Pact with Ember Guardians and Calm Wind Window Discovery",
+    "Breakthrough into Stormspire Temple",
+    "Storm Shield Barrier and Final Preparations",
+    "Completion of Triple Light Linked Ring and Victory of Light",
   ],
 
-  // 経済データ（初期値）
+  // Economy Data (initial values)
   initialEconomy: {
     auric: {
       currency: 120,
@@ -378,8 +434,8 @@ const campaignData = {
       resources: {
         incense: 6,
         sun_fragment: 3,
-        guardian_scroll: 2
-      }
+        guardian_scroll: 2,
+      },
     },
     veilbreak: {
       currency: 95,
@@ -391,30 +447,30 @@ const campaignData = {
       resources: {
         shadow_poison: 4,
         far_sight: 3,
-        supply_ration: 5
-      }
-    }
+        supply_ration: 5,
+      },
+    },
   },
 
-  // 最終統計
+  // Final Statistics
   finalStats: {
     auric: {
       finalMorale: 9.1,
-      achievement: "三光連環の儀完遂",
+      achievement: "Triple Light Linked Ring ritual completed",
       allianceCount: 3,
-      ritualsCompleted: 3
+      ritualsCompleted: 3,
     },
     veilbreak: {
       finalMorale: 7.3,
-      achievement: "善戦するも阻止失敗",
+      achievement: "Fought valiantly but failed to prevent",
       sabotageAttempts: 2,
-      blockadeSuccess: 1
-    }
-  }
+      blockadeSuccess: 1,
+    },
+  },
 };
 
-// グローバルエクスポート
-if (typeof module !== 'undefined' && module.exports) {
+// Global export
+if (typeof module !== "undefined" && module.exports) {
   module.exports = campaignData;
 } else {
   window.campaignData = campaignData;

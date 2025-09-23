@@ -1,224 +1,164 @@
 <!DOCTYPE html>
-<html lang="ja">
+
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>三光連環の儀 対立 - Campaign Dashboard</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="data.js"></script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Triple Light Linked Ring - Campaign Dashboard</title>
+<link href="style.css" rel="stylesheet"/>
+<script src="data.js"></script>
 </head>
 <body>
-    <!-- Header Navigation -->
-    <header class="main-header">
-      <div class="container">
-        <nav class="main-nav">
-          <a href="index.html" class="active">🏠 Dashboard</a>
-          <a href="narrative.html">📖 Narrative</a>
-          <a href="playlog.html">📊 Playlog</a>
-          <a href="worldmap.html">🗺️ World Map</a>
-        </nav>
-      </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="container">
-        <!-- Page Header -->
-        <section class="campaign-overview">
-            <h1>🌟 三光連環の儀 対立</h1>
-            <p class="subtitle">Silver Eclipse Cycle の壮大な物語 - 全14ターンの神聖なる儀式キャンペーン<br>
-            月蝕の夜、古代神殿に響く聖歌と雷鳴。三つの神殿を巡る神聖なる戦いの物語。</p>
-        </section>
-
-        <!-- Ritual Progress Indicator -->
-        <section class="card">
-            <div class="ritual-progress">
-                <h4>🔮 三光連環の儀 進行状況</h4>
-                <div class="progress-ring">
-                    <div class="progress-step completed">
-                        <div class="progress-circle">🌅</div>
-                        <div class="progress-label">第一節<br>慰めの祈り</div>
-                    </div>
-                    <div class="progress-step completed">
-                        <div class="progress-circle">🔥</div>
-                        <div class="progress-label">第二節<br>炎の試練</div>
-                    </div>
-                    <div class="progress-step completed">
-                        <div class="progress-circle">⚡</div>
-                        <div class="progress-label">第三節<br>嵐の結界</div>
-                    </div>
-                </div>
-                <p style="text-align: center; color: var(--auric-primary); font-weight: 600;">
-                    儀式完成度: 3/3 - 神聖なる聖約の確立
-                </p>
-            </div>
-        </section>
-
-        <!-- キャンペーン統計 -->
-        <section class="card">
-            <h3>📊 キャンペーン統計</h3>
-            <div class="campaign-stats">
-                    <div class="stat-item">
-                        <div class="stat-number">14</div>
-                        <div class="stat-label">ターン</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">2</div>
-                        <div class="stat-label">勢力</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">7</div>
-                        <div class="stat-label">地域</div>
-                    </div>
-                <div class="stat-item">
-                    <div class="stat-number">7</div>
-                    <div class="stat-label">キャラクター</div>
-                </div>
-            </div>
-        </section>
-
-            <!-- 勢力概要 -->
-            <section id="faction-overview" class="card">
-                <h3>🏛️ 勢力概要</h3>
-                <div class="faction-grid">
-                    <div class="faction-card auric">
-                        <div class="faction-header">
-                            <div class="faction-icon">🌟</div>
-                            <div class="faction-info">
-                                <h4>Auric Covenant</h4>
-                                <h5>オーリック契約団</h5>
-                                <p class="faction-result">🏆 神聖儀式完遂・勝利</p>
-                            </div>
-                        </div>
-                        <div class="faction-details">
-                            <p><strong>拠点</strong>: Moonweave Crossroads</p>
-                            <p><strong>専門</strong>: 神聖儀式と外交</p>
-                            <p><strong>哲学</strong>: 慎重な分析に基づく協調的民主制による意思決定</p>
-                            <p><strong>最終士気</strong>: 9.1 (勝利)</p>
-                        </div>
-                        <div class="faction-members">
-                            <div class="member">🌟 High Cantor Selene</div>
-                            <div class="member">🛡️ Warden Thalen</div>
-                            <div class="member">🔮 Oracle Lyra</div>
-                            <div class="member">📚 Chronicler Iven</div>
-                        </div>
-                    </div>
-
-                    <div class="faction-card veilbreak">
-                        <div class="faction-header">
-                            <div class="faction-icon">⚡</div>
-                            <div class="faction-info">
-                                <h4>Veilbreak Sentinels</h4>
-                                <h5>ヴェイルブレイク監視団</h5>
-                                <p class="faction-result">⚖️ 善戦するも阻止失敗</p>
-                            </div>
-                        </div>
-                        <div class="faction-details">
-                            <p><strong>拠点</strong>: Ashen Ramparts</p>
-                            <p><strong>専門</strong>: 戦術妨害と封鎖作戦</p>
-                            <p><strong>哲学</strong>: 直接指揮による計算された奇襲、軍事符丁での即断即決</p>
-                            <p><strong>最終士気</strong>: 7.3 (敗北)</p>
-                        </div>
-                        <div class="faction-members">
-                            <div class="member">⚡ Captain Raxen</div>
-                            <div class="member">🌙 Shade Operative Nyx</div>
-                            <div class="member">⚔️ Oathbreaker Varek</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-        <!-- 重要イベントタイムライン -->
-        <section class="card">
-            <h3>⚡ 重要イベント</h3>
-            <div class="events-timeline">
-                <div class="event-item">
-                    <div class="event-turn">ターン 2</div>
-                    <div class="event-content">
-                        <h4>第一節完遂</h4>
-                        <p>Solace Sanctumで三光連環の第一節を奏でる。儀式進行度1/3達成、迂回路発見。</p>
-                    </div>
-                </div>
-
-                <div class="event-item">
-                    <div class="event-turn">ターン 3</div>
-                    <div class="event-content">
-                        <h4>黄昏案内人との誓約</h4>
-                        <p>霧の森で案内人と同盟を結び、霧路の安全通行権を獲得。迂回路確保成功。</p>
-                    </div>
-                </div>
-
-                <div class="event-item">
-                    <div class="event-turn">ターン 10</div>
-                    <div class="event-content">
-                        <h4>第二節完遂と炎風攻防</h4>
-                        <p>Embershroud Basilicaで監視団突撃を結界で撃退、第二節完遂。儀式進行度2/3達成。</p>
-                    </div>
-                </div>
-
-                <div class="event-item">
-                    <div class="event-turn">ターン 14</div>
-                    <div class="event-content">
-                        <h4>三光連環の完成</h4>
-                        <p>Stormspire Templeで最終決戦。光の勝利により聖約が完成。キャンペーン完了。</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ナビゲーション -->
-        <section class="card">
-            <h3>📁 コンテンツナビゲーション</h3>
-            <div class="navigation-grid">
-                <div class="nav-item">
-                    <a href="narrative.html" class="nav-link">
-                        <div class="nav-icon">📖</div>
-                        <div class="nav-content">
-                            <h4>ナラティブリプレイ</h4>
-                            <p>物語形式で描かれた冒険の記録。キャラクターの台詞と行動を詳細に追体験。</p>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="nav-item">
-                    <a href="playlog.html" class="nav-link">
-                        <div class="nav-icon">📊</div>
-                        <div class="nav-content">
-                            <h4>プレイログ分析</h4>
-                            <p>数値データと統計で見る戦況分析。士気変動、リソース管理、戦略的要点を把握。</p>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="nav-item">
-                    <a href="worldmap.html" class="nav-link">
-                        <div class="nav-icon">🗺️</div>
-                        <div class="nav-content">
-                            <h4>世界マップ</h4>
-                            <p>地域情報と戦略価値、勢力圏の変遷。地理的な背景と戦術的意味を理解。</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer>
-        <p>Universal Narrative Engine (UNE) - Triple Light Linked Ring Campaign</p>
-    </footer>
-
-    <script>
-        // Turn selector functionality
-        document.getElementById('turnSelect').addEventListener('change', function() {
-            const turnNum = this.value;
-            if (turnNum) {
-                // Store selected turn in sessionStorage for cross-page navigation
-                sessionStorage.setItem('selectedTurn', turnNum);
-                // Navigate to narrative page with turn anchor
-                window.location.href = `narrative.html#turn-${turnNum}`;
-            }
-        });
-
+<!-- Header Navigation -->
+<header class="main-header">
+<div class="container">
+<nav class="main-nav">
+<a class="active" href="index.html">🏠 Dashboard</a>
+<a href="narrative.html">📖 Narrative</a>
+<a href="playlog.html">📊 Playlog</a>
+<a href="worldmap.html">🗺️ World Map</a>
+</nav>
+</div>
+</header>
+<!-- Main Content -->
+<main class="container">
+<!-- Page Header -->
+<section class="campaign-overview">
+<h1>🌟 Triple Light Linked Ring</h1>
+<p class="subtitle">Epic tale of the Silver Eclipse Cycle - A 14-turn sacred ritual campaign<br/>On the night of a lunar eclipse, sacred chants and thunder resonate in an ancient temple. A story of a holy battle across three temples.</p>
+</section>
+<!-- Ritual Progress Indicator -->
+<section class="card">
+<div class="ritual-progress">
+<h4>🔮 Triple Light Linked Ring Progress</h4>
+<div class="progress-ring">
+<div class="progress-step completed">
+<div class="progress-circle">🌅</div>
+<div class="progress-label">First Movement<br/>Prayer of Solace</div>
+</div>
+<div class="progress-step completed">
+<div class="progress-circle">🔥</div>
+<div class="progress-label">Second Movement<br/>Trial of Flames</div>
+</div>
+<div class="progress-step completed">
+<div class="progress-circle">⚡</div>
+<div class="progress-label">Third Movement<br/>Storm Barrier</div>
+</div>
+</div>
+<p style="text-align: center; color: var(--auric-primary); font-weight: 600;">Ritual Completion: 3/3 - Establishment of the Sacred Covenant</p>
+</div>
+</section>
+<!-- Campaign Statistics -->
+<section class="card">
+<h3>📊 Campaign Statistics</h3>
+<div class="campaign-stats">
+<div class="stat-item">
+<div class="stat-number">14</div>
+<div class="stat-label">Turn</div>
+</div>
+<div class="stat-item">
+<div class="stat-number">2</div>
+<div class="stat-label">Factions</div>
+</div>
+<div class="stat-item">
+<div class="stat-number">7</div>
+<div class="stat-label">Regions</div>
+</div>
+<div class="stat-item">
+<div class="stat-number">7</div>
+<div class="stat-label">Characters</div>
+</div>
+</div>
+</section>
+Faction Overview
+<section class="card" id="faction-overview">
+<h3>🏛️ Faction Overview</h3>
+<div class="faction-grid">
+<div class="faction-card auric">
+<div class="faction-header">
+<div class="faction-icon">🌟</div>
+<div class="faction-info">
+<h4>Auric Covenant</h4>
+<h5>Auric Covenant</h5>
+<p class="faction-result">🏆 Sacred Ritual Completed - Victory</p>
+</div>
+</div>
+<div class="faction-details">
+<p><strong>Base</strong>: Moonweave Crossroads</p>
+<p><strong>Specialty</strong>: Sacred rituals and diplomacy</p>
+<p><strong>Philosophy</strong>: Cooperative democratic decision-making based on careful analysis</p>
+<p><strong>Final Morale</strong>: 9.1 (Victory)</p>
+</div>
+<div class="faction-members">
+<div class="member">🌟 High Cantor Selene</div>
+<div class="member">🛡️ Warden Thalen</div>
+<div class="member">🔮 Oracle Lyra</div>
+<div class="member">📚 Chronicler Iven</div>
+</div>
+</div>
+<div class="faction-card veilbreak">
+<div class="faction-header">
+<div class="faction-icon">⚡</div>
+<div class="faction-info">
+<h4>Veilbreak Sentinels</h4>
+<h5>Veilbreak Sentinels</h5>
+<p class="faction-result">⚖️ Fought valiantly but failed to prevent</p>
+</div>
+</div>
+<div class="faction-details">
+<p><strong>Base</strong>: Ashen Ramparts</p>
+<p><strong>Specialty</strong>: Tactical disruption and blockade operations</p>
+<p><strong>Philosophy</strong>: Calculated ambushes under direct command, quick decisive action with military codes</p>
+<p><strong>Final Morale</strong>: 7.3 (Defeat)</p>
+</div>
+<div class="faction-members">
+<div class="member">⚡ Captain Raxen</div>
+<div class="member">🌙 Shade Operative Nyx</div>
+<div class="member">⚔️ Oathbreaker Varek</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Key Events Timeline -->
+<section class="card">
+<h3>⚡ Key Events</h3>
+<div class="events-timeline">
+<div class="event-item">
+<div class="event-turn">Turn 2</div>
+<div class="event-content">
+<h4>First Movement Completed</h4>
+<p>Performed the first movement of the Triple Light at Solace Sanctum. Achieved 1/3 ritual progress, discovered bypass route.</p>
+</div>
+</div>
+<div class="event-item">
+<div class="event-turn">Turn 3</div>
+<div class="event-content">
+<h4>Pact with the Twilight Guide</h4>
+<p>Allied with the guide in the Misty Forest and gained safe passage through the mist paths. Successfully secured a detour.</p>
+</div>
+</div>
+<div class="event-item">
+<div class="event-turn">Turn 10</div>
+<div class="event-content">
+<h4>Completion of the Second Movement and Flame-Wind Battle</h4>
+<p>Repelled the Sentinels' assault at Embershroud Basilica with a barrier, completing the second movement. Ritual progress 2/3 achieved.</p>
+</div>
+</div>
+<div class="event-item">
+<div class="event-turn">Turn 14</div>
+<div class="event-content">
+<h4>Completion of the Triple Light Linked Ring</h4>
+<p>Final battle at Stormspire Temple. The victory of light completes the sacred covenant. Campaign completed.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer>
+<p>Universal Narrative Engine (UNE) - Triple Light Linked Ring Campaign</p>
+</footer>
+<script>
         // Character and location hover tooltips
         document.addEventListener('DOMContentLoaded', function() {
             // Character tooltips
@@ -228,7 +168,7 @@
                     if (campaignData.characters[name]) {
                         const char = campaignData.characters[name];
                         this.setAttribute('data-tooltip',
-                            `${char.name} (${char.role}): ${char.description}。専門分野: ${char.specialties ? char.specialties.join('、') : '不明'}`);
+                            `${char.name} (${char.role}): ${char.description}. Specialties: ${char.specialties ? char.specialties.join(', ') : 'Unknown'}`);
                         this.classList.add('tooltip');
                     }
                 });
@@ -241,7 +181,7 @@
                     if (campaignData.locations[region]) {
                         const loc = campaignData.locations[region];
                         this.setAttribute('data-tooltip',
-                            `${loc.name} (${loc.type}): ${loc.specialEffect}。戦略価値: ${loc.strategicValue}`);
+                            `${loc.name} (${loc.type}): ${loc.specialEffect}. Strategic Value: ${loc.strategicValue}`);
                         this.classList.add('tooltip');
                     }
                 });
@@ -252,15 +192,15 @@
                 el.addEventListener('mouseenter', function() {
                     const resourceType = this.dataset.type;
                     const text = this.textContent.trim();
-                    // Extract resource name from text (e.g., "香束×6" -> "incense")
+                    // Extract resource name from text (e.g., "Incense×6" -> "incense")
                     let resourceKey = null;
-                    if (text.includes('香束')) resourceKey = 'incense';
-                    else if (text.includes('太陽欠片')) resourceKey = 'sun_fragment';
-                    else if (text.includes('守護巻物')) resourceKey = 'guardian_scroll';
-                    else if (text.includes('光花樹脂')) resourceKey = 'light_resin';
-                    else if (text.includes('影縛薬')) resourceKey = 'shadow_poison';
-                    else if (text.includes('遠見鏡')) resourceKey = 'far_sight';
-                    else if (text.includes('補給糧')) resourceKey = 'supply_ration';
+                    if (text.includes('Incense')) resourceKey = 'incense';
+                    else if (text.includes('Sun Fragments')) resourceKey = 'sun_fragment';
+                    else if (text.includes('Guardian Scrolls')) resourceKey = 'guardian_scroll';
+                    else if (text.includes('Light-Flower Resin')) resourceKey = 'light_resin';
+                    else if (text.includes('Shadow Poison')) resourceKey = 'shadow_poison';
+                    else if (text.includes('Far-sight Mirrors')) resourceKey = 'far_sight';
+                    else if (text.includes('Supply Rations')) resourceKey = 'supply_ration';
 
                     if (resourceKey && campaignData.resources[resourceKey]) {
                         const resource = campaignData.resources[resourceKey];
@@ -276,12 +216,12 @@
                 el.addEventListener('mouseenter', function() {
                     const text = this.textContent.trim();
                     let tacticsKey = null;
-                    if (text.includes('儀式集中')) tacticsKey = 'ritual_chanting';
-                    else if (text.includes('祈りの共鳴')) tacticsKey = 'ritual_chanting';
-                    else if (text.includes('空中結界')) tacticsKey = 'light_barrier';
-                    else if (text.includes('要塞化門扉')) tacticsKey = 'guardian_formation';
-                    else if (text.includes('隠密経路')) tacticsKey = 'shadow_snare';
-                    else if (text.includes('破壊工作')) tacticsKey = 'shadow_stakes';
+                    if (text.includes('Ritual Focus')) tacticsKey = 'ritual_chanting';
+                    else if (text.includes('Prayer Resonance')) tacticsKey = 'ritual_chanting';
+                    else if (text.includes('Aerial Ward')) tacticsKey = 'light_barrier';
+                    else if (text.includes('Fortified Gates')) tacticsKey = 'guardian_formation';
+                    else if (text.includes('Stealth Routes')) tacticsKey = 'shadow_snare';
+                    else if (text.includes('Sabotage Route')) tacticsKey = 'shadow_stakes';
 
                     if (tacticsKey && campaignData.tacticsAndMagic[tacticsKey]) {
                         const tactic = campaignData.tacticsAndMagic[tacticsKey];
