@@ -1,6 +1,6 @@
 # Repository Guidelines
 
-This repo hosts the Universal Narrative Engine (UNE). It implements a region graph-based life simulation engine with complex economic, social, and exploration mechanics. AI coding agents (e.g. Claude Code) act as autonomous TRPG GM/Player to generate narrative logs through automated gameplay.
+This repo hosts the Narrative Engine. It implements a region graph-based life simulation engine with complex economic, social, and exploration mechanics. AI coding agents (e.g. Claude Code) act as autonomous TRPG GM/Player to generate narrative logs through automated gameplay.
 
 ## Project Structure & Module Organization
 
