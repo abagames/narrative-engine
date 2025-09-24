@@ -47,14 +47,14 @@ Narrative Engine は経済・社会・探索メカニクスを持つ地域グラ
 
 ### AI エージェント思考フレームワーク
 
-#### GM 思考フレームワーク ([prompts/GM_CORE_MIND.md](prompts/GM_CORE_MIND.md))
+#### GM 思考フレームワーク ([prompts_ja/GM_CORE_MIND.md](prompts_ja/GM_CORE_MIND.md))
 
 - **環境制御**: NPC 行動、罠発動、天候変化
 - **戦況評価**: 数値的戦力分析、戦術優位性判定
 - **物語演出**: 緊張感創出、ドラマ演出、ペース調整
 - **難易度調整**: プレイヤーの習熟度に応じた挑戦レベル
 
-#### プレイヤー思考フレームワーク ([prompts/PLAYER_MIND.md](prompts/PLAYER_MIND.md))
+#### プレイヤー思考フレームワーク ([prompts_ja/PLAYER_MIND.md](prompts_ja/PLAYER_MIND.md))
 
 - **キャラクター個性**: Fighter、Wizard、Rogue 等の個性的思考パターン
 - **戦術的最適化**: 数値計算による最適行動選択
@@ -65,21 +65,21 @@ Narrative Engine は経済・社会・探索メカニクスを持つ地域グラ
 
 #### 戦闘システム
 
-- **個人戦闘** ([prompts/INDIVIDUAL_COMBAT_SYSTEM.md](prompts/INDIVIDUAL_COMBAT_SYSTEM.md)): 詳細な剣と魔法の戦闘
-- **戦術パターン** ([prompts/TACTICAL_PATTERNS.md](prompts/TACTICAL_PATTERNS.md)): 状況別最適戦術選択
-- **対話システム** ([prompts/DIALOGUE_SYSTEM.md](prompts/DIALOGUE_SYSTEM.md)): キャラクター個性に応じた戦闘台詞
+- **個人戦闘** ([prompts_ja/INDIVIDUAL_COMBAT_SYSTEM.md](prompts_ja/INDIVIDUAL_COMBAT_SYSTEM.md)): 詳細な剣と魔法の戦闘
+- **戦術パターン** ([prompts_ja/TACTICAL_PATTERNS.md](prompts_ja/TACTICAL_PATTERNS.md)): 状況別最適戦術選択
+- **対話システム** ([prompts_ja/DIALOGUE_SYSTEM.md](prompts_ja/DIALOGUE_SYSTEM.md)): キャラクター個性に応じた戦闘台詞
 
 #### 社会・管理システム
 
-- **ギルド管理** ([prompts/GUILD_MANAGEMENT.md](prompts/GUILD_MANAGEMENT.md)): ギルド運営、メンバー管理
-- **同盟戦略** ([prompts/ALLIANCE_STRATEGY.md](prompts/ALLIANCE_STRATEGY.md)): 他パーティーとの外交
-- **クエスト管理** ([prompts/QUEST_MANAGEMENT.md](prompts/QUEST_MANAGEMENT.md)): 目標設定、進行管理
-- **競争イベント** ([prompts/COMPETITIVE_EVENTS.md](prompts/COMPETITIVE_EVENTS.md)): パーティー間競争
+- **ギルド管理** ([prompts_ja/GUILD_MANAGEMENT.md](prompts_ja/GUILD_MANAGEMENT.md)): ギルド運営、メンバー管理
+- **同盟戦略** ([prompts_ja/ALLIANCE_STRATEGY.md](prompts_ja/ALLIANCE_STRATEGY.md)): 他パーティーとの外交
+- **クエスト管理** ([prompts_ja/QUEST_MANAGEMENT.md](prompts_ja/QUEST_MANAGEMENT.md)): 目標設定、進行管理
+- **競争イベント** ([prompts_ja/COMPETITIVE_EVENTS.md](prompts_ja/COMPETITIVE_EVENTS.md)): パーティー間競争
 
 #### ナラティブ生成
 
-- **小説変換** ([prompts/PARTY_PERSPECTIVE_NOVEL_CONVERSION.md](prompts/PARTY_PERSPECTIVE_NOVEL_CONVERSION.md)): プレイログから読みやすい物語への変換
-- **キャラクター性格** ([prompts/CHARACTER_PERSONALITY_TEMPLATES.md](prompts/CHARACTER_PERSONALITY_TEMPLATES.md)): 一貫した個性表現
+- **小説変換** ([prompts_ja/PARTY_PERSPECTIVE_NOVEL_CONVERSION.md](prompts_ja/PARTY_PERSPECTIVE_NOVEL_CONVERSION.md)): プレイログから読みやすい物語への変換
+- **キャラクター性格** ([prompts_ja/CHARACTER_PERSONALITY_TEMPLATES.md](prompts_ja/CHARACTER_PERSONALITY_TEMPLATES.md)): 一貫した個性表現
 
 ## 🔧 技術実装
 
