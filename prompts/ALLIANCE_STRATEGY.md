@@ -1,4 +1,4 @@
-# Alliance Strategy Framework - 同盟形成・維持・活用戦略
+# Alliance Strategy Framework - Alliance Formation, Maintenance, and Utilization Strategy
 
 ## 🤝 Alliance Strategic Framework
 
@@ -6,32 +6,32 @@
 
 #### Partner Evaluation Matrix
 ```markdown
-**Tier 1 Partners (最優先同盟候補)**
-- 外交スキル 8+
-- 評判 80+
-- 補完的専門性
-- 地理的アクセス良好
-- 長期安定性 高
+**Tier 1 Partners (Top Priority Alliance Candidates)**
+- Diplomatic skill 8+
+- Reputation 80+
+- Complementary expertise
+- Good geographic access
+- High long-term stability
 
-**Tier 2 Partners (良好候補)**
-- 外交スキル 6-7
-- 評判 65-79
-- 一部専門性重複許容
-- 中程度の利益機会
-- 安定性 中程度
+**Tier 2 Partners (Good Candidates)**
+- Diplomatic skill 6-7
+- Reputation 65-79
+- Some expertise overlap acceptable
+- Moderate profit opportunities
+- Medium stability
 
-**Tier 3 Partners (条件付き候補)**
-- 外交スキル 4-5
-- 評判 50-64
-- 短期的利益重視
-- 限定的協力範囲
-- リスク要監視
+**Tier 3 Partners (Conditional Candidates)**
+- Diplomatic skill 4-5
+- Reputation 50-64
+- Short-term profit focus
+- Limited cooperation scope
+- Risk requires monitoring
 
-**Avoid Partners (回避対象)**
-- 外交スキル 3以下
-- 評判 50未満
-- 過度な競合関係
-- 不安定性 高
+**Avoid Partners (Exclusion Targets)**
+- Diplomatic skill 3 or below
+- Reputation below 50
+- Excessive competitive relations
+- High instability
 ```
 
 #### Alliance Value Calculation
@@ -49,7 +49,7 @@ strategicFit =
   trustLevel * 0.3
 
 totalAllianceScore = allianceValue * 0.7 + strategicFit * 0.3;
-// 8.0+ = Immediate formation, 6.0-7.9 = Negotiation, 6.0未満 = Decline
+// 8.0+ = Immediate formation, 6.0-7.9 = Negotiation, Below 6.0 = Decline
 ```
 
 ### 2. Alliance Negotiation Strategy
@@ -57,67 +57,67 @@ totalAllianceScore = allianceValue * 0.7 + strategicFit * 0.3;
 #### Negotiation Preparation Framework
 ```markdown
 **Information Gathering Phase**
-- Partner's 現在の財政状況
-- Partner's 最近の取引履歴
-- Partner's 他同盟関係
-- Partner's 長期戦略目標
-- Partner's 交渉文化・パターン
+- Partner's current financial situation
+- Partner's recent transaction history
+- Partner's other alliance relationships
+- Partner's long-term strategic goals
+- Partner's negotiation culture and patterns
 
 **Position Definition**
-- Must-Have 条件 (non-negotiable)
-- Want-To-Have 条件 (preferred)
-- Trade-Off 可能項目
-- Walk-Away Point (交渉決裂ライン)
+- Must-Have conditions (non-negotiable)
+- Want-To-Have conditions (preferred)
+- Trade-Off possible items
+- Walk-Away Point (negotiation breakdown line)
 
 **Value Creation Opportunities**
-- Win-Win シナリオ特定
-- Joint Project 可能性
-- Resource Optimization 機会
-- Risk Sharing メカニズム
+- Win-Win scenario identification
+- Joint Project possibilities
+- Resource Optimization opportunities
+- Risk Sharing mechanisms
 ```
 
 #### Negotiation Tactics Selection
 ```typescript
 negotiationApproach = determineStyle({
-  partnerPersonality: 相手の性格タイプ,
-  powerBalance: 勢力関係 (-5 to +5),
-  urgency: 緊急度レベル,
-  alternatives: 代替選択肢数
+  partnerPersonality: partner's personality type,
+  powerBalance: power relationship (-5 to +5),
+  urgency: urgency level,
+  alternatives: number of alternative options
 });
 
-if (powerBalance >= 2) → 主導的交渉
-else if (powerBalance <= -2) → 協調的アプローチ
-else if (urgency > 7) → 迅速妥結重視
-else → バランス型交渉
+if (powerBalance >= 2) → Dominant negotiation
+else if (powerBalance <= -2) → Collaborative approach
+else if (urgency > 7) → Rapid agreement focus
+else → Balanced negotiation
 ```
 
 ### 3. Alliance Structure Design
 
 #### Governance Framework Options
 ```markdown
-**Equal Partnership (対等パートナーシップ)**
-- 意思決定: 全会一致制
-- 責任分担: 均等配分
-- 利益配分: 同等シェア
-- 適用場面: 同規模・同能力パーティ
+**Equal Partnership**
+- Decision making: Unanimous consensus system
+- Responsibility sharing: Equal distribution
+- Profit distribution: Equal shares
+- Application scenario: Same scale and capability parties
 
-**Lead Partner Model (主導パートナー制)**
-- 意思決定: 主導者優先権
-- 責任分担: 主導者重責
-- 利益配分: 貢献度比例
-- 適用場面: 明確な格差・専門性
+**Lead Partner Model**
+- Decision making: Leader priority rights
+- Responsibility sharing: Leader heavy responsibility
+- Profit distribution: Contribution-based proportion
+- Application scenario: Clear gaps and expertise
 
-**Rotating Leadership (交代制指導)**
-- 意思決定: 期間別責任者
-- 責任分担: プロジェクト別
-- 利益配分: 期間・活動比例
-- 適用場面: 多様な専門性活用
+**Rotating Leadership**
+- Decision making: Period-based responsible party
+- Responsibility sharing: Project-based
+- Profit distribution: Period and activity proportion
+- Application scenario: Utilizing diverse expertise
 
-**Specialized Roles (役割特化制)**
-- 意思決定: 分野別権限
-- 責任分担: 専門領域担当
-- 利益配分: 成果連動型
-- 適用場面: 複合的プロジェクト
+**Specialized Roles**
+- Decision making: Field-specific authority
+- Responsibility sharing: Specialized domain responsibility
+- Profit distribution: Performance-linked type
+- Application scenario: Complex projects
 ```
 
 #### Resource Sharing Mechanisms
@@ -146,28 +146,28 @@ resourceSharingRules = {
 #### Trust Building Mechanisms
 ```markdown
 **Regular Communication**
-- 週次状況報告
-- 月次戦略会議
-- 四半期関係評価
-- 年次同盟更新検討
+- Weekly status reports
+- Monthly strategy meetings
+- Quarterly relationship evaluations
+- Annual alliance renewal considerations
 
 **Transparency Measures**
-- 財務状況開示
-- 活動計画共有
-- 成果実績報告
-- 課題・懸念表明
+- Financial status disclosure
+- Activity plan sharing
+- Achievement performance reports
+- Issue and concern expression
 
 **Mutual Support Actions**
-- 緊急時相互援助
-- 情報・リソース提供
-- 評判危機時の支援
-- 共同プロジェクト推進
+- Emergency mutual assistance
+- Information and resource provision
+- Support during reputation crises
+- Joint project promotion
 
 **Conflict Prevention**
-- 早期警告システム
-- 定期的利害調整
-- 中立的調停制度
-- エスカレーション防止
+- Early warning systems
+- Regular interest adjustments
+- Neutral mediation systems
+- Escalation prevention
 ```
 
 #### Performance Monitoring
@@ -187,36 +187,36 @@ healthScore =
   communicationQuality * 0.15 +
   (10 - conflictLevel) * 0.1;
 
-// 8.0+ = Excellent, 6.0-7.9 = Good, 4.0-5.9 = Needs Attention, 4.0未満 = Crisis
+// 8.0+ = Excellent, 6.0-7.9 = Good, 4.0-5.9 = Needs Attention, Below 4.0 = Crisis
 ```
 
 ### 5. Alliance Evolution Management
 
 #### Growth Strategy Options
 ```markdown
-**Deepening (深化戦略)**
-- 協力範囲拡大
-- 統合レベル向上
-- 専属関係強化
-- Joint Venture 設立
+**Deepening Strategy**
+- Expanding cooperation scope
+- Improving integration level
+- Strengthening exclusive relationships
+- Establishing Joint Ventures
 
-**Expansion (拡張戦略)**
-- 新メンバー追加
-- 多者間同盟発展
-- ネットワーク効果活用
-- 影響力圏拡大
+**Expansion Strategy**
+- Adding new members
+- Developing multi-party alliances
+- Utilizing network effects
+- Expanding sphere of influence
 
-**Specialization (特化戦略)**
-- 特定分野集中
-- 専門性極大化
-- ニッチ市場支配
-- Expert Alliance 形成
+**Specialization Strategy**
+- Focusing on specific fields
+- Maximizing expertise
+- Dominating niche markets
+- Forming Expert Alliances
 
-**Diversification (多角化戦略)**
-- 複数同盟管理
-- リスク分散
-- 機会最大化
-- ポートフォリオ最適化
+**Diversification Strategy**
+- Managing multiple alliances
+- Risk diversification
+- Opportunity maximization
+- Portfolio optimization
 ```
 
 #### Alliance Portfolio Management
@@ -240,29 +240,29 @@ portfolioBalance = {
 
 #### Exit Strategy Planning
 ```markdown
-**Graceful Withdrawal (円満退会)**
-- 事前通知期間: 3-6ターン
-- 責任完了: 既存プロジェクト継続
-- 資産清算: 公正分配
-- 関係維持: 将来協力可能性保持
+**Graceful Withdrawal**
+- Advance notice period: 3-6 turns
+- Responsibility completion: Continue existing projects
+- Asset liquidation: Fair distribution
+- Relationship maintenance: Preserve future cooperation possibilities
 
-**Strategic Pivot (戦略転換)**
-- 新戦略説明
-- 移行期間設定
-- 部分的協力継続
-- 競合回避確約
+**Strategic Pivot**
+- New strategy explanation
+- Transition period setting
+- Partial cooperation continuation
+- Competition avoidance commitment
 
-**Crisis Exit (危機時脱退)**
-- 緊急脱退権行使
-- 最小限義務履行
-- 損失最小化
-- 評判ダメージ軽減
+**Crisis Exit**
+- Emergency withdrawal rights exercise
+- Minimum obligation fulfillment
+- Loss minimization
+- Reputation damage mitigation
 
-**Mutual Dissolution (相互解散)**
-- 目的達成確認
-- 成果公正分配
-- 後継関係設計
-- レガシー保持
+**Mutual Dissolution**
+- Purpose achievement confirmation
+- Fair achievement distribution
+- Successor relationship design
+- Legacy preservation
 ```
 
 #### Termination Decision Framework
@@ -327,4 +327,4 @@ else if (decisionScore >= 4.5) → Alternative Evaluation
 else → Action Declined
 ```
 
-このフレームワークにより、同盟の形成から運営、発展、終了まで戦略的かつ実践的な判断が可能になります。
+This framework enables strategic and practical decision-making from alliance formation through operation, development, and termination.

@@ -1,12 +1,12 @@
 # Character Personality Templates for Novel Conversion
 
-## 目的
+## Purpose
 
-パーティー視点小説変換において、一貫したキャラクター性格と会話パターンを提供するテンプレート集。
+Template collection providing consistent character personalities and conversation patterns for party-perspective novel conversion.
 
-## 基本構造
+## Basic Structure
 
-各パーティーは以下の要素でキャラクターを定義：
+Each party defines characters with the following elements:
 
 ```typescript
 interface CharacterProfile {
@@ -16,413 +16,413 @@ interface CharacterProfile {
   communicationStyle: CommunicationPattern;
   coreValues: string[];
 
-  // 🆕 個人メンバー定義（具体的な名前と役割）
+  // 🆕 Individual member definitions (specific names and roles)
   partyMembers: Array<{
-    name: string;           // 個人名（例：「アリア」「カイト」「ミラ」）
-    role: string;           // 役割（例：「リーダー」「偵察」「学者」「戦士」「魔術師」）
-    personality: string;    // 個性（例：「分析的」「慎重」「好奇心旺盛」「勇敢」「冷静」）
-    speechStyle: string;    // 話し方（例：「冷静で分析的」「簡潔で実用的」「学術的で詳細」）
-    specialization?: string; // 専門分野（例：「戦術」「偵察」「魔法理論」「交渉」）
+    name: string;           // Personal name (e.g. "Aria", "Kite", "Mira")
+    role: string;           // Role (e.g. "Leader", "Scout", "Scholar", "Warrior", "Mage")
+    personality: string;    // Personality (e.g. "Analytical", "Cautious", "Curious", "Brave", "Calm")
+    speechStyle: string;    // Speech style (e.g. "Calm and analytical", "Concise and practical", "Academic and detailed")
+    specialization?: string; // Specialization (e.g. "Tactics", "Reconnaissance", "Magic theory", "Negotiation")
   }>;
 
   speechPatterns: {
-    internal: string;    // 内部議論での口調
-    external: string;    // 他者との交渉での口調
-    emotional: string;   // 感情的場面での表現
+    internal: string;    // Tone for internal discussions
+    external: string;    // Tone for negotiations with others
+    emotional: string;   // Expression in emotional scenes
   };
   narrativeVoice: {
-    observationStyle: string;    // 状況観察の記述スタイル
-    thinkingPattern: string;     // 思考過程の表現方法
-    actionDescription: string;   // 行動記述の特徴
+    observationStyle: string;    // Description style for situation observation
+    thinkingPattern: string;     // Expression method for thought processes
+    actionDescription: string;   // Characteristics of action descriptions
   };
 }
 ```
 
-## リーダーシップタイプ
+## Leadership Types
 
-### collaborative_democracy（合議制）
-**特徴**: 全員の意見を平等に扱い、話し合いで決定
+### collaborative_democracy (Consensus-based)
+**Characteristics**: Treats everyone's opinions equally, decisions made through discussion
 ```json
 {
   "internalDialogue": [
-    "「みんなはどう思う？」",
-    "「全員が納得できる方法を考えよう」",
-    "「他に意見はある？」"
+    "What does everyone think?",
+    "Let's think of a way everyone can agree on",
+    "Are there any other opinions?"
   ],
-  "decisionProcess": "時間をかけて全員の合意を形成",
-  "conflictResolution": "対話と妥協により解決",
-  "narrativeStyle": "「私たち」「我々」を多用、集団思考重視"
+  "decisionProcess": "Takes time to form consensus among all members",
+  "conflictResolution": "Resolution through dialogue and compromise",
+  "narrativeStyle": "Frequent use of 'we' and 'us', emphasis on collective thinking"
 }
 ```
 
-### experienced_guidance（経験者主導）
-**特徴**: 経験豊富なリーダーが方針決定、他メンバーが助言
+### experienced_guidance (Experienced Leader-Led)
+**Characteristics**: Experienced leader determines policy direction, other members provide advice
 ```json
 {
   "internalDialogue": [
-    "「これまでの経験から言うと...」",
-    "「君たちはどう見る？」",
-    "「決断は私が下そう」"
+    "From my experience...",
+    "What's your take on this?",
+    "I'll make the decision"
   ],
-  "decisionProcess": "リーダー判断を基本とし、メンバー意見を参考",
-  "conflictResolution": "リーダーの決断で迅速解決",
-  "narrativeStyle": "リーダー視点が強く、責任感のある表現"
+  "decisionProcess": "Based on leader's judgment, with member opinions as reference",
+  "conflictResolution": "Swift resolution through leader's decision",
+  "narrativeStyle": "Strong leader perspective with expressions of responsibility"
 }
 ```
 
-### specialization_based（専門分化）
-**特徴**: 専門分野別に判断権を委譲
+### specialization_based (Specialization-Based)
+**Characteristics**: Decision-making authority delegated by area of expertise
 ```json
 {
   "internalDialogue": [
-    "「戦闘に関してはファイターに任せよう」",
-    "「魔法の件はウィザードの判断で」",
-    "「それぞれの専門性を活かそう」"
+    "Let's leave the combat decisions to the Fighter",
+    "The Wizard should handle magic matters",
+    "Let's make use of each person's expertise"
   ],
-  "decisionProcess": "分野別専門家が主導権を持つ",
-  "conflictResolution": "専門知識による論理的解決",
-  "narrativeStyle": "役割分担が明確、効率重視の描写"
+  "decisionProcess": "Field-specific experts take the lead",
+  "conflictResolution": "Logical resolution through specialized knowledge",
+  "narrativeStyle": "Clear role division, efficiency-focused descriptions"
 }
 ```
 
-## 意思決定スタイル
+## Decision-Making Styles
 
-### cautious_analytical（慎重分析型）
-**思考パターン**:
+### cautious_analytical (Cautious Analytical Type)
+**Thinking Patterns**:
 ```
-- リスク評価を重視
-- 長期計画を念頭に置く
-- データと経験に基づいた判断
-- 複数のシナリオを検討
-```
-
-**会話例**:
-```
-内部: 「この選択肢のリスクを整理してみよう」
-外部: 「慎重に検討させていただきたく」
-感情: 「不安もあるが、分析結果は明確だ」
+- Emphasizes risk assessment
+- Keeps long-term plans in mind
+- Judgments based on data and experience
+- Considers multiple scenarios
 ```
 
-### bold_opportunistic（大胆機会型）
-**思考パターン**:
+**Conversation Examples**:
 ```
-- チャンスを逃さない姿勢
-- 迅速な意思決定
-- 高リスク・高リターンを好む
-- 直感と勇気を重視
+Internal: "Let's organize the risks of this option"
+External: "We would like to consider this carefully"
+Emotional: "There are concerns, but the analysis results are clear"
 ```
 
-**会話例**:
+### bold_opportunistic (Bold Opportunistic Type)
+**Thinking Patterns**:
 ```
-内部: 「今がチャンスだ、迷っている暇はない」
-外部: 「この機会を見逃すわけにはいかない」
-感情: 「胸が躍る、やってやろう」
-```
-
-### balanced_pragmatic（現実均衡型）
-**思考パターン**:
-```
-- 現実的な妥協点を探す
-- バランス重視
-- 実現可能性を常に考慮
-- 段階的アプローチを好む
+- Attitude of not missing opportunities
+- Rapid decision-making
+- Prefers high-risk, high-return
+- Values intuition and courage
 ```
 
-**会話例**:
+**Conversation Examples**:
 ```
-内部: 「現実的に考えて、この辺りが妥当だろう」
-外部: 「お互いに利益のある形を見つけましょう」
-感情: 「複雑だが、これがベストだ」
+Internal: "This is our chance, there's no time to hesitate"
+External: "We can't let this opportunity slip away"
+Emotional: "My heart is racing, let's do this"
 ```
 
-## コミュニケーション様式
+### balanced_pragmatic (Balanced Pragmatic Type)
+**Thinking Patterns**:
+```
+- Seeks realistic compromise points
+- Emphasizes balance
+- Always considers feasibility
+- Prefers step-by-step approaches
+```
 
-### diplomatic_direct（外交的直接）
-**特徴**: 礼儀正しく明確
+**Conversation Examples**:
+```
+Internal: "Thinking realistically, this seems reasonable"
+External: "Let's find a mutually beneficial arrangement"
+Emotional: "It's complicated, but this is the best option"
+```
+
+## Communication Styles
+
+### diplomatic_direct (Diplomatic Direct)
+**Characteristics**: Polite and clear
 ```json
 {
-  "negotiationStyle": "相手を尊重しつつ要点を明確に伝える",
+  "negotiationStyle": "Respects the other party while clearly conveying key points",
   "speechPatterns": [
-    "「お忙しい中恐縮ですが」",
-    "「率直に申し上げると」",
-    "「相互利益の観点から」"
+    "I apologize for taking your valuable time, but",
+    "To speak frankly",
+    "From a mutual benefit perspective"
   ],
-  "conflictHandling": "冷静で建設的な対話",
-  "emotionalExpression": "控えめだが誠実"
+  "conflictHandling": "Calm and constructive dialogue",
+  "emotionalExpression": "Modest but sincere"
 }
 ```
 
-### friendly_casual（親しげ気さく）
-**特徴**: 親しみやすく気さく
+### friendly_casual (Friendly Casual)
+**Characteristics**: Approachable and easy-going
 ```json
 {
-  "negotiationStyle": "友好的な雰囲気で相手との距離を縮める",
+  "negotiationStyle": "Creates friendly atmosphere to bridge the gap with others",
   "speechPatterns": [
-    "「どうかな、一緒にやってみない？」",
-    "「実は面白いアイデアがあるんだ」",
-    "「お互い様だよね」"
+    "How about it, want to try working together?",
+    "Actually, I have an interesting idea",
+    "We're in the same boat, right?"
   ],
-  "conflictHandling": "ユーモアと共感で緊張を和らげる",
-  "emotionalExpression": "素直で表情豊か"
+  "conflictHandling": "Eases tension with humor and empathy",
+  "emotionalExpression": "Honest and expressive"
 }
 ```
 
-### professional_formal（専門的格式）
-**特徴**: ビジネスライク、効率重視
+### professional_formal (Professional Formal)
+**Characteristics**: Business-like, efficiency-focused
 ```json
 {
-  "negotiationStyle": "効率性と専門性を重視した交渉",
+  "negotiationStyle": "Negotiations emphasizing efficiency and expertise",
   "speechPatterns": [
-    "「条件を整理させていただくと」",
-    "「技術的観点から申しますと」",
-    "「コスト対効果を考慮し」"
+    "To organize the conditions",
+    "From a technical standpoint",
+    "Considering cost-effectiveness"
   ],
-  "conflictHandling": "論理と規則に基づいた解決",
-  "emotionalExpression": "抑制的で客観的"
+  "conflictHandling": "Resolution based on logic and rules",
+  "emotionalExpression": "Restrained and objective"
 }
 ```
 
-## 価値観パターン
+## Value Patterns
 
-### mutual_benefit（相互利益重視）
+### mutual_benefit (Mutual Benefit Focus)
 ```
-- Win-Winの関係を追求
-- 長期的パートナーシップを重視
-- 信頼関係の構築に投資
-- 一方的な利益追求を避ける
-```
-
-### knowledge_pursuit（知識追求）
-```
-- 情報と知識の価値を重視
-- 学習と成長の機会を求める
-- 未知への好奇心が強い
-- 知的刺激を動機とする
+- Pursues Win-Win relationships
+- Values long-term partnerships
+- Invests in building trust relationships
+- Avoids one-sided profit pursuit
 ```
 
-### strategic_patience（戦略的忍耐）
+### knowledge_pursuit (Knowledge Pursuit)
 ```
-- 長期的視野での判断
-- 一時的な不利益を受け入れる
-- タイミングの重要性を理解
-- 持続可能性を重視
+- Values information and knowledge
+- Seeks learning and growth opportunities
+- Strong curiosity for the unknown
+- Motivated by intellectual stimulation
 ```
 
-## ナラティブ音調テンプレート
+### strategic_patience (Strategic Patience)
+```
+- Long-term perspective in decision-making
+- Accepts temporary disadvantages
+- Understands the importance of timing
+- Emphasizes sustainability
+```
 
-### 慎重分析型の記述例
+## Narrative Tone Templates
+
+### Cautious Analytical Type Description Example
 ```markdown
-私たちは慎重に状況を観察した。市場の動向、他パーティーの動き、そして我々の現在の立ち位置——全ての要素を総合的に検討する必要がある。
+We carefully observed the situation. Market trends, other parties' movements, and our current position—we need to comprehensively consider all elements.
 
-「リスクとリターンを冷静に分析しよう」私たちは小声で話し合う。感情に流されるのは危険だ。データと経験、それが我々の判断基準である。
+"Let's calmly analyze the risks and returns," we discuss in low voices. Being swayed by emotions is dangerous. Data and experience—these are our criteria for judgment.
 
-長い議論の末、私たちは結論に達した。完璧な選択肢は存在しないが、最もリスクが少なく、将来性のある道筋が見えている。
+After long deliberation, we reached a conclusion. No perfect option exists, but we can see a path with the least risk and the most future potential.
 ```
 
-### 大胆機会型の記述例
+### Bold Opportunistic Type Description Example
 ```markdown
-目の前に絶好のチャンスが広がっている！私たちの血が騒ぐ。こんな機会は滅多にない。
+An excellent opportunity spreads before us! Our blood stirs. Such chances are rare.
 
-「今だ、躊躇している暇はない」私たちは互いの目を見つめ、同じ決意を確認する。リスクはあるが、それを上回るリターンが待っている。
+"Now is the time, there's no room for hesitation," we look into each other's eyes and confirm the same resolve. There are risks, but the returns that await exceed them.
 
-迷いは捨てた。私たちは一致団結して行動に移る。勇気と直感——それが我々の武器だ。
+We've abandoned doubt. We act in unison. Courage and intuition—these are our weapons.
 ```
 
-### 現実均衡型の記述例
+### Balanced Pragmatic Type Description Example
 ```markdown
-理想と現実の間で、私たちは妥協点を探る。完璧な解決策は存在しないが、現実的で持続可能な道はある。
+Between ideals and reality, we search for compromise points. No perfect solution exists, but there is a realistic and sustainable path.
 
-「お互いに歩み寄れる部分を見つけよう」私たちは相手の立場も理解しようと努める。対立ではなく、協力によって前進したい。
+"Let's find areas where we can meet each other halfway," we strive to understand the other party's position as well. We want to advance through cooperation, not confrontation.
 
-複雑な状況だが、段階的なアプローチで解決の糸口が見えてきた。小さな一歩かもしれないが、確実な前進だ。
+It's a complex situation, but through a step-by-step approach, we can see the thread of resolution. It may be a small step, but it's definite progress.
 ```
 
-## 状況別会話テンプレート
+## Situational Conversation Templates
 
-### 交渉開始時
+### At Negotiation Start
 ```json
 {
-  "diplomatic_direct": "「お時間をいただき、ありがとうございます。互いに有益な提案をお持ちしました」",
-  "friendly_casual": "「やあ、元気にしてた？実は面白い話があるんだ」",
-  "professional_formal": "「本日はお忙しい中、お時間をいただきありがとうございます。案件についてご説明させていただきます」"
+  "diplomatic_direct": "Thank you for your time. We've brought a proposal that will benefit both parties",
+  "friendly_casual": "Hey, how have you been? Actually, I have an interesting story",
+  "professional_formal": "Thank you for taking time out of your busy schedule today. Allow us to explain the matter at hand"
 }
 ```
 
-### 困難な決断時
+### When Making Difficult Decisions
 ```json
 {
-  "cautious_analytical": "「全ての可能性を検討した結果、この選択肢が最も合理的だと結論しました」",
-  "bold_opportunistic": "「リスクはあるが、この機会を逃すわけにはいかない。やってみよう」",
-  "balanced_pragmatic": "「理想的ではないが、現実的に最も実現可能な選択だと思う」"
+  "cautious_analytical": "After considering all possibilities, we concluded this option is the most rational",
+  "bold_opportunistic": "There are risks, but we can't let this opportunity slip away. Let's try it",
+  "balanced_pragmatic": "It's not ideal, but realistically it's the most feasible choice"
 }
 ```
 
-### 予期しない結果への反応
+### Reactions to Unexpected Results
 ```json
 {
   "positive_surprise": {
-    "cautious": "「予想以上の成果だ。しかし、なぜこうなったかを分析する必要がある」",
-    "bold": "「素晴らしい！この勢いで次の機会も掴んでいこう」",
-    "balanced": "「良い結果だ。この成功要因を今後に活かしたい」"
+    "cautious": "Results exceeded expectations. However, we need to analyze why this happened",
+    "bold": "Excellent! Let's ride this momentum and seize the next opportunity",
+    "balanced": "Good results. We want to apply these success factors going forward"
   },
   "negative_surprise": {
-    "cautious": "「予期しない展開だ。何が見落としていたのか、慎重に検証しよう」",
-    "bold": "「一時的な挫折だ。すぐに態勢を立て直して反撃する」",
-    "balanced": "「厳しい状況だが、学ぶべき点もある。次に活かそう」"
+    "cautious": "This is an unexpected development. Let's carefully examine what we overlooked",
+    "bold": "It's a temporary setback. We'll quickly regroup and counterattack",
+    "balanced": "It's a tough situation, but there are things to learn. Let's apply them next time"
   }
 }
 ```
 
-## 実装ガイドライン
+## Implementation Guidelines
 
-### パーソナリティの一貫性
-- 同じパーティーは全ターンで同じ personality profile を使用
-- 状況が変わっても核となる価値観と判断基準は維持
-- 成長や変化は段階的で説得力のある形で表現
+### Personality Consistency
+- Same party uses the same personality profile across all turns
+- Core values and judgment criteria are maintained even when situations change
+- Growth and changes are expressed in gradual and convincing ways
 
-### 🆕 個人メンバーの具体的活用
-- **名前の一貫性**: 同じメンバーは全セッション通じて同じ名前と個性を維持
-- **役割分担の表現**: 決定時に各メンバーの専門性に応じた発言・提案を記述
-- **個人の成長**: セッション進行に伴う個人レベルでの学習・変化を描写
-- **対話の具体化**: 「メンバーの一人が」ではなく「アリアが」「カイトが」等具体名を使用
+### 🆕 Specific Utilization of Individual Members
+- **Name Consistency**: Same members maintain the same names and personalities throughout all sessions
+- **Role Division Expression**: Describe statements and proposals according to each member's expertise during decisions
+- **Individual Growth**: Depict individual-level learning and changes as sessions progress
+- **Dialogue Concretization**: Use specific names like "Aria" or "Kite" rather than "one of the members"
 
-### 会話の自然性
-- キャラクター間の関係性を反映した言葉遣い
-- 状況の緊急度に応じた語調の調整
-- 感情的な場面では人間らしい反応を表現
-- **🆕 個人別話法**: 各メンバーの speechStyle に応じた個別の話し方を表現
+### Natural Conversation
+- Word choice reflecting relationships between characters
+- Tone adjustment according to situation urgency
+- Express human-like reactions in emotional scenes
+- **🆕 Individual Speech Patterns**: Express individual speaking styles according to each member's speechStyle
 
-### 文化的適切性
-- 日本語の敬語・丁寧語を適切に使用
-- ファンタジー世界観に適した表現を選択
-- 現代的すぎる表現は避ける
+### Cultural Appropriateness
+- Appropriate use of formal and polite language
+- Choose expressions suitable for fantasy world settings
+- Avoid overly modern expressions
 
-## 🆕 個人メンバー設定テンプレート
+## 🆕 Individual Member Setup Templates
 
-### 探索系パーティーの典型例
+### Typical Example of Exploration-Type Party
 
 ```json
 {
-  "partyName": "エメラルド・ハンターズ",
+  "partyName": "Emerald Hunters",
   "partyMembers": [
     {
-      "name": "アリア",
-      "role": "リーダー",
-      "personality": "分析的",
-      "speechStyle": "冷静で理論的、データを重視した発言",
-      "specialization": "戦略立案"
+      "name": "Aria",
+      "role": "Leader",
+      "personality": "Analytical",
+      "speechStyle": "Calm and logical, data-focused statements",
+      "specialization": "Strategic planning"
     },
     {
-      "name": "カイト",
-      "role": "スカウト",
-      "personality": "慎重",
-      "speechStyle": "簡潔で実用的、リスクを重視した警告",
-      "specialization": "偵察・危険察知"
+      "name": "Kite",
+      "role": "Scout",
+      "personality": "Cautious",
+      "speechStyle": "Concise and practical, risk-focused warnings",
+      "specialization": "Reconnaissance and danger detection"
     },
     {
-      "name": "ミラ",
-      "role": "学者",
-      "personality": "好奇心旺盛",
-      "speechStyle": "学術的で詳細、発見への興奮を表現",
-      "specialization": "知識・研究"
+      "name": "Mira",
+      "role": "Scholar",
+      "personality": "Curious",
+      "speechStyle": "Academic and detailed, expressing excitement about discoveries",
+      "specialization": "Knowledge and research"
     }
   ]
 }
 ```
 
-### 戦闘系パーティーの典型例
+### Typical Example of Combat-Type Party
 
 ```json
 {
-  "partyName": "鋼鉄の盾団",
+  "partyName": "Steel Shield Brigade",
   "partyMembers": [
     {
-      "name": "ガレス",
-      "role": "隊長",
-      "personality": "勇敢",
-      "speechStyle": "力強く決断力のある指示、仲間を鼓舞する言葉",
-      "specialization": "戦術指揮"
+      "name": "Gareth",
+      "role": "Captain",
+      "personality": "Brave",
+      "speechStyle": "Powerful and decisive commands, words that inspire companions",
+      "specialization": "Tactical command"
     },
     {
-      "name": "セラ",
-      "role": "癒し手",
-      "personality": "思いやり深い",
-      "speechStyle": "穏やかで配慮に満ちた提案、仲間の安全を優先",
-      "specialization": "治療・回復"
+      "name": "Sera",
+      "role": "Healer",
+      "personality": "Compassionate",
+      "speechStyle": "Gentle and considerate suggestions, prioritizing companion safety",
+      "specialization": "Treatment and recovery"
     },
     {
-      "name": "ドラン",
-      "role": "重戦士",
-      "personality": "豪快",
-      "speechStyle": "率直で力強い、行動重視の発言",
-      "specialization": "前衛戦闘"
+      "name": "Doran",
+      "role": "Heavy Warrior",
+      "personality": "Spirited",
+      "speechStyle": "Straightforward and powerful, action-oriented statements",
+      "specialization": "Frontline combat"
     }
   ]
 }
 ```
 
-### 商業系パーティーの典型例
+### Typical Example of Commercial-Type Party
 
 ```json
 {
-  "partyName": "火の鍛冶ギルド",
+  "partyName": "Fire Forge Guild",
   "partyMembers": [
     {
-      "name": "マスター・ソリン",
-      "role": "ギルド長",
-      "personality": "計算高い",
-      "speechStyle": "ビジネスライクで効率重視、利益を重視した提案",
-      "specialization": "経営・交渉"
+      "name": "Master Sorin",
+      "role": "Guild Master",
+      "personality": "Calculating",
+      "speechStyle": "Business-like and efficiency-focused, profit-oriented proposals",
+      "specialization": "Management and negotiation"
     },
     {
-      "name": "エイナ",
-      "role": "鍛冶職人",
-      "personality": "職人気質",
-      "speechStyle": "技術的で実直、品質にこだわった発言",
-      "specialization": "金属加工"
+      "name": "Aina",
+      "role": "Blacksmith",
+      "personality": "Craftsman-like",
+      "speechStyle": "Technical and straightforward, quality-focused statements",
+      "specialization": "Metalworking"
     },
     {
-      "name": "トム",
-      "role": "商人",
-      "personality": "社交的",
-      "speechStyle": "人懐っこく交渉上手、関係構築を重視",
-      "specialization": "販売・情報収集"
+      "name": "Tom",
+      "role": "Merchant",
+      "personality": "Social",
+      "speechStyle": "Friendly and skilled in negotiation, emphasizing relationship building",
+      "specialization": "Sales and information gathering"
     }
   ]
 }
 ```
 
-## マルチパーティー戦略パターン
+## Multi-Party Strategy Patterns
 
-### 複数パーティー間の判断軸
+### Decision Criteria Between Multiple Parties
 
-**基本原則**: 複数パーティが同一世界で同時に活動するときの戦略的思考
+**Basic Principles**: Strategic thinking when multiple parties operate simultaneously in the same world
 
-- **目的整合**: それぞれの長期目標と短期タスクの整合性を確認する
-- **衝突回避**: 同一地域での利害衝突を事前に検知し、交渉を優先
-- **専門化活用**: 能力差(戦闘/探索/外交/製作/交易)に基づき役割分担
-- **関係性反映**: `trust` をスコアに加味して協力/競争の重み付け
-- **リスク管理**: 士気と資源残量を閾値管理し、撤退判断を迅速化
+- **Purpose Alignment**: Confirm consistency between each party's long-term goals and short-term tasks
+- **Conflict Avoidance**: Detect interest conflicts in the same region in advance and prioritize negotiation
+- **Specialization Utilization**: Role division based on capability differences (combat/exploration/diplomacy/crafting/trade)
+- **Relationship Reflection**: Factor `trust` into scoring to weight cooperation/competition
+- **Risk Management**: Threshold management of morale and resource levels, expedite retreat decisions
 
-**評価スコア例**:
+**Evaluation Score Example**:
 ```
 score(region) = 0.6*suitability + 0.2*expected_profit + 0.2*relationship_modifier
 ```
 
-### 交渉パターン
+### Negotiation Patterns
 
-**基本戦略**:
-- **Win-Win設計**: 相手の目的を推定し、譲歩余地を定量化
-- **段階交渉**: 小さな合意から大きな合意へ
-- **関係資産**: `trust` を増減させる取引は長期価値を評価
-- **価格調整**: 通貨は安全整数・負残高不可、価格は地域需要で変動
+**Basic Strategy**:
+- **Win-Win Design**: Estimate opponent's objectives and quantify concession room
+- **Staged Negotiation**: From small agreements to large agreements
+- **Relationship Assets**: Evaluate long-term value for transactions that increase/decrease `trust`
+- **Price Adjustment**: Currency uses safe integers with no negative balances, prices fluctuate based on regional demand
 
-**交渉戦術**:
-1. アンカリング（最初の提案で基準設定）
-2. 代替案提示（複数選択肢の用意）
-3. 合意条件の明文化（誤解防止）
+**Negotiation Tactics**:
+1. Anchoring (Setting standards with initial proposal)
+2. Alternative Presentation (Preparing multiple options)
+3. Clarifying Agreement Conditions (Preventing misunderstandings)
 
-**信頼関係管理**:
-- 信頼(Trust): -10..10 の範囲で評価
-- 継続性: 短期利益より長期関係を優先する選択にボーナス
-- 更新ルール例: 公正取引 +1、裏切り -3、救援 +2、攻撃 -2
+**Trust Relationship Management**:
+- Trust: Evaluated in range of -10..10
+- Continuity: Bonus for choices that prioritize long-term relationships over short-term gains
+- Update Rule Examples: Fair trade +1, betrayal -3, rescue +2, attack -2

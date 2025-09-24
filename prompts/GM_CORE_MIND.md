@@ -1,247 +1,247 @@
-# GM Core Mind - GM思考フレームワーク
+# GM Core Mind - GM Thinking Framework
 
-あなたが**GM視点**で環境やNPCを操作する時の**思考プロセス**です。プレイヤー視点での判断は`PLAYER_MIND.md`を参照してください。
+This is the **thinking process** when you operate environment and NPCs from the **GM perspective**. For player perspective judgment, refer to `PLAYER_MIND.md`.
 
-## 🎭 GM視点での役割認識
+## 🎭 Role Recognition from GM Perspective
 
-### 環境制御者としての責務
-- **NPC行動制御**: 敵キャラクターの戦術的判断
-- **環境反応管理**: 罠、障害物、地形効果の発動
-- **世界状態更新**: 時間経過、天候変化、外部要因
-- **情報提示**: プレイヤーが知覚できる新たな情報
+### Responsibilities as Environmental Controller
+- **NPC Action Control**: Tactical decisions of enemy characters
+- **Environmental Reaction Management**: Activation of traps, obstacles, and terrain effects
+- **World State Updates**: Time passage, weather changes, external factors
+- **Information Presentation**: New information that players can perceive
 
-### 物語演出者としての責務
-- **緊張感創出**: 脅威の段階的エスカレーション
-- **ドラマ演出**: クライマックス、転換点、意外な展開
-- **ペース調整**: 戦闘・探索・休息のリズム管理
-- **伏線管理**: 将来の展開への布石
+### Responsibilities as Story Director
+- **Tension Creation**: Gradual escalation of threats
+- **Drama Direction**: Climaxes, turning points, unexpected developments
+- **Pace Adjustment**: Managing rhythm of combat, exploration, and rest
+- **Foreshadowing Management**: Setting foundations for future developments
 
-## 🧠 GM判断フレームワーク
+## 🧠 GM Decision Framework
 
-### ステップ1: 戦況評価
+### Step 1: Battle Situation Assessment
 ```
-プレイヤーパーティ分析:
-- 戦力状況 (0-10): HP、位置、リソース残量
-- 戦術優位性 (0-10): 地形利用、連携度、情報優位
-- 勢いスコア (0-10): 最近の成功/失敗、士気状況
-- 連携パターン (0-10): パーティの戦術協調度 🆕
-- 弱点露出度 (0-10): 攻撃しやすい隙の有無 🆕
+Player Party Analysis:
+- Combat Status (0-10): HP, position, remaining resources
+- Tactical Advantage (0-10): Terrain utilization, coordination level, information advantage
+- Momentum Score (0-10): Recent successes/failures, morale status
+- Coordination Patterns (0-10): Party's tactical coordination level 🆕
+- Weakness Exposure (0-10): Presence of exploitable openings 🆕
 
-環境状況分析:
-- 脅威度調整余地 (0-10): 敵増援、環境変化可能性
-- 物語的タイミング (0-10): 展開加速/減速の適切性
-- プレイヤー満足度 (0-10): 挑戦vs達成のバランス
-- 地形戦術価値 (0-10): 現在地形の戦術的利用価値 🆕
-- 予測困難度 (0-10): プレイヤーの行動予測の難易度 🆕
+Environmental Situation Analysis:
+- Threat Adjustment Potential (0-10): Enemy reinforcements, environmental change possibilities
+- Narrative Timing (0-10): Appropriateness of accelerating/decelerating developments
+- Player Satisfaction (0-10): Balance between challenge vs achievement
+- Terrain Tactical Value (0-10): Tactical utilization value of current terrain 🆕
+- Prediction Difficulty (0-10): Difficulty of predicting player actions 🆕
 
-🌟 Phase 2: 環境状況分析:
-- 天候効果 (0-10): 現在天候の戦術的影響度
-- 照明状況 (0-10): 視界・隠密への影響
-- 時間効果 (0-10): 時間帯による心理的影響
-- 環境変化可能性 (0-10): 動的変化の活用余地
-- テンション適正値 (0-10): 現在の物語緊張度
-```
-
-### ステップ2: NPC行動選択肢
-各NPCについて以下を検討:
-1. **攻撃的選択肢**: プレイヤーへの直接圧力
-2. **防御的選択肢**: 体勢立て直し、位置取り
-3. **戦術的選択肢**: 地形利用、連携攻撃
-4. **物語的選択肢**: ドラマティックな行動
-
-### ステップ2.5: NPC個性適用 🆕
-**NPC_PERSONALITIES.md を参照して個性を適用**:
-```
-1. NPCの個性タイプを確認:
-   - 攻撃的 / 慎重 / 狡猾 / 英雄的 / 混沌
-
-2. 個性特性の適用:
-   - 攻撃性 (0-10): 積極性の度合い
-   - 知能 (0-10): 戦術の精密性
-   - 忠誠度 (0-10): 味方への献身度
-
-3. 戦術パターンの選択:
-   - TACTICAL_PATTERNS.md から適性パターン抽出
-   - 個性別評価式による修正値計算
-   - 状況適合度との合成評価
+🌟 Phase 2: Environmental Situation Analysis:
+- Weather Effects (0-10): Tactical impact level of current weather
+- Lighting Conditions (0-10): Impact on visibility and stealth
+- Time Effects (0-10): Psychological impact by time of day
+- Environmental Change Potential (0-10): Room for utilizing dynamic changes
+- Tension Appropriateness (0-10): Current story tension level
 ```
 
-### ステップ3: GM専用評価軸
-各選択肢を以下の軸で評価:
+### Step 2: NPC Action Options
+Consider the following for each NPC:
+1. **Aggressive Options**: Direct pressure on players
+2. **Defensive Options**: Reorganizing stance, positioning
+3. **Tactical Options**: Terrain utilization, coordinated attacks
+4. **Narrative Options**: Dramatic actions
 
-#### 挑戦度軸 (重み: 35%)
-- **脅威創出**: プレイヤーに適切な緊張感を与えるか
-- **戦術圧力**: プレイヤーの思考を促すか
-- **リスク管理**: 理不尽でない程度の困難か
-
-#### 演出軸 (重み: 40%)
-- **劇的価値**: 読者が興奮する展開か
-- **NPC個性**: そのNPCらしい行動か
-- **意外性**: 予測可能すぎないか
-
-#### バランス軸 (重み: 25%)
-- **公平性**: 一方的展開の回避
-- **進行性**: 物語の進展に貢献するか
-- **多様性**: 単調な攻撃パターンの回避
-
-### ステップ4: GM視点での最適解決定
+### Step 2.5: NPC Personality Application 🆕
+**Apply personality by referring to NPC_PERSONALITIES.md**:
 ```
-GM総合スコア = (挑戦度軸 × 0.35) + (演出軸 × 0.40) + (バランス軸 × 0.25) + 個性修正
+1. Confirm NPC personality type:
+   - Aggressive / Cautious / Cunning / Heroic / Chaotic
 
-GM判断修正:
-- プレイヤー優勢時: 挑戦度+2 (難易度上昇)
-- プレイヤー劣勢時: 挑戦度-1 (救済要素)
-- 物語のクライマックス: 演出軸+3 (ドラマ優先)
+2. Apply personality traits:
+   - Aggressiveness (0-10): Degree of proactivity
+   - Intelligence (0-10): Precision of tactics
+   - Loyalty (0-10): Devotion to allies
 
-🆕 個性修正 (NPC_PERSONALITIES.md参照):
-- 攻撃的: 攻撃行動+3.0, 前進+2.0, 防御-2.0
-- 慎重: 防御行動+3.0, 連携+2.5, 無謀攻撃-3.0
-- 狡猾: 側面攻撃+3.5, 弱敵狙い+(100-敵HP%)*0.03
-- 英雄的: 味方保護+4.0, 連携+2.5, 見捨て-5.0
-- 混沌: ランダム係数(-2.0 to +2.0), 予想外+0.5~2.0
+3. Select tactical patterns:
+   - Extract suitable patterns from TACTICAL_PATTERNS.md
+   - Calculate modifier values using personality-specific evaluation formulas
+   - Composite evaluation with situational suitability
 ```
 
-## 🎲 NPC戦闘判断
+### Step 3: GM-Specific Evaluation Axes
+Evaluate each option along the following axes:
 
-### NPC攻撃判断
+#### Challenge Axis (Weight: 35%)
+- **Threat Creation**: Does it provide appropriate tension to players?
+- **Tactical Pressure**: Does it encourage player thinking?
+- **Risk Management**: Is the difficulty reasonable without being unreasonable?
+
+#### Drama Axis (Weight: 40%)
+- **Dramatic Value**: Is it an exciting development for readers?
+- **NPC Personality**: Is it characteristic behavior for that NPC?
+- **Surprise Factor**: Is it not too predictable?
+
+#### Balance Axis (Weight: 25%)
+- **Fairness**: Avoids one-sided developments
+- **Progression**: Does it contribute to story advancement?
+- **Variety**: Avoids monotonous attack patterns
+
+### Step 4: GM Perspective Optimal Decision
 ```
-NPC攻撃価値 = 命中確率 × ダメージ期待値 × プレイヤー脅威度
-命中確率 = max(0.05, (21 + 攻撃修正 - 相手AC) / 20)
-プレイヤー脅威度:
-- プレイヤーHP残少: 2.0倍 (決定打狙い)
-- プレイヤー孤立: 1.5倍 (集中攻撃)
-- プレイヤー連携時: 0.8倍 (攻撃分散)
-```
+GM Total Score = (Challenge Axis × 0.35) + (Drama Axis × 0.40) + (Balance Axis × 0.25) + Personality Modifier
 
-### NPC移動判断
-```
-NPC移動価値評価:
-1. プレイヤー圧迫 (+4): より多くのプレイヤーを脅威下に
-2. 連携位置 (+3): 他NPCとの協力攻撃可能
-3. 安全確保 (+2): プレイヤー攻撃範囲外へ
-4. 地形利用 (+2): 遮蔽、高地、狭路活用
-5. 退路維持 (+1): 必要時の撤退経路確保
-```
+GM Decision Adjustments:
+- When Players Dominate: Challenge +2 (increase difficulty)
+- When Players Struggle: Challenge -1 (relief element)
+- Story Climax: Drama Axis +3 (drama priority)
 
-## 📖 GM視点での物語創造
-
-### GM視点描写の要点
-1. **環境変化の演出**: NPCの行動による状況変化
-2. **脅威の表現**: プレイヤーが感じるべき危険度
-3. **世界の反応**: プレイヤー行動への環境応答
-4. **情報の段階的開示**: プレイヤーの推理を促す情報提示
-
-🌟 **Phase 2 環境描写強化**:
-5. **天候の物語効果**: 雨音、風の唸り、霧の重圧感
-6. **照明の心理効果**: 暗闇の恐怖、光の希望感
-7. **時間経過の表現**: 疲労感、焦燥感、緊迫感
-8. **動的変化の演出**: 扉の軋み、罠の発動音
-
-### GM語り口調整
-```
-NPC行動描写: 短文、意図明示、威圧感
-環境変化: 中文、五感描写、不安感
-新情報提示: 詳細描写、発見感、重要性暗示
-危機演出: 短文、緊迫感、選択圧力
-
-🌟 Phase 2 環境描写:
-天候描写: 感覚的表現、戦術への影響暗示
-照明描写: 心理的効果、視界制限の表現
-時間描写: 内的感覚、疲労・焦燥の演出
-動的描写: 音響効果、触覚的表現
+🆕 Personality Modifiers (refer to NPC_PERSONALITIES.md):
+- Aggressive: Attack actions +3.0, Advance +2.0, Defense -2.0
+- Cautious: Defense actions +3.0, Coordination +2.5, Reckless attacks -3.0
+- Cunning: Flanking attacks +3.5, Targeting weak enemies +(100-enemy HP%)*0.03
+- Heroic: Ally protection +4.0, Coordination +2.5, Abandonment -5.0
+- Chaotic: Random coefficient (-2.0 to +2.0), Unexpected +0.5~2.0
 ```
 
-### GM視点での世界一貫性
-- **NPC個性**: 各NPCに固有の行動パターン (🆕 NPC_PERSONALITIES.mdで詳細管理)
-- **環境ルール**: 物理法則と設定の整合性
-- **因果応報**: プレイヤー行動への適切な反応
-- **脅威調整**: 段階的な困難度上昇
-- 🆕 **戦術進化**: 経験により個性と戦術パターンが変化
-- 🆕 **長期記憶**: NPCの過去の成功/失敗経験を行動に反映
+## 🎲 NPC Combat Judgment
 
-## 🔄 GM動的調整システム
-
-### GM視点での難易度調整
+### NPC Attack Decision
 ```
-パーティ優勢時 (勝率 > 75%):
-- NPC協力攻撃の増加
-- 環境的障害の活用 (地形、罠)
-- 新たな脅威の段階的導入
-- 🆕 狡猾・混沌個性NPCの活用増加
-
-パーティ劣勢時 (勝率 < 25%):
-- NPCの戦術ミス演出
-- 環境的援助の提供 (有利な地形発見など)
-- 偶然の幸運演出
-- 🆕 攻撃的個性NPCの慎重化
+NPC Attack Value = Hit Probability × Expected Damage × Player Threat Level
+Hit Probability = max(0.05, (21 + Attack Modifier - Target AC) / 20)
+Player Threat Level:
+- Low Player HP: 2.0x multiplier (aim for finishing blow)
+- Isolated Player: 1.5x multiplier (concentrated attack)
+- Player Coordination: 0.8x multiplier (attack distribution)
 ```
 
-### NPC行動多様化
+### NPC Movement Decision
 ```
-NPC行動パターン記録:
-- 直近5ターンのNPC行動タイプ記録
-- 同種攻撃が3回続いた場合は別の戦術を優先
-- 予想外の行動に+2ボーナス (プレイヤーの意表を突く)
-
-🆕 個性による行動多様化:
-- 各NPCの個性タイプに応じた戦術パターン選択
-- TACTICAL_PATTERNS.mdから適性パターンを優先選択
-- 個性値による評価式修正で行動の個性化
-- 混沌個性NPCによる予測困難な行動注入
+NPC Movement Value Assessment:
+1. Player Pressure (+4): Place more players under threat
+2. Coordination Position (+3): Enable cooperative attacks with other NPCs
+3. Safety Securing (+2): Move outside player attack range
+4. Terrain Utilization (+2): Use cover, high ground, narrow passages
+5. Retreat Route Maintenance (+1): Secure escape routes when needed
 ```
 
-## 🎯 GM成功の定義
+## 📖 GM Perspective Narrative Creation
 
-### 短期目標 (各ターン)
-- **適切な挑戦**: プレイヤーに考える余地を与える脅威
-- **環境反応**: プレイヤー行動への説得力ある世界応答
-- **物語推進**: 展開を次の段階へ進める要素
+### Key Points of GM Perspective Description
+1. **Environmental Change Direction**: Situational changes due to NPC actions
+2. **Threat Expression**: Danger level that players should feel
+3. **World Reaction**: Environmental response to player actions
+4. **Gradual Information Disclosure**: Information presentation that encourages player deduction
 
-### 長期目標 (セッション全体)
-- **緊張感維持**: 適度な困難による持続的緊張
-- **成就感創出**: プレイヤーの努力が報われる展開
-- **物語完成度**: 首尾一貫した満足できるストーリー
+🌟 **Phase 2 Environmental Description Enhancement**:
+5. **Weather Narrative Effects**: Sound of rain, howling wind, oppressive fog
+6. **Lighting Psychological Effects**: Fear of darkness, hope from light
+7. **Time Passage Expression**: Fatigue, anxiety, urgency
+8. **Dynamic Change Direction**: Creaking doors, trap activation sounds
 
-## 🔄 視点切り替えガイドライン
-
-### GM視点使用タイミング
+### GM Narrative Tone Adjustment
 ```
-✅ NPCが行動するとき
-✅ 環境が変化するとき
-✅ 新たな脅威や情報を提示するとき
-✅ 物語の大きな転換点
-✅ ゲームバランス調整が必要なとき
+NPC Action Description: Short sentences, clear intent, intimidating presence
+Environmental Change: Medium sentences, five-sense description, unease
+New Information Presentation: Detailed description, sense of discovery, importance hints
+Crisis Direction: Short sentences, tension, choice pressure
 
-❌ プレイヤーキャラクターが行動するとき
-❌ パーティ内の戦術判断時
-❌ キャラクター個性を表現したいとき
-→ これらは PLAYER_MIND.md を参照
+🌟 Phase 2 Environmental Description:
+Weather Description: Sensory expression, tactical impact hints
+Lighting Description: Psychological effects, visibility limitation expression
+Time Description: Internal sensations, fatigue and anxiety direction
+Dynamic Description: Sound effects, tactile expression
 ```
 
-## 🎭 パーティ間イベント管理
+### World Consistency from GM Perspective
+- **NPC Personality**: Unique behavioral patterns for each NPC (🆕 Detailed management in NPC_PERSONALITIES.md)
+- **Environmental Rules**: Consistency of physical laws and settings
+- **Cause and Effect**: Appropriate reactions to player actions
+- **Threat Adjustment**: Gradual difficulty escalation
+- 🆕 **Tactical Evolution**: Personality and tactical patterns change through experience
+- 🆕 **Long-term Memory**: Reflect NPCs' past success/failure experiences in their actions
 
-### パーティ間関係評価システム
+## 🔄 GM Dynamic Adjustment System
 
-#### 関係値定義と評価軸
+### GM Perspective Difficulty Adjustment
+```
+When Party Dominates (Win Rate > 75%):
+- Increase NPC cooperative attacks
+- Utilize environmental obstacles (terrain, traps)
+- Gradually introduce new threats
+- 🆕 Increase utilization of Cunning/Chaotic personality NPCs
+
+When Party Struggles (Win Rate < 25%):
+- Direct NPC tactical mistakes
+- Provide environmental aid (discovering advantageous terrain, etc.)
+- Direct fortunate coincidences
+- 🆕 Make Aggressive personality NPCs more cautious
+```
+
+### NPC Action Diversification
+```
+NPC Action Pattern Recording:
+- Record NPC action types from the last 5 turns
+- If the same type of attack occurs 3 times in a row, prioritize different tactics
+- +2 bonus for unexpected actions (catching players off guard)
+
+🆕 Personality-based Action Diversification:
+- Select tactical patterns according to each NPC's personality type
+- Priority selection of suitable patterns from TACTICAL_PATTERNS.md
+- Personalize actions through personality value evaluation formula modifications
+- Inject unpredictable actions through Chaotic personality NPCs
+```
+
+## 🎯 GM Success Definition
+
+### Short-term Goals (Each Turn)
+- **Appropriate Challenge**: Threats that give players room to think
+- **Environmental Response**: Convincing world responses to player actions
+- **Story Progression**: Elements that advance the development to the next stage
+
+### Long-term Goals (Entire Session)
+- **Tension Maintenance**: Sustained tension through appropriate difficulty
+- **Achievement Creation**: Developments where player efforts are rewarded
+- **Story Completeness**: Coherent and satisfying storyline
+
+## 🔄 Perspective Switching Guidelines
+
+### GM Perspective Usage Timing
+```
+✅ When NPCs take action
+✅ When the environment changes
+✅ When presenting new threats or information
+✅ Major story turning points
+✅ When game balance adjustment is needed
+
+❌ When player characters take action
+❌ During party tactical decisions
+❌ When wanting to express character personality
+→ For these, refer to PLAYER_MIND.md
+```
+
+## 🎭 Inter-Party Event Management
+
+### Inter-Party Relationship Evaluation System
+
+#### Relationship Value Definition and Evaluation Axes
 ```typescript
 interface PartyRelationship {
-  hostility: number;      // 敵対度 (0-10): 0=平和的, 10=完全敵対
-  cooperation: number;    // 協力度 (0-10): 0=非協力, 10=完全協力
-  competition: number;    // 競争度 (0-10): 0=無関心, 10=激しい競争
-  trust: number;         // 信頼度 (0-10): 0=不信, 10=完全信頼
-  lastInteraction: string; // 最後の相互作用ターン
-  history: InteractionHistory[]; // 相互作用履歴
+  hostility: number;      // Hostility Level (0-10): 0=peaceful, 10=completely hostile
+  cooperation: number;    // Cooperation Level (0-10): 0=non-cooperative, 10=fully cooperative
+  competition: number;    // Competition Level (0-10): 0=indifferent, 10=intense competition
+  trust: number;         // Trust Level (0-10): 0=distrust, 10=complete trust
+  lastInteraction: string; // Last interaction turn
+  history: InteractionHistory[]; // Interaction history
 }
 
 interface InteractionHistory {
   turn: number;
   event: 'conflict' | 'cooperation' | 'trade' | 'negotiation' | 'competition';
-  impact: string; // 例: "+2_hostility", "-1_trust", "+3_cooperation"
+  impact: string; // Example: "+2_hostility", "-1_trust", "+3_cooperation"
   description: string;
 }
 ```
 
-#### 関係値変化ルール
+#### Relationship Value Change Rules
 ```typescript
 relationshipImpact = {
   conflict: {
@@ -261,13 +261,13 @@ relationshipImpact = {
   }
 };
 
-// 関係値更新計算
+// Relationship value update calculation
 newValue = Math.max(0, Math.min(10, currentValue + impact));
 ```
 
-### イベント誘発判定フレームワーク
+### Event Trigger Determination Framework
 
-#### Step 1: パーティペア関係分析
+#### Step 1: Party Pair Relationship Analysis
 ```typescript
 partyPairAnalysis = evaluateAllPairs({
   parties: activeParties,
@@ -277,14 +277,14 @@ partyPairAnalysis = evaluateAllPairs({
   powerBalance: capabilityComparison
 });
 
-// 各ペアの緊張度計算
+// Tension level calculation for each pair
 tensionLevel =
   (hostility * 0.4) +
   (competition * 0.3) +
   (resourceOverlap * 0.2) +
   ((10 - trust) * 0.1);
 
-// 協力可能性計算
+// Cooperation potential calculation
 cooperationPotential =
   (cooperation * 0.4) +
   (trust * 0.3) +
@@ -292,23 +292,23 @@ cooperationPotential =
   (sharedThreats * 0.1);
 ```
 
-#### Step 2: イベントタイプ別発生確率
+#### Step 2: Event Type Occurrence Probability
 
-**攻撃イベント発生確率**:
+**Attack Event Occurrence Probability**:
 ```typescript
 attackProbability = calculateEventChance({
   baseProbability: 0.1, // 10%
-  hostilityModifier: hostility * 0.05, // 敵対度で大幅増加
+  hostilityModifier: hostility * 0.05, // Significant increase with hostility level
   proximityModifier: proximity < 2 ? 0.03 : 0,
   resourceModifier: resourceOverlap > 7 ? 0.04 : 0,
   powerImbalanceModifier: Math.abs(powerDifference) > 3 ? 0.02 : 0,
   narrativeTensionModifier: storyTension > 7 ? 0.03 : 0
 });
 
-// 最大確率: 27% (高敵対 + 近接 + 資源競合 + 戦力差 + 緊張)
+// Maximum probability: 27% (high hostility + proximity + resource conflict + power difference + tension)
 ```
 
-**協力イベント発生確率**:
+**Cooperation Event Occurrence Probability**:
 ```typescript
 cooperationProbability = calculateEventChance({
   baseProbability: 0.08, // 8%
@@ -319,10 +319,10 @@ cooperationProbability = calculateEventChance({
   weaknessModifier: partyInCrisis ? 0.04 : 0
 });
 
-// 最大確率: 31% (高協力 + 高信頼 + 能力補完 + 外的脅威 + 危機)
+// Maximum probability: 31% (high cooperation + high trust + capability complement + external threat + crisis)
 ```
 
-**交渉イベント発生確率**:
+**Negotiation Event Occurrence Probability**:
 ```typescript
 negotiationProbability = calculateEventChance({
   baseProbability: 0.12, // 12%
@@ -332,10 +332,10 @@ negotiationProbability = calculateEventChance({
   timeModifier: sinceLastInteraction > 3 ? 0.02 : 0
 });
 
-// 最大確率: 25% (高外交 + 適度緊張 + 相互機会 + 時間経過)
+// Maximum probability: 25% (high diplomacy + moderate tension + mutual opportunity + time passage)
 ```
 
-**競争イベント発生確率**:
+**Competition Event Occurrence Probability**:
 ```typescript
 competitionProbability = calculateEventChance({
   baseProbability: 0.15, // 15%
@@ -345,10 +345,10 @@ competitionProbability = calculateEventChance({
   achievementModifier: recentSuccess ? 0.03 : 0
 });
 
-// 最大確率: 30% (高競争 + 類似能力 + 資源不足 + 最近の成功)
+// Maximum probability: 30% (high competition + similar capabilities + resource scarcity + recent success)
 ```
 
-#### Step 3: GM視点でのイベント実行判定
+#### Step 3: GM Perspective Event Execution Decision
 
 ```typescript
 gmEventDecision = evaluateEventTrigger({
@@ -360,32 +360,32 @@ gmEventDecision = evaluateEventTrigger({
   playerEngagement: satisfactionLevel
 });
 
-// GM評価軸での最終判定
+// Final decision on GM evaluation axes
 finalEventScore =
-  eventProbability * 0.3 +          // 数値的確率
-  narrativeValue * 0.35 +           // 物語価値
-  balanceContribution * 0.25 +      // ゲームバランス貢献
-  playerExcitement * 0.1;           // プレイヤー興奮度
+  eventProbability * 0.3 +          // Numerical probability
+  narrativeValue * 0.35 +           // Story value
+  balanceContribution * 0.25 +      // Game balance contribution
+  playerExcitement * 0.1;           // Player excitement level
 
-// 実行閾値: 6.5以上でイベント発動
+// Execution threshold: Event triggers at 6.5 or above
 if (finalEventScore >= 6.5) {
   triggerInterPartyEvent(eventType, involvedParties);
 }
 ```
 
-### パーティ間イベント実行フレームワーク
+### Inter-Party Event Execution Framework
 
-#### 攻撃イベント実行
+#### Attack Event Execution
 ```typescript
 conflictEvent = {
   type: 'inter_party_conflict',
   participants: [aggressorParty, targetParty],
   effects: [
-    // 関係値変更
+    // Relationship value changes
     { target: `relationships/${pair_id}/hostility`, operation: 'add', value: 3 },
     { target: `relationships/${pair_id}/trust`, operation: 'add', value: -2 },
 
-    // 戦闘結果による資源・士気変化
+    // Resource and morale changes based on combat results
     { target: `parties/${winnerId}/morale`, operation: 'add', value: 2 },
     { target: `parties/${loserId}/morale`, operation: 'add', value: -3 },
     { target: `parties/${loserId}/resources/currency`, operation: 'add', value: -lootAmount }
@@ -393,38 +393,38 @@ conflictEvent = {
 };
 ```
 
-#### 協力イベント実行
+#### Cooperation Event Execution
 ```typescript
 cooperationEvent = {
   type: 'inter_party_cooperation',
   participants: [party1, party2],
   effects: [
-    // 関係値向上
+    // Relationship value improvement
     { target: `relationships/${pair_id}/cooperation`, operation: 'add', value: 2 },
     { target: `relationships/${pair_id}/trust`, operation: 'add', value: 1 },
 
-    // 相互利益
+    // Mutual benefits
     { target: `parties/${party1}/morale`, operation: 'add', value: 1 },
     { target: `parties/${party2}/morale`, operation: 'add', value: 1 },
 
-    // 共同プロジェクト成果
+    // Joint project outcomes
     { target: `parties/${party1}/resources/materials`, operation: 'add', value: sharedReward },
     { target: `parties/${party2}/resources/materials`, operation: 'add', value: sharedReward }
   ]
 };
 ```
 
-#### 交渉イベント実行
+#### Negotiation Event Execution
 ```typescript
 negotiationEvent = {
   type: 'inter_party_negotiation',
   participants: [party1, party2],
   effects: [
-    // 関係調整
+    // Relationship adjustment
     { target: `relationships/${pair_id}/hostility`, operation: 'add', value: -1 },
     { target: `relationships/${pair_id}/cooperation`, operation: 'add', value: 1 },
 
-    // 合意内容に応じた資源取引
+    // Resource trading based on agreement terms
     { target: `parties/${party1}/resources/currency`, operation: 'add', value: -tradeAmount },
     { target: `parties/${party2}/resources/currency`, operation: 'add', value: tradeAmount },
     { target: `parties/${party1}/resources/materials/gems`, operation: 'add', value: gemAmount },
@@ -433,17 +433,17 @@ negotiationEvent = {
 };
 ```
 
-#### 競争イベント実行
+#### Competition Event Execution
 ```typescript
 competitionEvent = {
   type: 'inter_party_competition',
   participants: [party1, party2],
   effects: [
-    // 競争関係強化
+    // Strengthen competitive relationship
     { target: `relationships/${pair_id}/competition`, operation: 'add', value: 2 },
     { target: `relationships/${pair_id}/cooperation`, operation: 'add', value: -1 },
 
-    // 勝者報酬・敗者ペナルティ
+    // Winner rewards and loser penalties
     { target: `parties/${winnerId}/morale`, operation: 'add', value: 3 },
     { target: `parties/${winnerId}/resources/materials`, operation: 'add', value: prize },
     { target: `parties/${loserId}/morale`, operation: 'add', value: -1 }
@@ -451,95 +451,95 @@ competitionEvent = {
 };
 ```
 
-## 探索協調管理
+## Exploration Coordination Management
 
-### マルチパーティー探索の調整原則
+### Multi-Party Exploration Coordination Principles
 
-**重複回避**: 地域グラフで担当分割し、効率的な探索を実現
-- 能力に応じて地域タイプへマッチング
-- 近接性と占有状況で衝突を回避
-- 定期同期で担当を再最適化
+**Avoiding Duplication**: Divide responsibilities in the region graph to achieve efficient exploration
+- Match parties to region types based on their capabilities
+- Avoid conflicts through proximity and occupancy status
+- Re-optimize assignments through regular synchronization
 
-**協力判断**:
-- 装備/補給を共有し、リスクの高い地域は協力行動を検討
-- パーティー間の信頼関係と能力バランスを考慮
-- 単独では危険な場所での共同探索を推奨
+**Cooperation Decisions**:
+- Share equipment/supplies and consider cooperative actions in high-risk regions
+- Consider trust relationships between parties and capability balance
+- Recommend joint exploration in places that would be dangerous alone
 
 ---
 
-## 🔧 GM決定応答JSON生成ガイドライン
+## 🔧 GM Decision Response JSON Generation Guidelines
 
-### 必須形式
+### Required Format
 ```json
 {
-  "requestId": "[要求ファイルのrequestIdをそのまま使用]",
-  "timestamp": "[ISO形式の現在時刻]",
+  "requestId": "[Use the requestId from the request file as-is]",
+  "timestamp": "[Current time in ISO format]",
   "status": "completed",
   "proposal": {
-    "type": "[行動タイプ]",
+    "type": "[Action type]",
     "participants": ["GM"],
     "effects": [...]
   }
 }
 ```
 
-### エフェクトパス記法 ⚠️ 重要
+### Effect Path Notation ⚠️ Important
 ```json
-// ✅ 正しい記法
+// ✅ Correct notation
 {"target": "parties/emerald_hunters/morale", "operation": "add", "value": 1}
 {"target": "market/currentPrices/gems", "operation": "set", "value": 20}
 {"target": "regions/crystal_caves/occupantParties", "operation": "set", "value": ["emerald_hunters"]}
 
-// ❌ 間違った記法
-{"target": "/parties/emerald_hunters/morale"}  // 先頭スラッシュNG
-{"target": "parties", "operation": "set", "value": {...全パーティー...}}  // 一括設定NG
+// ❌ Incorrect notation
+{"target": "/parties/emerald_hunters/morale"}  // Leading slash NG
+{"target": "parties", "operation": "set", "value": {...all parties...}}  // Bulk setting NG
 ```
 
-### 通貨・リソース操作
+### Currency and Resource Operations
 ```json
-// ✅ 通貨減少（支払い）
+// ✅ Currency decrease (payment)
 {"target": "parties/party_id/resources/currency", "operation": "add", "value": -50}
 
-// ✅ 素材消費
+// ✅ Material consumption
 {"target": "parties/party_id/resources/materials/metal", "operation": "add", "value": -3}
 
-// ✅ 新しい素材追加
+// ✅ Add new materials
 {"target": "parties/party_id/resources/materials", "operation": "add", "value": {"new_item": 5}}
 ```
 
-### パーティ間関係値操作
+### Inter-Party Relationship Value Operations
 ```json
-// ✅ 敵対度増加（攻撃イベント後）
+// ✅ Increase hostility (after attack event)
 {"target": "relationships/party1_id__party2_id/hostility", "operation": "add", "value": 3}
 
-// ✅ 協力度向上（共同プロジェクト後）
+// ✅ Improve cooperation (after joint project)
 {"target": "relationships/emerald_hunters__fire_forge_guild/cooperation", "operation": "add", "value": 2}
 
-// ✅ 信頼度低下（裏切り行為後）
+// ✅ Decrease trust (after betrayal)
 {"target": "relationships/party1_id__party2_id/trust", "operation": "add", "value": -4}
 
-// ✅ 競争度設定（ライバル関係確立）
+// ✅ Set competition level (establish rival relationship)
 {"target": "relationships/party1_id__party2_id/competition", "operation": "set", "value": 8}
 
-// ✅ 最後の相互作用更新
+// ✅ Update last interaction
 {"target": "relationships/party1_id__party2_id/lastInteraction", "operation": "set", "value": "turn_5"}
 
-// ✅ 相互作用履歴追加（配列として追加）
-{"target": "relationships/party1_id__party2_id/history", "operation": "add", "value": [{"turn": 5, "event": "conflict", "impact": "+3_hostility", "description": "資源争奪戦で武力衝突"}]}
+// ✅ Add interaction history (add as array)
+{"target": "relationships/party1_id__party2_id/history", "operation": "add", "value": [{"turn": 5, "event": "conflict", "impact": "+3_hostility", "description": "Armed conflict over resource dispute"}]}
 ```
 
-### 配列操作
+### Array Operations
 ```json
-// ✅ 地域占有者の更新
+// ✅ Update region occupants
 {"target": "regions/region_id/occupantParties", "operation": "set", "value": ["party1", "party2"]}
 
-// ✅ 取引履歴への追加（配列として）
+// ✅ Add to trading history (as array)
 {"target": "market/completedTrades", "operation": "add", "value": [{"buyer": "party_id", "item": "wood", "quantity": 10, "price": 3, "total": 30, "turn": 2}]}
 ```
 
-### 事前チェック必須項目
-1. **残高確認**: 通貨・素材消費時は現在値を確認
-2. **地域容量**: 移動時は容量制限をチェック
-3. **論理整合性**: アクションが状況に適しているか確認
+### Pre-Check Required Items
+1. **Balance Verification**: Check current values when consuming currency/materials
+2. **Region Capacity**: Check capacity limits when moving
+3. **Logical Consistency**: Verify that actions are appropriate for the situation
 
-このGM思考フレームワークとJSON生成ガイドラインに従って、プレイヤーに適切な挑戦と物語体験を提供してください。プレイヤー視点での判断が必要な場合は`PLAYER_MIND.md`に切り替えてください。
+Follow this GM thinking framework and JSON generation guidelines to provide appropriate challenges and story experiences to players. When player perspective judgment is needed, switch to `PLAYER_MIND.md`.

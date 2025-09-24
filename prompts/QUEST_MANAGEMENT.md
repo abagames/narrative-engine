@@ -1,4 +1,4 @@
-# Quest Management Framework - 動的クエスト対応・優先順位判断
+# Quest Management Framework - Dynamic Quest Response & Priority Assessment
 
 ## 📜 Quest Strategic Framework
 
@@ -6,40 +6,40 @@
 
 #### Quest Type Classification
 ```markdown
-**Exploration Quests (探索クエスト)**
-- 必要スキル: 探索力 6+, 地理知識
-- リスク: 中-高 (未知領域)
-- 報酬: 地域アクセス, 宝物発見, 知識獲得
-- 期間: 5-15ターン
-- 適合パーティ: 探索特化, 冒険志向
+**Exploration Quests**
+- Required Skills: Exploration 6+, Geographic Knowledge
+- Risk: Medium-High (Unknown Territory)
+- Rewards: Regional Access, Treasure Discovery, Knowledge Acquisition
+- Duration: 5-15 Turns
+- Suitable Party: Exploration Specialists, Adventure-oriented
 
-**Trading Quests (交易クエスト)**
-- 必要スキル: 交易力 5+, 物流管理
-- リスク: 低-中 (市場変動)
-- 報酬: 通貨, 交易ルート, 商業コネクション
-- 期間: 3-10ターン
-- 適合パーティ: 交易特化, 効率重視
+**Trading Quests**
+- Required Skills: Trading 5+, Logistics Management
+- Risk: Low-Medium (Market Fluctuation)
+- Rewards: Currency, Trade Routes, Commercial Connections
+- Duration: 3-10 Turns
+- Suitable Party: Trading Specialists, Efficiency-focused
 
-**Combat Quests (戦闘クエスト)**
-- 必要スキル: 戦闘力 7+, 戦術知識
-- リスク: 高 (生命危険)
-- 報酬: 通貨, 装備, 戦闘評判
-- 期間: 1-5ターン
-- 適合パーティ: 戦闘特化, 高リスク許容
+**Combat Quests**
+- Required Skills: Combat 7+, Tactical Knowledge
+- Risk: High (Life-threatening)
+- Rewards: Currency, Equipment, Combat Reputation
+- Duration: 1-5 Turns
+- Suitable Party: Combat Specialists, High Risk Tolerance
 
-**Social Quests (社会クエスト)**
-- 必要スキル: 外交力 6+, 交渉能力
-- リスク: 低 (評判リスク)
-- 報酬: 評判向上, 政治的影響力, 情報
-- 期間: 3-8ターン
-- 適合パーティ: 外交特化, 関係構築
+**Social Quests**
+- Required Skills: Diplomacy 6+, Negotiation Ability
+- Risk: Low (Reputation Risk)
+- Rewards: Reputation Improvement, Political Influence, Information
+- Duration: 3-8 Turns
+- Suitable Party: Diplomacy Specialists, Relationship Building
 
-**Crafting Quests (製作クエスト)**
-- 必要スキル: 製作力 6+, 専門技術
-- リスク: 低 (材料コスト)
-- 報酬: 技術向上, 特殊レシピ, 製作評判
-- 期間: 2-7ターン
-- 適合パーティ: 製作特化, 技術革新
+**Crafting Quests**
+- Required Skills: Crafting 6+, Specialized Techniques
+- Risk: Low (Material Costs)
+- Rewards: Technical Improvement, Special Recipes, Crafting Reputation
+- Duration: 2-7 Turns
+- Suitable Party: Crafting Specialists, Technical Innovation
 ```
 
 #### Quest Value Assessment
@@ -59,7 +59,7 @@ questCost =
 
 questROI = (questValue - questCost) / questCost;
 
-// ROI > 1.0 = 高優先度, 0.5-1.0 = 中優先度, 0.2-0.5 = 低優先度, 0.2未満 = 却下
+// ROI > 1.0 = High Priority, 0.5-1.0 = Medium Priority, 0.2-0.5 = Low Priority, < 0.2 = Reject
 ```
 
 ### 2. Quest Portfolio Management
@@ -67,22 +67,22 @@ questROI = (questValue - questCost) / questCost;
 #### Portfolio Balance Strategy
 ```markdown
 **High-Risk High-Reward (20-30%)**
-- 探索系・戦闘系クエスト
-- 期待リターン: 200-500%
-- 失敗リスク: 30-50%
-- 目的: 大幅成長・突破口
+- Exploration & Combat Quests
+- Expected Return: 200-500%
+- Failure Risk: 30-50%
+- Purpose: Significant Growth & Breakthrough
 
 **Medium-Risk Medium-Reward (40-50%)**
-- 交易系・社会系クエスト
-- 期待リターン: 100-200%
-- 失敗リスク: 10-25%
-- 目的: 安定成長・基盤強化
+- Trading & Social Quests
+- Expected Return: 100-200%
+- Failure Risk: 10-25%
+- Purpose: Stable Growth & Foundation Building
 
 **Low-Risk Low-Reward (20-30%)**
-- 製作系・情報収集クエスト
-- 期待リターン: 50-100%
-- 失敗リスク: 5-15%
-- 目的: スキル蓄積・ネットワーク
+- Crafting & Information Gathering Quests
+- Expected Return: 50-100%
+- Failure Risk: 5-15%
+- Purpose: Skill Accumulation & Networking
 ```
 
 #### Dynamic Portfolio Adjustment
@@ -95,10 +95,10 @@ portfolioBalance = assessCurrentNeeds({
   competitivePosition: relativeStrength
 });
 
-if (resourceStatus === 'critical') → 低リスク確実収入重視
-else if (skillGaps.length > 3) → スキル開発クエスト優先
-else if (marketOpportunities.score > 8) → 戦略的機会活用
-else → バランス型ポートフォリオ維持
+if (resourceStatus === 'critical') → Focus on low-risk guaranteed income
+else if (skillGaps.length > 3) → Prioritize skill development quests
+else if (marketOpportunities.score > 8) → Leverage strategic opportunities
+else → Maintain balanced portfolio
 ```
 
 ### 3. Quest Execution Strategy
@@ -106,28 +106,28 @@ else → バランス型ポートフォリオ維持
 #### Pre-Execution Planning
 ```markdown
 **Resource Allocation Planning**
-- 必要人員・スキル配置
-- 装備・道具準備
-- 資金・材料確保
-- 時間スケジュール策定
+- Required personnel & skill assignment
+- Equipment & tool preparation
+- Capital & material procurement
+- Time schedule development
 
 **Risk Assessment & Mitigation**
-- 失敗シナリオ分析
-- 代替計画策定
-- 保険・バックアップ確保
-- 撤退条件設定
+- Failure scenario analysis
+- Alternative plan development
+- Insurance & backup assurance
+- Withdrawal condition setting
 
 **Success Criteria Definition**
-- 最低限達成目標
-- 理想的成果目標
-- ボーナス達成可能性
-- 評価指標設定
+- Minimum achievement targets
+- Ideal outcome goals
+- Bonus achievement possibilities
+- Evaluation metric setting
 
 **Stakeholder Management**
-- クエスト依頼者関係
-- 協力者・パートナー
-- 競合者対策
-- 影響受ける第三者
+- Quest client relationships
+- Collaborators & partners
+- Competitor countermeasures
+- Affected third parties
 ```
 
 #### Execution Monitoring Framework
@@ -140,10 +140,10 @@ questProgress = trackExecution({
   stakeholderSatisfaction: clientFeedback
 });
 
-if (objectiveCompletion < timeProgress * 0.8) → 効率改善要
-else if (resourceConsumption > timeProgress * 1.2) → コスト管理要
-else if (qualityLevel < expectation * 0.9) → 品質向上要
-else → 順調進行
+if (objectiveCompletion < timeProgress * 0.8) → Efficiency improvement needed
+else if (resourceConsumption > timeProgress * 1.2) → Cost management needed
+else if (qualityLevel < expectation * 0.9) → Quality improvement needed
+else → Smooth progress
 ```
 
 ### 4. Quest Completion Optimization
@@ -151,22 +151,22 @@ else → 順調進行
 #### Quality vs Speed Trade-offs
 ```markdown
 **Speed Priority Scenarios**
-- 時間制限クエスト
-- 競合者存在時
-- 市場機会限定時
-- 緊急性高い依頼
+- Time-limited quests
+- Competitor presence
+- Limited market opportunities
+- High urgency requests
 
 **Quality Priority Scenarios**
-- 評判重要クライアント
-- 技術習得目的
-- 長期関係構築時
-- 複雑・高難度クエスト
+- Reputation-important clients
+- Technical learning objectives
+- Long-term relationship building
+- Complex & high-difficulty quests
 
 **Balance Approach**
-- 標準的クエスト
-- 複数要素考慮必要
-- リスク中程度
-- 継続関係維持
+- Standard quests
+- Multiple factors requiring consideration
+- Medium risk level
+- Ongoing relationship maintenance
 ```
 
 #### Completion Decision Framework
@@ -179,10 +179,10 @@ completionStrategy = determineApproach({
   resourceAvailability: remainingCapacity
 });
 
-if (timeRemaining < 20% && currentQuality >= 80%) → 速やか完了
-else if (timeRemaining > 50% && bonusOpportunities.value > baseReward * 0.3) → 追加価値追求
-else if (clientExpectations > currentQuality) → 品質向上優先
-else → 効率的完了
+if (timeRemaining < 20% && currentQuality >= 80%) → Rapid completion
+else if (timeRemaining > 50% && bonusOpportunities.value > baseReward * 0.3) → Pursue additional value
+else if (clientExpectations > currentQuality) → Prioritize quality improvement
+else → Efficient completion
 ```
 
 ### 5. Quest Outcome Analysis
@@ -190,28 +190,28 @@ else → 効率的完了
 #### Performance Evaluation
 ```markdown
 **Success Metrics**
-- 目標達成度 (完了率)
-- 品質レベル (満足度)
-- 効率性 (時間・コスト)
-- 付加価値 (ボーナス獲得)
+- Goal achievement rate (completion rate)
+- Quality level (satisfaction)
+- Efficiency (time & cost)
+- Added value (bonus acquisition)
 
 **Learning Outcomes**
-- 新スキル習得
-- 経験値蓄積
-- 知識・情報獲得
-- ノウハウ蓄積
+- New skill acquisition
+- Experience accumulation
+- Knowledge & information gain
+- Know-how accumulation
 
 **Relationship Building**
-- クライアント満足度
-- 信頼関係構築
-- ネットワーク拡大
-- 評判向上
+- Client satisfaction
+- Trust relationship building
+- Network expansion
+- Reputation improvement
 
 **Strategic Impact**
-- 長期目標への貢献
-- 競争優位構築
-- 市場地位向上
-- 将来機会創出
+- Contribution to long-term goals
+- Competitive advantage building
+- Market position improvement
+- Future opportunity creation
 ```
 
 #### Lessons Learned Integration
@@ -237,23 +237,23 @@ knowledgeBase.update({
 
 #### Chain Quest Management
 ```markdown
-**Sequential Quests (連続クエスト)**
-- 前提条件チェック
-- 継続的関係活用
-- 累積効果狙い
-- 長期価値最大化
+**Sequential Quests**
+- Prerequisite checking
+- Continuous relationship utilization
+- Cumulative effect targeting
+- Long-term value maximization
 
-**Parallel Quest Execution (並行実行)**
-- リソース最適配分
-- シナジー効果活用
-- リスク分散
-- 効率性向上
+**Parallel Quest Execution**
+- Optimal resource allocation
+- Synergy effect utilization
+- Risk diversification
+- Efficiency improvement
 
-**Conditional Quest Planning (条件付き計画)**
-- 成果連動型選択
-- 市況対応型調整
-- 機会創出型拡張
-- 撤退条件設定
+**Conditional Quest Planning**
+- Outcome-linked selection
+- Market-responsive adjustment
+- Opportunity-creating expansion
+- Withdrawal condition setting
 ```
 
 #### Innovation in Quest Approach
@@ -266,41 +266,41 @@ innovativeApproach = developNewMethods({
   riskTolerance: acceptableUncertainty
 });
 
-if (innovativeApproach.expectedValue > traditionalMethod.value * 1.3) → 革新的手法採用
-else if (innovativeApproach.riskLevel < traditionalMethod.risk * 0.8) → 安全革新手法
-else if (traditionalMethod.certainty > 0.9) → 従来手法維持
-else → 部分的革新適用
+if (innovativeApproach.expectedValue > traditionalMethod.value * 1.3) → Adopt innovative approach
+else if (innovativeApproach.riskLevel < traditionalMethod.risk * 0.8) → Safe innovative approach
+else if (traditionalMethod.certainty > 0.9) → Maintain traditional approach
+else → Apply partial innovation
 ```
 
 ## 🎯 Practical Implementation
 
 ### Quest Decision Matrix
 ```markdown
-| 要素 | 重要度 | 評価基準 | 配点 |
-|------|--------|----------|------|
-| 報酬価値 | 30% | 通貨・物品・特権価値 | 1-10 |
-| スキル適合 | 25% | 必要スキルとの一致度 | 1-10 |
-| 時間効率 | 20% | 期間対効果比 | 1-10 |
-| リスクレベル | 15% | 失敗可能性・損失規模 | 1-10 |
-| 戦略価値 | 10% | 長期目標への貢献度 | 1-10 |
+| Element | Weight | Evaluation Criteria | Score |
+|---------|--------|-------------------|-------|
+| Reward Value | 30% | Currency, Items, Privilege Value | 1-10 |
+| Skill Match | 25% | Alignment with Required Skills | 1-10 |
+| Time Efficiency | 20% | Duration vs Effect Ratio | 1-10 |
+| Risk Level | 15% | Failure Possibility & Loss Scale | 1-10 |
+| Strategic Value | 10% | Contribution to Long-term Goals | 1-10 |
 ```
 
 ### Quest Management Workflow
 ```
-1. クエスト発見・情報収集
-2. 評価・優先順位付け
-3. ポートフォリオ調整
-4. 実行計画策定
-5. 実行・監視
-6. 完了・評価
-7. 学習・改善
+1. Quest Discovery & Information Gathering
+2. Evaluation & Prioritization
+3. Portfolio Adjustment
+4. Execution Planning
+5. Execution & Monitoring
+6. Completion & Evaluation
+7. Learning & Improvement
 ```
 
 ### Success Indicators
-- **完了率**: 85%以上
-- **品質スコア**: 平均8.0以上
-- **ROI**: 平均100%以上
-- **クライアント満足度**: 90%以上
-- **継続依頼率**: 70%以上
+- **Completion Rate**: 85% or higher
+- **Quality Score**: Average 8.0 or higher
+- **ROI**: Average 100% or higher
+- **Client Satisfaction**: 90% or higher
+- **Repeat Request Rate**: 70% or higher
 
-このフレームワークにより、クエストの戦略的選択から効率的実行、価値最大化まで体系的に管理できます。
+This framework enables systematic management from strategic quest selection to efficient execution and value maximization.

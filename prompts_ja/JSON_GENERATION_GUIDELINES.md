@@ -1,44 +1,44 @@
-# JSON Generation Guidelines - Common Specifications
+# JSON生成ガイドライン - 共通仕様
 
-## 🎯 Overview
+## 🎯 概要
 
-This document provides common guidelines for AI Agents when generating decision response JSON. Referenced by both GM_CORE_MIND.md and PLAYER_MIND.md, it supports error-free and accurate JSON generation.
+このドキュメントは、AI Agentが決定応答JSONを生成する際の共通ガイドラインです。GM_CORE_MIND.mdとPLAYER_MIND.mdの両方で参照され、エラーのない正確なJSON生成を支援します。
 
-## ⚠️ Common Error Patterns and Solutions
+## ⚠️ よくあるエラーパターンと対策
 
-### 1. Path Notation Errors
+### 1. パス記法エラー
 ```json
-// ❌ Absolutely NG: Leading slash
+// ❌ 絶対にNG: 先頭スラッシュ
 {"target": "/parties/emerald_hunters/morale"}
 
-// ✅ Correct notation
+// ✅ 正しい記法
 {"target": "parties/emerald_hunters/morale"}
 ```
 
-### 2. Batch Setting Errors
+### 2. 一括設定エラー
 ```json
-// ❌ Batch setting of multiple objects is NG
+// ❌ 複数オブジェクトの一括設定はNG
 {"target": "parties", "operation": "set", "value": {
   "emerald_hunters": {...},
   "fire_forge_guild": {...}
 }}
 
-// ✅ Split into individual effects
+// ✅ 個別エフェクトに分割
 [
   {"target": "parties/emerald_hunters", "operation": "set", "value": {...}},
   {"target": "parties/fire_forge_guild", "operation": "set", "value": {...}}
 ]
 ```
 
-### 3. Array Operation Errors
+### 3. 配列操作エラー
 ```json
-// ❌ Inappropriate structure for array addition
+// ❌ 配列への追加で構造が不適切
 {"target": "market/completedTrades", "operation": "add", "value": {
   "buyer": "swift_merchants",
   "item": "herbs"
 }}
 
-// ✅ Properly structured as array
+// ✅ 配列として正しく構造化
 {"target": "market/completedTrades", "operation": "add", "value": [{
   "buyer": "swift_merchants",
   "item": "herbs",
@@ -49,19 +49,19 @@ This document provides common guidelines for AI Agents when generating decision 
 }]}
 ```
 
-### 4. Missing Balance Checks
+### 4. 残高チェック漏れ
 ```json
-// ❌ Payment without balance confirmation
+// ❌ 残高確認なしの支払い
 {"target": "parties/party_id/resources/currency", "operation": "add", "value": -100}
 
-// ✅ Execute after confirming balance in advance
-// Current currency: 80, Payment: 100 → Execution impossible
-// Current currency: 150, Payment: 100 → Execution possible
+// ✅ 事前に残高を確認してから実行
+// 現在通貨: 80, 支払い: 100 → 実行不可能
+// 現在通貨: 150, 支払い: 100 → 実行可能
 ```
 
-## 🔧 Basic JSON Structure
+## 🔧 基本JSON構造
 
-### GM Decision Response
+### GM決定応答
 ```json
 {
   "requestId": "request_GM_1234567890",
@@ -81,7 +81,7 @@ This document provides common guidelines for AI Agents when generating decision 
 }
 ```
 
-### Player Decision Response
+### Player決定応答
 ```json
 {
   "requestId": "request_emerald_hunters_1234567890",
@@ -101,81 +101,81 @@ This document provides common guidelines for AI Agents when generating decision 
   "meta": {
     "llmDecision": {
       "frameworkEvaluation": {
-        "aggressive_opportunist": "Reason for application",
-        "risk_taking_decisive": "Reason for application"
+        "aggressive_opportunist": "適用理由",
+        "risk_taking_decisive": "適用理由"
       },
       "character_voices": {
-        "Rex": "'Character's statement'",
-        "Ruby": "'Character's statement'"
+        "レックス": "『キャラクターの発言』",
+        "ルビー": "『キャラクターの発言』"
       },
       "selectedAction": {
         "type": "explore",
-        "reasoning": "Detailed selection reasoning"
+        "reasoning": "詳細な選択理由"
       }
     }
   }
 }
 ```
 
-## 📝 Operation Types
+## 📝 operation タイプ
 
-### "set" - Complete Value Replacement
+### "set" - 値の完全置換
 ```json
 {"target": "parties/party_id/location", "operation": "set", "value": "new_region"}
 {"target": "regions/region_id/occupantParties", "operation": "set", "value": ["party1"]}
 ```
 
-### "add" - Value Addition/Appending
+### "add" - 値の加算・追加
 ```json
-// Numerical addition
+// 数値の加算
 {"target": "parties/party_id/morale", "operation": "add", "value": 2}
 {"target": "parties/party_id/resources/currency", "operation": "add", "value": -50}
 
-// Object merging
+// オブジェクトのマージ
 {"target": "parties/party_id/resources/materials", "operation": "add", "value": {"gems": 3}}
 
-// Array addition
-{"target": "market/completedTrades", "operation": "add", "value": [new_trade_object]}
+// 配列への追加
+{"target": "market/completedTrades", "operation": "add", "value": [新規取引オブジェクト]}
 ```
 
-## 🎯 Party-Specific Path Examples
+## 🎯 パーティー固有のパス例
 
-### Emerald Hunters
+### エメラルドハンターズ
 ```json
 {"target": "parties/emerald_hunters/morale", "operation": "add", "value": 1}
 {"target": "parties/emerald_hunters/resources/materials", "operation": "add", "value": {"gems": 8, "rare_crystals": 3}}
 ```
 
-### Fire Forge Guild
+### 炎の鍛冶ギルド
 ```json
 {"target": "parties/fire_forge_guild/resources/materials/metal", "operation": "add", "value": -6}
 {"target": "parties/fire_forge_guild/resources/materials", "operation": "add", "value": {"crafted_weapons": 4}}
 ```
 
-### Swift Merchants
+### 迅速商会
 ```json
 {"target": "parties/swift_merchants/resources/currency", "operation": "add", "value": -36}
 {"target": "parties/swift_merchants/resources/materials", "operation": "add", "value": {"magical_herbs": 3}}
 ```
 
-### Wisdom Seekers
+### 知恵の探求者団
 ```json
 {"target": "parties/wisdom_seekers/capabilities/diplomacy", "operation": "add", "value": 1}
 {"target": "parties/wisdom_seekers/resources/materials", "operation": "add", "value": {"ancient_knowledge": 5}}
 ```
 
-### Shadow Scouts
+### 影の斥候団
 ```json
 {"target": "parties/shadow_scouts/location", "operation": "set", "value": "mystic_plains"}
 {"target": "parties/shadow_scouts/resources/materials", "operation": "add", "value": {"intelligence_data": 2}}
 ```
 
-## 🔍 Pre-Check Procedures
+## 🔍 事前チェック手順
 
-1. **Load worldStateFile**: Obtain current state from decision request's `worldStateFile`
-2. **Balance & Inventory Check**: Check feasibility of consumption-type effects
-3. **Logical Consistency Check**: Verify if executable based on party's position and capabilities
-4. **ID Consistency Check**: Verify requestId matches party ID
-5. **Path Notation Check**: No leading slash, appropriate hierarchical structure
+1. **worldStateFileの読み込み**: 決定要求の `worldStateFile` から現在状態を取得
+2. **残高・在庫確認**: 消費系エフェクトの実行可能性チェック
+3. **論理整合性確認**: パーティーの位置・能力で実行可能か
+4. **ID整合性確認**: requestIdとパーティーIDが一致しているか
+5. **パス記法確認**: 先頭スラッシュなし、適切な階層構造か
 
-Following these guidelines enables error-free and stable JSON generation.
+このガイドラインに従うことで、エラーのない安定したJSON生成が可能になります。

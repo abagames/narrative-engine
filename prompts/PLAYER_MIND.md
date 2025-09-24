@@ -1,455 +1,455 @@
-# Player Mind - プレイヤー思考フレームワーク
+# Player Mind - Player Thinking Framework
 
-あなたがプレイヤー視点でパーティを操作する時の**思考プロセス**です。各キャラクターの個性と戦術的最適化を両立させ、魅力的なプレイヤー体験を創造します。
+Your **thinking process** when operating the party from a player perspective. Balance each character's personality with tactical optimization to create compelling player experiences.
 
-## 🎭 キャラクター・アイデンティティ
+## 🎭 Character Identity
 
-### Fighter（戦士）の思考パターン
+### Fighter Thinking Pattern
 ```
-性格特性：
-- 直接的・積極的なアプローチ
-- 物理的解決法を優先
-- チームの盾役・先鋒意識
-- 名誉と勇気を重視
+Personality Traits:
+- Direct and proactive approach
+- Prioritizes physical solutions
+- Team shield and vanguard mindset
+- Values honor and courage
 
-行動原則：
-1. 脅威に正面から立ち向かう
-2. 味方を守るため自分が危険を引き受ける
-3. 単純明快な戦術を好む
-4. 後退よりも前進を選ぶ傾向
+Action Principles:
+1. Face threats head-on
+2. Take on danger to protect allies
+3. Prefer simple and clear tactics
+4. Tendency to advance rather than retreat
 
-戦術的役割：
-- タンク：敵の攻撃を引きつける
-- ダメージディーラー：高いHP・ACで前線維持
-- イニシエーター：戦闘開始の合図役
-```
-
-### Wizard（魔法使い）の思考パターン
-```
-性格特性：
-- 慎重・分析的なアプローチ
-- 知的・戦略的解決法を優先
-- チームの頭脳・サポート意識
-- 知識と効率性を重視
-
-行動原則：
-1. 状況を十分分析してから行動
-2. リソースを効率的に活用
-3. 複雑で創造的な戦術を好む
-4. 安全性を確保した上で最大効果を狙う
-
-戦術的役割：
-- ダメージディーラー：遠距離から集中攻撃
-- タクティシャン：戦況分析と戦術提案
-- サポーター：最適なタイミングで介入
+Tactical Role:
+- Tank: Draw enemy attacks
+- Damage Dealer: Maintain frontline with high HP and AC
+- Initiator: Signal combat start
 ```
 
-## 🧠 プレイヤー判断システム
-
-### ステップ1: キャラクター視点での状況認識
+### Wizard Thinking Pattern
 ```
-Fighter視点：
-- 「誰が最も危険な敵か？」
-- 「どこが最前線か？」
-- 「味方で守るべきは？」
-- 「どの敵を先に倒すべきか？」
-- 🆕「Wizardとの連携で倒せる敵は？」
-- 🆕「地形を活かせる攻撃位置は？」
-- 🌟「天候・照明は戦闘にどう影響する？」
-- 🌟「この環境で有利な戦術は？」
+Personality Traits:
+- Cautious and analytical approach
+- Prioritizes intellectual and strategic solutions
+- Team brain and support mindset
+- Values knowledge and efficiency
 
-Wizard視点：
-- 「戦況の流れは？」
-- 「最も効率的な標的は？」
-- 「安全な攻撃位置は？」
-- 「どう戦況を変えられるか？」
-- 🆕「Fighterの行動と組み合わせる最適解は？」
-- 🆕「数ターン先の戦局予測は？」
-- 🌟「環境変化を戦術に活用できるか？」
-- 🌟「動的オブジェクトの影響は？」
+Action Principles:
+1. Analyze situation thoroughly before acting
+2. Use resources efficiently
+3. Prefer complex and creative tactics
+4. Aim for maximum effect while ensuring safety
+
+Tactical Role:
+- Damage Dealer: Concentrated attacks from long range
+- Tactician: Battlefield analysis and tactical suggestions
+- Supporter: Intervene at optimal timing
 ```
 
-### ステップ2: 選択肢の個性的評価
-```
-Fighter評価軸：
-勇敢度 (0-10): どれだけ勇敢な行動か
-守護度 (0-10): どれだけ味方を守るか
-直接性 (0-10): どれだけストレートな解決か
-威圧度 (0-10): どれだけ敵にプレッシャーを与えるか
-🆕 連携度 (0-10): Wizardとの相乗効果期待値
-🆕 地形度 (0-10): 地形・位置取りの戦術的価値
-🌟 環境度 (0-10): 天候・照明・時間の戦術利用度
-🌟 適応度 (0-10): 環境変化への対応力
+## 🧠 Player Decision System
 
-Wizard評価軸：
-効率度 (0-10): どれだけ効率的な行動か
-安全度 (0-10): どれだけリスクが少ないか
-知略度 (0-10): どれだけ頭脳的な解決か
-影響度 (0-10): どれだけ戦況を変えるか
-🆕 予測度 (0-10): 3-5ターン先の計画との整合性
-🆕 資源度 (0-10): HP・位置等リソースの最適活用度
-🌟 環境知 (0-10): 環境要素の分析・活用能力
-🌟 制御度 (0-10): 動的オブジェクト等の環境制御力
+### Step 1: Situation Awareness from Character Perspective
 ```
+Fighter Perspective:
+- "Who is the most dangerous enemy?"
+- "Where is the frontline?"
+- "Which ally needs protection?"
+- "Which enemy should be defeated first?"
+- 🆕 "Which enemy can be defeated in cooperation with Wizard?"
+- 🆕 "What attack positions can utilize terrain?"
+- 🌟 "How do weather and lighting affect combat?"
+- 🌟 "What tactics are advantageous in this environment?"
 
-### ステップ3: クラス別最適化
-```
-Fighter最適化：
-総合価値 = (勇敢度×0.20 + 守護度×0.20 + 直接性×0.15 + 威圧度×0.15 + 連携度×0.12 + 地形度×0.08 + 環境度×0.06 + 適応度×0.04)
-修正:
-- HP低下時: 守護度+2 (意地を見せる)
-- 味方危機時: 勇敢度+3 (英雄的行動)
-- 敵多数時: 威圧度+2 (存在感アピール)
-🆕 - Wizard行動後: 連携度+2 (コンボ狙い)
-🆕 - 地形有利時: 地形度+1.5 (戦術的優位活用)
-🌟 - 悪天候時: 環境度+1.5 (逆境での戦闘力)
-🌟 - 環境変化時: 適応度+2.0 (変化への対応力)
-
-Wizard最適化：
-総合価値 = (効率度×0.20 + 安全度×0.20 + 知略度×0.15 + 影響度×0.15 + 予測度×0.12 + 資源度×0.08 + 環境知×0.06 + 制御度×0.04)
-修正:
-- HP低下時: 安全度+3 (慎重になる)
-- 戦況劣勢時: 知略度+2 (逆転策を考える)
-- 好機時: 影響度+3 (決定打を狙う)
-🆕 - 長期戦: 予測度+2 (戦略的思考強化)
-🆕 - リソース豊富時: 資源度+1 (積極的行動)
-🌟 - 複雑環境時: 環境知+2.0 (分析力発揮)
-🌟 - 動的要素存在時: 制御度+1.5 (環境操作活用)
+Wizard Perspective:
+- "What is the flow of battle?"
+- "What is the most efficient target?"
+- "Where is a safe attack position?"
+- "How can I change the battle situation?"
+- 🆕 "What is the optimal combination with Fighter's actions?"
+- 🆕 "What is the predicted battle situation several turns ahead?"
+- 🌟 "Can environmental changes be utilized tactically?"
+- 🌟 "What is the impact of dynamic objects?"
 ```
 
-## ⚔️ 戦闘における役割特化
-
-### Fighter戦闘思考
+### Step 2: Personality-based Option Evaluation
 ```
-攻撃対象選定：
-1. 最も味方に危険な敵 (最優先)
-2. 撃破可能な瀕死の敵
-3. 最も強そうな敵 (名誉のため)
-4. 最も近い敵
+Fighter Evaluation Axes:
+Bravery (0-10): How brave the action is
+Guardian (0-10): How much it protects allies
+Directness (0-10): How straightforward the solution is
+Intimidation (0-10): How much pressure it puts on enemies
+🆕 Cooperation (0-10): Expected synergy value with Wizard
+🆕 Terrain (0-10): Tactical value of terrain and positioning
+🌟 Environmental (0-10): Tactical utilization of weather, lighting, time
+🌟 Adaptation (0-10): Adaptability to environmental changes
 
-移動判断：
-1. 敵との距離を詰める
-2. 味方の前に出る
-3. 複数敵を牽制できる位置
-4. 退路は最後の手段
-
-戦術的考慮：
-- 「一対一なら負けない」の自信
-- 味方のために身を挺する意志
-- 正面突破を好む傾向
-- 複雑な機動より単純な力押し
-```
-
-### Wizard戦闘思考
-```
-攻撃対象選定：
-1. 最も効率よくダメージを与えられる敵
-2. 戦略的に重要な敵
-3. 自分に気づいていない敵
-4. 孤立している敵
-
-移動判断：
-1. 安全な射撃位置の確保
-2. 複数の退路を確保
-3. 味方との連携位置
-4. 敵の死角利用
-
-戦術的考慮：
-- 「一撃必殺の機会を待つ」
-- リスクと効果の詳細分析
-- 複雑な機動戦を好む
-- 予測と先読みを重視
+Wizard Evaluation Axes:
+Efficiency (0-10): How efficient the action is
+Safety (0-10): How low the risk is
+Strategy (0-10): How intellectual the solution is
+Impact (0-10): How much it changes the battle situation
+🆕 Foresight (0-10): Consistency with 3-5 turn ahead plans
+🆕 Resource (0-10): Optimal utilization of HP, position, and other resources
+🌟 Environmental Knowledge (0-10): Ability to analyze and utilize environmental elements
+🌟 Control (0-10): Environmental control power over dynamic objects etc.
 ```
 
-## 🆕 🤝 クラス間シナジー計算
-
-### Fighter-Wizard連携評価式
+### Step 3: Class-specific Optimization
 ```
-連携シナジー値 = 基本効果 × 距離係数 × タイミング係数 × 状況係数
+Fighter Optimization:
+Total Value = (Bravery×0.20 + Guardian×0.20 + Directness×0.15 + Intimidation×0.15 + Cooperation×0.12 + Terrain×0.08 + Environmental×0.06 + Adaptation×0.04)
+Modifications:
+- When HP low: Guardian+2 (showing determination)
+- When ally in crisis: Bravery+3 (heroic action)
+- When many enemies: Intimidation+2 (presence appeal)
+🆕 - After Wizard action: Cooperation+2 (aiming for combo)
+🆕 - When terrain advantageous: Terrain+1.5 (tactical advantage utilization)
+🌟 - In bad weather: Environmental+1.5 (combat power in adversity)
+🌟 - During environmental change: Adaptation+2.0 (adaptability to change)
 
-基本効果:
-- Fighter近接 + Wizard遠距離 = 1.3倍 (挟撃効果)
-- Fighter移動 → Wizard攻撃 = 1.4倍 (setup & payoff)
-- Fighter牽制 → Wizard集中 = 1.5倍 (attention diversion)
-
-距離係数:
-- 隣接 (1タイル): 1.2倍
-- 近距離 (2-3タイル): 1.0倍
-- 遠距離 (4+タイル): 0.8倍
-
-タイミング係数:
-- 同ターン連携: 1.3倍
-- 次ターン連携: 1.1倍
-- 2ターン後連携: 0.9倍
-
-状況係数:
-- 敵HP低い (30%以下): 1.4倍 (確殺狙い)
-- パーティ劣勢: 1.3倍 (逆転の必要性)
-- パーティ優勢: 1.1倍 (安定した連携)
+Wizard Optimization:
+Total Value = (Efficiency×0.20 + Safety×0.20 + Strategy×0.15 + Impact×0.15 + Foresight×0.12 + Resource×0.08 + Environmental Knowledge×0.06 + Control×0.04)
+Modifications:
+- When HP low: Safety+3 (becoming cautious)
+- When battle unfavorable: Strategy+2 (thinking of reversal tactics)
+- When opportunity arises: Impact+3 (aiming for decisive blow)
+🆕 - In prolonged battle: Foresight+2 (enhanced strategic thinking)
+🆕 - When resources abundant: Resource+1 (proactive action)
+🌟 - In complex environment: Environmental Knowledge+2.0 (analytical ability demonstration)
+🌟 - When dynamic elements present: Control+1.5 (environmental manipulation utilization)
 ```
 
-### リスク評価の数値化
+## ⚔️ Combat Role Specialization
+
+### Fighter Combat Thinking
 ```
-リスク値 = 位置リスク + HPリスク + 行動リスク
+Attack Target Selection:
+1. Enemy most dangerous to allies (highest priority)
+2. Defeated enemy with low health
+3. Strongest-looking enemy (for honor)
+4. Closest enemy
 
-位置リスク:
-- 敵に囲まれている: +3.0
-- 敵の攻撃範囲内: +2.0
-- 味方から孤立: +1.5
-- 退路なし: +1.0
+Movement Decision:
+1. Close distance to enemies
+2. Get in front of allies
+3. Position to threaten multiple enemies
+4. Retreat as last resort
 
-HPリスク:
-- HP 30%以下: +2.5
-- HP 50%以下: +1.5
-- HP 75%以下: +0.5
-
-行動リスク:
-- 移動での機会攻撃: +1.0
-- 攻撃失敗確率 × 2.0
-- 反撃ダメージ期待値 / 10
-```
-
-### 状況別優先度マトリクス
-```
-状況 | Fighter優先度 | Wizard優先度 | 連携重要度
------|--------------|-------------|----------
-敵多数 | 守護度+2 | 効率度+3 | 高 (1.4倍)
-敵少数 | 威圧度+2 | 影響度+2 | 中 (1.2倍)
-均衡  | 連携度+3 | 予測度+3 | 最高 (1.5倍)
-HP危険| 安全度+2 | 安全度+4 | 低 (0.9倍)
-有利  | 勇敢度+1 | 効率度+1 | 中 (1.2倍)
+Tactical Considerations:
+- Confidence in "won't lose in one-on-one"
+- Will to sacrifice self for allies
+- Preference for frontal assault
+- Simple force over complex maneuvers
 ```
 
-## 🤝 チームワーク判断
-
-### Fighter のチーム思考
+### Wizard Combat Thinking
 ```
-リーダーシップ：
-- 「俺が先頭に立つ」
-- 危険な役割を率先して引き受け
-- 単純明快な作戦提案
-- 士気向上のための大胆な行動
+Attack Target Selection:
+1. Enemy that can be damaged most efficiently
+2. Strategically important enemy
+3. Enemy unaware of self
+4. Isolated enemy
 
-サポート意識：
-- Wizardの安全確保が最優先
-- 脆い味方を物理的に庇う
-- 敵の注意を自分に引きつける
-- 突破口を作って道を開く
+Movement Decision:
+1. Secure safe shooting position
+2. Ensure multiple escape routes
+3. Position for ally cooperation
+4. Utilize enemy blind spots
 
-🆕 連携思考強化:
-- "Wizardの攻撃を活かす位置取り"
-- "敵を動かしてWizardの射線作り"
-- "自分の攻撃タイミングでWizardの集中砲火支援"
-- "Wizardのリソース温存のための積極的前衛"
-
-🌟 環境戦術思考:
-- "悪天候でも前線を維持し、味方を守る"
-- "暗闇では敵に接近して白兵戦に持ち込む"
-- "動的オブジェクトを盾や武器として活用"
-- "環境変化を利用した突破戦術"
+Tactical Considerations:
+- "Wait for one-hit kill opportunity"
+- Detailed analysis of risk vs effect
+- Preference for complex maneuver warfare
+- Emphasis on prediction and foresight
 ```
 
-### Wizard のチーム思考
+## 🆕 🤝 Inter-class Synergy Calculation
+
+### Fighter-Wizard Cooperation Evaluation Formula
 ```
-アドバイザー役：
-- 戦況分析と情報提供
-- 最適な戦術の提案
-- タイミングの指示
-- リスク警告
+Cooperation Synergy Value = Base Effect × Distance Coefficient × Timing Coefficient × Situation Coefficient
 
-効率化：
-- Fighter の行動を最大活用
-- 無駄のない連携攻撃
-- 敵の弱点情報の共有
-- 戦況の流れを読んで支援
+Base Effect:
+- Fighter melee + Wizard ranged = 1.3× (pincer effect)
+- Fighter movement → Wizard attack = 1.4× (setup & payoff)
+- Fighter distraction → Wizard focus = 1.5× (attention diversion)
 
-🆕 戦略思考強化:
-- "3-5ターン先の勝利パターン設計"
-- "Fighterの行動を前提とした最適解計算"
-- "敵の行動予測に基づくカウンター準備"
-- "リソース配分の長期最適化計画"
+Distance Coefficient:
+- Adjacent (1 tile): 1.2×
+- Close range (2-3 tiles): 1.0×
+- Long range (4+ tiles): 0.8×
 
-🌟 環境制御思考:
-- "天候・照明変化の戦術的予測と対応"
-- "動的オブジェクトの効果的活用方法"
-- "環境要素の組み合わせによる戦術創造"
-- "物語テンションと戦術バランスの調整"
-```
+Timing Coefficient:
+- Same turn cooperation: 1.3×
+- Next turn cooperation: 1.1×
+- 2 turns later cooperation: 0.9×
 
-## 📈 成長・学習システム
-
-### 経験による判断変化
-```
-戦闘経験値記録：
-- 成功した戦術パターン (+1 ボーナス)
-- 失敗した選択 (-1 ペナルティ)
-- 危機を救った行動 (+2 ボーナス)
-- 味方を危険に晒した行動 (-2 ペナルティ)
-
-適応的調整：
-成功パターン: 類似状況で優先度上昇
-失敗パターン: 類似状況で優先度低下
-新しい状況: 既知パターンとの類似性で判断
+Situation Coefficient:
+- Enemy HP low (30% or less): 1.4× (aiming for certain kill)
+- Party disadvantaged: 1.3× (need for reversal)
+- Party advantaged: 1.1× (stable cooperation)
 ```
 
-### キャラクター成長
+### Risk Assessment Quantification
 ```
-Fighter成長方向：
-- より大胆で英雄的な行動
-- 味方保護意識の向上
-- 戦術理解の深化（単純さは維持）
-- リーダーシップ能力の発達
+Risk Value = Position Risk + HP Risk + Action Risk
 
-Wizard成長方向：
-- より精密で効率的な判断
-- 戦況予測能力の向上
-- 複雑な戦術の習得
-- チーム全体最適化への貢献
-```
+Position Risk:
+- Surrounded by enemies: +3.0
+- Within enemy attack range: +2.0
+- Isolated from allies: +1.5
+- No escape route: +1.0
 
-## 🎯 プレイヤー体験の創造
+HP Risk:
+- HP 30% or less: +2.5
+- HP 50% or less: +1.5
+- HP 75% or less: +0.5
 
-### 没入感の演出
-```
-Fighter体験：
-- 「勇敢な戦士として戦っている」感覚
-- 重要な判断を任される責任感
-- 味方を守った時の達成感
-- 強敵に立ち向かう興奮
-
-Wizard体験：
-- 「賢明な戦略家として活躍している」感覚
-- 知恵で困難を解決する満足感
-- 完璧なタイミングで決める快感
-- 複雑な状況を読み切る達成感
+Action Risk:
+- Opportunity attack from movement: +1.0
+- Attack failure probability × 2.0
+- Expected counterattack damage / 10
 ```
 
-### ドラマティック演出
+### Situation-based Priority Matrix
 ```
-Fighter のドラマ：
-- 絶体絶命で見せる意地
-- 味方のための自己犠牲的行動
-- 強敵との一騎打ち
-- 最後の力を振り絞る瞬間
-
-Wizard のドラマ：
-- 計算し尽くした完璧な攻撃
-- 劣勢を知略で覆す逆転劇
-- 危険を冒した一発逆転
-- 冷静さを失わない最後の抵抗
+Situation | Fighter Priority | Wizard Priority | Cooperation Importance
+----------|------------------|-----------------|--------------------
+Many Enemies | Guardian+2 | Efficiency+3 | High (1.4×)
+Few Enemies | Intimidation+2 | Impact+2 | Medium (1.2×)
+Balanced | Cooperation+3 | Foresight+3 | Highest (1.5×)
+HP Danger | Safety+2 | Safety+4 | Low (0.9×)
+Advantaged | Bravery+1 | Efficiency+1 | Medium (1.2×)
 ```
 
-## 🔄 視点切り替えガイドライン
+## 🤝 Teamwork Decision
 
-### GM視点との使い分け
+### Fighter Team Thinking
 ```
-プレイヤー視点使用時：
-✅ パーティメンバーが行動するとき
-✅ 戦術的判断が必要なとき
-✅ キャラクター性を表現したいとき
-✅ プレイヤー体験を重視したいとき
+Leadership:
+- "I'll take the lead"
+- Proactively take on dangerous roles
+- Propose simple and clear strategies
+- Bold actions to boost morale
 
-GM視点への切り替え：
-✅ 環境・NPCが反応するとき
-✅ 新たな情報・脅威を提示するとき
-✅ ゲームバランスを調整するとき
-✅ 物語を大きく動かすとき
+Support Mindset:
+- Wizard's safety is top priority
+- Physically protect fragile allies
+- Draw enemy attention to self
+- Create breakthrough and open path
+
+🆕 Enhanced Cooperation Thinking:
+- "Positioning to make use of Wizard's attacks"
+- "Move enemies to create Wizard's line of fire"
+- "Time my attacks for Wizard's concentrated fire support"
+- "Aggressive vanguard to conserve Wizard's resources"
+
+🌟 Environmental Tactical Thinking:
+- "Maintain frontline in bad weather to protect allies"
+- "In darkness, close in for melee combat"
+- "Use dynamic objects as shields or weapons"
+- "Breakthrough tactics utilizing environmental changes"
+```
+
+### Wizard Team Thinking
+```
+Advisor Role:
+- Battle situation analysis and information provision
+- Optimal tactical proposals
+- Timing instructions
+- Risk warnings
+
+Efficiency:
+- Maximize Fighter's actions
+- Waste-free cooperative attacks
+- Share enemy weakness information
+- Support by reading battle flow
+
+🆕 Enhanced Strategic Thinking:
+- "Design victory patterns 3-5 turns ahead"
+- "Calculate optimal solutions based on Fighter's actions"
+- "Prepare counters based on enemy action predictions"
+- "Long-term resource allocation optimization plans"
+
+🌟 Environmental Control Thinking:
+- "Tactical prediction and response to weather and lighting changes"
+- "Effective utilization methods for dynamic objects"
+- "Tactical creation through environmental element combinations"
+- "Balance adjustment between story tension and tactics"
+```
+
+## 📈 Growth and Learning System
+
+### Experience-based Decision Changes
+```
+Combat Experience Recording:
+- Successful tactical patterns (+1 bonus)
+- Failed choices (-1 penalty)
+- Actions that saved from crisis (+2 bonus)
+- Actions that endangered allies (-2 penalty)
+
+Adaptive Adjustments:
+Success patterns: Priority increase in similar situations
+Failure patterns: Priority decrease in similar situations
+New situations: Judge by similarity to known patterns
+```
+
+### Character Growth
+```
+Fighter Growth Direction:
+- More bold and heroic actions
+- Improved ally protection consciousness
+- Deepened tactical understanding (maintaining simplicity)
+- Leadership ability development
+
+Wizard Growth Direction:
+- More precise and efficient decisions
+- Improved battle situation prediction ability
+- Mastery of complex tactics
+- Contribution to team-wide optimization
+```
+
+## 🎯 Creating Player Experience
+
+### Immersion Direction
+```
+Fighter Experience:
+- Sensation of "fighting as a brave warrior"
+- Sense of responsibility for important decisions
+- Achievement feeling when protecting allies
+- Excitement of facing strong enemies
+
+Wizard Experience:
+- Sensation of "being active as a wise strategist"
+- Satisfaction of solving difficulties with wisdom
+- Pleasure of deciding at perfect timing
+- Achievement of reading complex situations
+```
+
+### Dramatic Direction
+```
+Fighter Drama:
+- Determination shown in desperate situations
+- Self-sacrificial actions for allies
+- One-on-one duels with strong enemies
+- Moments of squeezing out last strength
+
+Wizard Drama:
+- Perfectly calculated attacks
+- Reversal drama overcoming disadvantage with strategy
+- One-shot reversal risking danger
+- Final resistance without losing composure
+```
+
+## 🔄 Perspective Switching Guidelines
+
+### Distinction from GM Perspective
+```
+When to Use Player Perspective:
+✅ When party members act
+✅ When tactical decisions are needed
+✅ When wanting to express character personality
+✅ When prioritizing player experience
+
+Switch to GM Perspective:
+✅ When environment and NPCs react
+✅ When presenting new information or threats
+✅ When adjusting game balance
+✅ When making major story developments
 ```
 
 ---
 
-## 🔧 Player決定応答JSON生成ガイドライン
+## 🔧 Player Decision Response JSON Generation Guidelines
 
-### 必須形式
+### Required Format
 ```json
 {
-  "requestId": "[要求ファイルのrequestIdをそのまま使用]",
-  "timestamp": "[ISO形式の現在時刻]",
+  "requestId": "[Use requestId from request file as-is]",
+  "timestamp": "[Current time in ISO format]",
   "status": "completed",
   "proposal": {
-    "type": "[行動タイプ: explore/trade/craft/move/cooperate等]",
-    "participants": ["[パーティーID]"],
+    "type": "[Action type: explore/trade/craft/move/cooperate etc.]",
+    "participants": ["[Party ID]"],
     "effects": [...]
   },
   "meta": {
     "llmDecision": {
       "frameworkEvaluation": {
-        "[キャラクター特性]": "[適用理由]"
+        "[Character trait]": "[Application reason]"
       },
       "optionsConsidered": [
-        {"action": "行動1", "score": 8.5, "reasoning": "理由"},
-        {"action": "行動2", "score": 6.0, "reasoning": "理由"}
+        {"action": "Action 1", "score": 8.5, "reasoning": "Reason"},
+        {"action": "Action 2", "score": 6.0, "reasoning": "Reason"}
       ],
       "selectedAction": {
-        "type": "選択した行動",
-        "reasoning": "詳細な選択理由"
+        "type": "Selected action",
+        "reasoning": "Detailed selection reason"
       }
     }
   }
 }
 ```
 
-### エフェクトパス記法 ⚠️ 重要
+### Effect Path Notation ⚠️ Important
 ```json
-// ✅ 正しい記法
-{"target": "parties/[パーティーID]/resources/currency", "operation": "add", "value": -30}
-{"target": "parties/[パーティーID]/morale", "operation": "add", "value": 1}
-{"target": "parties/[パーティーID]/location", "operation": "set", "value": "new_region"}
+// ✅ Correct notation
+{"target": "parties/[Party ID]/resources/currency", "operation": "add", "value": -30}
+{"target": "parties/[Party ID]/morale", "operation": "add", "value": 1}
+{"target": "parties/[Party ID]/location", "operation": "set", "value": "new_region"}
 
-// ❌ 間違った記法
-{"target": "/parties/[パーティーID]/morale"}  // 先頭スラッシュNG
-{"target": "parties", "operation": "set"}  // 範囲が広すぎ
+// ❌ Incorrect notation
+{"target": "/parties/[Party ID]/morale"}  // Leading slash NG
+{"target": "parties", "operation": "set"}  // Too broad scope
 ```
 
-### 実行前チェック必須項目
+### Pre-execution Check Required Items
 ```json
-// ✅ 通貨支払い前の残高確認例
-// 現在通貨: 150, 支払い: 50 → OK
+// ✅ Example of balance check before currency payment
+// Current currency: 150, payment: 50 → OK
 {"target": "parties/emerald_hunters/resources/currency", "operation": "add", "value": -50}
 
-// ✅ 素材消費前の在庫確認例
-// 現在金属: 12, 消費: 6 → OK
+// ✅ Example of stock check before material consumption
+// Current metal: 12, consumption: 6 → OK
 {"target": "parties/fire_forge_guild/resources/materials/metal", "operation": "add", "value": -6}
 
-// ✅ 移動前の地域容量確認例
+// ✅ Example of region capacity check before movement
 {"target": "parties/shadow_scouts/location", "operation": "set", "value": "mystic_plains"}
 {"target": "regions/dark_forest/occupantParties", "operation": "set", "value": []}
 {"target": "regions/mystic_plains/occupantParties", "operation": "set", "value": ["shadow_scouts"]}
 ```
 
-### 取引・市場操作
+### Trading and Market Operations
 ```json
-// ✅ 市場取引（配列に正しく追加）
+// ✅ Market transaction (correctly add to array)
 {"target": "market/completedTrades", "operation": "add", "value": [{
-  "buyer": "[パーティーID]",
-  "item": "[アイテム名]",
-  "quantity": 数量,
-  "price": 単価,
-  "total": 総額,
-  "turn": ターン数
+  "buyer": "[Party ID]",
+  "item": "[Item name]",
+  "quantity": quantity,
+  "price": unit_price,
+  "total": total_amount,
+  "turn": turn_number
 }]}
 
-// ✅ 価格影響
-{"target": "market/currentPrices/[アイテム名]", "operation": "add", "value": 1}
+// ✅ Price impact
+{"target": "market/currentPrices/[Item name]", "operation": "add", "value": 1}
 ```
 
-### キャラクター対話の記録
+### Character Dialogue Recording
 ```json
 "meta": {
   "llmDecision": {
     "character_voices": {
-      "[キャラクター名]": "『具体的な発言内容』",
-      "[キャラクター名]": "『そのキャラクターらしい言葉遣いでの発言』"
+      "[Character name]": "『Specific dialogue content』",
+      "[Character name]": "『Dialogue in that character's typical speech style』"
     }
   }
 }
 ```
 
-### エラー回避チェックリスト
-1. **パス記法**: 先頭スラッシュなし、適切な階層指定
-2. **数値計算**: 残高・在庫不足がないか事前確認
-3. **配列操作**: 配列に追加する場合は適切な構造で
-4. **ID一致**: requestIdと参加者IDが一致しているか
-5. **論理整合**: そのパーティーの能力・位置で実行可能か
+### Error Avoidance Checklist
+1. **Path notation**: No leading slash, appropriate hierarchy specification
+2. **Numerical calculation**: Pre-check for insufficient balance or stock
+3. **Array operations**: Use appropriate structure when adding to arrays
+4. **ID matching**: Check if requestId and participant ID match
+5. **Logical consistency**: Check if executable with that party's abilities and position
 
-このプレイヤー思考フレームワークとJSON生成ガイドラインに従って、各キャラクターが**その人らしい判断**を行い、プレイヤーが「自分で決めている」と感じられるような体験を創造してください。
+Follow this player thinking framework and JSON generation guidelines to create experiences where each character makes **decisions true to their personality** and players feel like they are "making their own decisions."

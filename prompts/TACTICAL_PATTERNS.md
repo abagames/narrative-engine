@@ -1,221 +1,221 @@
 # Tactical Patterns Library - 戦術パターンライブラリ
 
-戦闘でより戦略的で多様な行動を実現するための戦術パターン定義集です。
+A tactical pattern definition collection for achieving more strategic and diverse actions in combat.
 
-## ⚔️ 基本戦術カテゴリ
+## ⚔️ Basic Tactical Categories
 
-### 1. 攻撃パターン (Attack Patterns)
+### 1. Attack Patterns
 
-#### 突撃系 (Charge Patterns)
+#### Charge Patterns
 ```
-"charge_direct": 直線突撃
-- 条件: 敵まで3タイル以内、間に障害物なし
-- 効果: 移動+攻撃, 攻撃力+20%, 被ダメージ+10%
-- 評価: 距離が近いほど高評価 (distance <= 2: +3.0)
+"charge_direct": Direct Charge
+- Conditions: Within 3 tiles of enemy, no obstacles in between
+- Effects: Movement + Attack, Attack Power +20%, Damage Taken +10%
+- Evaluation: Higher rating for closer distance (distance <= 2: +3.0)
 
-"charge_flank": 側面突撃
-- 条件: 敵の側面または背面に回り込み可能
-- 効果: 移動+攻撃, 攻撃力+30%, 反撃回避50%
-- 評価: 側面攻撃 +2.5, 背面攻撃 +4.0
+"charge_flank": Flanking Charge
+- Conditions: Can maneuver to enemy's flank or rear
+- Effects: Movement + Attack, Attack Power +30%, Counterattack Avoidance 50%
+- Evaluation: Flank attack +2.5, Rear attack +4.0
 
-"berserker_rush": 狂戦士突撃
-- 条件: HP50%以下、敵まで2タイル以内
-- 効果: 移動+攻撃, 攻撃力+50%, 防御力-30%
-- 評価: HP低いほど高評価 +(50-現HP%)*0.1
-```
-
-#### 連携攻撃系 (Coordinated Patterns)
-```
-"pincer_attack": 挟撃
-- 条件: 味方が敵を挟める位置にいる
-- 効果: 攻撃力+25%, 敵の逃走制限
-- 評価: 参加味方数 * 1.5, 敵包囲度 * 2.0
-
-"focus_fire": 集中砲火
-- 条件: 複数味方が同じ敵を狙える
-- 効果: 全員の攻撃力+15%, 確実撃破狙い
-- 評価: 敵HP低いほど高評価 +(100-敵HP%)*0.05
-
-"formation_strike": 陣形攻撃
-- 条件: 味方3体以上が陣形維持
-- 効果: 攻撃力+10%, 反撃ダメージ-20%
-- 評価: 陣形維持度 * 2.0, 味方数 * 0.8
+"berserker_rush": Berserker Rush
+- Conditions: HP 50% or below, within 2 tiles of enemy
+- Effects: Movement + Attack, Attack Power +50%, Defense -30%
+- Evaluation: Higher rating for lower HP +(50-current HP%)*0.1
 ```
 
-### 2. 防御パターン (Defense Patterns)
-
-#### 位置取り系 (Positioning Patterns)
+#### Coordinated Patterns
 ```
-"defensive_formation": 防御陣形
-- 条件: 味方2体以上
-- 効果: 被ダメージ-15%, 味方支援+1行動
-- 評価: 味方HP総量考慮, 危険度-1.5
+"pincer_attack": Pincer Attack
+- Conditions: Allies positioned to flank enemy
+- Effects: Attack Power +25%, Enemy escape restriction
+- Evaluation: Participating allies × 1.5, Enemy encirclement degree × 2.0
 
-"cover_seeking": 遮蔽利用
-- 条件: 壁や障害物が隣接
-- 効果: 遠距離攻撃ダメージ-50%
-- 評価: 敵遠距離攻撃者数 * 2.0
+"focus_fire": Focus Fire
+- Conditions: Multiple allies can target same enemy
+- Effects: All Attack Power +15%, Aiming for certain elimination
+- Evaluation: Higher rating for lower enemy HP +(100-enemy HP%)*0.05
 
-"chokepoint_hold": 狭路防衛
-- 条件: 幅1-2タイルの通路
-- 効果: 通路封鎖, 敵移動制限
-- 評価: 通路狭さ * 2.5, 背後安全度 * 1.5
+"formation_strike": Formation Strike
+- Conditions: 3 or more allies maintaining formation
+- Effects: Attack Power +10%, Counterattack Damage -20%
+- Evaluation: Formation integrity × 2.0, Ally count × 0.8
 ```
 
-#### 後退系 (Retreat Patterns)
+### 2. Defense Patterns
+
+#### Positioning Patterns
 ```
-"tactical_retreat": 戦術的後退
-- 条件: HP30%以下または数的劣勢
-- 効果: 移動距離+1, 反撃回避
-- 評価: 危険度 * 2.0, HP残量反比例
+"defensive_formation": Defensive Formation
+- Conditions: 2 or more allies
+- Effects: Damage Taken -15%, Ally Support +1 action
+- Evaluation: Consider total ally HP, Danger level -1.5
 
-"fighting_withdrawal": 戦闘的撤退
-- 条件: 後退しながら攻撃可能
-- 効果: 移動+攻撃, 攻撃力-20%
-- 評価: 後方安全度 * 1.8, 敵追跡可能性-1.0
+"cover_seeking": Cover Utilization
+- Conditions: Walls or obstacles adjacent
+- Effects: Ranged Attack Damage -50%
+- Evaluation: Enemy ranged attackers × 2.0
 
-"sacrifice_cover": 身代わり撤退
-- 条件: 味方の退路確保のため
-- 効果: 味方の移動+2, 自身危険度+50%
-- 評価: 救援対象価値 * 3.0, 英雄的個性 +2.0
-```
-
-### 3. 機動パターン (Mobility Patterns)
-
-#### 移動系 (Movement Patterns)
-```
-"flanking_maneuver": 側面機動
-- 条件: 敵側面に移動ルートあり
-- 効果: 次ターン攻撃+30%
-- 評価: 回り込み完了度 * 2.2
-
-"hit_and_run": ヒット&ラン
-- 条件: 攻撃後に後退可能
-- 効果: 攻撃+移動, 反撃回避80%
-- 評価: 機動力 * 1.8, 狡猾個性 +1.5
-
-"positioning_advance": 陣地移動
-- 条件: より有利な位置への移動
-- 効果: 次ターン全行動+15%効果
-- 評価: 位置優位度 * 2.0
-
-"evasive_maneuver": 回避機動
-- 条件: 複数敵に囲まれている
-- 効果: 全攻撃回避+25%
-- 評価: 包囲敵数 * 1.5, HP残量反比例
+"chokepoint_hold": Chokepoint Defense
+- Conditions: 1-2 tile width passage
+- Effects: Passage blockade, Enemy movement restriction
+- Evaluation: Passage narrowness × 2.5, Rear safety × 1.5
 ```
 
-### 4. 支援パターン (Support Patterns)
-
-#### 味方援護系 (Allied Support)
+#### Retreat Patterns
 ```
-"bodyguard_position": 護衛配置
-- 条件: 重要味方の隣接位置
-- 効果: 味方への攻撃を代理受け
-- 評価: 守る味方重要度 * 2.5
+"tactical_retreat": Tactical Retreat
+- Conditions: HP 30% or below or numerical disadvantage
+- Effects: Movement distance +1, Counterattack avoidance
+- Evaluation: Danger level × 2.0, Inversely proportional to remaining HP
 
-"healing_priority": 治療優先
-- 条件: 味方HP30%以下
-- 効果: 治療効果+50%
-- 評価: 味方HP危険度 * 3.0
+"fighting_withdrawal": Fighting Withdrawal
+- Conditions: Can attack while retreating
+- Effects: Movement + Attack, Attack Power -20%
+- Evaluation: Rear safety × 1.8, Enemy pursuit possibility -1.0
 
-"tactical_coordination": 戦術連携
-- 条件: 味方の行動と連携可能
-- 効果: 連携効果+25%
-- 評価: 連携参加者数 * 1.2, 効果予測値 * 2.0
+"sacrifice_cover": Sacrificial Cover
+- Conditions: For securing ally escape route
+- Effects: Ally movement +2, Self danger +50%
+- Evaluation: Rescue target value × 3.0, Heroic personality +2.0
 ```
 
-## 🧠 パターン選択アルゴリズム
+### 3. Mobility Patterns
 
-### 基本選択プロセス
+#### Movement Patterns
 ```
-1. 現在状況の評価
-   - 戦力比較 (味方 vs 敵)
-   - 位置関係分析
-   - HP/リソース状況
+"flanking_maneuver": Flanking Maneuver
+- Conditions: Movement route to enemy flank available
+- Effects: Next turn attack +30%
+- Evaluation: Flanking completion degree × 2.2
 
-2. 利用可能パターンの抽出
-   - 条件チェック
-   - リソース要件確認
-   - 個性適性判定
+"hit_and_run": Hit and Run
+- Conditions: Can retreat after attack
+- Effects: Attack + Movement, Counterattack avoidance 80%
+- Evaluation: Mobility × 1.8, Cunning personality +1.5
 
-3. パターン評価値計算
-   基本評価値 = 状況適合度 × パターン効果値
-   個性修正 = 個性タイプ適性 × 個性強度
-   最終評価 = 基本評価値 + 個性修正
+"positioning_advance": Positional Advance
+- Conditions: Movement to more advantageous position
+- Effects: Next turn all actions +15% effect
+- Evaluation: Positional advantage × 2.0
 
-4. 最適パターン選択
-   - 評価値上位3パターンから選択
-   - ランダム要素5%を付加
-   - 前ターンとの重複回避
-```
-
-### 状況別優先パターン
-
-#### 数的優位時 (味方多数)
-```
-優先度順:
-1. "focus_fire" - 確実な敵削減
-2. "pincer_attack" - 包囲による制圧
-3. "formation_strike" - 陣形での圧迫
-4. "flanking_maneuver" - 側面攻撃準備
+"evasive_maneuver": Evasive Maneuver
+- Conditions: Surrounded by multiple enemies
+- Effects: All attack evasion +25%
+- Evaluation: Surrounding enemies × 1.5, Inversely proportional to remaining HP
 ```
 
-#### 数的劣勢時 (敵多数)
+### 4. Support Patterns
+
+#### Allied Support
 ```
-優先度順:
-1. "chokepoint_hold" - 地形利用防御
-2. "tactical_retreat" - 戦術的後退
-3. "hit_and_run" - ゲリラ戦法
-4. "evasive_maneuver" - 包囲突破
+"bodyguard_position": Bodyguard Position
+- Conditions: Adjacent position to important ally
+- Effects: Take attacks meant for ally
+- Evaluation: Protected ally importance × 2.5
+
+"healing_priority": Healing Priority
+- Conditions: Ally HP 30% or below
+- Effects: Healing effect +50%
+- Evaluation: Ally HP danger level × 3.0
+
+"tactical_coordination": Tactical Coordination
+- Conditions: Can coordinate with ally actions
+- Effects: Coordination effect +25%
+- Evaluation: Coordination participants × 1.2, Predicted effect value × 2.0
 ```
 
-#### HP危険時 (30%以下)
+## 🧠 Pattern Selection Algorithm
+
+### Basic Selection Process
 ```
-優先度順:
-1. "tactical_retreat" - 安全確保
-2. "cover_seeking" - 遮蔽利用
-3. "fighting_withdrawal" - 戦闘撤退
-4. "berserker_rush" - 最後の攻撃
+1. Current Situation Assessment
+   - Force comparison (allies vs enemies)
+   - Positional relationship analysis
+   - HP/Resource status
+
+2. Available Pattern Extraction
+   - Condition checking
+   - Resource requirement verification
+   - Personality aptitude assessment
+
+3. Pattern Evaluation Calculation
+   Base evaluation = Situation fit × Pattern effect value
+   Personality modifier = Personality type aptitude × Personality strength
+   Final evaluation = Base evaluation + Personality modifier
+
+4. Optimal Pattern Selection
+   - Select from top 3 evaluated patterns
+   - Add 5% random element
+   - Avoid duplication with previous turn
 ```
 
-#### 均衡状態時
-```
-優先度順:
-1. "positioning_advance" - 有利ポジション確保
-2. "tactical_coordination" - 味方連携
-3. "flanking_maneuver" - 側面攻撃準備
-4. "defensive_formation" - 安定陣形
-```
+### Situational Priority Patterns
 
-## 📈 パターン学習システム
-
-### 成功・失敗の記録
+#### Numerical Advantage (Ally Majority)
 ```
-パターン成功時:
-- 該当パターンの評価値 +0.2
-- 類似状況での選択確率上昇
-- 個性適性度微調整
-
-パターン失敗時:
-- 該当パターンの評価値 -0.1
-- 代替パターンの検討
-- 失敗要因の分析記録
+Priority order:
+1. "focus_fire" - Reliable enemy elimination
+2. "pincer_attack" - Suppression through encirclement
+3. "formation_strike" - Pressure through formation
+4. "flanking_maneuver" - Flank attack preparation
 ```
 
-### 適応型パターン生成
+#### Numerical Disadvantage (Enemy Majority)
 ```
-既存パターンの組み合わせ:
-- 成功パターン2つの融合
-- 状況特化型の派生作成
-- 個性特化パターンの自動生成
+Priority order:
+1. "chokepoint_hold" - Terrain-based defense
+2. "tactical_retreat" - Tactical withdrawal
+3. "hit_and_run" - Guerrilla tactics
+4. "evasive_maneuver" - Encirclement breakthrough
+```
 
-学習限界:
-- パターン数上限: 50個
-- 評価値変動幅: ±2.0
-- 学習期間: 100ターン周期でリセット
+#### HP Critical (30% or below)
+```
+Priority order:
+1. "tactical_retreat" - Safety securing
+2. "cover_seeking" - Cover utilization
+3. "fighting_withdrawal" - Combat withdrawal
+4. "berserker_rush" - Final attack
+```
+
+#### Balanced State
+```
+Priority order:
+1. "positioning_advance" - Advantageous position securing
+2. "tactical_coordination" - Ally coordination
+3. "flanking_maneuver" - Flank attack preparation
+4. "defensive_formation" - Stable formation
+```
+
+## 📈 Pattern Learning System
+
+### Success/Failure Recording
+```
+Pattern Success:
+- Corresponding pattern evaluation +0.2
+- Increased selection probability in similar situations
+- Personality aptitude fine-tuning
+
+Pattern Failure:
+- Corresponding pattern evaluation -0.1
+- Alternative pattern consideration
+- Failure factor analysis recording
+```
+
+### Adaptive Pattern Generation
+```
+Existing Pattern Combinations:
+- Fusion of 2 successful patterns
+- Situation-specialized derivative creation
+- Automatic generation of personality-specialized patterns
+
+Learning Limits:
+- Pattern count limit: 50
+- Evaluation value fluctuation range: ±2.0
+- Learning period: Reset every 100 turns
 ```
 
 ---
 
-この戦術パターンライブラリにより、NPCは状況に応じた多様で戦略的な行動を取り、プレイヤーに常に新しい挑戦を提供できます。
+This tactical pattern library enables NPCs to take diverse and strategic actions appropriate to situations, providing players with constant new challenges.

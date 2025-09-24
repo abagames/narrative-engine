@@ -1,10 +1,10 @@
-# Individual Combat System - 個人戦闘システムフレームワーク
+# Individual Combat System - Individual Combat System Framework
 
-**目的**: パーティメンバー個人レベルでの詳細な戦闘処理を行い、剣と魔法のやり取りを完全に記録する。
+**Purpose**: Perform detailed combat processing at the individual party member level and completely record sword and magic interactions.
 
-## 🗡️ パーティメンバー戦闘定義
+## 🗡️ Party Member Combat Definition
 
-### 基本戦闘プロファイル
+### Basic Combat Profile
 ```typescript
 interface CombatMember {
   id: string;                    // "iron_wolves.kael", "silk_merchants.zara"
@@ -12,34 +12,34 @@ interface CombatMember {
   class: 'Fighter' | 'Wizard' | 'Rogue' | 'Cleric';
   level: number;                 // 1-10
 
-  // 戦闘ステータス
+  // Combat Status
   hp: { current: number; max: number };
   stats: {
-    attack: number;              // 物理攻撃力 (1-20)
-    defense: number;             // 物理防御力 (1-20)
-    magic: number;               // 魔法攻撃力 (1-20)
-    resistance: number;          // 魔法抵抗力 (1-20)
-    speed: number;               // 行動順序 (1-20)
-    accuracy: number;            // 命中率 (1-20)
+    attack: number;              // Physical attack power (1-20)
+    defense: number;             // Physical defense power (1-20)
+    magic: number;               // Magic attack power (1-20)
+    resistance: number;          // Magic resistance (1-20)
+    speed: number;               // Action order (1-20)
+    accuracy: number;            // Hit rate (1-20)
   };
 
-  // 装備
+  // Equipment
   equipment: {
     weapon: CombatWeapon;
     armor: CombatArmor;
     accessories?: CombatAccessory[];
   };
 
-  // 戦闘スキル
+  // Combat Skills
   skills: CombatSkill[];
 
-  // 戦闘状態
-  conditions: StatusCondition[];  // 毒、魅了、強化等
-  actionPoints: number;          // そのターンの行動ポイント
+  // Combat Conditions
+  conditions: StatusCondition[];  // Poison, charm, enhancement, etc.
+  actionPoints: number;          // Action points for that turn
 }
 ```
 
-### 武器・防具システム
+### Weapon and Armor System
 ```typescript
 interface CombatWeapon {
   id: string;
@@ -71,88 +71,88 @@ interface CombatSkill {
 }
 ```
 
-## ⚔️ 戦闘ターンシステム
+## ⚔️ Combat Turn System
 
-### ターン構造
+### Turn Structure
 ```
-Phase 1: イニシアティブ決定
-- 各メンバーのspeed値でソート
-- 同速度の場合はランダム
+Phase 1: Initiative Determination
+- Sort by each member's speed value
+- Random order for equal speeds
 
-Phase 2: 個人アクション実行
-- 各メンバーが順番に行動選択
-- TACTICAL_PATTERNS.mdの戦術パターン適用
-- GM_CORE_MIND.md / PLAYER_MIND.mdで意思決定
+Phase 2: Individual Action Execution
+- Each member selects actions in turn
+- Apply tactical patterns from TACTICAL_PATTERNS.md
+- Decision making with GM_CORE_MIND.md / PLAYER_MIND.md
 
-Phase 3: 同時効果解決
-- ダメージ適用
-- 状態異常処理
-- 戦闘終了判定
-```
-
-### アクション選択プロセス
-```
-1. 利用可能アクション抽出
-   - 通常攻撃 (常時利用可能)
-   - スキル使用 (コスト・クールダウンチェック)
-   - 移動 (戦術的位置取り)
-   - 防御・待機
-
-2. TACTICAL_PATTERNS.md適用
-   - 現在状況での最適パターン選択
-   - 個性・クラス特性による修正
-   - リスク・リターン評価
-
-3. 最終アクション決定
-   - パターン評価値計算
-   - キャラクター個性による重み付け
-   - 5%のランダム要素追加
+Phase 3: Simultaneous Effect Resolution
+- Apply damage
+- Process status conditions
+- Combat end determination
 ```
 
-## 🎯 戦闘アクション詳細処理
+### Action Selection Process
+```
+1. Extract Available Actions
+   - Normal attack (always available)
+   - Skill usage (cost and cooldown check)
+   - Movement (tactical positioning)
+   - Defense and waiting
 
-### 物理攻撃処理
+2. Apply TACTICAL_PATTERNS.md
+   - Select optimal pattern for current situation
+   - Modify based on personality and class traits
+   - Risk-return evaluation
+
+3. Final Action Decision
+   - Calculate pattern evaluation values
+   - Weight by character personality
+   - Add 5% random element
+```
+
+## 🎯 Combat Action Detailed Processing
+
+### Physical Attack Processing
 ```typescript
 interface PhysicalAttack {
   attacker: CombatMember;
   target: CombatMember;
   weapon: CombatWeapon;
 
-  // 計算結果
+  // Calculation Results
   hit_chance: number;            // (attacker.accuracy + weapon.accuracy_bonus) vs target.defense
   damage_roll: number;           // weapon.damage + attacker.attack
   final_damage: number;          // damage_roll - target.defense
-  critical_hit: boolean;         // 5%確率で2倍ダメージ
+  critical_hit: boolean;         // 5% chance for 2x damage
 
-  // ナラティブ生成
+  // Narrative Generation
   narrative: string;             // "Kael swings his enchanted blade..."
-  dialogue?: string;             // DIALOGUE_SYSTEM.mdから生成
+  dialogue?: string;             // Generated from DIALOGUE_SYSTEM.md
 }
 ```
 
-### 魔法攻撃処理
+### Magic Attack Processing
 ```typescript
 interface MagicAttack {
   caster: CombatMember;
-  targets: CombatMember[];       // 単体/範囲攻撃
+  targets: CombatMember[];       // Single/area attack
   spell: CombatSkill;
 
-  // 計算結果
-  cast_success: number;          // 詠唱成功率
+  // Calculation Results
+  cast_success: number;          // Casting success rate
   spell_power: number;           // caster.magic + spell.power
-  damage_per_target: number[];   // 各ターゲットへのダメージ
-  additional_effects: SkillEffect[]; // 状態異常等
+  damage_per_target: number[];   // Damage to each target
+  additional_effects: SkillEffect[]; // Status conditions, etc.
 
-  // ナラティブ生成
+  // Narrative Generation
   incantation?: string;          // "Ancient flames, heed my call!"
   visual_effect: string;         // "crackling fireball streaks"
   impact_description: string;    // "explodes in brilliant flames"
 }
 ```
 
-## 📖 戦闘ナラティブ生成
+## 📖 Combat Narrative Generation
 
-### 詳細戦闘ログ構造
+### Detailed Combat Log Structure
 ```json
 {
   "type": "detailed_combat",
@@ -167,7 +167,7 @@ interface MagicAttack {
           "action_type": "sword_attack",
           "target": "silk_merchants.zara",
           "tactical_pattern": "charge_direct",
-          "dialogue": "行くぞ！敵を叩く！",
+          "dialogue": "Let's go! Strike down the enemy!",
           "mechanics": {
             "hit_roll": 15,
             "damage_roll": 12,
@@ -193,73 +193,73 @@ interface MagicAttack {
 }
 ```
 
-### キャラクター個性による戦闘スタイル
+### Combat Style by Character Personality
 
-#### Fighter系戦闘パターン (PLAYER_MIND.mdベース)
+#### Fighter-type Combat Patterns (Based on PLAYER_MIND.md)
 ```
-勇敢型Fighter:
-- 優先アクション: charge_direct, berserker_rush
-- 戦闘台詞: "恐れることはない！", "俺が盾になる！"
-- 戦術的選択: 前線維持、味方庇護優先
+Brave Fighter:
+- Priority Actions: charge_direct, berserker_rush
+- Combat Dialogue: "Fear nothing!", "I'll be the shield!"
+- Tactical Choice: Maintain frontline, prioritize ally protection
 
-慎重型Fighter:
-- 優先アクション: defensive_formation, tactical_retreat
-- 戦闘台詞: "様子を見よう", "慎重に行こう"
-- 戦術的選択: 安全確保、確実な勝利狙い
-```
-
-#### Wizard系戦闘パターン
-```
-攻撃特化型Wizard:
-- 優先アクション: focus_fire, 高威力呪文
-- 戦闘台詞: "分析完了、弱点を突く", "この術式で決める"
-- 戦術的選択: 最適なタイミングで最大効果
-
-支援特化型Wizard:
-- 優先アクション: healing_priority, tactical_coordination
-- 戦闘台詞: "みんなが心配です", "回復を優先します"
-- 戦術的選択: 味方支援、長期戦略重視
+Cautious Fighter:
+- Priority Actions: defensive_formation, tactical_retreat
+- Combat Dialogue: "Let's watch the situation", "Let's be careful"
+- Tactical Choice: Secure safety, aim for certain victory
 ```
 
-## 🧠 GM/プレイヤー戦闘判断統合
-
-### GM視点戦闘制御 (GM_CORE_MIND.mdベース)
+#### Wizard-type Combat Patterns
 ```
-NPC戦闘行動決定:
-1. 戦況評価 (0-10スケール)
-   - プレイヤーパーティ脅威度
-   - 自軍戦力残存度
-   - 戦術的優位性
+Attack-specialized Wizard:
+- Priority Actions: focus_fire, high-power spells
+- Combat Dialogue: "Analysis complete, exploit the weakness", "This technique will decide it"
+- Tactical Choice: Maximum effect at optimal timing
 
-2. 物語的演出判断
-   - 緊張感創出の必要性
-   - ドラマティックなタイミング
-   - キャラクター成長機会
-
-3. NPC個性適用
-   - NPC_PERSONALITIES.mdパターン
-   - 一貫した行動原則
-   - 感情的反応パターン
+Support-specialized Wizard:
+- Priority Actions: healing_priority, tactical_coordination
+- Combat Dialogue: "I'm worried about everyone", "I'll prioritize healing"
+- Tactical Choice: Ally support, emphasize long-term strategy
 ```
 
-### プレイヤー視点戦闘判断 (PLAYER_MIND.mdベース)
+## 🧠 GM/Player Combat Decision Integration
+
+### GM Perspective Combat Control (Based on GM_CORE_MIND.md)
 ```
-キャラクター戦闘選択:
-1. クラス適性評価
-   - Fighter: 物理的解決法優先
-   - Wizard: 戦略的・効率的解決
+NPC Combat Action Decision:
+1. Battle Situation Assessment (0-10 scale)
+   - Player party threat level
+   - Own force remaining strength
+   - Tactical advantage
 
-2. 個性特性適用
-   - 勇敢度による前線意識
-   - 慎重度による安全優先
-   - 協調性による連携重視
+2. Narrative Direction Judgment
+   - Need for tension creation
+   - Dramatic timing
+   - Character growth opportunities
 
-3. 戦術パターン適用
-   - TACTICAL_PATTERNS.mdから最適選択
-   - 状況適合度 × 個性適性
-   - 最終評価値による決定
+3. NPC Personality Application
+   - NPC_PERSONALITIES.md patterns
+   - Consistent behavioral principles
+   - Emotional reaction patterns
+```
+
+### Player Perspective Combat Judgment (Based on PLAYER_MIND.md)
+```
+Character Combat Selection:
+1. Class Aptitude Assessment
+   - Fighter: Prioritize physical solutions
+   - Wizard: Strategic and efficient solutions
+
+2. Personality Trait Application
+   - Frontline awareness based on bravery
+   - Safety priority based on caution
+   - Coordination emphasis based on cooperation
+
+3. Tactical Pattern Application
+   - Optimal selection from TACTICAL_PATTERNS.md
+   - Situation compatibility × personality aptitude
+   - Decision based on final evaluation value
 ```
 
 ---
 
-このフレームワークにより、抽象的な`conflict`アクションを**真の剣と魔法の戦闘**に変換し、各キャラクターの個性と戦術的判断を完全に記録できます。
+This framework allows converting abstract `conflict` actions into **true sword and magic combat** and completely recording each character's personality and tactical judgment.

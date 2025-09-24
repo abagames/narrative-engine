@@ -1,52 +1,52 @@
 # AI Agent File-Based Workflow
 
-このドキュメントは、AI Coding Agent（Claude Code 等）が autonomous TRPG セッションを実行するためのワークフローガイドです。
+This document is a workflow guide for AI Coding Agents (such as Claude Code) to execute autonomous TRPG sessions.
 
-## 🎯 設計原則
+## 🎯 Design Principles
 
-- **AI Agent 主導**: Claude Code 等の AI Coding Agent が判断・実行
-- **新規コード実装禁止**: すでに実装済みツールのみを利用し、新たな自動化スクリプトなどは実装しない
-- **永続化重視**: 全ての状態・決定をファイルに記録
-- **完全自律**: 人間の介入なしで完全なセッション実行
+- **AI Agent-Driven**: AI Coding Agents such as Claude Code make decisions and execute
+- **No New Code Implementation**: Use only already implemented tools; do not implement new automation scripts
+- **Persistence-Focused**: Record all states and decisions to files
+- **Complete Autonomy**: Complete session execution without human intervention
 
-## 🔧 システム構成
+## 🔧 System Configuration
 
-### ディレクトリ構造
+### Directory Structure
 
 ```
 autonomous_sessions/
-├── inputs/                      # AI Agent 入力ファイル置き場
-│   ├── world_initial.json      # AI Agent が作成する初期世界状態
-│   └── session_config.json     # AI Agent が作成するセッション設定
-├── sessions/                    # セッション管理
+├── inputs/                      # AI Agent input file storage
+│   ├── world_initial.json      # Initial world state created by AI Agent
+│   └── session_config.json     # Session configuration created by AI Agent
+├── sessions/                    # Session management
 │   └── session_YYYYMMDD_HHMMSS/
 │       ├── metadata.json
 │       ├── world_initial.json
 │       ├── world_current.json
-│       ├── world_prev.json       # 前回状態（worldStateDiff計算用）
+│       ├── world_prev.json       # Previous state (for worldStateDiff calculation)
 │       ├── world_final.json
 │       ├── playlog.jsonl
 │       └── narrative.md
-└── ai_workspace/               # AI Agent作業領域
-    ├── decision_requests/      # 決定要求（エンジン→AI Agent）
-    ├── decision_responses/     # 決定応答（AI Agent→エンジン）
-    ├── world_snapshots/       # 世界状態スナップショット
-    └── results/               # 処理結果ファイル（各ツール実行結果）
+└── ai_workspace/               # AI Agent work area
+    ├── decision_requests/      # Decision requests (Engine → AI Agent)
+    ├── decision_responses/     # Decision responses (AI Agent → Engine)
+    ├── world_snapshots/       # World state snapshots
+    └── results/               # Processing result files (each tool execution result)
         ├── session_result.json
         ├── process_result.json
         └── next_turn_result.json
 ```
 
-## 🚀 AI Agent 実行フロー
+## 🚀 AI Agent Execution Flow
 
-### Phase 1: セッション初期化
+### Phase 1: Session Initialization
 
-**事前準備**: 入力ディレクトリの作成
+**Preparation**: Creating input directory
 
-1. **入力ディレクトリ初期化**: AI Agent が標準ディレクトリ構造を作成
+1. **Input Directory Initialization**: AI Agent creates standard directory structure
 
 ```bash
-# Bash ツールでディレクトリ構造作成
+# Create directory structure with Bash tool
 mkdir -p autonomous_sessions/inputs
 mkdir -p autonomous_sessions/ai_workspace/decision_requests
 mkdir -p autonomous_sessions/ai_workspace/decision_responses
@@ -54,27 +54,27 @@ mkdir -p autonomous_sessions/ai_workspace/world_snapshots
 mkdir -p autonomous_sessions/ai_workspace/results
 ```
 
-**重要**: すべての入力ファイルは `autonomous_sessions/inputs/` 配下に配置してください。これによりファイルパスが統一され、AI Agent の実行が予測可能になります。
+**Important**: All input files should be placed under `autonomous_sessions/inputs/`. This unifies file paths and makes AI Agent execution predictable.
 
-**AI Agent 世界構築**: 初期世界状態の設計・作成
+**AI Agent World Building**: Design and creation of initial world state
 
-2. **世界設計**: AI Agent が地理・政治・経済状況を決定
+2. **World Design**: AI Agent determines geographical, political, and economic conditions
 
-   - 地域数と配置決定（AI Agent が適切なマップサイズを決定）
-   - 各地域の名前・タイプ・特性を AI Agent が創造（forest, settlement, ruins, mountains, lakes 等）
-   - 地域間の接続関係（neighbors）を AI Agent が設計
-   - 各地域の容量・資源・特殊効果を AI Agent が設定
-   - 初期市場価格を AI Agent が経済バランスを考慮して設定
+   - Decide number and placement of regions (AI Agent determines appropriate map size)
+   - AI Agent creates names, types, and characteristics for each region (forest, settlement, ruins, mountains, lakes, etc.)
+   - AI Agent designs connections between regions (neighbors)
+   - AI Agent sets capacity, resources, and special effects for each region
+   - AI Agent sets initial market prices considering economic balance
 
-3. **パーティー設計**: AI Agent が多様なパーティーを作成
+3. **Party Design**: AI Agent creates diverse parties
 
-   - パーティー数と配置決定
-   - 各パーティーの能力値設定（exploration, trade, combat, diplomacy, crafting）
-   - 初期リソース配分（currency, materials）
-   - パーティー個性と目標設定
-   - **各パーティは他のパーティと敵対や同盟関係にあり、パーティ間イベントが頻繁に発生するよう設定すること**
-   - **パーティ間関係値の初期設定**: 各パーティペア間の初期関係を明確に定義
-   - **Character Profile Configuration**: 各パーティーに具体的なキャラクター設定を適用
+   - Decide party number and placement
+   - Set ability values for each party (exploration, trade, combat, diplomacy, crafting)
+   - Initial resource allocation (currency, materials)
+   - Set party personality and goals
+   - **Each party should be in hostile or alliance relationships with other parties, configured so that inter-party events occur frequently**
+   - **Initial setup of inter-party relationship values**: Clearly define initial relationships between each party pair
+   - **Character Profile Configuration**: Apply specific character settings to each party
 
 **Character Profile Configuration**:
 
@@ -85,34 +85,34 @@ mkdir -p autonomous_sessions/ai_workspace/results
     "decisionMaking": "cautious_analytical",
     "communicationStyle": "diplomatic_direct",
 
-    // 🆕 個人メンバー定義（具体的な名前による対話生成）
+    // 🆕 Individual member definition (dialogue generation with specific names)
     "partyMembers": [
       {
-        "name": "アリア",
-        "role": "リーダー",
-        "personality": "分析的",
-        "speechStyle": "冷静で理論的、データを重視した発言",
-        "specialization": "戦略立案"
+        "name": "Aria",
+        "role": "Leader",
+        "personality": "Analytical",
+        "speechStyle": "Calm and logical, statements emphasizing data",
+        "specialization": "Strategic planning"
       },
       {
-        "name": "カイト",
-        "role": "スカウト",
-        "personality": "慎重",
-        "speechStyle": "簡潔で実用的、リスクを重視した警告",
-        "specialization": "偵察・危険察知"
+        "name": "Kaito",
+        "role": "Scout",
+        "personality": "Cautious",
+        "speechStyle": "Concise and practical, warnings emphasizing risks",
+        "specialization": "Reconnaissance and danger detection"
       },
       {
-        "name": "ミラ",
-        "role": "学者",
-        "personality": "好奇心旺盛",
-        "speechStyle": "学術的で詳細、発見への興奮を表現",
-        "specialization": "知識・研究"
+        "name": "Mira",
+        "role": "Scholar",
+        "personality": "Curious",
+        "speechStyle": "Academic and detailed, expressing excitement about discoveries",
+        "specialization": "Knowledge and research"
       }
     ],
 
     "speechPatterns": {
-      "internal": "丁寧語、分析的、慎重",
-      "external": "礼儀正しく、明確、交渉上手"
+      "internal": "Polite, analytical, cautious",
+      "external": "Courteous, clear, skilled at negotiation"
     }
   }
 }
@@ -121,125 +121,125 @@ mkdir -p autonomous_sessions/ai_workspace/results
 **Benefits**:
 
 - Technical logs become immersive character-driven stories with named individuals
-- **🆕 Specific character dialogue**: "アリアが地図を指差しながら" instead of "メンバーの一人が"
+- **🆕 Specific character dialogue**: "Aria points to the map while" instead of "One of the members"
 - **🆕 Role-based specialization**: Each member contributes according to their expertise
 - **🆕 Party member introductions**: Each narrative begins with detailed member descriptions and party philosophy
 - Deep psychological insight into party decision-making processes
 - Rich dialogue and environmental descriptions with individual personality traits
 - Maintains 100% data accuracy while achieving novel-quality readability
 
-4. **パーティ間関係値初期化**: AI Agent がパーティペア間の初期関係を設定
+4. **Inter-party Relationship Value Initialization**: AI Agent sets initial relationships between party pairs
 
-**関係値初期化原則**:
+**Relationship Value Initialization Principles**:
 ```typescript
-// 基本的な関係値分布（推奨）
+// Basic relationship value distribution (recommended)
 relationshipDistribution = {
-  敵対関係: "20-30%のペア", // hostility: 6-8, cooperation: 1-3
-  中立関係: "40-50%のペア", // 全値: 4-6の範囲
-  友好関係: "20-30%のペア", // cooperation: 6-8, trust: 6-8
-  競争関係: "パワーバランス調整用" // competition: 7-9
+  HostileRelations: "20-30% of pairs", // hostility: 6-8, cooperation: 1-3
+  NeutralRelations: "40-50% of pairs", // All values: 4-6 range
+  FriendlyRelations: "20-30% of pairs", // cooperation: 6-8, trust: 6-8
+  CompetitiveRelations: "For power balance adjustment" // competition: 7-9
 };
 
-// ペアID命名規則
+// Pair ID naming convention
 pairId = `${alphabeticalFirst}_id__${alphabeticalSecond}_id`;
-// 例: "emerald_hunters__fire_forge_guild"
+// Example: "emerald_hunters__fire_forge_guild"
 
-// 関係値設定の戦略的考慮
+// Strategic considerations for relationship value setting
 strategicConsiderations = {
-  地理的近接: "隣接地域のパーティは高competition",
-  能力補完: "異なる専門性→高cooperation可能性",
-  能力競合: "同じ専門性→高competition",
-  物語的対立: "設定上の敵対→高hostility",
-  バランス: "1つの支配勢力を避ける分散配置"
+  GeographicalProximity: "Parties in adjacent regions have high competition",
+  AbilityComplementation: "Different specializations → high cooperation possibility",
+  AbilityCompetition: "Same specializations → high competition",
+  NarrativeConflict: "Setting-based hostility → high hostility",
+  Balance: "Distributed placement avoiding single dominant power"
 };
 ```
 
-**具体的初期化例**:
+**Specific Initialization Example**:
 ```json
 {
   "emerald_hunters__fire_forge_guild": {
-    "hostility": 2,     // 低敵対（貿易パートナー可能性）
-    "cooperation": 6,   // 高協力（探索vs製作の補完関係）
-    "competition": 3,   // 低競争（異なる専門分野）
-    "trust": 5,         // 中立信頼
+    "hostility": 2,     // Low hostility (trade partner possibility)
+    "cooperation": 6,   // High cooperation (exploration vs crafting complementary relationship)
+    "competition": 3,   // Low competition (different specializations)
+    "trust": 5,         // Neutral trust
     "lastInteraction": "turn_0",
     "history": []
   },
   "emerald_hunters__shadow_syndicate": {
-    "hostility": 7,     // 高敵対（設定上の対立）
-    "cooperation": 1,   // 低協力
-    "competition": 8,   // 高競争（同じ地域での活動）
-    "trust": 2,         // 低信頼
+    "hostility": 7,     // High hostility (setting-based conflict)
+    "cooperation": 1,   // Low cooperation
+    "competition": 8,   // High competition (activity in same region)
+    "trust": 2,         // Low trust
     "lastInteraction": "turn_0",
     "history": []
   }
 }
 ```
 
-5. **初期世界状態ファイル作成**: `Write` ツールで `autonomous_sessions/inputs/world_initial.json` 作成
+5. **Initial World State File Creation**: Create `autonomous_sessions/inputs/world_initial.json` with `Write` tool
 
 ```json
 {
   "parties": {
     "[party_id]": {
       "id": "[party_id]",
-      "name": "[AI Agentが決定した名前]",
-      "location": "[AI Agentが決定した配置]",
-      "resources": { "currency": "[AI決定値]", "materials": {...} },
-      "capabilities": { "exploration": "[AI決定値]", ... },
-      "morale": "[AI決定値]",
+      "name": "[Name determined by AI Agent]",
+      "location": "[Placement determined by AI Agent]",
+      "resources": { "currency": "[AI determined value]", "materials": {...} },
+      "capabilities": { "exploration": "[AI determined value]", ... },
+      "morale": "[AI determined value]",
       "characterProfile": {
-        "leadershipStyle": "[AI決定値]",
-        "decisionMaking": "[AI決定値]",
-        "communicationStyle": "[AI決定値]",
+        "leadershipStyle": "[AI determined value]",
+        "decisionMaking": "[AI determined value]",
+        "communicationStyle": "[AI determined value]",
         "partyMembers": [
           {
-            "name": "[AI創造のメンバー名]",
-            "role": "[AI決定役割]",
-            "personality": "[AI決定個性]",
-            "speechStyle": "[AI決定話し方]",
-            "specialization": "[AI決定専門分野]"
+            "name": "[Member name created by AI]",
+            "role": "[Role determined by AI]",
+            "personality": "[Personality determined by AI]",
+            "speechStyle": "[Speech style determined by AI]",
+            "specialization": "[Specialization determined by AI]"
           }
         ],
         "speechPatterns": {
-          "internal": "[AI決定内部コミュニケーション]",
-          "external": "[AI決定外部コミュニケーション]"
+          "internal": "[Internal communication determined by AI]",
+          "external": "[External communication determined by AI]"
         }
       }
     }
   },
   "regions": {
-    "[AI創造の地域ID]": {
-      "id": "[AI創造の地域ID]",
-      "name": "[AI Agentが創造した地域名]",
-      "type": "[AI Agentが決定したタイプ: forest/settlement/ruins/mountains/desert/lake等]",
-      "capacity": "[AI決定値]",
-      "neighbors": ["[AI設計の隣接地域ID配列]"],
-      "occupantParties": ["[AI配置のパーティー]"],
-      "resources": ["[AI設定の地域固有資源]"],
-      "specialEffects": ["[AI設定の特殊効果]"],
+    "[Region ID created by AI]": {
+      "id": "[Region ID created by AI]",
+      "name": "[Region name created by AI Agent]",
+      "type": "[Type determined by AI Agent: forest/settlement/ruins/mountains/desert/lake etc.]",
+      "capacity": "[AI determined value]",
+      "neighbors": ["[Array of adjacent region IDs designed by AI]"],
+      "occupantParties": ["[Parties placed by AI]"],
+      "resources": ["[Region-specific resources set by AI]"],
+      "specialEffects": ["[Special effects set by AI]"],
       "influence": {}
     }
   },
   "market": {
-    "currentPrices": { "[AI Agentが決定した価格設定]" },
+    "currentPrices": { "[Price settings determined by AI Agent]" },
     "priceHistory": [],
     "completedTrades": []
   },
   "relationships": {
     "[party1_id]__[party2_id]": {
-      "hostility": "[AI決定値 0-10]",
-      "cooperation": "[AI決定値 0-10]",
-      "competition": "[AI決定値 0-10]",
-      "trust": "[AI決定値 0-10]",
+      "hostility": "[AI determined value 0-10]",
+      "cooperation": "[AI determined value 0-10]",
+      "competition": "[AI determined value 0-10]",
+      "trust": "[AI determined value 0-10]",
       "lastInteraction": "turn_0",
       "history": []
     },
     "[party1_id]__[party3_id]": {
-      "hostility": "[AI決定値]",
-      "cooperation": "[AI決定値]",
-      "competition": "[AI決定値]",
-      "trust": "[AI決定値]",
+      "hostility": "[AI determined value]",
+      "cooperation": "[AI determined value]",
+      "competition": "[AI determined value]",
+      "trust": "[AI determined value]",
       "lastInteraction": "turn_0",
       "history": []
     }
@@ -250,41 +250,41 @@ strategicConsiderations = {
 }
 ```
 
-5. **セッション設定ファイル作成**: `Write` ツールで `autonomous_sessions/inputs/session_config.json` 作成
+5. **Session Configuration File Creation**: Create `autonomous_sessions/inputs/session_config.json` with `Write` tool
 
 ```json
 {
-  "sessionName": "[AI Agentが決定したセッション名]",
-  "maxTurns": "[AI決定値]",
+  "sessionName": "[Session name determined by AI Agent]",
+  "maxTurns": "[AI determined value]",
   "stopConditions": {
-    "[AI Agentが設定した終了条件]": "[AI決定値]"
+    "[End condition set by AI Agent]": "[AI determined value]"
   }
 }
 ```
 
-6. **ツール実行**: セッション開始
+6. **Tool Execution**: Session start
 
 - `npx tsx src/start_session.ts autonomous_sessions/inputs/world_initial.json autonomous_sessions/inputs/session_config.json`
 
-**注意**: 環境変数 `AUTONOMOUS_SESSIONS_DIR` の設定は任意です。設定しない場合は自動的に `./autonomous_sessions` がデフォルトディレクトリとして使用されます。特定のディレクトリを指定したい場合のみ環境変数を設定してください：
+**Note**: Setting the environment variable `AUTONOMOUS_SESSIONS_DIR` is optional. If not set, `./autonomous_sessions` will automatically be used as the default directory. Set the environment variable only if you want to specify a specific directory:
 
 ```bash
-# デフォルト実行（推奨）
+# Default execution (recommended)
 npx tsx src/start_session.ts autonomous_sessions/inputs/world_initial.json autonomous_sessions/inputs/session_config.json
 
-# カスタムディレクトリを使用する場合
+# When using custom directory
 AUTONOMOUS_SESSIONS_DIR=./custom_sessions npx tsx src/start_session.ts custom_sessions/inputs/world_initial.json custom_sessions/inputs/session_config.json
 ```
 
-**start_session.ts の処理内容**:
+**start_session.ts Processing Content**:
 
-- AI Agent が作成した `world_initial.json` を読み込み
-- セッション管理ディレクトリを作成（`autonomous_sessions/sessions/session_YYYYMMDD_HHMMSS/`）
-- 初期世界状態を `world_initial.json` として保存
-- AI Agent 作業用ディレクトリ（`ai_workspace/`）を初期化
-- 最初のターンの決定要求ファイルを生成
+- Load `world_initial.json` created by AI Agent
+- Create session management directory (`autonomous_sessions/sessions/session_YYYYMMDD_HHMMSS/`)
+- Save initial world state as `world_initial.json`
+- Initialize AI Agent work directory (`ai_workspace/`)
+- Generate decision request files for the first turn
 
-**出力ファイル**: `autonomous_sessions/ai_workspace/results/session_result.json`
+**Output File**: `autonomous_sessions/ai_workspace/results/session_result.json`
 
 ```json
 {
@@ -295,9 +295,9 @@ AUTONOMOUS_SESSIONS_DIR=./custom_sessions npx tsx src/start_session.ts custom_se
 }
 ```
 
-**生成される決定要求ファイル例**:
+**Generated Decision Request File Examples**:
 
-**GM 用**: `ai_workspace/decision_requests/request_GM_143023.json`
+**For GM**: `ai_workspace/decision_requests/request_GM_143023.json`
 
 ```json
 {
@@ -314,11 +314,11 @@ AUTONOMOUS_SESSIONS_DIR=./custom_sessions npx tsx src/start_session.ts custom_se
     "availableActions": ["price_update", "environmental_change", "market_event"],
     "recentHistory": []
   },
-  "instructions": "[GM決定用指示: worldStateFileを読み込んで完全な世界状態を取得してください]"
+  "instructions": "[GM decision instructions: Please read worldStateFile to obtain complete world state]"
 }
 ```
 
-**パーティー用**: `ai_workspace/decision_requests/request_party1_143024.json`
+**For Party**: `ai_workspace/decision_requests/request_party1_143024.json`
 
 ```json
 {
@@ -333,8 +333,8 @@ AUTONOMOUS_SESSIONS_DIR=./custom_sessions npx tsx src/start_session.ts custom_se
   "contextData": {
     "partyState": {
       "id": "party1_explorer",
-      "name": "[AI Agentが決定したパーティー名]",
-      "location": "[現在位置]",
+      "name": "[Party name determined by AI Agent]",
+      "location": "[Current location]",
       "resources": { "currency": 120, "materials": {...} },
       "capabilities": { "exploration": 8, "trade": 4, "combat": 6 },
       "morale": 7
@@ -347,63 +347,63 @@ AUTONOMOUS_SESSIONS_DIR=./custom_sessions npx tsx src/start_session.ts custom_se
     "availableActions": ["move", "explore", "trade", "cooperate", "market_trade"],
     "recentHistory": []
   },
-  "instructions": "[Player決定用指示: worldStateFileを読み込んで完全な世界状態を取得してください]"
+  "instructions": "[Player decision instructions: Please read worldStateFile to obtain complete world state]"
 }
 ```
 
-### Phase 2: AI Agent 決定処理
+### Phase 2: AI Agent Decision Processing
 
-#### Step 1: 決定要求の読み込み
+#### Step 1: Reading Decision Requests
 
-**ツール実行**: ファイル読み込み
+**Tool Execution**: File reading
 
-- `Read` ツールで `./autonomous_sessions/ai_workspace/decision_requests/` 内の全`.json`ファイルを読み込み
-- 各ファイルから JSON 解析して `request` オブジェクト取得
+- Read all `.json` files in `./autonomous_sessions/ai_workspace/decision_requests/` with `Read` tool
+- Parse JSON from each file to obtain `request` object
 
-**データ解析**: 要求内容の確認
+**Data Analysis**: Confirm request content
 
-- `request.requestId`: 要求 ID
-- `request.framework.role`: 'GM' または 'Player'
+- `request.requestId`: Request ID
+- `request.framework.role`: 'GM' or 'Player'
 
-#### Step 2: 世界状態取得と判断
+#### Step 2: World State Acquisition and Decision Making
 
-**ツール実行**: 世界状態読み込み
+**Tool Execution**: World state reading
 
-- `Read` ツールで `request.worldStateFile` から完全な世界状態を読み込み
+- Read complete world state from `request.worldStateFile` with `Read` tool
 
-**AI Agent 判断処理**: 既読フレームワークによる意思決定
+**AI Agent Decision Processing**: Decision making based on previously read frameworks
 
-**重要原則**:
+**Important Principles**:
 
-- フレームワークの評価軸を数値的に適用（0-10 点スケール）
-- キャラクター個性と専門性を行動決定に反映
-- 簡潔で具体的な selectedReasoning を記録
+- Apply framework evaluation axes numerically (0-10 point scale)
+- Reflect character personality and specialization in action decisions
+- Record concise and specific selectedReasoning
 
-1. **世界状態分析**: 読み込んだ世界状態と `request.contextData` から現状把握
-2. **フレームワーク適用**: `request.framework.role` に基づいて適切なフレームワーク（GM_CORE_MIND.md または PLAYER_MIND.md）の評価基準を適用
-   - **GM 役**: 挑戦度軸、物語軸、バランス軸で環境や NPC の行動を評価
-   - **Player 役**: キャラクター個性、専門性、リスク評価で行動を選択
-3. **選択肢生成**: `request.contextData.availableActions` から可能なアクション選択肢を作成・評価
-4. **スコア計算**: フレームワークの評価軸に従って各選択肢にスコア付け（0-10 点）
-5. **最適行動選択**: 最高スコアの選択肢を決定し、評価詳細を記録
+1. **World State Analysis**: Understand current situation from read world state and `request.contextData`
+2. **Framework Application**: Apply evaluation criteria of appropriate framework (GM_CORE_MIND.md or PLAYER_MIND.md) based on `request.framework.role`
+   - **GM Role**: Evaluate environment and NPC actions using challenge level axis, narrative axis, and balance axis
+   - **Player Role**: Select actions based on character personality, specialization, and risk assessment
+3. **Option Generation**: Create and evaluate possible action options from `request.contextData.availableActions`
+4. **Score Calculation**: Score each option according to framework evaluation axes (0-10 points)
+5. **Optimal Action Selection**: Decide on highest scoring option and record evaluation details
 
-#### Step 3: アクション提案作成
+#### Step 3: Action Proposal Creation
 
-**データ生成**: 決定応答 JSON 構造（world_current.json 変更指示のみ）
+**Data Generation**: Decision response JSON structure (world_current.json change instructions only)
 
 ```json
 {
   "requestId": "[request.requestId]",
-  "timestamp": "[現在時刻のISO文字列]",
+  "timestamp": "[Current time ISO string]",
   "status": "completed",
   "proposal": {
-    "type": "[選択したアクションタイプ]",
+    "type": "[Selected action type]",
     "participants": ["[actor_id_or_GM]"],
     "effects": [
       {
         "target": "/path/to/state",
         "operation": "set|add",
-        "value": "[変更値]"
+        "value": "[Change value]"
       }
     ]
   },
@@ -411,13 +411,13 @@ AUTONOMOUS_SESSIONS_DIR=./custom_sessions npx tsx src/start_session.ts custom_se
     "frameworkEvaluation": {
       "challengeBalance": 8,
       "narrativeTension": 7,
-      "selectedReasoning": "高い協力レベルに対し新たな高価値資源で探索競争のバランスを創出"
+      "selectedReasoning": "Create balance of exploration competition with new high-value resources against high cooperation level"
     }
   }
 }
 ```
 
-**Player 用決定応答例**:
+**Player Decision Response Example**:
 
 ```json
 {
@@ -440,24 +440,24 @@ AUTONOMOUS_SESSIONS_DIR=./custom_sessions npx tsx src/start_session.ts custom_se
       "explorationSpecialty": 9,
       "riskAssessment": 7,
       "resourceValue": 8,
-      "selectedReasoning": "探索特化パーティーとして高品質結晶発見の好機を活用"
+      "selectedReasoning": "Leverage opportunity to discover high-quality crystals as exploration-specialized party"
     }
   }
 }
 ```
 
-**ツール実行**: 応答ファイル保存
+**Tool Execution**: Response file saving
 
-- `Write` ツールで `./autonomous_sessions/ai_workspace/decision_responses/${request.requestId}.json` に上記 JSON を保存
+- Save above JSON to `./autonomous_sessions/ai_workspace/decision_responses/${request.requestId}.json` with `Write` tool
 
-### Phase 3: 実行結果確認
+### Phase 3: Execution Result Confirmation
 
-**ツール実行**: AI 応答処理
+**Tool Execution**: AI response processing
 
 - `npx tsx src/process_ai_responses.ts [sessionId]`
-- 出力ファイル: `autonomous_sessions/ai_workspace/results/process_result.json`
+- Output file: `autonomous_sessions/ai_workspace/results/process_result.json`
 
-**エラーがある場合**:
+**When there are errors**:
 
 ```json
 {
@@ -475,7 +475,7 @@ AUTONOMOUS_SESSIONS_DIR=./custom_sessions npx tsx src/start_session.ts custom_se
 }
 ```
 
-**全て成功した場合**:
+**When all successful**:
 
 ```json
 {
@@ -487,7 +487,7 @@ AUTONOMOUS_SESSIONS_DIR=./custom_sessions npx tsx src/start_session.ts custom_se
 }
 ```
 
-**セッション完了の場合**:
+**When session completed**:
 
 ```json
 {
@@ -499,182 +499,182 @@ AUTONOMOUS_SESSIONS_DIR=./custom_sessions npx tsx src/start_session.ts custom_se
 }
 ```
 
-**process_ai_responses.ts の処理内容**:
+**process_ai_responses.ts Processing Content**:
 
-- AI Agent が作成した決定応答ファイルを読み込み・JSON スキーマ検証実行
-- 各アクションをゲームエンジンで実行・結果記録
-- **完全なプレイログエントリ生成**:
-  - AI Agent の思考プロセス復元（frameworkEvaluation: 評価軸とスコア）
-  - 詳細ナラティブ生成
-  - step 番号自動採番、actor 記録
-- 世界状態を更新（`world_current.json`に保存）
-- **処理済みファイルの段階的クリーンアップ**:
-  - **成功時**: 成功した決定要求・応答ファイルペアのみ即座削除
-  - **失敗時**: 失敗したファイルペアは保持（`errors`配列に詳細記録）
-  - **リトライ完了時**: リトライ制限超過でスキップされたファイルも削除
-  - **競合状態防止**: ファイル操作時はファイルロック確認後に実行
+- Read decision response files created by AI Agent and perform JSON schema validation
+- Execute each action in the game engine and record results
+- **Complete playlog entry generation**:
+  - Restore AI Agent thought process (frameworkEvaluation: evaluation axes and scores)
+  - Generate detailed narrative
+  - Automatic step numbering, actor recording
+- Update world state (save to `world_current.json`)
+- **Gradual cleanup of processed files**:
+  - **On success**: Immediately delete only successful decision request/response file pairs
+  - **On failure**: Keep failed file pairs (detailed recording in `errors` array)
+  - **On retry completion**: Delete files that were skipped due to exceeded retry limits
+  - **Race condition prevention**: Execute file operations after confirming file locks
 
-**AI Agent のエラー対応**:
+**AI Agent Error Handling**:
 
-- `autonomous_sessions/ai_workspace/results/process_result.json`の`errors`配列を確認
-- 失敗した決定要求について:
-  1. **エラー内容を分析**:
-     - `currency 不足`: リソース計算ミス → 正確な残量で再計算
-     - `invalid action`: 無効なアクションタイプ → 利用可能アクションから選択
-     - `Schema validation failed`: **target path レベル不足** → "parties/party_id" 形式に修正
-     - `Schema validation failed`: **無効な operation** → "set" または "add" のみ使用
-  2. **修正された決定応答ファイルを再作成** （失敗した requestId のみ）
-  3. `npx tsx src/process_ai_responses.ts [sessionId]`を再実行
+- Check `errors` array in `autonomous_sessions/ai_workspace/results/process_result.json`
+- For failed decision requests:
+  1. **Analyze error content**:
+     - `currency insufficient`: Resource calculation error → Recalculate with accurate remaining amount
+     - `invalid action`: Invalid action type → Select from available actions
+     - `Schema validation failed`: **Insufficient target path level** → Fix to "parties/party_id" format
+     - `Schema validation failed`: **Invalid operation** → Use only "set" or "add"
+  2. **Recreate corrected decision response file** (only for failed requestId)
+  3. Re-execute `npx tsx src/process_ai_responses.ts [sessionId]`
 
-**エラー処理制限**:
+**Error Processing Limits**:
 
-- **最大リトライ回数**: 同一決定要求につき最大 3 回まで再試行
-- **リトライ超過時**: 該当決定をスキップし、他の決定を継続処理
-- **デッドロック防止**: 全決定が 3 回連続失敗した場合、セッションを強制終了
-- **エラーログ記録**: 失敗した決定とエラー理由を`error_log.json`に永続化
+- **Maximum retry count**: Up to 3 retries per same decision request
+- **When retry exceeded**: Skip relevant decision and continue processing other decisions
+- **Deadlock prevention**: Force terminate session if all decisions fail 3 consecutive times
+- **Error log recording**: Persist failed decisions and error reasons to `error_log.json`
 
-**継続処理**: AI Agent 主導ループ
+**Continuation Processing**: AI Agent-driven loop
 
-**nextStatus の 5 つの状態**:
+**5 states of nextStatus**:
 
-- `'error'`: 処理失敗、AI Agent が失敗した決定を修正・再処理（リトライ制限内）
-- `'error_abort'`: エラー処理制限超過、セッション強制終了
-- `'partial_success'`: 一部の決定が成功、失敗した決定の修正が必要
-- `'turn_completed'`: ターン完了、AI Agent が次ターンの決定要求生成
-- `'completed'`: セッション完了、AI Agent が Phase 4（ナラティブ生成）へ進行
+- `'error'`: Processing failed, AI Agent fixes and reprocesses failed decisions (within retry limits)
+- `'error_abort'`: Error processing limit exceeded, force terminate session
+- `'partial_success'`: Some decisions succeeded, need to fix failed decisions
+- `'turn_completed'`: Turn completed, AI Agent generates next turn decision requests
+- `'completed'`: Session completed, AI Agent proceeds to Phase 4 (Narrative Generation)
 
-**AI Agent 継続条件**:
+**AI Agent Continuation Conditions**:
 
-- `nextStatus: "error"`: 失敗した決定要求を修正して再実行（リトライカウンタ確認）
-- `nextStatus: "error_abort"`: エラーログ出力後、セッション強制終了
-- `nextStatus: "partial_success"`: **成功した決定のプレイログ作成・追記** → **失敗した決定の修正・再実行** → 全成功後に次ターン生成
-- `nextStatus: "turn_completed"`: **プレイログ作成・追記** → **次ターン決定要求生成**
-- `nextStatus: "completed"`: **最終プレイログ作成・追記** → Phase 5（ナラティブリプレイ生成）へ進行
+- `nextStatus: "error"`: Fix failed decision requests and re-execute (check retry counter)
+- `nextStatus: "error_abort"`: Output error log and force terminate session
+- `nextStatus: "partial_success"`: **Create and append playlog for successful decisions** → **Fix and re-execute failed decisions** → Generate next turn after all success
+- `nextStatus: "turn_completed"`: **Create and append playlog** → **Generate next turn decision requests**
+- `nextStatus: "completed"`: **Create and append final playlog** → Proceed to Phase 5 (Narrative Replay Generation)
 
-### Phase 4: プレイログ作成・追記
+### Phase 4: Playlog Creation and Appending
 
-**ターン完了時（`nextStatus: "turn_completed"`）の処理**:
+**Processing when turn completed (`nextStatus: "turn_completed"`):**
 
-1. **ターンプレイログ作成**: AI Agent がそのターンのナラティブを生成
+1. **Turn Playlog Creation**: AI Agent generates narrative for that turn
 
-**AI Agent 実行手順**:
+**AI Agent Execution Procedure**:
 
-a) **処理済み決定応答ファイルからの情報収集**:
+a) **Information collection from processed decision response files**:
 
-- `Read`ツールで`ai_workspace/decision_responses/`内の全`.json`ファイルを読み込み
-- 各ファイルから以下の情報を抽出:
-  - `meta.llmDecision.character_voices`: キャラクター台詞
-  - `meta.llmDecision.selectedAction.reasoning`: 行動理由・動機
-  - `proposal.type`と`proposal.effects`: 実行されたアクション詳細
-  - `meta.llmDecision.optionsConsidered`: 検討された選択肢
-- 時系列順（timestamp または requestId 順）に行動を整理
+- Read all `.json` files in `ai_workspace/decision_responses/` with `Read` tool
+- Extract following information from each file:
+  - `meta.llmDecision.character_voices`: Character dialogue
+  - `meta.llmDecision.selectedAction.reasoning`: Action reasons and motivations
+  - `proposal.type` and `proposal.effects`: Executed action details
+  - `meta.llmDecision.optionsConsidered`: Considered options
+- Organize actions in chronological order (timestamp or requestId order)
 
-b) **世界状態変化の分析**:
+b) **Analysis of world state changes**:
 
-- `Read`ツールで`sessions/[sessionId]/world_current.json`から最新世界状態を取得
-- 前ターンからの変化を特定:
-  - パーティー状態変化（リソース、士気、位置等）
-  - 市場価格変動
-  - 地域状況変化
-  - 世界イベント発生・更新
+- Get latest world state from `sessions/[sessionId]/world_current.json` with `Read` tool
+- Identify changes from previous turn:
+  - Party state changes (resources, morale, position, etc.)
+  - Market price fluctuations
+  - Regional situation changes
+  - World event occurrence/updates
 
-c) **フォーカスパーティーの選択**:
+c) **Focus party selection**:
 
-- そのターンで最も重要/興味深い行動を行ったパーティーを選択
-- 優先順位: 新規探索 > 初回交流 > 重要な取引 > クラフト > 移動
-- 選択されたパーティー視点で物語を構築
+- Select the party that performed the most important/interesting action in that turn
+- Priority order: New exploration > First interaction > Important trade > Craft > Movement
+- Construct story from selected party's perspective
 
-d) **ナラティブ構造の生成**:
+d) **Narrative structure generation**:
 
-- フォーカスパーティーの内部視点を中心に構成
-- 他パーティーの行動は環境情報・背景として組み込み
-- キャラクター台詞を適切に配置
-- 行動の動機と結果を因果関係で結合
+- Construct centered on focus party's internal perspective
+- Incorporate other parties' actions as environmental information and background
+- Appropriately place character dialogue
+- Connect action motivations and results with causal relationships
 
-**ツール実行**: ターンプレイログファイル作成
+**Tool Execution**: Turn playlog file creation
 
-- `Write`ツールで`ai_workspace/turn_playlog.json`に以下の構造で保存:
+- Save to `ai_workspace/turn_playlog.json` with following structure using `Write` tool:
 
 ```json
 {
   "narrative": {
-    "basicDescription": "火の鍛冶ギルドが市場で鉱石15単位を通貨50で購入",
+    "basicDescription": "Fire Forge Guild purchases 15 units of ore for 50 currency at market",
     "internalPerspective": {
-      "situationObservation": "市場で鉱石価格が上昇傾向、在庫確保の好機を発見",
-      "internalDeliberation": "ファイターは即決を提案、ウィザードは価格分析と将来予測を重視して賛成",
-      "actionMotivation": "鍛冶ギルドの中核能力である金属加工のため高品質鉱石が必要",
-      "expectedOutcome": "次期鍛冶作業で高品質装備を製作し、競争優位性を確保"
+      "situationObservation": "Discovered ore price upward trend in market, good opportunity to secure inventory",
+      "internalDeliberation": "Fighter proposed immediate decision, Wizard agreed emphasizing price analysis and future forecasting",
+      "actionMotivation": "High-quality ore needed for metalworking, the core capability of the forge guild",
+      "expectedOutcome": "Produce high-quality equipment in next forging work to secure competitive advantage"
     },
     "externalInteraction": {
-      "approachStrategy": "信頼できる品質重視の鍛冶ギルドとしての評判を活用",
+      "approachStrategy": "Leverage reputation as reliable quality-focused forge guild",
       "communicationSummary": [
-        "市場価格の動向を確認",
-        "品質保証された鉱石を要求",
-        "迅速決済で良好な関係維持"
+        "Confirmed market price trends",
+        "Requested quality-guaranteed ore",
+        "Maintained good relationship with swift payment"
       ],
-      "perceivedResponse": "市場参加者は鍛冶ギルドの専門性を認識し、品質重視の取引に応じる意向",
-      "relationshipAssessment": "市場との継続的信頼関係が維持され、今後の優先取引が期待できる状況"
+      "perceivedResponse": "Market participants recognize forge guild's expertise and show willingness to engage in quality-focused transactions",
+      "relationshipAssessment": "Continuous trust relationship with market maintained, expectation of priority trading in future"
     },
     "outcomeReaction": {
-      "immediateEmotionalResponse": "良質な鉱石確保への満足感と次の作業への期待",
-      "strategicImplication": "鍛冶能力の活用機会増加、他パーティへの装備供給可能性",
-      "futureDirectionAdjustment": "鉱石の定期調達と鍛冶製品の販売戦略検討",
-      "teamMoraleImpact": "専門性を活かした成功により、ギルドメンバーの自信と結束が向上"
+      "immediateEmotionalResponse": "Satisfaction with securing quality ore and anticipation for next work",
+      "strategicImplication": "Increased opportunities to utilize forging capabilities, possibility of equipment supply to other parties",
+      "futureDirectionAdjustment": "Consider regular ore procurement and sales strategy for forged products",
+      "teamMoraleImpact": "Success utilizing expertise improved guild members' confidence and unity"
     },
     "environmentalContext": {
-      "settingDescription": "活気ある市場広場、各種資源が取引される商業の中心地",
-      "otherPartiesObservation": "他の探索パーティーも資源調達活動を活発化させている兆候",
-      "worldStateAwareness": "全体的な探索・開発活動の増加により資源需要が高まっている状況"
+      "settingDescription": "Lively market square, commercial center where various resources are traded",
+      "otherPartiesObservation": "Signs that other exploration parties are also intensifying resource procurement activities",
+      "worldStateAwareness": "Resource demand is increasing due to overall increase in exploration and development activities"
     }
   }
 }
 ```
 
-**重要注意**: 決定応答ファイルのクリーンアップタイミング
+**Important Note**: Decision response file cleanup timing
 
-- `process_ai_responses.ts`実行後、決定応答ファイルは自動削除される
-- **必須**: `process_ai_responses.ts`実行直後に上記手順 a)を実行してナラティブ情報を保存
-- 削除後は`meta.llmDecision.character_voices`等の詳細情報が失われる
+- After `process_ai_responses.ts` execution, decision response files are automatically deleted
+- **Required**: Execute above procedure a) immediately after `process_ai_responses.ts` execution to save narrative information
+- After deletion, detailed information like `meta.llmDecision.character_voices` is lost
 
-2. **ツール実行**: プレイログ追記
+2. **Tool Execution**: Playlog appending
 
 - `npx tsx src/append_playlog.ts [sessionId] turn_playlog.json`
 
-**append_playlog.ts の処理内容**:
+**append_playlog.ts Processing Content**:
 
-- AI Agent が作成した`turn_playlog.json`（ナラティブのみ）を読み込み
-- 対応する決定応答ファイルから`meta.frameworkEvaluation`情報を復元
-- 現在の世界状態（`world_current.json`）を読み込み
-- **段階的世界状態差分計算**:
-  - **初回実行時**: `world_initial.json`と`world_current.json`を比較
-  - **2 回目以降**: `world_prev.json`と`world_current.json`を比較
-  - **差分計算後**: `world_current.json`を`world_prev.json`として保存（次回比較用）
-- **完全なプレイログエントリ自動生成**:
-  - `step`番号自動計算（既存 playlog.jsonl の最終 step + 1）
-  - `type`, `participants`, `actor`を決定応答から復元
-  - `effects`情報を決定応答から取得
-  - `meta.frameworkEvaluation`を決定応答から復元（簡潔な評価情報記録）
-  - `narrative`を AI Agent 作成データから取得
-  - `worldStateDiff`自動生成（段階的比較による正確な変更差分）
-  - `worldStateSnapshot`参照追加（`world_current.json`への相対パス）
-- 完全なプレイログエントリを`playlog.jsonl`に追記
+- Read `turn_playlog.json` (narrative only) created by AI Agent
+- Restore `meta.frameworkEvaluation` information from corresponding decision response files
+- Read current world state (`world_current.json`)
+- **Gradual world state diff calculation**:
+  - **First execution**: Compare `world_initial.json` and `world_current.json`
+  - **Second and later**: Compare `world_prev.json` and `world_current.json`
+  - **After diff calculation**: Save `world_current.json` as `world_prev.json` (for next comparison)
+- **Complete playlog entry automatic generation**:
+  - Automatic `step` number calculation (last step of existing playlog.jsonl + 1)
+  - Restore `type`, `participants`, `actor` from decision responses
+  - Get `effects` information from decision responses
+  - Restore `meta.frameworkEvaluation` from decision responses (record concise evaluation information)
+  - Get `narrative` from AI Agent created data
+  - Automatic `worldStateDiff` generation (accurate change diff through gradual comparison)
+  - Add `worldStateSnapshot` reference (relative path to `world_current.json`)
+- Append complete playlog entry to `playlog.jsonl`
 
-3. **ツール実行**: 次ターン決定要求生成
+3. **Tool Execution**: Next turn decision request generation
 
 - `npx tsx src/generate_next_turn.ts [sessionId] ([targetTurn])`
-  - `targetTurn` を省略すると `world_current.json` の現在ターン値に 1 を加算したターンが自動設定される
-  - 巻き戻しや特定ターンの再生成が必要な場合のみ明示的に `targetTurn` を指定
+  - If `targetTurn` is omitted, the turn will be automatically set to the current turn value in `world_current.json` + 1
+  - Explicitly specify `targetTurn` only when rollback or regeneration of specific turns is needed
 
-**generate_next_turn.ts の処理内容**:
+**generate_next_turn.ts Processing Content**:
 
-- 現在の世界状態（`world_current.json`）を読み込み
-- 次ターン用の決定要求ファイルを生成：
-  - GM 用: `ai_workspace/decision_requests/request_GM_[timestamp].json`
-  - 各パーティー用: `ai_workspace/decision_requests/request_[partyId]_[timestamp].json`
-- 各決定要求ファイルに最新の世界状態情報を反映
-- contextData を現在の状況に合わせて更新
+- Read current world state (`world_current.json`)
+- Generate decision request files for next turn:
+  - For GM: `ai_workspace/decision_requests/request_GM_[timestamp].json`
+  - For each party: `ai_workspace/decision_requests/request_[partyId]_[timestamp].json`
+- Reflect latest world state information in each decision request file
+- Update contextData to match current situation
 
-**出力ファイル**: `autonomous_sessions/ai_workspace/results/next_turn_result.json`
+**Output File**: `autonomous_sessions/ai_workspace/results/next_turn_result.json`
 
 ```json
 {
@@ -688,206 +688,214 @@ d) **ナラティブ構造の生成**:
 }
 ```
 
-4. **次ターンループ開始**: AI Agent は生成された決定要求ファイルから Phase 2 を再開
+4. **Next Turn Loop Start**: AI Agent resumes Phase 2 from generated decision request files
 
-**セッション完了時（`nextStatus: "completed"`）の処理**:
+**Processing when session completes (`nextStatus: "completed"`):**
 
-1. **最終ターンプレイログ作成**: 上記と同様の形式で最終ターンのナラティブ生成
-2. **ツール実行**: 最終プレイログ追記
+1. **Final Turn Playlog Creation**: Generate final turn narrative in same format as above
+2. **Tool Execution**: Final playlog appending
 
 - `npx tsx src/append_playlog.ts [sessionId] final_turn_playlog.json`
-- append_playlog.ts は上記と同様の差分計算・追記処理を実行
+- append_playlog.ts executes same diff calculation and appending process as above
 
-## 🔧 実装変更推奨事項
+## 🔧 Implementation Change Recommendations
 
-**結果ファイルの配置場所変更**:
+**Result File Placement Location Change**:
 
-現在のツール実装では、結果ファイル（`session_result.json`, `process_result.json`, `next_turn_result.json`）がプロジェクトルートに出力されています。これを `autonomous_sessions/ai_workspace/results/` 配下に変更することを推奨します。
+In the current tool implementation, result files (`session_result.json`, `process_result.json`, `next_turn_result.json`) are output to the project root. We recommend changing this to under `autonomous_sessions/ai_workspace/results/`.
 
-**変更対象ファイル**:
+**Target Files for Change**:
 
 - `src/start_session.ts`: `./session_result.json` → `${AUTONOMOUS_SESSIONS_DIR}/ai_workspace/results/session_result.json`
 - `src/process_ai_responses.ts`: `./process_result.json` → `${AUTONOMOUS_SESSIONS_DIR}/ai_workspace/results/process_result.json`
 - `src/generate_next_turn.ts`: `./next_turn_result.json` → `${AUTONOMOUS_SESSIONS_DIR}/ai_workspace/results/next_turn_result.json`
 
-**利点**:
+**Benefits**:
 
-- 作業ファイルの統一的管理
-- プロジェクトルートの汚染防止
-- セッション完了時の一括クリーンアップ対象化
+- Unified management of work files
+- Prevention of project root pollution
+- Target for batch cleanup when session completes
 
-### Phase 5: ナラティブリプレイ生成
+### Phase 5: Narrative Replay Generation
 
-**ツール実行**: セッション完了処理
+**Tool Execution**: Session completion processing
 
 - `npx tsx src/finalize_session.ts [sessionId]`
 
-**finalize_session.ts の処理内容**:
+**finalize_session.ts Processing Content**:
 
-- 最終世界状態を`world_final.json`として保存
-- **作業ファイルの最終クリーンアップ**:
-  - `ai_workspace/decision_requests/`内の全ファイル削除（セッション完了時のみ）
-  - `ai_workspace/decision_responses/`内の全ファイル削除（セッション完了時のみ）
-  - `ai_workspace/world_snapshots/`内の古いファイル削除（ターン進行時は最新 5 ターン分保持）
-  - **注意**: 中間ターンでは作業ファイルを完全クリーンアップしない
-- セッションメタデータの更新
+- Save final world state as `world_final.json`
+- **Final cleanup of work files**:
+  - Delete all files in `ai_workspace/decision_requests/` (only when session completes)
+  - Delete all files in `ai_workspace/decision_responses/` (only when session completes)
+  - Delete old files in `ai_workspace/world_snapshots/` (keep latest 5 turns when turn progresses)
+  - **Note**: Do not completely cleanup work files during intermediate turns
+- Update session metadata
 
-**AI Agent 作業**: ナラティブリプレイ生成
+**AI Agent Work**: Narrative replay generation
 
-1. **プレイログ読み込み**: `Read` ツールで `playlog.jsonl` を読み込み
-2. **世界状態読み込み**: `Read` ツールで `world_initial.json` からパーティー情報とキャラクタープロファイルを取得
-3. **目標進化分析**: プレイログから各パーティーの目標変化と転換点を特定
-4. **AI Agent 作業**: 全プレイログから魅力的なリプレイ形式のナラティブを作成
-   - **冒頭部: パーティー紹介セクション**:
-     - 各パーティーの基本情報（名前、専門分野、拠点）
-     - **🎯 初期目標**: 各パーティーの当初の目的・目標を明記
-     - メンバー構成と役割分担（`world_initial.json`の`partyMembers`から取得）
-     - 各メンバーの個性と専門性（`personality`, `speechStyle`, `specialization`）
-     - パーティーの活動方針と目標設定
-   - **本編部: セッション再現**:
-     - 時系列順のセッション再現（1 ターンずつ個別記述、複数ターンまとめ禁止）
-     - **重要ターンでの転換点マーキング**: 【🔄 目標転換点】【⚔️ 真の敵の露見】等
-     - **転換の契機**: 何が目標変化を引き起こしたかを明記
-     - **🎯 新たな目標**: 変更後の目標を具体的に記述
-     - **🔥 敵対の根拠**: 新たな敵との敵対理由を分析・明記
-     - キャラクター視点での心情描写・台詞再現
-     - 環境・雰囲気の詳細描写
-     - 重要な決断・転機・戦闘の詳細再現
-     - パーティー間の相互作用と協力関係の描写
-   - **エピローグ部: 目標達成過程の総括**:
-     - **📈 目標の進化**: 段階的な目標変化を時系列で整理
-     - **🌟 勢力の役割変化**: 各パーティーの役割変化を追跡
-     - 最終的な目標達成と物語の結末
-5. **リプレイファイル作成**: `Write` ツールで `narrative_replay.md` を作成
+1. **Playlog Reading**: Read `playlog.jsonl` with `Read` tool
+2. **World State Reading**: Get party information and character profiles from `world_initial.json` with `Read` tool
+3. **Goal Evolution Analysis**: Identify goal changes and turning points for each party from playlog
+4. **AI Agent Work**: Create attractive replay-format narrative from all playlogs
+   - **Opening Section: Party Introduction Section**:
+     - Basic information for each party (name, specialization, base)
+     - **🎯 Initial Goals**: Clearly state each party's original purpose and objectives
+     - Member composition and role distribution (obtained from `partyMembers` in `world_initial.json`)
+     - Each member's personality and specialization (`personality`, `speechStyle`, `specialization`)
+     - Party activity policy and goal setting
+   - **Main Section: Session Recreation**:
+     - Chronological session recreation (describe each turn individually, prohibition of combining multiple turns)
+     - **Turning point marking at important turns**: 【🔄 Goal Turning Point】【⚔️ True Enemy Revelation】 etc.
+     - **Catalyst for Change**: Clearly state what caused the goal transformation
+     - **🎯 New Goals**: Specifically describe post-change objectives
+     - **🔥 Basis for Hostility**: Analyze and document reasons for hostility with new enemies
+     - **💡 Term Explanation Boxes**: Add explanations for important terms that appear for the first time in each turn
+       - Target world-specific terms, tactical/strategic terms, organization/faction names, special abilities/magic terms, etc.
+       - To assist reader understanding, concisely explain the meaning, function, and role of terms in context
+       - Use markdown blockquote syntax (`> **💡 Term Explanation**: **Term Name** - Explanation content`) for visual distinction
+     - Character perspective emotional descriptions and dialogue recreation
+     - Detailed environmental and atmospheric descriptions
+     - Detailed recreation of important decisions, turning points, and combat
+     - Description of inter-party interactions and cooperative relationships
+   - **Epilogue Section: Summary of Goal Achievement Process**:
+     - **📈 Goal Evolution**: Organize phased goal changes chronologically
+     - **🌟 Faction Role Changes**: Track role changes of each party
+     - Final goal achievement and story conclusion
+5. **Replay File Creation**: Create `narrative_replay.md` with `Write` tool
 
-**推奨リプレイ構成**:
+**Recommended Replay Structure**:
 
 ```markdown
-# [セッション名] - ナラティブリプレイ
+# [Session Name] - Narrative Replay
 
-## 冒険者たちの紹介
+## Adventurer Introductions
 
-### [パーティー名 1]
+### [Party Name 1]
 
-**拠点**: [location] | **専門分野**: [specialization]
+**Base**: [location] | **Specialization**: [specialization]
 
-- **[メンバー名]** ([role]): [personality]な性格で、[specialization]を担当
-  - 口調: [speechStyle]
-- **[メンバー名]** ([role]): [個性説明]
+- **[Member Name]** ([role]): [personality] personality, responsible for [specialization]
+  - Speech Style: [speechStyle]
+- **[Member Name]** ([role]): [personality description]
 
-**🎯 初期目標**: [パーティーの当初の目的・目標]
-**活動方針**: [characterProfile.decisionMaking]に基づく[characterProfile.leadershipStyle]
+**🎯 Initial Goals**: [Party's original purpose and objectives]
+**Activity Policy**: [characterProfile.leadershipStyle] based on [characterProfile.decisionMaking]
 
-### [パーティー名 2]
+### [Party Name 2]
 
-[同様の構成...]
+[Similar structure...]
 
-## 冒険の記録
+## Adventure Records
 
-### ターン 1: [主要イベント]
+### Turn 1: [Major Event]
 
-[プレイログ基づく詳細再現...]
+> **💡 Term Explanation**: **[First-time important term]** - [Concise explanation of term's meaning, function, and role in context]
 
-### ターン X: [イベント名] 【🔄 目標転換点】
+[Detailed recreation based on playlog...]
 
-**転換の契機**: [何が目標変化を引き起こしたか]
+### Turn X: [Event Name] 【🔄 Goal Turning Point】
 
-**🎯 新たな目標**: [変更後の目標]
+> **💡 Term Explanation**: **[Important term appearing at turning point]** - [Term explanation]. **[Related important term]** - [Additional explanation]
 
-- [具体的な目標項目 1]
-- [具体的な目標項目 2]
+**Catalyst for Change**: [What caused the goal transformation]
 
-[続きの描写...]
+**🎯 New Goals**: [Post-change objectives]
 
-### ターン Y: [イベント名] 【⚔️ 真の敵の露見】
+- [Specific goal item 1]
+- [Specific goal item 2]
 
-**[敵の正体判明]**: [敵対勢力の発覚内容]
+[Continued description...]
 
-**🔥 敵対の根拠**:
+### Turn Y: [Event Name] 【⚔️ True Enemy Revelation】
 
-- **[理由 1]**: [具体的な動機]
-- **[理由 2]**: [具体的な動機]
+**[Enemy Identity Revealed]**: [Hostile faction discovery content]
 
-**🎯 最終目標の確定**: [目標 1] → [目標 2] → **[最終目標]**
+**🔥 Basis for Hostility**:
 
-[続きの描写...]
+- **[Reason 1]**: [Specific motivation]
+- **[Reason 2]**: [Specific motivation]
 
-## 🏆 エピローグ
+**🎯 Final Goal Confirmation**: [Goal 1] → [Goal 2] → **[Final Goal]**
 
-### 📈 目標の進化：[段階数]段階の戦い
+[Continued description...]
 
-**第一段階（ターン X-Y）**: **[期間名]** 🔸
+## 🏆 Epilogue
 
-- **目標**: [この段階の目標]
-- **成果**: [達成した成果]
-- **象徴**: [象徴的な台詞や出来事]
+### 📈 Goal Evolution: [Number of stages] Stage Battle
 
-**第二段階（ターン A-B）**: **[期間名]** 🔸
+**First Stage (Turn X-Y)**: **[Period Name]** 🔸
 
-- **転換点**: [転換のきっかけ]
-- **目標**: [この段階の目標]
-- **成果**: [達成した成果]
-- **象徴**: [象徴的な台詞や出来事]
+- **Goal**: [Goal for this stage]
+- **Achievement**: [Accomplished results]
+- **Symbol**: [Symbolic dialogue or events]
 
-### 🌟 [勢力数]勢力の役割変化
+**Second Stage (Turn A-B)**: **[Period Name]** 🔸
 
-**[パーティー名]**: [初期役割] → [中期役割] → [最終役割]
+- **Turning Point**: [Catalyst for transformation]
+- **Goal**: [Goal for this stage]
+- **Achievement**: [Accomplished results]
+- **Symbol**: [Symbolic dialogue or events]
 
-[最終的な物語の結末と意義]
+### 🌟 [Number of factions] Faction Role Changes
+
+**[Party Name]**: [Initial Role] → [Mid-term Role] → [Final Role]
+
+[Final story conclusion and significance]
 ```
 
-### Phase 6: 可読プレイログ生成
+### Phase 6: Readable Playlog Generation
 
-**目的**: プレイログの技術データを可読性の高いマークダウンファイルに変換
+**Purpose**: Convert technical data from playlog into a highly readable markdown file
 
-**AI Agent 作業**: 分析的プレイログ作成
+**AI Agent Work**: Analytical playlog creation
 
-1. **プレイログ解析**: `Read` ツールで `playlog.jsonl` を読み込み、全ターンのデータを分析
-2. **初期状態抽出**: `Read` ツールで `world_initial.json` から各パーティーの初期パラメータを取得
-3. **データ変換処理**: 技術データを視覚的・分析的形式に変換
+1. **Playlog Analysis**: Use `Read` tool to read `playlog.jsonl` and analyze data from all turns
+2. **Initial State Extraction**: Use `Read` tool to get initial parameters for each party from `world_initial.json`
+3. **Data Conversion Processing**: Convert technical data to visual and analytical format
 
-**ツール実行**: 可読性プレイログファイル作成
+**Tool Execution**: Readable playlog file creation
 
-- `Write` ツールで `playlog.md` を作成
+- Create `playlog.md` with `Write` tool
 
-**推奨プレイログ構成**:
+**Recommended Playlog Structure**:
 
 ```markdown
-# [セッション名] - プレイログ分析
+# [Session Name] - Playlog Analysis
 
-## 📊 初期パーティー状態
+## 📊 Initial Party Status
 
-### ⚔️ [パーティー名 1]
+### ⚔️ [Party Name 1]
 
-**拠点**: [location] | **専門**: [specialization]
+**Base**: [location] | **Specialization**: [specialization]
 
-| パラメータ | 初期値     |
-| ---------- | ---------- |
-| 💰 通貨    | [value]    |
-| 🗡️ 戦闘力  | [value]    |
-| 🏃 探索力  | [value]    |
-| 🤝 外交力  | [value]    |
-| 📈 士気    | [value]    |
-| 📍 位置    | [location] |
+| Parameter | Initial Value |
+| --------- | ------------- |
+| 💰 Currency | [value] |
+| 🗡️ Combat Power | [value] |
+| 🏃 Exploration Power | [value] |
+| 🤝 Diplomacy Power | [value] |
+| 📈 Morale | [value] |
+| 📍 Position | [location] |
 
-**リソース**: [materials list]
+**Resources**: [materials list]
 
-## 🌩️ ターン別変化ログ
+## 🌩️ Turn-by-Turn Change Log
 
-### ターン X: [イベント名] [絵文字]
+### Turn X: [Event Name] [Emoji]
 
-**GM アクション**: [action_type]
+**GM Action**: [action_type]
 
-#### 📍 位置変更
+#### 📍 Position Changes
 
-- [party_icon] **[Party]**: [from] → [to] ([移動理由])
+- [party_icon] **[Party]**: [from] → [to] ([movement reason])
 
-#### 🎭 パーティー間イベント
+#### 🎭 Inter-Party Events
 
-- [icon1][icon2] **[Party1] vs [Party2]**: [event_icon] **[イベント種別]** - [詳細説明]
-  - 🏆 結果: [outcome]（該当する場合）
+- [icon1][icon2] **[Party1] vs [Party2]**: [event_icon] **[Event Type]** - [detailed description]
+  - 🏆 Result: [outcome] (when applicable)
 
-#### 📈 士気変化
+#### 📈 Morale Changes
 ```
 
 [Party1]: [from] → [to] ([change]) [arrow] [reason]
@@ -895,196 +903,196 @@ d) **ナラティブ構造の生成**:
 
 ```
 
-#### 🎒 リソース変化
+#### 🎒 Resource Changes
 - [party_icon] **[Party]**: [resource] [from]→[to] ([change]) - [reason]
 
-#### 💰 経済活動（該当ターンのみ）
+#### 💰 Economic Activities (applicable turns only)
 - [party_icon] **[Party]**: [transaction details]
 
-**🎯 重要イベント**: [key_events]
+**🎯 Key Events**: [key_events]
 
-## 📊 最終統計
+## 📊 Final Statistics
 
-### 🏆 勢力ランキング（士気順）
+### 🏆 Faction Rankings (by morale)
 1. [Party with highest morale]
 2. [Party with medium morale]
 3. [Party with lowest morale]
 
-### 📈 士気変動グラフ
+### 📈 Morale Fluctuation Graph
 ```
 
 [ASCII graph showing morale trends]
 
 ```
 
-### 🎯 キーイベント要約
-- **ターン X**: [major_event_summary]
+### 🎯 Key Event Summary
+- **Turn X**: [major_event_summary]
 
-### 🏅 MVPアワード
-- **🛡️ 最優秀防御**: [party] ([reason])
-- **🕊️ 最優秀外交**: [party] ([reason])
-- **🌙 最優秀粘り強さ**: [party] ([reason])
+### 🏅 MVP Awards
+- **🛡️ Best Defense**: [party] ([reason])
+- **🕊️ Best Diplomacy**: [party] ([reason])
+- **🌙 Best Persistence**: [party] ([reason])
 ```
 
-**作成手順**:
+**Creation Procedure**:
 
-1. **初期状態セクション**:
+1. **Initial State Section**:
 
-   - `world_initial.json` から各パーティーの能力値・リソースを表形式で整理
-   - 絵文字を活用して視覚的に分かりやすく表示
+   - Organize each party's ability values and resources from `world_initial.json` in table format
+   - Use emojis for visual clarity and easy understanding
 
-2. **ターン別詳細セクション**:
+2. **Turn-by-Turn Detail Section**:
 
-   - `playlog.jsonl` の各 step を順次処理
-   - 位置変更、パーティー間イベント、士気・リソース変化を構造化
-   - 戦闘・外交・経済・諜報等のイベント種別を絵文字で分類
-   - 1 ターンずつ個別記述、複数ターンまとめ禁止
+   - Process each step in `playlog.jsonl` sequentially
+   - Structure position changes, inter-party events, and morale/resource changes
+   - Classify event types (combat, diplomacy, economy, espionage, etc.) with emojis
+   - Describe each turn individually, prohibition of combining multiple turns
 
-3. **パーティー間イベントの分析**:
+3. **Inter-Party Event Analysis**:
 
-   - `worldStateDiff` から各パーティーの関係性変化を抽出
-   - 戦闘結果、協力関係、経済取引等を具体的に記述
-   - 結果と影響を明確に表記
+   - Extract relationship changes for each party from `worldStateDiff`
+   - Describe combat results, cooperative relationships, economic transactions, etc. concretely
+   - Clearly indicate results and impacts
 
-4. **統計・分析セクション**:
-   - 士気変動を ASCII グラフで視覚化
-   - 勢力ランキングと最終評価
-   - キーイベント抽出と MVP 選定
+4. **Statistics and Analysis Section**:
+   - Visualize morale fluctuations with ASCII graphs
+   - Faction rankings and final evaluation
+   - Key event extraction and MVP selection
 
-**重要ポイント**:
+**Important Points**:
 
-- **絵文字活用**: 各勢力・アクション・リソースを色分け表示で識別しやすく
-- **表形式**: 数値データは表やグラフで視覚的に整理
-- **時系列追跡**: 各ターンの因果関係と戦略的変化を明確化
-- **技術 → 物語変換**: JSON データを読みやすいストーリー形式に変換
+- **Emoji Utilization**: Make each faction, action, and resource easily identifiable with color-coded displays
+- **Table Format**: Organize numerical data visually with tables and graphs
+- **Chronological Tracking**: Clarify causal relationships and strategic changes in each turn
+- **Technical → Narrative Conversion**: Transform JSON data into readable story format
 
-**AI Agent 注意事項**:
+**AI Agent Notes**:
 
-- プレイログとナラティブリプレイは対応関係を保つ
-- 数値変化の理由と戦略的意図を分析・記録
-- パーティー間の力関係変化を客観的に評価
-- 各ターンの重要度と影響度を段階的に表示
+- Maintain correspondence between playlog and narrative replay
+- Analyze and record reasons for numerical changes and strategic intentions
+- Objectively evaluate changes in power relationships between parties
+- Display the importance and impact level of each turn in stages
 
-### Phase 7: 世界マップ生成
+### Phase 7: World Map Generation
 
-**目的**: セッションの世界状態データから包括的な世界マップドキュメントを作成
+**Purpose**: Create a comprehensive world map document from session world state data
 
-**AI Agent 作業**: 地政学的マップ作成
+**AI Agent Work**: Geopolitical map creation
 
-1. **世界状態解析**: `Read` ツールで `world_initial.json` を読み込み、地域・接続・勢力情報を抽出
-2. **地理的関係分析**: 隣接関係 (`neighbors`) から地域配置とネットワーク構造を把握
-3. **戦略的価値評価**: 資源・特殊効果・影響力から各地域の重要度を分析
-4. **歴史的文脈統合**: `playlog.jsonl` から重要イベント発生地を特定・対応付け
+1. **World State Analysis**: Use `Read` tool to load `world_initial.json` and extract region, connection, and faction information
+2. **Geographic Relationship Analysis**: Understand regional placement and network structure from adjacency relationships (`neighbors`)
+3. **Strategic Value Assessment**: Analyze importance of each region from resources, special effects, and influence
+4. **Historical Context Integration**: Identify and correlate important event locations from `playlog.jsonl`
 
-**ツール実行**: 世界マップファイル作成
+**Tool Execution**: World map file creation
 
-- `Write` ツールで `world_map.md` を作成
+- Create `world_map.md` with `Write` tool
 
-**推奨マップ構成**:
+**Recommended Map Structure**:
 
 ```markdown
-# [セッション名] - 世界マップ
+# [Session Name] - World Map
 
-## 🗺️ 地域配置図
+## 🗺️ Regional Layout Diagram
 ```
 
-[ASCII 文字による地形マップ]
-⛰️ [山脈名] ⛰️ 🌪️ [平原名] 🌪️
+[ASCII character terrain map]
+⛰️ [Mountain Range] ⛰️ 🌪️ [Plains Name] 🌪️
 | |
-🏰 [要塞名] ───── ⚔️ [要衝名] ⚔️
+🏰 [Fortress Name] ───── ⚔️ [Strategic Point] ⚔️
 | |
-💰 [都市名] ───── 🔮 [洞窟名] 🔮
+💰 [City Name] ───── 🔮 [Cave Name] 🔮
 
 ```
 
-## 📊 地域一覧
+## 📊 Regional Directory
 
-### 🏰 [地域名]
-**タイプ**: [type] | **容量**: [capacity] | **[勢力] 拠点**
+### 🏰 [Region Name]
+**Type**: [type] | **Capacity**: [capacity] | **[Faction] Base**
 
-| 要素 | 詳細 |
-|------|------|
-| 📍 **隣接地域** | [neighbors list] |
-| 🎒 **資源** | [resources list] |
-| ⭐ **特殊効果** | [specialEffects list] |
-| 👑 **支配勢力** | [occupant] (影響度: [influence]) |
-| 🎯 **戦略価値** | [strategic_analysis] |
+| Element | Details |
+|---------|--------|
+| 📍 **Adjacent Regions** | [neighbors list] |
+| 🎒 **Resources** | [resources list] |
+| ⭐ **Special Effects** | [specialEffects list] |
+| 👑 **Controlling Faction** | [occupant] (Influence: [influence]) |
+| 🎯 **Strategic Value** | [strategic_analysis] |
 
-## 🏛️ 勢力圏分析
+## 🏛️ Sphere of Influence Analysis
 
-### [勢力名]
-- **🏠 本拠地**: [base_region]
-- **🎯 制圧目標**: [target_region]
-- **🛡️ 戦略**: [strategy_description]
+### [Faction Name]
+- **🏠 Home Base**: [base_region]
+- **🎯 Conquest Target**: [target_region]
+- **🛡️ Strategy**: [strategy_description]
 
-## 📈 交通・補給路
+## 📈 Transportation & Supply Routes
 
-### 🛤️ 主要街道
-1. **[軸名]**: [region1] ↔ [region2] ↔ [region3]
+### 🛤️ Major Roads
+1. **[Route Name]**: [region1] ↔ [region2] ↔ [region3]
 
-### 🚛 補給線の脆弱性
-- **[重要地域]**: [vulnerability_analysis]
+### 🚛 Supply Line Vulnerabilities
+- **[Important Region]**: [vulnerability_analysis]
 
-## 🎭 [セッション名] 重要イベント地
+## 🎭 [Session Name] Important Event Locations
 
-### ⚔️ ターン X-Y: [イベント名]
-- **場所**: [region_name]
-- **イベント**: [event_description]
-- **結果**: [outcome]
+### ⚔️ Turn X-Y: [Event Name]
+- **Location**: [region_name]
+- **Event**: [event_description]
+- **Result**: [outcome]
 
-## 🌩️ 世界の脅威と機会
+## 🌩️ World Threats and Opportunities
 
-### ⚡ [中立勢力名]
-- **性質**: [faction_nature]
-- **影響**: [impact_description]
-- **活動地**: [active_regions]
+### ⚡ [Neutral Faction Name]
+- **Nature**: [faction_nature]
+- **Influence**: [impact_description]
+- **Active Regions**: [active_regions]
 
-### 🔮 古代遺産
-- **[遺産名]**: [description_and_power]
+### 🔮 Ancient Artifacts
+- **[Artifact Name]**: [description_and_power]
 
-## 🎯 戦略的要点まとめ
+## 🎯 Strategic Key Points Summary
 
-1. **🏆 勝利の鍵**: [victory_conditions]
-2. **💰 経済支配**: [economic_control_points]
-3. **🔮 技術優位**: [tech_advantages]
+1. **🏆 Keys to Victory**: [victory_conditions]
+2. **💰 Economic Dominance**: [economic_control_points]
+3. **🔮 Technological Advantage**: [tech_advantages]
 ```
 
-**作成手順**:
+**Creation Procedure**:
 
-1. **地域データ抽出**:
+1. **Regional Data Extraction**:
 
-   - `world_initial.json` の `regions` オブジェクトから全地域情報を取得
-   - 各地域の `type`, `neighbors`, `resources`, `specialEffects` を整理
-   - `occupantParties` と `influence` から勢力配置を把握
+   - Obtain all regional information from the `regions` object in `world_initial.json`
+   - Organize each region's `type`, `neighbors`, `resources`, `specialEffects`
+   - Understand faction placement from `occupantParties` and `influence`
 
-2. **地理的配置分析**:
+2. **Geographic Placement Analysis**:
 
-   - `neighbors` 配列から隣接関係グラフを構築
-   - 中心性（接続数）が高い地域を要衝として特定
-   - 地形タイプ別に適切な絵文字を割り当て
+   - Build adjacency relationship graph from `neighbors` array
+   - Identify regions with high centrality (connection count) as strategic points
+   - Assign appropriate emojis by terrain type
 
-3. **戦略的分析**:
+3. **Strategic Analysis**:
 
-   - 各パーティーの `location` から勢力圏を特定
-   - `resources` と `specialEffects` から地域価値を評価
-   - プレイログの重要イベントと地域を対応付け
+   - Identify spheres of influence from each party's `location`
+   - Evaluate regional value from `resources` and `specialEffects`
+   - Correlate important events from playlog with regions
 
-4. **視覚化実装**:
-   - ASCII 文字で地域配置図を作成
-   - 表形式で地域詳細データを整理
-   - 絵文字で地形・勢力・イベントを色分け表示
+4. **Visualization Implementation**:
+   - Create regional layout diagram with ASCII characters
+   - Organize regional detail data in table format
+   - Color-code terrain, factions, and events with emojis
 
-**重要ポイント**:
+**Important Points**:
 
-- **地政学的視点**: 単なる地図ではなく、戦略的価値と勢力関係を重視
-- **歴史統合**: プレイログの重要イベントを地域と結び付け
-- **視覚的明確性**: ASCII 図と絵文字で直感的理解を促進
-- **戦略的洞察**: 各勢力の意図と世界の力学を分析
+- **Geopolitical Perspective**: Emphasize strategic value and factional relationships, not just a simple map
+- **Historical Integration**: Connect important events from playlog with regions
+- **Visual Clarity**: Promote intuitive understanding with ASCII diagrams and emojis
+- **Strategic Insight**: Analyze each faction's intentions and world dynamics
 
-**AI Agent 注意事項**:
+**AI Agent Notes**:
 
-- プレイログの重要イベントと地域を正確に対応付け
-- 各勢力の戦略的意図を地政学的観点で分析
-- 中立勢力や古代遺産の影響を考慮した世界観構築
-- 経済・軍事・外交・魔術の複合的バランス評価
-- 世界マップとナラティブリプレイ・プレイログとの一貫性確保
+- Accurately correlate important events from playlog with regions
+- Analyze each faction's strategic intentions from a geopolitical perspective
+- Build worldview considering the influence of neutral factions and ancient artifacts
+- Evaluate complex balance of economy, military, diplomacy, and magic
+- Ensure consistency between world map and narrative replay/playlog

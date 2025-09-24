@@ -1,207 +1,222 @@
-# NPC Personality System - NPC個性システム
+# NPC Personality System
 
-NPCの個性と行動パターンを定義し、より多様で予測不可能な戦術的判断を実現します。
+Defines NPC personalities and behavior patterns to achieve more diverse and unpredictable tactical decisions.
 
-## 🎭 基本個性タイプ
+## 🎭 Basic Personality Types
 
-### 攻撃的 (Aggressive)
+### Aggressive
+
 ```
-攻撃性: 8-10
-知能: 4-7
-忠誠度: 6-8
+Aggressiveness: 8-10
+Intelligence: 4-7
+Loyalty: 6-8
 
-行動特性:
-- 近接戦闘を好む
-- HP50%以下でも積極的に攻撃
-- 味方への支援より敵への攻撃優先
-- 地形無視で直線的移動
+Behavioral Traits:
+- Prefers close combat
+- Actively attacks even when HP is below 50%
+- Prioritizes attacking enemies over supporting allies
+- Moves in straight lines ignoring terrain
 
-戦術パターン:
-- "charge_closest": 最も近い敵に突撃
-- "berserker_rush": HP低下時の無謀攻撃
-- "intimidate_advance": 威嚇しながら前進
-```
-
-### 慎重 (Cautious)
-```
-攻撃性: 2-5
-知能: 7-9
-忠誠度: 7-10
-
-行動特性:
-- 防御的位置取りを重視
-- HP75%以下で後退検討
-- 味方との連携を優先
-- 地形を戦術的に活用
-
-戦術パターン:
-- "defensive_formation": 味方と防御陣形
-- "tactical_retreat": 計画的後退
-- "cover_seeking": 遮蔽物利用
+Tactical Patterns:
+- "charge_closest": Charges at the nearest enemy
+- "berserker_rush": Reckless attacks when HP is low
+- "intimidate_advance": Advances while intimidating
 ```
 
-### 狡猾 (Cunning)
+### Cautious
+
 ```
-攻撃性: 5-8
-知能: 8-10
-忠誠度: 3-6
+Aggressiveness: 2-5
+Intelligence: 7-9
+Loyalty: 7-10
 
-行動特性:
-- 不意打ち・奇襲を狙う
-- 弱った敵を優先攻撃
-- 味方を盾として利用
-- 予測困難な移動パターン
+Behavioral Traits:
+- Values defensive positioning
+- Considers retreat when HP drops below 75%
+- Prioritizes coordination with allies
+- Tactically utilizes terrain
 
-戦術パターン:
-- "flank_attack": 側面攻撃
-- "opportunist_strike": 機会攻撃
-- "feint_maneuver": フェイント移動
-```
-
-### 英雄的 (Heroic)
-```
-攻撃性: 6-8
-知能: 6-8
-忠誠度: 9-10
-
-行動特性:
-- 味方保護を最優先
-- 劣勢でも逃げない
-- 戦術的に最適な判断
-- 予測可能だが効果的
-
-戦術パターン:
-- "protect_allies": 味方援護優先
-- "last_stand": 最後の抵抗
-- "coordinated_attack": 連携攻撃
+Tactical Patterns:
+- "defensive_formation": Forms defensive formation with allies
+- "tactical_retreat": Planned retreat
+- "cover_seeking": Utilizes cover
 ```
 
-### 混沌 (Chaotic)
+### Cunning
+
 ```
-攻撃性: 1-10 (ランダム)
-知能: 3-7
-忠誠度: 1-8
+Aggressiveness: 5-8
+Intelligence: 8-10
+Loyalty: 3-6
 
-行動特性:
-- 予測不可能な行動
-- 感情に左右される判断
-- 極端な選択を取りがち
-- ターンごとに性格変化
+Behavioral Traits:
+- Aims for surprise attacks and ambushes
+- Prioritizes attacking weakened enemies
+- Uses allies as shields
+- Unpredictable movement patterns
 
-戦術パターン:
-- "random_chaos": 完全ランダム行動
-- "mood_swing": 気分による戦術変更
-- "wild_card": 想定外の行動
-```
-
-## 🧮 個性別判断アルゴリズム
-
-### 攻撃的タイプの評価式
-```
-選択肢スコア = 基本スコア + 個性修正
-
-個性修正:
-- 攻撃行動: +3.0
-- 前進行動: +2.0
-- 防御行動: -2.0
-- 後退行動: -3.0
-- 敵との距離が近い: +1.5
-- HP減少による攻撃性ボーナス: (100 - HP%) * 0.02
+Tactical Patterns:
+- "flank_attack": Flanking attack
+- "opportunist_strike": Opportunity attack
+- "feint_maneuver": Feint movement
 ```
 
-### 慎重タイプの評価式
-```
-個性修正:
-- 防御行動: +3.0
-- 味方との連携: +2.5
-- 地形利用: +2.0
-- 無謀な攻撃: -3.0
-- HP安全マージン: (現HP / 最大HP) * 2.0
-- 味方との距離維持: 距離2以内 +1.5
-```
+### Heroic
 
-### 狡猾タイプの評価式
 ```
-個性修正:
-- 側面・背面攻撃: +3.5
-- 弱った敵への攻撃: +(100 - 敵HP%) * 0.03
-- 数的優位での攻撃: +2.0
-- 正面からの攻撃: -1.5
-- 不利な状況での逃走: +2.5
+Aggressiveness: 6-8
+Intelligence: 6-8
+Loyalty: 9-10
+
+Behavioral Traits:
+- Prioritizes ally protection above all
+- Never flees even when disadvantaged
+- Makes tactically optimal decisions
+- Predictable but effective
+
+Tactical Patterns:
+- "protect_allies": Prioritizes ally support
+- "last_stand": Last stand resistance
+- "coordinated_attack": Coordinated attack
 ```
 
-### 英雄的タイプの評価式
-```
-個性修正:
-- 味方保護行動: +4.0
-- 連携攻撃: +2.5
-- 戦術的最適解: +2.0
-- 味方見捨て行動: -5.0
-- 危険な味方への接近: +1.5
-```
+### Chaotic
 
-### 混沌タイプの評価式
 ```
-個性修正:
-- ランダム係数: (-2.0 to +2.0)
-- 気分値による修正: 現在気分 * 0.5
-- 前ターンと同じ行動: -1.0
-- 予想外度ボーナス: +0.5 to +2.0
+Aggressiveness: 1-10 (Random)
+Intelligence: 3-7
+Loyalty: 1-8
 
-気分値変化:
-- 攻撃成功: +2
-- 攻撃失敗: -1
-- ダメージ受ける: -1
-- 味方がやられる: -2
+Behavioral Traits:
+- Unpredictable actions
+- Decisions influenced by emotions
+- Tends to make extreme choices
+- Personality changes each turn
+
+Tactical Patterns:
+- "random_chaos": Completely random actions
+- "mood_swing": Tactical changes based on mood
+- "wild_card": Unexpected actions
 ```
 
-## 🎲 個性適用の実装ガイド
+## 🧮 Personality-Based Decision Algorithms
 
-### GM_CORE_MIND.mdでの個性参照
+### Aggressive Type Evaluation Formula
+
 ```
-ステップ2.5: NPC個性適用
+Choice Score = Base Score + Personality Modifier
 
-1. NPCの個性タイプを確認
-2. 該当する行動特性を参照
-3. 戦術パターンから選択肢を生成
-4. 個性別評価式で修正値を計算
-5. 最終スコアで行動決定
-```
-
-### 個性の動的変化
-```
-経験による変化:
-- 連続成功 → 攻撃性+1, 知能+1
-- 連続失敗 → 攻撃性-1, 慎重さ+1
-- 味方の死 → 忠誠度変化, 攻撃性変化
-- 劣勢継続 → 知能+1, 攻撃性調整
-
-変化限界: ±3ポイント (極端すぎる変化を防ぐ)
+Personality Modifiers:
+- Attack actions: +3.0
+- Advance actions: +2.0
+- Defense actions: -2.0
+- Retreat actions: -3.0
+- Close distance to enemy: +1.5
+- Aggressiveness bonus from HP reduction: (100 - HP%) * 0.02
 ```
 
-### 複数NPC間の相互作用
+### Cautious Type Evaluation Formula
+
 ```
-相性システム:
-- 攻撃的 + 慎重 = バランス型連携
-- 狡猾 + 攻撃的 = 高リスク高リターン
-- 英雄的 + 任意 = 他NPCの忠誠度+1
-- 混沌 + 任意 = 予測困難な連携
-
-影響範囲: 隣接タイル内のNPC同士
+Personality Modifiers:
+- Defense actions: +3.0
+- Coordination with allies: +2.5
+- Terrain utilization: +2.0
+- Reckless attacks: -3.0
+- HP safety margin: (Current HP / Max HP) * 2.0
+- Maintaining distance to allies: Within distance 2 +1.5
 ```
 
-## 📊 個性システムの効果測定
+### Cunning Type Evaluation Formula
 
-### 多様性指標
-- 同一行動連続回数の削減 (目標: 3回未満)
-- 戦術パターンの使用分散度
-- プレイヤー予測的中率の低下
+```
+Personality Modifiers:
+- Flank/rear attacks: +3.5
+- Attacks on weakened enemies: +(100 - Enemy HP%) * 0.03
+- Attacks with numerical advantage: +2.0
+- Frontal attacks: -1.5
+- Escape in disadvantageous situations: +2.5
+```
 
-### 物語的効果
-- NPCキャラクターの記憶に残る度
-- 戦闘の緊張感レベル
-- 物語展開の意外性
+### Heroic Type Evaluation Formula
+
+```
+Personality Modifiers:
+- Ally protection actions: +4.0
+- Coordinated attacks: +2.5
+- Tactically optimal solutions: +2.0
+- Abandoning allies: -5.0
+- Approaching endangered allies: +1.5
+```
+
+### Chaotic Type Evaluation Formula
+
+```
+Personality Modifiers:
+- Random coefficient: (-2.0 to +2.0)
+- Mood value modifier: Current mood * 0.5
+- Same action as previous turn: -1.0
+- Unpredictability bonus: +0.5 to +2.0
+
+Mood Value Changes:
+- Attack success: +2
+- Attack failure: -1
+- Taking damage: -1
+- Ally defeated: -2
+```
+
+## 🎲 Implementation Guide for Personality Application
+
+### Personality Reference in GM_CORE_MIND.md
+
+```
+Step 2.5: NPC Personality Application
+
+1. Check NPC personality type
+2. Reference corresponding behavioral traits
+3. Generate choices from tactical patterns
+4. Calculate modifier values using personality-specific evaluation formulas
+5. Determine action based on final score
+```
+
+### Dynamic Personality Changes
+
+```
+Changes through Experience:
+- Consecutive successes → Aggressiveness +1, Intelligence +1
+- Consecutive failures → Aggressiveness -1, Caution +1
+- Ally death → Loyalty change, Aggressiveness change
+- Continued disadvantage → Intelligence +1, Aggressiveness adjustment
+
+Change Limits: ±3 points (prevents extreme changes)
+```
+
+### Interactions Between Multiple NPCs
+
+```
+Compatibility System:
+- Aggressive + Cautious = Balanced coordination
+- Cunning + Aggressive = High risk, high return
+- Heroic + Any = Other NPCs' loyalty +1
+- Chaotic + Any = Unpredictable coordination
+
+Influence Range: NPCs within adjacent tiles
+```
+
+## 📊 Measuring Personality System Effectiveness
+
+### Diversity Metrics
+
+- Reduction in consecutive identical actions (Target: Less than 3 times)
+- Distribution of tactical pattern usage
+- Decrease in player prediction accuracy
+
+### Narrative Effects
+
+- Memorability of NPC characters
+- Combat tension level
+- Narrative unpredictability
 
 ---
 
-この個性システムにより、各NPCが一貫した個性を持ちながら、状況に応じて動的に変化する豊かな戦術的多様性を実現できます。
+This personality system enables each NPC to maintain consistent personality while achieving rich tactical diversity that dynamically changes according to situations.
