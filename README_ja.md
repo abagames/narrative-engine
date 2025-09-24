@@ -12,7 +12,7 @@ Narrative Engine は、AI 駆動による完全自律型 TRPG システムであ
 
 以下は、実際に AI エージェントが生成・実行した TRPG セッションのリプレイである：
 
-### Thunder Storm Campaign (雷嵐キャンペーン) ([閲覧](https://abagames.github.io/narrarive-engine/thunder_storm_campaign_ja/))
+### Thunder Storm Campaign (雷嵐キャンペーン) ([閲覧](https://abagames.github.io/narrative-engine/thunder_storm_campaign_ja/))
 
 - **ディレクトリ**: [`docs/thunder_storm_campaign_ja/`](docs/thunder_storm_campaign_ja/)
 - **内容**: 嵐の中での冒険を描いた完全自律 TRPG セッション
@@ -20,7 +20,7 @@ Narrative Engine は、AI 駆動による完全自律型 TRPG システムであ
 
 ![replay_screenshot](docs/thunder_storm_campaign_ja/screenshot.png)
 
-### Triple Light Linked Ring (三光連環) ([閲覧](https://abagames.github.io/narrarive-engine/triple_light_linked_ring_ja/))
+### Triple Light Linked Ring (三光連環) ([閲覧](https://abagames.github.io/narrative-engine/triple_light_linked_ring_ja/))
 
 - **ディレクトリ**: [`docs/triple_light_linked_ring_ja/`](docs/triple_light_linked_ring_ja/)
 - **内容**: 三つの光の指輪を巡る神秘的な冒険セッション

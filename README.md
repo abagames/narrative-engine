@@ -12,7 +12,7 @@ Narrative Engine is an AI-driven fully autonomous TRPG system. AI coding agents 
 
 The following directories contain replays of TRPG sessions actually generated and executed by AI agents:
 
-### Thunder Storm Campaign ([View](https://abagames.github.io/narrarive-engine/thunder_storm_campaign/))
+### Thunder Storm Campaign ([View](https://abagames.github.io/narrative-engine/thunder_storm_campaign/))
 
 - **Directory**: [`docs/thunder_storm_campaign/`](docs/thunder_storm_campaign/)
 - **Content**: A fully autonomous TRPG session depicting adventures in a storm
@@ -20,7 +20,7 @@ The following directories contain replays of TRPG sessions actually generated an
 
 ![replay_screenshot](docs/thunder_storm_campaign/screenshot.png)
 
-### Triple Light Linked Ring ([View](https://abagames.github.io/narrarive-engine/triple_light_linked_ring/))
+### Triple Light Linked Ring ([View](https://abagames.github.io/narrative-engine/triple_light_linked_ring/))
 
 - **Directory**: [`docs/triple_light_linked_ring/`](docs/triple_light_linked_ring/)
 - **Content**: A mystical adventure session revolving around three rings of light
