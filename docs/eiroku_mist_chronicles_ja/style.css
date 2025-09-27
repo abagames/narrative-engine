@@ -1,0 +1,773 @@
+/* 永禄の霧戦記 - Universal Styling */
+/* Eiroku Mist Chronicles：四勢力による戦国覇権争奪戦 */
+
+/* ==== Reset & Base ==== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Noto Serif JP', '游明朝', 'Yu Mincho', serif;
+  background: linear-gradient(135deg, #1A1A1A 0%, #2D2D2D 100%);
+  color: #E0E0E0;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ==== Typography ==== */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Noto Sans JP', '游ゴシック', 'Yu Gothic', sans-serif;
+  font-weight: 600;
+  margin: 1rem 0 0.5rem 0;
+  color: #F5F5F5;
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.25rem; }
+
+/* 統計データ用フォント */
+.stats, .economy-data, .turn-stats {
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+}
+
+/* ==== Turn Items (Playlog) ==== */
+.turn-item {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin: 1.25rem 0;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+/* ==== Turn Sections (Narrative) ==== */
+.turn-section {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin: 1.25rem 0;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.turn-header {
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.turn-content {
+  line-height: 1.6;
+}
+
+.turn-content h4 {
+  color: #FFD700;
+  margin: 1rem 0 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+
+/* ==== Term Explanation Boxes ==== */
+.term-explanation {
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.1),
+    rgba(37, 99, 235, 0.05)
+  );
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-left: 4px solid #3b82f6;
+  border-radius: 8px;
+  padding: 1rem 1.2rem;
+  margin: 1rem 0 1.5rem 0;
+}
+
+.term-explanation h5 {
+  color: #3b82f6;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+/* ==== Cross-link Navigation ==== */
+.turn-nav {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.cross-link, .next-turn, .prev-turn {
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  color: #E0E0E0;
+  transition: all 0.3s ease;
+  font-size: 0.85rem;
+}
+
+.cross-link:hover, .next-turn:hover, .prev-turn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+/* ==== Objective Turning Points ==== */
+.objective-shift {
+  background: rgba(255, 215, 0, 0.1);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 8px;
+  padding: 1rem 1.2rem;
+  margin: 1rem 0 1.5rem 0;
+}
+
+.objective-shift h4 {
+  color: #FFD700;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+/* ==== Phase Evolution ==== */
+.phase-evolution {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.phase-timeline {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.phase {
+  padding: 1.5rem;
+  border-radius: 10px;
+  border-left: 4px solid currentColor;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.military-phase {
+  border-left-color: #DC3545;
+  background: rgba(220, 53, 69, 0.1);
+}
+
+.political-phase {
+  border-left-color: #663399;
+  background: rgba(102, 51, 153, 0.1);
+}
+
+.legal-phase {
+  border-left-color: #17A2B8;
+  background: rgba(23, 162, 184, 0.1);
+}
+.final-phase {
+  border-left-color: #FF9800;
+  background: rgba(255, 152, 0, 0.1);
+}
+
+/* ==== Tooltips ==== */
+.tooltip {
+  position: relative;
+  cursor: help;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 3px;
+}
+
+.tooltip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.9);
+  color: #FFF;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  max-width: 350px;
+  min-width: 200px;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.tooltip:hover::after {
+  opacity: 1;
+}
+
+/* ==== Faction Colors (Eiroku Mist Chronicles) ==== */
+
+/* 🌫️ 影颶の衆 (Shadow Gale Clan) */
+.faction.shadow_gale, .shadow_gale {
+  color: #708090;
+  border-color: #2C3E50;
+}
+
+.character.shadow_gale {
+  color: #708090;
+}
+
+.faction-bg.shadow_gale {
+  background: linear-gradient(135deg, rgba(44, 62, 80, 0.3) 0%, rgba(52, 73, 94, 0.2) 100%);
+  border: 2px solid rgba(44, 62, 80, 0.5);
+}
+
+.faction-card.shadow_gale {
+  background: linear-gradient(135deg, rgba(44, 62, 80, 0.2) 0%, rgba(52, 73, 94, 0.1) 100%);
+  border-left: 4px solid #2C3E50;
+}
+
+.faction-card.shadow_gale:hover {
+  box-shadow: 0 0 20px rgba(44, 62, 80, 0.3);
+}
+
+.faction-stat.shadow_gale {
+  border-left: 4px solid #2C3E50;
+  background: rgba(44, 62, 80, 0.1);
+}
+
+.organization[data-org*="shadow"], .location[data-region*="ise"] {
+  color: #708090;
+  border-color: #2C3E50;
+}
+
+/* 🌙 月影陰陽寮 (Moonlit Onmyo Guild) */
+.faction.moonlit_onmyo, .moonlit_onmyo {
+  color: #9966CC;
+  border-color: #663399;
+}
+
+.character.moonlit_onmyo {
+  color: #9966CC;
+}
+
+.faction-bg.moonlit_onmyo {
+  background: linear-gradient(135deg, rgba(102, 51, 153, 0.3) 0%, rgba(153, 102, 204, 0.2) 100%);
+  border: 2px solid rgba(102, 51, 153, 0.5);
+}
+
+.faction-card.moonlit_onmyo {
+  background: linear-gradient(135deg, rgba(102, 51, 153, 0.2) 0%, rgba(153, 102, 204, 0.1) 100%);
+  border-left: 4px solid #663399;
+}
+
+.faction-card.moonlit_onmyo:hover {
+  box-shadow: 0 0 20px rgba(102, 51, 153, 0.3);
+}
+
+.faction-stat.moonlit_onmyo {
+  border-left: 4px solid #663399;
+  background: rgba(102, 51, 153, 0.1);
+}
+
+.organization[data-org*="onmyo"], .location[data-region*="kumano"] {
+  color: #9966CC;
+  border-color: #663399;
+}
+
+/* ⚔️ 紅刃先鋒隊 (Crimson Blade Vanguard) */
+.faction.crimson_blade, .crimson_blade {
+  color: #FF6B6B;
+  border-color: #DC3545;
+}
+
+.character.crimson_blade {
+  color: #FF6B6B;
+}
+
+.faction-bg.crimson_blade {
+  background: linear-gradient(135deg, rgba(220, 53, 69, 0.3) 0%, rgba(200, 35, 51, 0.2) 100%);
+  border: 2px solid rgba(220, 53, 69, 0.5);
+}
+
+.faction-card.crimson_blade {
+  background: linear-gradient(135deg, rgba(220, 53, 69, 0.2) 0%, rgba(200, 35, 51, 0.1) 100%);
+  border-left: 4px solid #DC3545;
+}
+
+.faction-card.crimson_blade:hover {
+  box-shadow: 0 0 20px rgba(220, 53, 69, 0.3);
+}
+
+.faction-stat.crimson_blade {
+  border-left: 4px solid #DC3545;
+  background: rgba(220, 53, 69, 0.1);
+}
+
+.organization[data-org*="blade"], .location[data-region*="sakurai"] {
+  color: #FF6B6B;
+  border-color: #DC3545;
+}
+
+/* ⚙️ 銀蘭機巧院 (Silver Dutch Institute) */
+.faction.silver_dutch, .silver_dutch {
+  color: #20B2AA;
+  border-color: #17A2B8;
+}
+
+.character.silver_dutch {
+  color: #20B2AA;
+}
+
+.faction-bg.silver_dutch {
+  background: linear-gradient(135deg, rgba(23, 162, 184, 0.3) 0%, rgba(19, 132, 150, 0.2) 100%);
+  border: 2px solid rgba(23, 162, 184, 0.5);
+}
+
+.faction-card.silver_dutch {
+  background: linear-gradient(135deg, rgba(23, 162, 184, 0.2) 0%, rgba(19, 132, 150, 0.1) 100%);
+  border-left: 4px solid #17A2B8;
+}
+
+.faction-card.silver_dutch:hover {
+  box-shadow: 0 0 20px rgba(23, 162, 184, 0.3);
+}
+
+.faction-stat.silver_dutch {
+  border-left: 4px solid #17A2B8;
+  background: rgba(23, 162, 184, 0.1);
+}
+
+.organization[data-org*="dutch"], .location[data-region*="edo"] {
+  color: #20B2AA;
+  border-color: #17A2B8;
+}
+
+/* 中立・係争地 */
+.region.neutral {
+  fill: #696969;
+  stroke: #A9A9A9;
+}
+
+.region.contested {
+  fill: #8B4513;
+  stroke: #DAA520;
+}
+
+.region-tag.neutral {
+  background: #696969;
+  color: #F5F5F5;
+}
+
+.region-tag.contested {
+  background: #8B4513;
+  color: #FFE4B5;
+}
+
+/* ==== Layout & Container ==== */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+/* ==== Header Navigation ==== */
+.main-header {
+  background: rgba(17, 24, 39, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.main-nav {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.main-nav a {
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  color: #E0E0E0;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.main-nav a:hover, .main-nav a.active {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.campaign-overview {
+  text-align: center;
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.campaign-overview h1 {
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(45deg, #708090, #9966CC, #FF6B6B, #20B2AA);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.campaign-overview .subtitle {
+  font-size: 1rem;
+  opacity: 0.9;
+  margin: 0;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* ==== Cards ==== */
+.card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+
+/* ==== Campaign Statistics ==== */
+.campaign-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #87CEEB;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* ==== Faction Grid ==== */
+.faction-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 1.5rem;
+}
+
+.faction-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.faction-icon {
+  font-size: 3rem;
+  margin-right: 1rem;
+}
+
+.faction-info h4 {
+  font-size: 1.4rem;
+  margin: 0 0 0.25rem 0;
+}
+
+.faction-info h5 {
+  font-size: 1rem;
+  opacity: 0.8;
+  margin: 0 0 0.5rem 0;
+}
+
+/* ==== Statistics Table ==== */
+.stats-table {
+  width: 100%;
+  margin: 1rem 0;
+  border-collapse: collapse;
+}
+
+.stats-table td {
+  padding: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stats-table td:first-child {
+  font-weight: bold;
+  width: 40%;
+}
+
+/* ==== World Map Specific Styles ==== */
+.map-container {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 15px;
+  background: #1a1a2e;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.influence-zones {
+  pointer-events: none;
+}
+
+.world-map-svg {
+  width: 100%;
+  height: auto;
+}
+
+.region {
+  cursor: pointer;
+  stroke-width: 2;
+  transition: all 0.3s ease;
+}
+
+.region:hover {
+  stroke-width: 3;
+  filter: drop-shadow(0 0 8px currentColor);
+}
+
+.region-group {
+  cursor: pointer;
+}
+
+.region-group:hover .region {
+  stroke-width: 3;
+  filter: drop-shadow(0 0 8px currentColor);
+}
+
+.region-label {
+  fill: #FFFFFF;
+  font-size: 16px;
+  pointer-events: none;
+  text-anchor: middle;
+}
+
+.region-name {
+  fill: #FFFFFF;
+  font-size: 12px;
+  pointer-events: none;
+  text-anchor: middle;
+  font-weight: 500;
+}
+
+/* SVG内の凡例テキストも白に */
+.legend-title {
+  fill: #FFFFFF;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.legend-text {
+  fill: #FFFFFF;
+  font-size: 11px;
+}
+
+.legend-subtitle {
+  fill: #CCCCCC;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.legend-small {
+  fill: #CCCCCC;
+  font-size: 10px;
+}
+
+/* ==== Navigation Grid ==== */
+.navigation-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.nav-icon {
+  font-size: 3rem;
+  margin-right: 1.5rem;
+}
+
+.nav-content h4 {
+  margin-bottom: 0.5rem;
+  font-size: 1.3rem;
+}
+
+.nav-content p {
+  opacity: 0.8;
+  font-size: 0.9rem;
+}
+
+/* ==== Responsive Design ==== */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .campaign-overview {
+    margin: 1rem 0;
+    padding: 1.25rem;
+  }
+
+  .campaign-overview h1 {
+    font-size: 1.8rem;
+  }
+
+  .card {
+    padding: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .faction-grid,
+  .navigation-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .campaign-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .nav-icon {
+    font-size: 2rem;
+    margin-right: 1rem;
+  }
+
+  .faction-icon {
+    font-size: 2rem;
+  }
+
+  .map-container {
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0.5rem;
+  }
+
+  .card {
+    padding: 1rem;
+  }
+
+  .main-nav {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .campaign-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .faction-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .faction-icon {
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* ==== Animations ==== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.card:nth-child(1) { animation-delay: 0.1s; }
+.card:nth-child(2) { animation-delay: 0.2s; }
+.card:nth-child(3) { animation-delay: 0.3s; }
+.card:nth-child(4) { animation-delay: 0.4s; }
+.card:nth-child(5) { animation-delay: 0.5s; }
+
+/* ==== Footer ==== */
+footer {
+  text-align: center;
+  padding: 2rem;
+  margin-top: 3rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: #A0A0A0;
+  font-size: 0.9rem;
+}
+
+footer p {
+  margin: 0;
+}
+
+/* ==== Print Styles ==== */
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+
+  .card {
+    background: white;
+    border: 1px solid #ccc;
+    box-shadow: none;
+  }
+
+  nav, .tooltip {
+    display: none;
+  }
+}

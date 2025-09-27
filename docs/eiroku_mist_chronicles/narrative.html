@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eiroku Mist Chronicles - Narrative Replay</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="data.js"></script>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="main-header">
+      <div class="container">
+        <nav class="main-nav">
+          <a href="index.html">🏠 Dashboard</a>
+          <a href="narrative.html" class="active">📖 Narrative</a>
+          <a href="playlog.html">📊 Playlog</a>
+          <a href="worldmap.html">🗺️ World Map</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Campaign Overview -->
+        <section class="campaign-overview">
+            <h1>📖 Eiroku Mist Chronicles - Narrative Replay</h1>
+            <p class="subtitle">Detailed records of the four-faction Warring States hegemony battle<br>
+            All 20 turns of adventure recreated in narrative form, with terminology explanations and cross-link functionality</p>
+        </section>
+
+        <!-- Character Introduction -->
+        <section class="adventurers-intro">
+            <h2>🎭 Character Introduction</h2>
+
+            <div class="turn-section">
+                <div class="party-content">
+                    <div class="party-description">
+                        <h3>🌫️ Shadow Gale Clan</h3>
+                        <p><strong>Base</strong>: <span class="location tooltip" data-region="ise_shadow_vale" data-tooltip="A rugged mountainous region in southern Ise. A natural fortress covered in deep valleys and dense fog, providing an ideal location for a ninja stronghold.">Ise Shadow Vale</span> | <strong>Specialty</strong>: Ninjutsu Espionage</p>
+
+                        <ul>
+                            <li><strong><span class="character shadow_gale tooltip" data-name="kiryu_aoi" data-tooltip="Leader of the Shadow Gale Clan. With calm judgment and exceptional ninjutsu skills, oversees the strategic operations of the entire faction.">Kiryu Aoi</span></strong> (Shadow Leader): Quiet and perceptive personality, responsible for strategic planning and infiltration operations
+                                <br>- Speech style: Concise and calm analysis</li>
+                            <li><strong><span class="character shadow_gale tooltip" data-name="fuma_jin" data-tooltip="Former member of the Fuma clan. With superior physical abilities and sharp senses, handles enemy reconnaissance and disruption tactics.">Fuma Jin</span></strong> (Advanced Scout): Cynical and bold, handles reconnaissance and disruption
+                                <br>- Speech style: Sarcastic and provocative</li>
+                            <li><strong><span class="character shadow_gale tooltip" data-name="nuedo_kogetsu" data-tooltip="Specialist in poisons and illusions. Possesses unmatched skills in brewing secret medicines and neutralizing enemies.">Nuedo Kogetsu</span></strong> (Poison Master): Calm and composed personality, specialist in poison and illusion synthesis
+                                <br>- Speech style: Quiet and technical</li>
+                        </ul>
+
+                        <p><strong>🎯 Initial Objective</strong>: Maintain the prestige of the Iga Jōnin Momochi Tanba family while establishing an intelligence network in Kyoto and gaining influence in the imperial capital</p>
+                        <p><strong>Activity Policy</strong>: Information-driven strategy based on specialization</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="turn-section">
+                <div class="party-content">
+                    <div class="party-description">
+                        <h3>🌙 Moonlit Onmyo Guild</h3>
+                        <p><strong>Base</strong>: <span class="location tooltip" data-region="kumano_spirit_shrine" data-tooltip="One of the Kumano Sanzan shrines. Known since ancient times as a sacred site of spiritual power, functioning as the fundamental training ground for Onmyōdō practice.">Kumano Spirit Shrine</span> | <strong>Specialty</strong>: Onmyōdō & Mystical Arts</p>
+
+                        <ul>
+                            <li><strong><span class="character moonlit_onmyo tooltip" data-name="manai_sakuya" data-tooltip="Chief Onmyōji of the Moonlit Onmyo Guild. Serves as the cornerstone of spiritual defense through powerful barrier arts and shikigami control.">Manai Sakuya</span></strong> (Onmyo Head): Quiet passionate personality, barrier arts specialist
+                                <br>- Speech style: Formal declarations interwoven with waka poetry</li>
+                            <li><strong><span class="character moonlit_onmyo tooltip" data-name="karasumaru_kaya" data-tooltip="Onmyōji skilled in summoning and controlling shikigami. In combat, overwhelms enemies by deploying multiple shikigami.">Karasumaru Kaya</span></strong> (Shikigami User): Bold and intuitive, handles combat shikigami operations
+                                <br>- Speech style: Powerful and intuitive commands</li>
+                            <li><strong><span class="character moonlit_onmyo tooltip" data-name="ashiya_hotaru" data-tooltip="Diviner with exceptional spiritual abilities. Predicts battlefield outcomes through future sight and provides crucial strategic advice.">Ashiya Hotaru</span></strong> (Diviner): Introspective with keen observation, governs future sight and spirit vision
+                                <br>- Speech style: Quiet and insightful</li>
+                        </ul>
+
+                        <p><strong>🎯 Initial Objective</strong>: As members of the Kyoto Civil-Military Mediation Group and Ashikaga family, establish position as spiritual guardians of the imperial capital and gain trust from the Imperial Court</p>
+                        <p><strong>Activity Policy</strong>: Harmonious governance through traditional authority</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="turn-section">
+                <div class="party-content">
+                    <div class="party-description">
+                        <h3>⚔️ Crimson Blade Vanguard</h3>
+                        <p><strong>Base</strong>: <span class="location tooltip" data-region="sakurai_dueling_fields" data-tooltip="An ancient battlefield in Yamato Province. Used as a warrior training ground where many generals honed their swordsmanship and cavalry tactics.">Sakurai Dueling Fields</span> | <strong>Specialty</strong>: Bushidō Swordsmanship</p>
+
+                        <ul>
+                            <li><strong><span class="character crimson_blade tooltip" data-name="sanada_rekka" data-tooltip="Inheritor of Takeda-style cavalry tactics. Excels in spear techniques and commands cavalry units in charges against enemy positions.">Sanada Rekka</span></strong> (Captain): Bold with strong fighting spirit, spear cavalry command specialist
+                                <br>- Speech style: Powerful battlefield commands</li>
+                            <li><strong><span class="character crimson_blade tooltip" data-name="yuki_sayone" data-tooltip="Master of dual-sword style. Wields left and right swords with ease, demonstrating formidable combat ability in individual battles.">Yuki Sayone</span></strong> (Swordsman): Calm seeker of the way, masters dual-sword style
+                                <br>- Speech style: Concise and practical</li>
+                            <li><strong><span class="character crimson_blade tooltip" data-name="sasaki_rinkuro" data-tooltip="Strategist versed in tactical theory. Develops tactics that overcome numerical disadvantages through troop positioning and battlefield range control.">Sasaki Rinkuro</span></strong> (Strategist): Veteran strategist, master of formation & range control
+                                <br>- Speech style: Veteran and thoughtful tactical analysis</li>
+                        </ul>
+
+                        <p><strong>🎯 Initial Objective</strong>: Enhance the prestige of the Kai Takeda family and seize leadership in imperial capital defense as a mounted warrior corps</p>
+                        <p><strong>Activity Policy</strong>: Direct frontal strategy based on Bushidō</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="turn-section">
+                <div class="party-content">
+                    <div class="party-description">
+                        <h3>⚙️ Silver Dutch Institute</h3>
+                        <p><strong>Base</strong>: <span class="location tooltip" data-region="edo_arsenal_dock" data-tooltip="Shipbuilding and technical research facility on Edo Bay. Functions as a Western technology introduction base where new weapons are developed.">Edo Arsenal Dock</span> | <strong>Specialty</strong>: Western Engineering</p>
+
+                        <ul>
+                            <li><strong><span class="character silver_dutch tooltip" data-name="johan_stark" data-tooltip="Engineer who came to Japan from the Netherlands. Well-versed in Western artillery technology, bringing innovation to Japanese tactical systems.">Johan van der Stark</span></strong> (Technical Director): Theoretical and methodical, artillery engineering specialist
+                                <br>- Speech Style: Academic and precise technical explanations</li>
+                            <li><strong><span class="character silver_dutch tooltip" data-name="okame_tsuyaku" data-tooltip="Multilingual interpreter. Serves as a bridge with foreign engineers and plays an important role in political negotiations.">Interpreter Okame</span></strong> (Diplomatic Translator): Sociable and courageous, handles negotiation and intelligence gathering
+                                <br>- Speech Style: Sociable and tactful negotiation</li>
+                            <li><strong><span class="character silver_dutch tooltip" data-name="hendrik_spiker" data-tooltip="Engineer skilled in mechanical engineering. Develops new armaments that fuse Western technology with traditional weapons.">Hendrik Spiker</span></strong> (Armament Engineer): Curious inventor, specializes in mechanical weapon design
+                                <br>- Speech Style: Excited inventor's curiosity</li>
+                        </ul>
+
+                        <p><strong>🎯 Initial Objective</strong>: As the Nagasaki Dejima Western Technology Magistrate Branch under the Ōtomo family, promote advanced technology and establish technological superiority in the capital</p>
+                        <p><strong>Activity Policy</strong>: Collaborative pragmatism through technological innovation</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phase Evolution -->
+        <section class="card">
+            <h2>🌊 Four-Phase Evolution</h2>
+            <div class="phase-evolution">
+                <div class="phase-timeline">
+                    <div class="phase military-phase">
+                        <h3>⚔️ Military Conquest Phase (Turn 1-5)</h3>
+                        <p>From the mist's descent to Imperial Court inspection. The discovery of the Ganko Cannon intensifies military technology competition, with each faction competing for hegemony across political, technological, and ninjutsu fronts.</p>
+                    </div>
+                    <div class="phase political-phase">
+                        <h3>⚖️ Political Authority Phase (Turn 6-10)</h3>
+                        <p>From the Imperial Duel declaration to the Emperor's judgment. Through official martial trials before the Emperor, shadow conflicts are elevated to formal authority struggles.</p>
+                    </div>
+                    <div class="phase legal-phase">
+                        <h3>📜 Legal Resolution Phase (Turn 11-15)</h3>
+                        <p>From the Sakurai Field surprise attack to the new equilibrium of the ceremonial morning. The Shadow Gale's revenge and the alliance of the three imperial capital forces determine the final power arrangement.</p>
+                    </div>
+                    <div class="phase final-phase">
+                        <h3>⚡ Final Battle Phase (Turn 16-20)</h3>
+                        <p>From the Edo public exercises to victory through the storm. The final battle between the imperial capital alliance and the Shadow Gale unfolds under the natural fury of a typhoon.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Adventure Records -->
+        <section class="card">
+            <h2>📜 Adventure Records</h2>
+
+            <!-- First Act: Mist-Shrouded Kyoto -->
+            <h3>Act I: Mist-Shrouded Kyoto (Turn 1-5)</h3>
+
+            <!-- Turn 1 -->
+            <section id="turn-1" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 1: Descent of Dense Fog 【🌫️ Environmental Change】</h4>
+                    <nav class="turn-nav">
+                        <a href="playlog.html#turn-1" class="cross-link">📊 View Data</a>
+                        <a href="#turn-2" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <div class="term-explanation">
+                        <h5>💡 Term Explanations</h5>
+                        <p><strong><span class="organization tooltip" data-org="shadow_gale" data-tooltip="A group under the Iga Jōnin Momochi Tanba family, specializing in ninjutsu and espionage warfare. Based in Ise Shadow Vale, they conduct intelligence activities in Kyoto.">Shadow Gale Clan</span></strong> - Ninja group under the Iga Jōnin Momochi Tanba family. Led by Kiryu Aoi, they specialize in espionage warfare and infiltration operations. <strong><span class="organization tooltip" data-org="moonlit_onmyo" data-tooltip="An Onmyōji group belonging to the Ashikaga family. Based at Kumano Spirit Shrine, they handle the spiritual protection of Kyoto through barrier arts and shikigami operations.">Moonlit Onmyo Guild</span></strong> - An Onmyōji group belonging to the Ashikaga family. Led by Manai Sakuya, they handle the spiritual protection of Kyoto through barrier arts and shikigami operations.</p>
+                    </div>
+
+                    <p>In the chaotic Eiroku era, early summer morning. Dense fog covered Ise and Kyoto, and the curtain of night fell even during the day. In this supernatural mist, the four factions quietly began to move.</p>
+
+                    <p><span class="character moonlit_onmyo tooltip" data-name="manai_sakuya" data-tooltip="Chief Onmyōji of the Moonlit Onmyo Guild. Serves as the cornerstone of spiritual defense through powerful barrier arts and shikigami control.">Manai Sakuya</span> detected ninja footprints and the cold smell of iron in the palace alleys. "The mist is the binding cord of barriers" — while chanting the framework of barriers in waka poetry, she ordered <span class="character moonlit_onmyo tooltip" data-name="karasumaru_kaya" data-tooltip="Onmyōji skilled in summoning and controlling shikigami. In combat, overwhelms enemies by deploying multiple shikigami.">Kaya</span> to release shikigami to the crossroads. When <span class="character moonlit_onmyo tooltip" data-name="ashiya_hotaru" data-tooltip="Diviner with exceptional spiritual abilities. Predicts battlefield outcomes through future sight and provides crucial strategic advice.">Ashiya Hotaru</span> measured the flow of spiritual energy, she saw through the plan of the Iga group to steal secret documents from the palace officials' quarters at midnight.</p>
+
+                    <p>Meanwhile, at the <span class="location tooltip" data-region="azuchi_foundry" data-tooltip="Oda family's technical research base. An advanced workshop complex where various crafts and weapons are manufactured.">Azuchi Clockwork Foundry</span> in Ōmi, <span class="organization tooltip" data-org="crimson_blade" data-tooltip="Mounted warrior group of the Kai Takeda family. Based at Sakurai Dueling Fields, they aim for leadership in imperial capital defense through Bushidō swordsmanship and cavalry tactics.">Crimson Blade Vanguard</span> and <span class="organization tooltip" data-org="silver_dutch" data-tooltip="Technical research institution of the Nagasaki Dejima Western Technology Magistrate Branch under the Ōtomo family. Based at Edo Arsenal Dock, they seek to establish technological superiority through the introduction of Western technology.">Silver Dutch Institute</span> were sparking over control of the forging furnaces. Through the mist, <span class="organization tooltip" data-org="shadow_gale" data-tooltip="A group under the Iga Jōnin Momochi Tanba family, specializing in ninjutsu and espionage warfare. Based in Ise Shadow Vale, they conduct intelligence activities in Kyoto.">Shadow Gale Clan</span> set up rope ladders, while <span class="organization tooltip" data-org="silver_dutch" data-tooltip="Technical research institution of the Nagasaki Dejima Western Technology Magistrate Branch under the Ōtomo family. Based at Edo Arsenal Dock, they seek to establish technological superiority through the introduction of Western technology.">Silver Dutch Institute</span> maintained the furnace core gears at Azuchi while engaging in technological competition with the Crimson Blade.</p>
+
+                    <p>Sakuya quietly declared: "The mist is the cord, the enemy is the jewel. Entangle and deliver to the throne" — To maintain the prestige of the Ashikaga family, the plan was to succeed in the barrier ceremony in the capital and turn the Iga movements to their advantage.</p>
+                </div>
+            </section>
+
+            <!-- Turn 2 -->
+            <section id="turn-2" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 2: Ganko Cannon Discovery 【⚔️ Technical Turning Point】</h4>
+                    <nav class="turn-nav">
+                        <a href="#turn-1" class="prev-turn">← Previous Turn</a>
+                        <a href="playlog.html#turn-2" class="cross-link">📊 View Data</a>
+                        <a href="#turn-3" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <div class="term-explanation">
+                        <h5>💡 Term Explanations</h5>
+                        <p><strong><span class="weapon tooltip" data-tooltip="Prototype design of Western-style large cannon. A revolutionary weapon with power that transcends conventional matchlock guns.">Ganko Cannon</span></strong> - Prototype design of a Western-style large cannon. Discovered at Azuchi Clockwork Foundry, it's a strategic weapon that pushed tensions between Takeda and Ōtomo to the peak. <strong><span class="location tooltip" data-region="azuchi_foundry" data-tooltip="Oda family's technical research base. An advanced workshop complex where various crafts and weapons are manufactured.">Azuchi Clockwork Foundry</span></strong> - An industrial base in Ōmi where Western technology and Japanese craftsmanship converge.</p>
+                    </div>
+
+                    <p>The <span class="weapon tooltip" data-tooltip="Prototype design of Western-style large cannon. A revolutionary weapon with power that transcends conventional matchlock guns.">Ganko Cannon</span> blueprints discovered at <span class="location tooltip" data-region="azuchi_foundry" data-tooltip="Oda family's technical research base. An advanced workshop complex where various crafts and weapons are manufactured.">Azuchi Clockwork Foundry</span> completely changed the war situation. Around these Western-style large cannon prototype designs, <span class="organization tooltip" data-org="crimson_blade" data-tooltip="Mounted warrior group of the Kai Takeda family. Based at Sakurai Dueling Fields, they aim for leadership in imperial capital defense through Bushidō swordsmanship and cavalry tactics.">Crimson Blade Vanguard</span> moved to control the furnace core, while <span class="organization tooltip" data-org="silver_dutch" data-tooltip="Technical research institution of the Nagasaki Dejima Western Technology Magistrate Branch under the Ōtomo family. Based at Edo Arsenal Dock, they seek to establish technological superiority through the introduction of Western technology.">Silver Dutch Institute</span> regained control through danger pay and diplomacy, winning over craftsmen and lords.</p>
+
+                    <p><span class="character silver_dutch tooltip" data-name="johan_stark" data-tooltip="Engineer who came to Japan from the Netherlands. Well-versed in Western artillery technology, bringing innovation to Japanese tactical systems.">Johan</span> sensed the fear of the blacksmiths lined up in the furnace gear room and realized that Crimson Blade spears were surrounding the prototype cannon core. <span class="character silver_dutch tooltip" data-name="okame_tsuyaku" data-tooltip="Multilingual interpreter. Serves as a bridge with foreign engineers and plays an important role in political negotiations.">Interpreter Okame</span> suggested, "If we get the lord to issue a red seal for craftsman protection, it will be difficult to point spears at them," and <span class="character silver_dutch tooltip" data-name="hendrik_spiker" data-tooltip="Engineer skilled in mechanical engineering. Develops new armaments that fuse Western technology with traditional weapons.">Hendrik</span> argued, "If we double the stabilizer, the cannon mount won't shake even if spears thrust in."</p>
+
+                    <div class="objective-shift">
+                        <h4>🔄 Objective Turning Point</h4>
+                        <p>With the discovery of the Ganko Cannon, the conflict evolved from mere factional disputes to a full-scale hegemony struggle over military technology</p>
+                    </div>
+
+                    <p>Silver Dutch succeeded in winning over the craftsmen by guaranteeing twenty kan in danger pay and distribution after completion of the Ganko Cannon. Through proposals to the guardian deputy, they restricted armed entry into the workshop and repelled military force with technology. At this moment, they felt the arrival of a new era where technological innovation would change tactics.</p>
+                </div>
+            </section>
+
+            <!-- Turn 3 -->
+            <section id="turn-3" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 3: Gunpowder Blockade 【💰 Economic Strategy】</h4>
+                    <nav class="turn-nav">
+                        <a href="#turn-2" class="prev-turn">← Previous Turn</a>
+                        <a href="playlog.html#turn-3" class="cross-link">📊 View Data</a>
+                        <a href="#turn-4" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p>When the shogunate inspectors blockaded <span class="location tooltip" data-region="edo_arsenal_dock" data-tooltip="Shipbuilding and technical research facility on Edo Bay. Functions as a Western technology introduction base where new weapons are developed.">Edo Arsenal Dock</span> and began gunpowder inspections, the various factions engaged in psychological warfare over firearm procurement routes. Gunpowder prices skyrocketed, and each faction's supply lines wavered.</p>
+
+                    <p><span class="character crimson_blade tooltip" data-name="sanada_rekka" data-tooltip="Inheritor of Takeda-style cavalry tactics. Excels in spear techniques and commands cavalry units in charges against enemy positions.">Sanada Rekka</span> charged into the wharf and cited military law before the inspector. "The Takeda family has handled artillery operations since the Tenshō era; contribution is more beneficial to the shogunate than confiscation" — Applying pressure through both military might and law, he successfully obtained gunpowder barrel confiscation orders under the Takeda name.</p>
+
+                    <p>Simultaneously, <span class="organization tooltip" data-org="shadow_gale" data-tooltip="A group under the Iga Jōnin Momochi Tanba family, specializing in ninjutsu and espionage warfare. Based in Ise Shadow Vale, they conduct intelligence activities in Kyoto.">Shadow Gale Clan</span> rewrote inspection ledgers, and <span class="organization tooltip" data-org="moonlit_onmyo" data-tooltip="An Onmyōji group belonging to the Ashikaga family. Based at Kumano Spirit Shrine, they handle the spiritual protection of Kyoto through barrier arts and shikigami operations.">Moonlit Onmyo Guild</span> sent spiritual talismans to Silver Dutch to help them legally secure gunpowder barrels. Edo port became a battlefield for a three-front struggle over gunpowder, information, and barriers.</p>
+                </div>
+            </section>
+
+            <!-- Turn 4 -->
+            <section id="turn-4" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 4: Typhoon Front 【🌪️ Nature's Trial】</h4>
+                    <nav class="turn-nav">
+                        <a href="#turn-3" class="prev-turn">← Previous Turn</a>
+                        <a href="playlog.html#turn-4" class="cross-link">📊 View Data</a>
+                        <a href="#turn-5" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p>While a typhoon front ravaged <span class="location tooltip" data-region="edo_arsenal_dock" data-tooltip="Shipbuilding and technical research facility on Edo Bay. Functions as a Western technology introduction base where new weapons are developed.">Edo Port</span>, <span class="organization tooltip" data-org="shadow_gale" data-tooltip="A group under the Iga Jōnin Momochi Tanba family, specializing in ninjutsu and espionage warfare. Based in Ise Shadow Vale, they conduct intelligence activities in Kyoto.">Shadow Gale Clan</span> rewrote inspection ledgers to nullify Crimson Blade's confiscation orders and took control of the storm response official records. <span class="character shadow_gale tooltip" data-name="kiryu_aoi" data-tooltip="Leader of the Shadow Gale Clan. With calm judgment and exceptional ninjutsu skills, oversees the strategic operations of the entire faction.">Kiryu Aoi</span> calmly calculated, "If we dissolve the order documents, the gunpowder will be left hanging," and <span class="character shadow_gale tooltip" data-name="fuma_jin" data-tooltip="Former member of the Fuma clan. With superior physical abilities and sharp senses, handles enemy reconnaissance and disruption tactics.">Fuma Jin</span> whispered, "If we hide behind the breakwater, the inspectors won't notice."</p>
+
+                    <p>Amidst the storm sounds, they simultaneously performed ledger substitution and seal forgery, and <span class="character shadow_gale tooltip" data-name="nuedo_kogetsu" data-tooltip="Specialist in poisons and illusions. Possesses unmatched skills in brewing secret medicines and neutralizing enemies.">Nuedo Kogetsu</span> completed the resealing using protective talismans. The plan was for Shadow Gale's adjusted ledgers to become the only authentic records after the storm.</p>
+                </div>
+            </section>
+
+            <!-- Turn 5 -->
+            <section id="turn-5" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 5: Imperial Court Inspection 【👑 Political Trial】</h4>
+                    <nav class="turn-nav">
+                        <a href="#turn-4" class="prev-turn">← Previous Turn</a>
+                        <a href="playlog.html#turn-5" class="cross-link">📊 View Data</a>
+                        <a href="#turn-6" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <div class="term-explanation">
+                        <h5>💡 Term Explanations</h5>
+                        <p><strong>Imperial Court Inspection</strong> - Investigators dispatched by the Emperor. Important political pressure that arrived in Kyoto and demanded submission of consultation records between ninja and onmyōji.</p>
+                    </div>
+
+                    <p>Imperial court inspectors entered Kyoto, and <span class="organization tooltip" data-org="moonlit_onmyo" data-tooltip="An Onmyōji group belonging to the Ashikaga family. Based at Kumano Spirit Shrine, they handle the spiritual protection of Kyoto through barrier arts and shikigami operations.">Moonlit Onmyo Guild</span> presented barrier records to explain the port's confusion during the storm. <span class="character moonlit_onmyo tooltip" data-name="manai_sakuya" data-tooltip="Chief Onmyōji of the Moonlit Onmyo Guild. Serves as the cornerstone of spiritual defense through powerful barrier arts and shikigami control.">Manai Sakuya</span> reported to the inspector, "Here are the lightning veins and tidal changes. The gunpowder protective talismans during the storm were applied by the Onmyō Bureau," and <span class="character moonlit_onmyo tooltip" data-name="ashiya_hotaru" data-tooltip="Diviner with exceptional spiritual abilities. Predicts battlefield outcomes through future sight and provides crucial strategic advice.">Ashiya Hotaru</span> held Shadow Gale's ledgers up to a spirit lamp to show evidence of forgery.</p>
+
+                    <div class="objective-shift">
+                        <h4>🎯 New Objective</h4>
+                        <p>The Onmyō Bureau gains the court's trust and is officially delegated authority over Kyoto's talisman management, taking the upper hand in political negotiations</p>
+                    </div>
+
+                    <p>The inspector accepted the Onmyō Bureau's explanation and officially delegated talisman management, while <span class="organization tooltip" data-org="crimson_blade" data-tooltip="Mounted warrior group of the Kai Takeda family. Based at Sakurai Dueling Fields, they aim for leadership in imperial capital defense through Bushidō swordsmanship and cavalry tactics.">Crimson Blade</span> and <span class="organization tooltip" data-org="silver_dutch" data-tooltip="Technical research institution of the Nagasaki Dejima Western Technology Magistrate Branch under the Ōtomo family. Based at Edo Arsenal Dock, they seek to establish technological superiority through the introduction of Western technology.">Silver Dutch</span> agreed to joint test firing and shared obligations. In this first act, three battle fronts of technology, politics, and ninjutsu were clearly formed.</p>
+                </div>
+            </section>
+
+            <!-- Second Act -->
+            <h3>Act II: Imperial Duel (Turn 6-10)</h3>
+
+            <!-- Turn 6 -->
+            <section id="turn-6" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 6: Imperial Duel Declaration 【⚔️ Duel of Destiny】</h4>
+                    <nav class="turn-nav">
+                        <a href="#turn-5" class="prev-turn">← Previous Turn</a>
+                        <a href="playlog.html#turn-6" class="cross-link">📊 View Data</a>
+                        <a href="#turn-7" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <div class="term-explanation">
+                        <h5>💡 Term Explanations</h5>
+                        <p><strong>Imperial Duel</strong> - Official duel conducted under emergency martial judgment decreed by the Emperor. A historic martial trial where representatives of the Onmyō Bureau and Shadow Gale faced each other at Kyoto Arcane Quarter.</p>
+                    </div>
+
+                    <p>When the Emperor's martial judgment was issued, <span class="location tooltip" data-region="kyoto_arcane_quarter" data-tooltip="Kyoto's arcane and scholarly district. The center of knowledge where the Onmyō Bureau and various arts and sciences research institutes are concentrated.">Kyoto Arcane Quarter</span> transformed into a dueling arena. The Imperial Duel — this was not a mere private fight, but an official martial trial conducted before the Emperor.</p>
+
+                    <p><span class="character shadow_gale tooltip" data-name="kiryu_aoi" data-tooltip="Leader of the Shadow Gale Clan. With calm judgment and exceptional ninjutsu skills, oversees the strategic operations of the entire faction.">Kiryu Aoi</span> cast shadows over the dueling ring, and <span class="character shadow_gale tooltip" data-name="fuma_jin" data-tooltip="Former member of the Fuma clan. With superior physical abilities and sharp senses, handles enemy reconnaissance and disruption tactics.">Fuma Jin</span> infiltrated the Onmyō Bureau's ritual shelf to plant blades. Meanwhile, <span class="character moonlit_onmyo tooltip" data-name="manai_sakuya" data-tooltip="Chief Onmyōji of the Moonlit Onmyo Guild. Serves as the cornerstone of spiritual defense through powerful barrier arts and shikigami control.">Manai Sakuya</span> frowned at the presence of hidden weapons, and <span class="character moonlit_onmyo tooltip" data-name="karasumaru_kaya" data-tooltip="Onmyōji skilled in summoning and controlling shikigami. In combat, overwhelms enemies by deploying multiple shikigami.">Karasumaru Kaya</span> ordered <span class="organization tooltip" data-org="crimson_blade" data-tooltip="Mounted warrior group of the Kai Takeda family. Based at Sakurai Dueling Fields, they aim for leadership in imperial capital defense through Bushidō swordsmanship and cavalry tactics.">Crimson Blade Vanguard</span>, "Wear protective talismans and stand here. I'll adjust the shikigami so they don't involve you."</p>
+
+                    <div class="objective-shift">
+                        <h4>🔄 Objective Turning Point</h4>
+                        <p>By the Emperor's judgment, the previous shadow struggles were elevated to an official decisive battle</p>
+                        <p><strong>🎯 New Objective</strong>: Shadow Gale seeks to subjugate the Onmyō Bureau in the Imperial Duel to control the imperial capital's intelligence networks, while the Onmyō Bureau aims to prove the ninja's misconduct before the Emperor to maintain political leadership</p>
+                    </div>
+
+                    <p>From <span class="location tooltip" data-region="azuchi_foundry" data-tooltip="Oda family's technical research base. An advanced workshop complex where various crafts and weapons are manufactured.">Azuchi</span>, <span class="character silver_dutch tooltip" data-name="johan_stark" data-tooltip="Engineer who came to Japan from the Netherlands. Well-versed in Western artillery technology, bringing innovation to Japanese tactical systems.">Johan</span> sent a fast horse message: "<span class="weapon tooltip" data-tooltip="Prototype design of Western-style large cannon. A revolutionary weapon with power that transcends conventional matchlock guns.">Ganko Cannon</span> loading complete. If war spreads in Kyoto, we can send artillery support." This was the moment when tensions on two fronts connected.</p>
+                </div>
+            </section>
+
+            <!-- Turn 7 -->
+            <section id="turn-7" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 7: Dueling Ring Preparation 【⚔️ Martial Trial Stage】</h4>
+                    <nav class="turn-nav">
+                        <a href="#turn-6" class="prev-turn">← Previous Turn</a>
+                        <a href="playlog.html#turn-7" class="cross-link">📊 View Data</a>
+                        <a href="#turn-8" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p>A dueling ring was set up at <span class="location tooltip" data-region="kyoto_arcane_quarter" data-tooltip="Kyoto's arcane and scholarly district. The center of knowledge where the Onmyō Bureau and various arts and sciences research institutes are concentrated.">Kyoto Arcane Quarter</span>, and preparations for the Imperial Duel began in earnest. <span class="character moonlit_onmyo tooltip" data-name="manai_sakuya" data-tooltip="Chief Onmyōji of the Moonlit Onmyo Guild. Serves as the cornerstone of spiritual defense through powerful barrier arts and shikigami control.">Manai Sakuya</span> confirmed the barrier placements, while <span class="character shadow_gale tooltip" data-name="kiryu_aoi" data-tooltip="Leader of the Shadow Gale Clan. With calm judgment and exceptional ninjutsu skills, oversees the strategic operations of the entire faction.">Kiryu Aoi</span> advanced the placement of hidden weapons.</p>
+
+                    <p>Meanwhile, <span class="character crimson_blade tooltip" data-name="sanada_rekka" data-tooltip="Inheritor of Takeda-style cavalry tactics. Excels in spear techniques and commands cavalry units in charges against enemy positions.">Sanada Rekka</span> secured the safety of the viewing area with artillery support from <span class="location tooltip" data-region="azuchi_foundry" data-tooltip="Oda family's technical research base. An advanced workshop complex where various crafts and weapons are manufactured.">Azuchi</span>. <span class="character silver_dutch tooltip" data-name="johan_stark" data-tooltip="Engineer who came to Japan from the Netherlands. Well-versed in Western artillery technology, bringing innovation to Japanese tactical systems.">Johan</span> made final adjustments to the <span class="weapon tooltip" data-tooltip="Prototype design of Western-style large cannon. A revolutionary weapon with power that transcends conventional matchlock guns.">Ganko Cannon</span> and prepared to observe the duel.</p>
+
+                    <p>The Emperor's viewing area was set up around the dueling ring, and the stage that would determine the fate of the four factions was complete. Representatives of the Onmyō Bureau and Shadow Gale faced each other at the center of the ring, with tension reaching its peak.</p>
+                </div>
+            </section>
+
+            <!-- Turn 8 -->
+            <section id="turn-8" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 8: Dueling Ring Shattered 【⚡ Shift to Melee】</h4>
+                    <nav class="turn-nav">
+                        <a href="#turn-7" class="prev-turn">← Previous Turn</a>
+                        <a href="playlog.html#turn-8" class="cross-link">📊 View Data</a>
+                        <a href="#turn-9" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <div class="term-explanation">
+                        <h5>💡 Term Explanations</h5>
+                        <p><strong>Dueling Ring Shattered</strong> - A crucial turning point where lightning shattered the dueling ring, transforming the individual duel into a four-faction melee. A fundamental change in combat format occurred.</p>
+                    </div>
+
+                    <p>At the moment the duel began, lightning shattered the dueling ring. The individual duel instantly transformed into a four-faction melee, and <span class="location tooltip" data-region="kyoto_arcane_quarter" data-tooltip="Kyoto's arcane and scholarly district. The center of knowledge where the Onmyō Bureau and various arts and sciences research institutes are concentrated.">Kyoto Arcane Quarter</span> became a chaotic battlefield.</p>
+
+                    <p><span class="character moonlit_onmyo tooltip" data-name="karasumaru_kaya" data-tooltip="Onmyōji skilled in summoning and controlling shikigami. In combat, overwhelms enemies by deploying multiple shikigami.">Karasumaru Kaya</span>'s shikigami blew away the fragments of the shattered ring, and <span class="character shadow_gale tooltip" data-name="fuma_jin" data-tooltip="Former member of the Fuma clan. With superior physical abilities and sharp senses, handles enemy reconnaissance and disruption tactics.">Fuma Jin</span> attempted to infiltrate the viewing area amidst the confusion. <span class="character crimson_blade tooltip" data-name="yuki_sayone" data-tooltip="Master of dual-sword style. Wields left and right swords with ease, demonstrating formidable combat ability in individual battles.">Yuki Sayone</span>'s dual-sword style flashed, and <span class="character silver_dutch tooltip" data-name="hendrik_spiker" data-tooltip="Engineer skilled in mechanical engineering. Develops new armaments that fuse Western technology with traditional weapons.">Hendrik</span>'s mechanical weapons spewed fire.</p>
+
+                    <div class="objective-shift">
+                        <h4>🔄 Tactical Turning Point</h4>
+                        <p>Combat format fundamentally changed from individual duel to four-faction melee</p>
+                    </div>
+
+                    <p>The unprecedented melee unfolding before the Emperor had become chaos that no one could control. Amid the dancing lightning, swords, shikigami, and machinery, each faction continued fighting for survival.</p>
+                </div>
+            </section>
+
+            <!-- Turn 9 -->
+            <section id="turn-9" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 9: Imperial Guard Intervention 【🛡️ Imperial Authority Activated】</h4>
+                    <nav class="turn-nav">
+                        <a href="#turn-8" class="prev-turn">← Previous Turn</a>
+                        <a href="playlog.html#turn-9" class="cross-link">📊 View Data</a>
+                        <a href="#turn-10" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <div class="term-explanation">
+                        <h5>💡 Term Explanations</h5>
+                        <p><strong>Imperial Guard Intervention</strong> - Imperial authority activated to stop the melee. Transition to political resolution phase begins with ceasefire declaration within ten periods.</p>
+                    </div>
+
+                    <p>As the melee intensified, imperial authority was activated. Imperial Guard forces surrounded the academy district, and the ceasefire declaration "Lay down arms within ten periods" echoed throughout.</p>
+
+                    <p>Under the intimidating voice of the Imperial Guard Commander, the four factions were forced to cease fighting. <span class="character moonlit_onmyo tooltip" data-name="manai_sakuya" data-tooltip="Chief Onmyōji of the Moonlit Onmyo Guild. Serves as the cornerstone of spiritual defense through powerful barrier arts and shikigami control.">Manai Sakuya</span> recalled her shikigami, and <span class="character shadow_gale tooltip" data-name="kiryu_aoi" data-tooltip="Leader of the Shadow Gale Clan. With calm judgment and exceptional ninjutsu skills, oversees the strategic operations of the entire faction.">Kiryu Aoi</span> concealed himself in shadows. <span class="character crimson_blade tooltip" data-name="sanada_rekka" data-tooltip="Inheritor of Takeda-style cavalry tactics. Excels in spear techniques and commands cavalry units in charges against enemy positions.">Sanada Rekka</span> thrust his spear into the ground, and <span class="character silver_dutch tooltip" data-name="johan_stark" data-tooltip="Engineer who came to Japan from the Netherlands. Well-versed in Western artillery technology, bringing innovation to Japanese tactical systems.">Johan</span> stopped the mechanical movements.</p>
+
+                    <div class="objective-shift">
+                        <h4>🔄 Political Transition</h4>
+                        <p>Forced ceasefire by imperial authority begins transition from military resolution to political resolution phase</p>
+                    </div>
+
+                    <p>Silence returned to the academy district scattered with fragments of the shattered dueling ring, and each faction awaited the Emperor's final judgment. The melee had ended, but the true resolution still lay ahead.</p>
+                </div>
+            </section>
+
+            <!-- Turn 10: Final Judgment -->
+            <section id="turn-10" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 10: Imperial Judgment 【👑 Victory Decision】</h4>
+                    <nav class="turn-nav">
+                        <a href="#turn-9" class="prev-turn">← Previous Turn</a>
+                        <a href="playlog.html#turn-10" class="cross-link">📊 View Data</a>
+                        <a href="#turn-11" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <div class="term-explanation">
+                        <h5>💡 Term Explanations</h5>
+                        <p><strong>Imperial Judgment</strong> - Official result of the martial trial. It was decided that Moonlit Onmyo Guild would continue Kyoto defense, Crimson Blade Vanguard would serve as Imperial Guard auxiliaries, Silver Dutch Institute would contribute technology, and Shadow Gale Clan would be placed under surveillance in Ise.</p>
+                    </div>
+
+                    <p><strong>🏆 Imperial Judgment Announced</strong>: <span class="organization tooltip" data-org="moonlit_onmyo" data-tooltip="An Onmyōji group belonging to the Ashikaga family. Based at Kumano Spirit Shrine, they handle the spiritual protection of Kyoto through barrier arts and shikigami operations.">Moonlit Onmyo Guild</span> officially continues Kyoto defense, <span class="organization tooltip" data-org="crimson_blade" data-tooltip="Mounted warrior group of the Kai Takeda family. Based at Sakurai Dueling Fields, they aim for leadership in imperial capital defense through Bushidō swordsmanship and cavalry tactics.">Crimson Blade Vanguard</span> assumes Imperial Guard auxiliary duties at <span class="location tooltip" data-region="sakurai_dueling_fields" data-tooltip="An ancient battlefield in Yamato Province. Used as a warrior training ground where many generals honed their swordsmanship and cavalry tactics.">Sakurai Dueling Fields</span>, <span class="organization tooltip" data-org="silver_dutch" data-tooltip="Technical research institution of the Nagasaki Dejima Western Technology Magistrate Branch under the Ōtomo family. Based at Edo Arsenal Dock, they seek to establish technological superiority through the introduction of Western technology.">Silver Dutch Institute</span> contributed artillery training kits. <span class="organization tooltip" data-org="shadow_gale" data-tooltip="A group under the Iga Jōnin Momochi Tanba family, specializing in ninjutsu and espionage warfare. Based in Ise Shadow Vale, they conduct intelligence activities in Kyoto.">Shadow Gale Clan</span> withdraws to <span class="location tooltip" data-region="ise_shadow_vale" data-tooltip="A rugged mountainous region in southern Ise. A natural fortress covered in deep valleys and dense fog, providing an ideal location for a ninja stronghold.">Ise Shadow Vale</span> under surveillance.</p>
+
+                    <p><span class="character moonlit_onmyo tooltip" data-name="manai_sakuya" data-tooltip="Chief Onmyōji of the Moonlit Onmyo Guild. Serves as the cornerstone of spiritual defense through powerful barrier arts and shikigami control.">Manai Sakuya</span> looked over the new barrier diagram laid out in the palace garden and quietly vowed, "Victory has meaning only when we continue to protect." <span class="character crimson_blade tooltip" data-name="sanada_rekka" data-tooltip="Inheritor of Takeda-style cavalry tactics. Excels in spear techniques and commands cavalry units in charges against enemy positions.">Sanada Rekka</span> renewed his spirit in the wind of Sakurai Plain, while <span class="character silver_dutch tooltip" data-name="johan_stark" data-tooltip="Engineer who came to Japan from the Netherlands. Well-versed in Western artillery technology, bringing innovation to Japanese tactical systems.">Johan</span> felt joy that his technology would be utilized while preparing to return to his workshop.</p>
+
+                    <div class="objective-shift">
+                        <h4>🎯 Final Objectives Confirmed</h4>
+                        <p>Structure confirmed: Onmyō Bureau consolidates position as imperial capital guardian, Crimson Blade as Imperial Guard auxiliary, Silver Dutch restores trust through technological contribution, and Shadow Gale prepares next shadow strike in Ise</p>
+                    </div>
+
+                    <p>In <span class="location tooltip" data-region="ise_shadow_vale" data-tooltip="A rugged mountainous region in southern Ise. A natural fortress covered in deep valleys and dense fog, providing an ideal location for a ninja stronghold.">Ise</span>, <span class="character shadow_gale tooltip" data-name="kiryu_aoi" data-tooltip="Leader of the Shadow Gale Clan. With calm judgment and exceptional ninjutsu skills, oversees the strategic operations of the entire faction.">Kiryu Aoi</span> tended to his troops with shadow healing baths while bitter over the defeat. "Next time we'll extend our hand from the depths of shadow" — <span class="organization tooltip" data-org="shadow_gale" data-tooltip="A group under the Iga Jōnin Momochi Tanba family, specializing in ninjutsu and espionage warfare. Based in Ise Shadow Vale, they conduct intelligence activities in Kyoto.">Shadow Gale</span>'s will to strengthen unity through the bitterness of defeat remained unshaken.</p>
+                </div>
+            </section>
+
+            <!-- Third Act: New Order Establishment -->
+            <h3>Act III: Establishment of New Order (Turn 11-15)</h3>
+
+            <!-- Turn 11 -->
+            <section id="turn-11" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 11: Sakurai Field Surprise Attack 【⚔️ Shadow Gale's Revenge】</h4>
+                    <nav class="turn-nav">
+                        <a href="#turn-10" class="prev-turn">← Previous Turn</a>
+                        <a href="playlog.html#turn-11" class="cross-link">📊 View Data</a>
+                        <a href="#turn-12" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p>Dissatisfied with the Imperial judgment, <span class="organization tooltip" data-org="shadow_gale" data-tooltip="A group under the Iga Jōnin Momochi Tanba family, specializing in ninjutsu and espionage warfare. Based in Ise Shadow Vale, they conduct intelligence activities in Kyoto.">Shadow Gale Clan</span> launched a surprise attack on the imperial capital supply corps at <span class="location tooltip" data-region="sakurai_dueling_fields" data-tooltip="An ancient battlefield in Yamato Province. Used as a warrior training ground where many generals honed their swordsmanship and cavalry tactics.">Sakurai Dueling Fields</span>. Elite forces led by <span class="character shadow_gale tooltip" data-name="kiryu_aoi" data-tooltip="Leader of the Shadow Gale Clan. With calm judgment and exceptional ninjutsu skills, oversees the strategic operations of the entire faction.">Kiryu Aoi</span> charged with smoke screens and hidden weapons, erupting in direct combat with <span class="organization tooltip" data-org="crimson_blade" data-tooltip="Mounted warrior group of the Kai Takeda family. Based at Sakurai Dueling Fields, they aim for leadership in imperial capital defense through Bushidō swordsmanship and cavalry tactics.">Crimson Blade Vanguard</span>.</p>
+
+                    <p><span class="character crimson_blade tooltip" data-name="sanada_rekka" data-tooltip="Inheritor of Takeda-style cavalry tactics. Excels in spear techniques and commands cavalry units in charges against enemy positions.">Sanada Rekka</span> responded with "Spear formation, seal the shadows!" creating a spear wall, while <span class="character silver_dutch tooltip" data-name="johan_stark" data-tooltip="Engineer who came to Japan from the Netherlands. Well-versed in Western artillery technology, bringing innovation to Japanese tactical systems.">Johan</span>'s portable cannons rained bullets from the flanks. <span class="character moonlit_onmyo tooltip" data-name="manai_sakuya" data-tooltip="Chief Onmyōji of the Moonlit Onmyo Guild. Serves as the cornerstone of spiritual defense through powerful barrier arts and shikigami control.">Manai Sakuya</span> remotely sent lightning chain talismans to support <span class="organization tooltip" data-org="crimson_blade" data-tooltip="Mounted warrior group of the Kai Takeda family. Based at Sakurai Dueling Fields, they aim for leadership in imperial capital defense through Bushidō swordsmanship and cavalry tactics.">Crimson Blade</span>'s shield formation.</p>
+
+                    <div class="objective-shift">
+                        <h4>🎯 Revenge War Begins</h4>
+                        <p>Shadow Gale rebels against the Imperial judgment and begins final resistance with sabotage operations against imperial capital supply lines</p>
+                    </div>
+
+                    <p>After fierce battle, <span class="organization tooltip" data-org="shadow_gale" data-tooltip="A group under the Iga Jōnin Momochi Tanba family, specializing in ninjutsu and espionage warfare. Based in Ise Shadow Vale, they conduct intelligence activities in Kyoto.">Shadow Gale</span> retreated into the mist while losing some intelligence scrolls. <span class="organization tooltip" data-org="crimson_blade" data-tooltip="Mounted warrior group of the Kai Takeda family. Based at Sakurai Dueling Fields, they aim for leadership in imperial capital defense through Bushidō swordsmanship and cavalry tactics.">Crimson Blade</span> defended the supply column to the death despite damaging their spear points, further strengthening the imperial capital alliance's unity.</p>
+                </div>
+            </section>
+
+            <!-- Turn 12 -->
+            <section id="turn-12" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 12: Sakurai Field Battle 【⚔️ Continuing Fierce Combat】</h4>
+                    <nav class="turn-nav">
+                        <a href="#turn-11" class="prev-turn">← Previous Turn</a>
+                        <a href="playlog.html#turn-12" class="cross-link">📊 View Data</a>
+                        <a href="#turn-13" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p>As <span class="organization tooltip" data-org="shadow_gale" data-tooltip="A group under the Iga Jōnin Momochi Tanba family, specializing in ninjutsu and espionage warfare. Based in Ise Shadow Vale, they conduct intelligence activities in Kyoto.">Shadow Gale</span>'s assault shook the artillery formation, fierce combat erupted again at <span class="location tooltip" data-region="sakurai_dueling_fields" data-tooltip="An ancient battlefield in Yamato Province. Used as a warrior training ground where many generals honed their swordsmanship and cavalry tactics.">Sakurai Field</span> during the day as <span class="organization tooltip" data-org="crimson_blade" data-tooltip="Mounted warrior group of the Kai Takeda family. Based at Sakurai Dueling Fields, they aim for leadership in imperial capital defense through Bushidō swordsmanship and cavalry tactics.">Crimson Blade</span>'s spear wall and <span class="organization tooltip" data-org="silver_dutch" data-tooltip="Technical research institution of the Nagasaki Dejima Western Technology Magistrate Branch under the Ōtomo family. Based at Edo Arsenal Dock, they seek to establish technological superiority through the introduction of Western technology.">Silver Dutch</span>'s portable cannons exchanged fire. <span class="character moonlit_onmyo tooltip" data-name="manai_sakuya" data-tooltip="Chief Onmyōji of the Moonlit Onmyo Guild. Serves as the cornerstone of spiritual defense through powerful barrier arts and shikigami control.">Manai Sakuya</span> supported morale with lightning talismans, and the battle to defend the supply column continued.</p>
+
+                    <p><span class="character crimson_blade tooltip" data-name="sanada_rekka" data-tooltip="Inheritor of Takeda-style cavalry tactics. Excels in spear techniques and commands cavalry units in charges against enemy positions.">Sanada Rekka</span> commanded "Not yet, tighten the spears further and crush the shadows!" while <span class="character silver_dutch tooltip" data-name="johan_stark" data-tooltip="Engineer who came to Japan from the Netherlands. Well-versed in Western artillery technology, bringing innovation to Japanese tactical systems.">Johan</span> decided "Fire the portable cannon's final round to open the path."</p>
+
+                    <p>The artillery blast blew away part of the shadow forces, but Crimson Blade's spears also broke, turning into a war of attrition where both armies shed blood. As daytime thunder shook Sakurai Field, torn canvas and charred cannon cart remnants scattered across the battlefield.</p>
+                </div>
+            </section>
+
+            <!-- Turn 13 -->
+            <section id="turn-13" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 13: Combat End Declaration 【🛡️ Imperial Guard Judgment】</h4>
+                    <nav class="turn-nav">
+                        <a href="#turn-12" class="prev-turn">← Previous Turn</a>
+                        <a href="playlog.html#turn-13" class="cross-link">📊 View Data</a>
+                        <a href="#turn-14" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p>The Imperial Guard declared an end to combat at Sakurai Field and ordered post-war processing and redeployment for each faction. <span class="organization tooltip" data-org="shadow_gale" data-tooltip="A group under the Iga Jōnin Momochi Tanba family, specializing in ninjutsu and espionage warfare. Based in Ise Shadow Vale, they conduct intelligence activities in Kyoto.">Shadow Gale Clan</span> retreated to <span class="location tooltip" data-region="ise_shadow_vale" data-tooltip="A rugged mountainous region in southern Ise. A natural fortress covered in deep valleys and dense fog, providing an ideal location for a ninja stronghold.">Ise Shadow Vale</span>, and <span class="organization tooltip" data-org="crimson_blade" data-tooltip="Mounted warrior group of the Kai Takeda family. Based at Sakurai Dueling Fields, they aim for leadership in imperial capital defense through Bushidō swordsmanship and cavalry tactics.">Crimson Blade Vanguard</span> shifted to highway defense.</p>
+
+                    <p><span class="character shadow_gale tooltip" data-name="kiryu_aoi" data-tooltip="Leader of the Shadow Gale Clan. With calm judgment and exceptional ninjutsu skills, oversees the strategic operations of the entire faction.">Kiryu Aoi</span> guided wounded soldiers to the mist-hidden village in Ise, saying "Now we withdraw our blood, shadows await the next night." <span class="character crimson_blade tooltip" data-name="sanada_rekka" data-tooltip="Inheritor of Takeda-style cavalry tactics. Excels in spear techniques and commands cavalry units in charges against enemy positions.">Sanada Rekka</span> established fences and patrol routes at Sakurai Field, declaring "Takeda guards the highways, this is an opportunity to gain the Emperor's trust."</p>
+
+                    <div class="objective-shift">
+                        <h4>🔄 Post-War Reorganization</h4>
+                        <p>Imperial Guard judgment clarifies role distribution for each faction and begins preparation for the next phase</p>
+                    </div>
+
+                    <p><span class="character silver_dutch tooltip" data-name="johan_stark" data-tooltip="Engineer who came to Japan from the Netherlands. Well-versed in Western artillery technology, bringing innovation to Japanese tactical systems.">Johan</span> delivered artillery training kits to the imperial workshop, and <span class="character moonlit_onmyo tooltip" data-name="manai_sakuya" data-tooltip="Chief Onmyōji of the Moonlit Onmyo Guild. Serves as the cornerstone of spiritual defense through powerful barrier arts and shikigami control.">Manai Sakuya</span> shared defense diagrams with the Imperial Guard. Combat had ended, but the balance after the martial judgment was taking shape.</p>
+                </div>
+            </section>
+
+            <!-- Turn 14 -->
+            <section id="turn-14" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 14: Kyoto Festival Eve 【🌙 Final Infiltration】</h4>
+                    <nav class="turn-nav">
+                        <a href="#turn-13" class="prev-turn">← Previous Turn</a>
+                        <a href="playlog.html#turn-14" class="cross-link">📊 View Data</a>
+                        <a href="#turn-15" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p>On the eve of the festival in <span class="location tooltip" data-region="kyoto_arcane_quarter" data-tooltip="Kyoto's arcane and scholarly district. The center of knowledge where the Onmyō Bureau and various arts and sciences research institutes are concentrated.">Kyoto</span>, <span class="organization tooltip" data-org="shadow_gale" data-tooltip="A group under the Iga Jōnin Momochi Tanba family, specializing in ninjutsu and espionage warfare. Based in Ise Shadow Vale, they conduct intelligence activities in Kyoto.">Shadow Gale Clan</span> elite forces infiltrated the capital again and clashed with <span class="organization tooltip" data-org="moonlit_onmyo" data-tooltip="An Onmyōji group belonging to the Ashikaga family. Based at Kumano Spirit Shrine, they handle the spiritual protection of Kyoto through barrier arts and shikigami operations.">Moonlit Onmyo Guild</span>. Amidst the festival preparation crowds, ninjutsu, mystical arts, swordsmanship, and Western machinery intersected on the capital's rooftops.</p>
+
+                    <p><span class="character shadow_gale tooltip" data-name="kiryu_aoi" data-tooltip="Leader of the Shadow Gale Clan. With calm judgment and exceptional ninjutsu skills, oversees the strategic operations of the entire faction.">Kiryu Aoi</span> commanded while sliding on roof tiles, "Break the incense burners! Scatter the shadows!" while <span class="character moonlit_onmyo tooltip" data-name="manai_sakuya" data-tooltip="Chief Onmyōji of the Moonlit Onmyo Guild. Serves as the cornerstone of spiritual defense through powerful barrier arts and shikigami control.">Manai Sakuya</span> responded through shikigami with "Lightning chains, reconfigure to seven-fold!"</p>
+
+                    <p><span class="character silver_dutch tooltip" data-name="johan_stark" data-tooltip="Engineer who came to Japan from the Netherlands. Well-versed in Western artillery technology, bringing innovation to Japanese tactical systems.">Johan</span>'s electric net ensnared the shadow forces, and <span class="character crimson_blade tooltip" data-name="sanada_rekka" data-tooltip="Inheritor of Takeda-style cavalry tactics. Excels in spear techniques and commands cavalry units in charges against enemy positions.">Sanada Rekka</span>'s spear wall pushed back the remnants. The festival was protected, but burn marks from lightning and electric nets remained on the capital's rooftops.</p>
+
+                    <div class="objective-shift">
+                        <h4>🏮 Festival Defense</h4>
+                        <p>Shadow Gale's final infiltration operation fails, and the three-faction alliance of the imperial capital is completely established</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 15 -->
+            <section id="turn-15" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 15: New Balance of the Ceremonial Dawn 【🌅 Dawn of New Order】</h4>
+                    <nav class="turn-nav">
+                        <a href="#turn-14" class="prev-turn">← Previous Turn</a>
+                        <a href="playlog.html#turn-15" class="cross-link">📊 View Data</a>
+                        <a href="#turn-16" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p>The Kyoto festival successfully concluded, and the new order's balance was established. <span class="organization tooltip" data-org="moonlit_onmyo" data-tooltip="An Onmyōji group belonging to the Ashikaga family. Based at Kumano Spirit Shrine, they handle the spiritual protection of Kyoto through barrier arts and shikigami operations.">Moonlit Onmyo Guild</span> consolidated their position as imperial capital guardians, <span class="organization tooltip" data-org="crimson_blade" data-tooltip="Mounted warrior group of the Kai Takeda family. Based at Sakurai Dueling Fields, they aim for leadership in imperial capital defense through Bushidō swordsmanship and cavalry tactics.">Crimson Blade Vanguard</span> strengthened highway defenses, and <span class="organization tooltip" data-org="silver_dutch" data-tooltip="Technical research institution of the Nagasaki Dejima Western Technology Magistrate Branch under the Ōtomo family. Based at Edo Arsenal Dock, they seek to establish technological superiority through the introduction of Western technology.">Silver Dutch Institute</span> gained trust through technological contributions.</p>
+
+                    <p><span class="character moonlit_onmyo tooltip" data-name="manai_sakuya" data-tooltip="Chief Onmyōji of the Moonlit Onmyo Guild. Serves as the cornerstone of spiritual defense through powerful barrier arts and shikigami control.">Manai Sakuya</span> watched the sunrise from the palace and declared, "A new morning for the imperial capital has arrived." The ceremonial dawn illuminated the stable rule of the three-faction alliance, while <span class="organization tooltip" data-org="shadow_gale" data-tooltip="A group under the Iga Jōnin Momochi Tanba family, specializing in ninjutsu and espionage warfare. Based in Ise Shadow Vale, they conduct intelligence activities in Kyoto.">Shadow Gale</span> waited in the shadows of Ise for their next opportunity.</p>
+
+                    <div class="objective-shift">
+                        <h4>🌅 New Order Established</h4>
+                        <p>The imperial capital's three-faction alliance creates stable governance, establishing the foundation for the next phase</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Fourth Act: Final Storm -->
+            <h3>Act IV: The Final Storm (Turn 16-20)</h3>
+
+            <!-- Turn 16 -->
+            <section id="turn-16" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 16: Edo Public Exercises 【🌊 Emperor's New Command】</h4>
+                    <nav class="turn-nav">
+                        <a href="#turn-15" class="prev-turn">← Previous Turn</a>
+                        <a href="playlog.html#turn-16" class="cross-link">📊 View Data</a>
+                        <a href="#turn-17" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p>The Emperor commanded public military exercises at <span class="location tooltip" data-region="edo_arsenal_dock" data-tooltip="Shipbuilding and technical research facility on Edo Bay. Functions as a Western technology introduction base where new weapons are developed.">Edo Arsenal Dock</span> to demonstrate the unity of the three-faction alliance. <span class="organization tooltip" data-org="crimson_blade" data-tooltip="Mounted warrior group of the Kai Takeda family. Based at Sakurai Dueling Fields, they aim for leadership in imperial capital defense through Bushidō swordsmanship and cavalry tactics.">Crimson Blade Vanguard</span> displayed cavalry formations, <span class="organization tooltip" data-org="moonlit_onmyo" data-tooltip="An Onmyōji group belonging to the Ashikaga family. Based at Kumano Spirit Shrine, they handle the spiritual protection of Kyoto through barrier arts and shikigami operations.">Moonlit Onmyo Guild</span> showed barrier techniques, and <span class="organization tooltip" data-org="silver_dutch" data-tooltip="Technical research institution of the Nagasaki Dejima Western Technology Magistrate Branch under the Ōtomo family. Based at Edo Arsenal Dock, they seek to establish technological superiority through the introduction of Western technology.">Silver Dutch Institute</span> demonstrated the completed <span class="weapon tooltip" data-tooltip="Prototype design of Western-style large cannon. A revolutionary weapon with power that transcends conventional matchlock guns.">Ganko Cannon</span>.</p>
+
+                    <p><span class="character silver_dutch tooltip" data-name="johan_stark" data-tooltip="Engineer who came to Japan from the Netherlands. Well-versed in Western artillery technology, bringing innovation to Japanese tactical systems.">Johan</span> proclaimed, "This cannon symbolizes the fusion of Eastern wisdom and Western technology," while <span class="character crimson_blade tooltip" data-name="sanada_rekka" data-tooltip="Inheritor of Takeda-style cavalry tactics. Excels in spear techniques and commands cavalry units in charges against enemy positions.">Sanada Rekka</span> demonstrated cavalry charging techniques. <span class="character moonlit_onmyo tooltip" data-name="manai_sakuya" data-tooltip="Chief Onmyōji of the Moonlit Onmyo Guild. Serves as the cornerstone of spiritual defense through powerful barrier arts and shikigami control.">Manai Sakuya</span> displayed grand barrier formations that covered the entire bay.</p>
+
+                    <p>However, watching from the shadows in Ise, <span class="organization tooltip" data-org="shadow_gale" data-tooltip="A group under the Iga Jōnin Momochi Tanba family, specializing in ninjutsu and espionage warfare. Based in Ise Shadow Vale, they conduct intelligence activities in Kyoto.">Shadow Gale</span> prepared for their final operation. This public display of the alliance's power became the catalyst for the ultimate confrontation.</p>
+                </div>
+            </section>
+
+            <!-- Turn 17 -->
+            <section id="turn-17" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 17: Typhoon Approaching Exercises 【🌪️ Storm Omens】</h4>
+                    <nav class="turn-nav">
+                        <a href="#turn-16" class="prev-turn">← Previous Turn</a>
+                        <a href="playlog.html#turn-17" class="cross-link">📊 View Data</a>
+                        <a href="#turn-18" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p>As a typhoon approached <span class="location tooltip" data-region="edo_arsenal_dock" data-tooltip="Shipbuilding and technical research facility on Edo Bay. Functions as a Western technology introduction base where new weapons are developed.">Edo Bay</span>, the public exercises continued under increasingly harsh natural conditions. Strong winds and rain tested the alliance's unity, while <span class="organization tooltip" data-org="shadow_gale" data-tooltip="A group under the Iga Jōnin Momochi Tanba family, specializing in ninjutsu and espionage warfare. Based in Ise Shadow Vale, they conduct intelligence activities in Kyoto.">Shadow Gale</span> saw opportunity in nature's fury.</p>
+
+                    <p><span class="character moonlit_onmyo tooltip" data-name="ashiya_hotaru" data-tooltip="Diviner with exceptional spiritual abilities. Predicts battlefield outcomes through future sight and provides crucial strategic advice.">Ashiya Hotaru</span> predicted through divination, "The storm brings more than wind and rain. The shadows move again." <span class="character crimson_blade tooltip" data-name="sasaki_rinkuro" data-tooltip="Strategist versed in tactical theory. Develops tactics that overcome numerical disadvantages through troop positioning and battlefield range control.">Sasaki Rinkuro</span> analyzed the weather patterns and prepared defensive strategies against potential shadow attacks during the storm.</p>
+
+                    <p>The approaching typhoon became both a test of the alliance's strength and the perfect cover for Shadow Gale's final gambit. As winds howled across the bay, both sides prepared for the ultimate confrontation.</p>
+                </div>
+            </section>
+
+            <!-- Turn 18 -->
+            <section id="turn-18" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 18: Typhoon Surprise Attack 【⚡ Lightning Decisive Battle】</h4>
+                    <nav class="turn-nav">
+                        <a href="#turn-17" class="prev-turn">← Previous Turn</a>
+                        <a href="playlog.html#turn-18" class="cross-link">📊 View Data</a>
+                        <a href="#turn-19" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p>Under cover of the typhoon, <span class="organization tooltip" data-org="shadow_gale" data-tooltip="A group under the Iga Jōnin Momochi Tanba family, specializing in ninjutsu and espionage warfare. Based in Ise Shadow Vale, they conduct intelligence activities in Kyoto.">Shadow Gale Clan</span> launched their all-out assault on <span class="location tooltip" data-region="edo_arsenal_dock" data-tooltip="Shipbuilding and technical research facility on Edo Bay. Functions as a Western technology introduction base where new weapons are developed.">Edo Arsenal Dock</span>. Lightning flashed as ninja emerged from the storm, striking at the heart of the alliance's power demonstration.</p>
+
+                    <p><span class="character shadow_gale tooltip" data-name="fuma_jin" data-tooltip="Former member of the Fuma clan. With superior physical abilities and sharp senses, handles enemy reconnaissance and disruption tactics.">Fuma Jin</span> led the charge: "Let thunder be our war cry!" while <span class="character shadow_gale tooltip" data-name="nuedo_kogetsu" data-tooltip="Specialist in poisons and illusions. Possesses unmatched skills in brewing secret medicines and neutralizing enemies.">Nuedo Kogetsu</span> deployed storm-enhanced illusions. The alliance fought back desperately as rain and steel intermingled in the ultimate lightning decisive battle.</p>
+
+                    <p><span class="character silver_dutch tooltip" data-name="hendrik_spiker" data-tooltip="Engineer skilled in mechanical engineering. Develops new armaments that fuse Western technology with traditional weapons.">Hendrik</span> turned the <span class="weapon tooltip" data-tooltip="Prototype design of Western-style large cannon. A revolutionary weapon with power that transcends conventional matchlock guns.">Ganko Cannon</span> toward the attacking forces, while <span class="character moonlit_onmyo tooltip" data-name="karasumaru_kaya" data-tooltip="Onmyōji skilled in summoning and controlling shikigami. In combat, overwhelms enemies by deploying multiple shikigami.">Karasumaru Kaya</span> summoned storm shikigami to counter the shadow assault. Lightning lit the bay as the decisive battle reached its climax.</p>
+                </div>
+            </section>
+
+            <!-- Turn 19 -->
+            <section id="turn-19" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 19: Imperial Decisive Battle Declaration 【👑 Moment of Imperial Command】</h4>
+                    <nav class="turn-nav">
+                        <a href="#turn-18" class="prev-turn">← Previous Turn</a>
+                        <a href="playlog.html#turn-19" class="cross-link">📊 View Data</a>
+                        <a href="#turn-20" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p>Witnessing the fierce battle raging in the typhoon, the Emperor issued the final decisive battle declaration. All forces were to settle their conflict once and for all under the storm's fury, with imperial authority as witness to the ultimate resolution.</p>
+
+                    <p><span class="character moonlit_onmyo tooltip" data-name="manai_sakuya" data-tooltip="Chief Onmyōji of the Moonlit Onmyo Guild. Serves as the cornerstone of spiritual defense through powerful barrier arts and shikigami control.">Manai Sakuya</span> raised her staff against the howling wind: "By imperial command, we settle this under heaven's judgment!" <span class="character shadow_gale tooltip" data-name="kiryu_aoi" data-tooltip="Leader of the Shadow Gale Clan. With calm judgment and exceptional ninjutsu skills, oversees the strategic operations of the entire faction.">Kiryu Aoi</span> emerged from the shadows for the final confrontation: "Then let shadows and light clash for the last time!"</p>
+
+                    <p>The stage was set for the ultimate battle that would determine the future of all four factions. Under the Emperor's witness and nature's fury, the final phase began.</p>
+                </div>
+            </section>
+
+            <!-- Turn 20 -->
+            <section id="turn-20" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 20: Victory Through the Storm 【🌅 True Conclusion】</h4>
+                    <nav class="turn-nav">
+                        <a href="#turn-19" class="prev-turn">← Previous Turn</a>
+                        <a href="playlog.html#turn-20" class="cross-link">📊 View Data</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p>As the typhoon reached its peak, the final battle's conclusion arrived. The combined might of <span class="organization tooltip" data-org="moonlit_onmyo" data-tooltip="An Onmyōji group belonging to the Ashikaga family. Based at Kumano Spirit Shrine, they handle the spiritual protection of Kyoto through barrier arts and shikigami operations.">Moonlit Onmyo Guild</span>, <span class="organization tooltip" data-org="crimson_blade" data-tooltip="Mounted warrior group of the Kai Takeda family. Based at Sakurai Dueling Fields, they aim for leadership in imperial capital defense through Bushidō swordsmanship and cavalry tactics.">Crimson Blade Vanguard</span>, and <span class="organization tooltip" data-org="silver_dutch" data-tooltip="Technical research institution of the Nagasaki Dejima Western Technology Magistrate Branch under the Ōtomo family. Based at Edo Arsenal Dock, they seek to establish technological superiority through the introduction of Western technology.">Silver Dutch Institute</span> proved decisive against <span class="organization tooltip" data-org="shadow_gale" data-tooltip="A group under the Iga Jōnin Momochi Tanba family, specializing in ninjutsu and espionage warfare. Based in Ise Shadow Vale, they conduct intelligence activities in Kyoto.">Shadow Gale</span>'s final assault.</p>
+
+                    <p>The <span class="weapon tooltip" data-tooltip="Prototype design of Western-style large cannon. A revolutionary weapon with power that transcends conventional matchlock guns.">Ganko Cannon</span>'s thunderous roar mixed with the storm's fury, barriers of light pierced the darkness, and cavalry charges cut through the chaos. When dawn broke through the dissipating storm clouds, the alliance stood victorious.</p>
+
+                    <p><span class="character shadow_gale tooltip" data-name="kiryu_aoi" data-tooltip="Leader of the Shadow Gale Clan. With calm judgment and exceptional ninjutsu skills, oversees the strategic operations of the entire faction.">Kiryu Aoi</span> bowed in defeat: "The shadows acknowledge the light's victory." <span class="character moonlit_onmyo tooltip" data-name="manai_sakuya" data-tooltip="Chief Onmyōji of the Moonlit Onmyo Guild. Serves as the cornerstone of spiritual defense through powerful barrier arts and shikigami control.">Manai Sakuya</span> extended her hand in reconciliation: "There is place for shadows in our new order, if they choose peace."</p>
+
+                    <div class="objective-shift">
+                        <h4>🏆 Final Victory</h4>
+                        <p>The imperial capital alliance achieves definitive victory, establishing lasting peace and a new order that incorporates all factions</p>
+                    </div>
+
+                    <p>As the storm clouds cleared and dawn illuminated Edo Bay, the Eiroku Mist Chronicles reached their true conclusion. The four factions found their places in a new order built on mutual respect, technological advancement, and imperial unity.</p>
+                </div>
+            </section>
+        </section>
+
+        <!-- Epilogue -->
+        <section class="card">
+            <h2>🏆 Epilogue</h2>
+
+            <h3>📈 Objective Evolution: Four-Phase Battle</h3>
+            <div class="achievement-summary">
+                <div class="evolution-timeline">
+                    <div class="evolution-phase">
+                        <h4>Phase 1: Technology Competition → Imperial Duel</h4>
+                        <p>From the Ganko Cannon discovery to martial trial preparation, factions evolved from resource competition to formal authority struggle.</p>
+                    </div>
+                    <div class="evolution-phase">
+                        <h4>Phase 2: Imperial Authority → Political Resolution</h4>
+                        <p>Imperial judgment established power balance, transitioning to legitimate governance structure.</p>
+                    </div>
+                    <div class="evolution-phase">
+                        <h4>Phase 3: Shadow Revenge → Alliance Consolidation</h4>
+                        <p>Shadow Gale's resistance strengthened the three-faction alliance, establishing stable imperial capital defense.</p>
+                    </div>
+                    <div class="evolution-phase">
+                        <h4>Phase 4: Storm Decisive Battle → True Unity</h4>
+                        <p>Final confrontation under nature's fury achieved ultimate resolution and lasting peace.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>🌟 Four Factions' Role Evolution</h3>
+            <div class="faction-evolution">
+                <div class="faction-final-role">
+                    <h4>🌫️ Shadow Gale Clan</h4>
+                    <p><strong>Journey</strong>: Espionage dominance → Imperial duel defeat → Revenge campaign → Final submission</p>
+                    <p><strong>Final Role</strong>: Reformed intelligence network operating within imperial framework</p>
+                </div>
+                <div class="faction-final-role">
+                    <h4>🌙 Moonlit Onmyo Guild</h4>
+                    <p><strong>Journey</strong>: Traditional authority → Imperial favor → Leadership role → Ultimate guardian</p>
+                    <p><strong>Final Role</strong>: Spiritual protectors of the imperial capital with expanded authority</p>
+                </div>
+                <div class="faction-final-role">
+                    <h4>⚔️ Crimson Blade Vanguard</h4>
+                    <p><strong>Journey</strong>: Military prowess → Imperial auxiliary → Defensive specialist → Honored guard</p>
+                    <p><strong>Final Role</strong>: Elite Imperial Guard corps with highway defense responsibility</p>
+                </div>
+                <div class="faction-final-role">
+                    <h4>⚙️ Silver Dutch Institute</h4>
+                    <p><strong>Journey</strong>: Technological innovation → Strategic alliance → Technical integration → Cultural bridge</p>
+                    <p><strong>Final Role</strong>: Imperial technology advisors bridging East and West</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2024 Eiroku Mist Chronicles. Generated by Narrative Engine autonomous AI system.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize tooltip functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tooltips = document.querySelectorAll('.tooltip');
+            tooltips.forEach(tooltip => {
+                tooltip.addEventListener('mouseenter', showTooltip);
+                tooltip.addEventListener('mouseleave', hideTooltip);
+            });
+        });
+
+        function showTooltip(event) {
+            const tooltipText = event.target.getAttribute('data-tooltip');
+            if (tooltipText) {
+                const tooltipElement = document.createElement('div');
+                tooltipElement.className = 'tooltip-popup';
+                tooltipElement.textContent = tooltipText;
+                tooltipElement.style.position = 'absolute';
+                tooltipElement.style.backgroundColor = 'rgba(0, 0, 0, 0.9)';
+                tooltipElement.style.color = 'white';
+                tooltipElement.style.padding = '8px 12px';
+                tooltipElement.style.borderRadius = '4px';
+                tooltipElement.style.fontSize = '14px';
+                tooltipElement.style.maxWidth = '300px';
+                tooltipElement.style.zIndex = '1000';
+                tooltipElement.style.pointerEvents = 'none';
+
+                document.body.appendChild(tooltipElement);
+
+                const rect = event.target.getBoundingClientRect();
+                tooltipElement.style.left = rect.left + 'px';
+                tooltipElement.style.top = (rect.bottom + 5) + 'px';
+
+                event.target.tooltipElement = tooltipElement;
+            }
+        }
+
+        function hideTooltip(event) {
+            if (event.target.tooltipElement) {
+                document.body.removeChild(event.target.tooltipElement);
+                event.target.tooltipElement = null;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,467 @@
+{
+  "parties": {
+    "shadow_gale_clan": {
+      "id": "shadow_gale_clan",
+      "name": "影颶の衆",
+      "faction": "伊賀上忍・百地丹波家",
+      "location": "ise_shadow_vale",
+      "resources": {
+        "currency": 180,
+        "materials": {
+          "shadow_lotus": 6,
+          "smoke_bombs": 12,
+          "information_seals": 4
+        }
+      },
+      "capabilities": {
+        "exploration": 7,
+        "trade": 5,
+        "combat": 6,
+        "diplomacy": 4,
+        "crafting": 5,
+        "infiltration": 9
+      },
+      "morale": 8,
+      "characterProfile": {
+        "leadershipStyle": "silent_meritocracy",
+        "decisionMaking": "opportunistic_calculus",
+        "communicationStyle": "coded_succinct",
+        "partyMembers": [
+          {
+            "name": "霧生 葵",
+            "role": "影衆頭",
+            "personality": "静謐で洞察深い",
+            "speechStyle": "低い声で短く命じる",
+            "specialization": "戦略立案と潜入"
+          },
+          {
+            "name": "風魔 迅",
+            "role": "機先斥候",
+            "personality": "皮肉屋で大胆",
+            "speechStyle": "挑発混じりのささやき",
+            "specialization": "索敵と撹乱"
+          },
+          {
+            "name": "鵺堂 紅月",
+            "role": "毒薬師",
+            "personality": "冷静沈着",
+            "speechStyle": "淡々と分析報告",
+            "specialization": "毒と幻術調合"
+          }
+        ],
+        "speechPatterns": {
+          "internal": "簡潔な暗号表現で意思統一",
+          "external": "礼節を保ちつつも威圧的な言外の圧"
+        }
+      }
+    },
+    "moonlit_onmyo_guild": {
+      "id": "moonlit_onmyo_guild",
+      "name": "月影陰陽寮",
+      "faction": "京洛公武調停衆・足利家",
+      "location": "kumano_spirit_shrine",
+      "resources": {
+        "currency": 160,
+        "materials": {
+          "spirit_talismans": 9,
+          "moon_silver": 3,
+          "incense_offerings": 10
+        }
+      },
+      "capabilities": {
+        "exploration": 5,
+        "trade": 4,
+        "combat": 7,
+        "diplomacy": 6,
+        "crafting": 6,
+        "arcana": 9
+      },
+      "morale": 7,
+      "characterProfile": {
+        "leadershipStyle": "ritual_consensus",
+        "decisionMaking": "divinatory_projection",
+        "communicationStyle": "poetic_formal",
+        "partyMembers": [
+          {
+            "name": "真名井 朔夜",
+            "role": "陰陽頭",
+            "personality": "静かな情熱家",
+            "speechStyle": "和歌を織り込んだ宣託",
+            "specialization": "結界術"
+          },
+          {
+            "name": "烏丸 伽耶",
+            "role": "式神使い",
+            "personality": "豪胆で直感的",
+            "speechStyle": "率直で飾り気のない断言",
+            "specialization": "戦闘式神運用"
+          },
+          {
+            "name": "蘆屋 蛍",
+            "role": "占術士",
+            "personality": "内省的で観察眼鋭い",
+            "speechStyle": "静かな囁き",
+            "specialization": "未来視と霊視"
+          }
+        ],
+        "speechPatterns": {
+          "internal": "柔らかくも厳かな口調で議論",
+          "external": "儀礼的敬語に希少な比喩を添える"
+        }
+      }
+    },
+    "crimson_blade_vanguard": {
+      "id": "crimson_blade_vanguard",
+      "name": "紅刃先鋒隊",
+      "faction": "甲斐武田家・騎馬武者団",
+      "location": "sakurai_dueling_fields",
+      "resources": {
+        "currency": 150,
+        "materials": {
+          "folded_steel": 8,
+          "war_horses": 5,
+          "banner_silk": 6
+        }
+      },
+      "capabilities": {
+        "exploration": 4,
+        "trade": 3,
+        "combat": 9,
+        "diplomacy": 5,
+        "crafting": 4,
+        "tactics": 8
+      },
+      "morale": 9,
+      "characterProfile": {
+        "leadershipStyle": "martial_command",
+        "decisionMaking": "decisive_charge",
+        "communicationStyle": "resonant_cadence",
+        "partyMembers": [
+          {
+            "name": "真田 烈火",
+            "role": "隊長",
+            "personality": "豪胆で闘志旺盛",
+            "speechStyle": "力強く端的な檄",
+            "specialization": "槍騎兵指揮"
+          },
+          {
+            "name": "結城 鞘音",
+            "role": "剣士",
+            "personality": "冷静な求道者",
+            "speechStyle": "静かな剣術理論の分析",
+            "specialization": "二刀流剣術"
+          },
+          {
+            "name": "佐々木 凜九郎",
+            "role": "軍師",
+            "personality": "老練で策略家",
+            "speechStyle": "重みのある低声で指示",
+            "specialization": "布陣と間合い制御"
+          }
+        ],
+        "speechPatterns": {
+          "internal": "武辺語と軍略語が交錯する熱い討議",
+          "external": "礼節を保ちつつも挑戦的な口上"
+        }
+      }
+    },
+    "silver_dutch_institute": {
+      "id": "silver_dutch_institute",
+      "name": "銀蘭機巧院",
+      "faction": "長崎出島西洋技術奉行支局・大友家",
+      "location": "edo_arsenal_dock",
+      "resources": {
+        "currency": 210,
+        "materials": {
+          "clockwork_parts": 10,
+          "black_powder": 14,
+          "glass_lenses": 7
+        }
+      },
+      "capabilities": {
+        "exploration": 6,
+        "trade": 8,
+        "combat": 5,
+        "diplomacy": 7,
+        "crafting": 9,
+        "engineering": 10
+      },
+      "morale": 8,
+      "characterProfile": {
+        "leadershipStyle": "guild_council",
+        "decisionMaking": "iterative_prototyping",
+        "communicationStyle": "precise_multilingual",
+        "partyMembers": [
+          {
+            "name": "ヨハン・ファン・デル・スターク",
+            "role": "技術院長",
+            "personality": "理論派で几帳面",
+            "speechStyle": "蘭語混じりの丁寧な和訳",
+            "specialization": "砲術工学"
+          },
+          {
+            "name": "通詞 お亀",
+            "role": "外交通訳",
+            "personality": "社交的で度胸がある",
+            "speechStyle": "柔らかな肥前訛りで調整",
+            "specialization": "交渉と情報収集"
+          },
+          {
+            "name": "ヘンドリク・スパイカー",
+            "role": "兵装技師",
+            "personality": "好奇心旺盛な発明家",
+            "speechStyle": "早口で技術用語を列挙",
+            "specialization": "機巧武器設計"
+          }
+        ],
+        "speechPatterns": {
+          "internal": "蘭語と和語を交えた議論で技術仕様を詰める",
+          "external": "礼節を守りつつ技術優位を強調"
+        }
+      }
+    }
+  },
+  "regions": {
+    "ise_shadow_vale": {
+      "id": "ise_shadow_vale",
+      "name": "伊勢影ヶ淵",
+      "type": "forest",
+      "capacity": 2,
+      "neighbors": [
+        "koga_mist_forest",
+        "kyoto_arcane_quarter"
+      ],
+      "occupantParties": [
+        "shadow_gale_clan"
+      ],
+      "resources": [
+        "shadow_lotus",
+        "silk_contracts"
+      ],
+      "specialEffects": [
+        "night_veil: 隠密判定+2",
+        "fog_mires: 移動コスト+1"
+      ],
+      "influence": {
+        "shadow_gale_clan": 62
+      }
+    },
+    "koga_mist_forest": {
+      "id": "koga_mist_forest",
+      "name": "甲賀朧林",
+      "type": "forest",
+      "capacity": 3,
+      "neighbors": [
+        "ise_shadow_vale",
+        "kumano_spirit_shrine"
+      ],
+      "occupantParties": [],
+      "resources": [
+        "rare_herbs",
+        "mist_silk"
+      ],
+      "specialEffects": [
+        "mist_screen: 斥候判定難化",
+        "hidden_passages: 秘密経路"
+      ],
+      "influence": {}
+    },
+    "kumano_spirit_shrine": {
+      "id": "kumano_spirit_shrine",
+      "name": "熊野霊峰社",
+      "type": "shrine",
+      "capacity": 2,
+      "neighbors": [
+        "koga_mist_forest",
+        "kyoto_arcane_quarter",
+        "sakurai_dueling_fields"
+      ],
+      "occupantParties": [
+        "moonlit_onmyo_guild"
+      ],
+      "resources": [
+        "spirit_talismans",
+        "sacred_water"
+      ],
+      "specialEffects": [
+        "spirit_currents: 妖術判定+2",
+        "kami_favor: 祝詞成功率向上"
+      ],
+      "influence": {
+        "moonlit_onmyo_guild": 58
+      }
+    },
+    "kyoto_arcane_quarter": {
+      "id": "kyoto_arcane_quarter",
+      "name": "京洛術院区",
+      "type": "settlement",
+      "capacity": 4,
+      "neighbors": [
+        "ise_shadow_vale",
+        "kumano_spirit_shrine",
+        "edo_arsenal_dock"
+      ],
+      "occupantParties": [],
+      "resources": [
+        "moon_silver",
+        "scholar_scrolls",
+        "court_influence"
+      ],
+      "specialEffects": [
+        "court_intrigue: 外交判定+1",
+        "arcane_libraries: 妖術研究効率+2"
+      ],
+      "influence": {
+        "moonlit_onmyo_guild": 22,
+        "shadow_gale_clan": 10
+      }
+    },
+    "edo_arsenal_dock": {
+      "id": "edo_arsenal_dock",
+      "name": "江戸武備船渠",
+      "type": "port",
+      "capacity": 3,
+      "neighbors": [
+        "kyoto_arcane_quarter",
+        "azuchi_clockwork_foundry"
+      ],
+      "occupantParties": [
+        "silver_dutch_institute"
+      ],
+      "resources": [
+        "black_powder",
+        "foreign_guns",
+        "trade_contracts"
+      ],
+      "specialEffects": [
+        "naval_supply: 補給効率+2",
+        "western_connex: 外交交渉+2"
+      ],
+      "influence": {
+        "silver_dutch_institute": 65
+      }
+    },
+    "azuchi_clockwork_foundry": {
+      "id": "azuchi_clockwork_foundry",
+      "name": "安土機巧炉",
+      "type": "industrial",
+      "capacity": 3,
+      "neighbors": [
+        "edo_arsenal_dock",
+        "sakurai_dueling_fields"
+      ],
+      "occupantParties": [],
+      "resources": [
+        "clockwork_parts",
+        "refined_iron"
+      ],
+      "specialEffects": [
+        "gear_resonance: 工学判定+2",
+        "smoke_cover: 視界-1"
+      ],
+      "influence": {
+        "silver_dutch_institute": 18
+      }
+    },
+    "sakurai_dueling_fields": {
+      "id": "sakurai_dueling_fields",
+      "name": "桜井試合原",
+      "type": "plains",
+      "capacity": 2,
+      "neighbors": [
+        "kumano_spirit_shrine",
+        "azuchi_clockwork_foundry"
+      ],
+      "occupantParties": [
+        "crimson_blade_vanguard"
+      ],
+      "resources": [
+        "folded_steel",
+        "training_grounds"
+      ],
+      "specialEffects": [
+        "clash_entrainment: 剣術訓練成功率+2",
+        "banner_winds: 士気+1"
+      ],
+      "influence": {
+        "crimson_blade_vanguard": 61
+      }
+    }
+  },
+  "market": {
+    "currentPrices": {
+      "shadow_lotus": 38,
+      "silk_contracts": 22,
+      "spirit_talismans": 44,
+      "moon_silver": 55,
+      "folded_steel": 36,
+      "war_horses": 40,
+      "clockwork_parts": 52,
+      "black_powder": 46,
+      "foreign_guns": 62,
+      "trade_contracts": 28,
+      "rare_herbs": 30,
+      "refined_iron": 33
+    },
+    "priceHistory": [],
+    "completedTrades": []
+  },
+  "relationships": {
+    "crimson_blade_vanguard__moonlit_onmyo_guild": {
+      "hostility": 4,
+      "cooperation": 5,
+      "competition": 6,
+      "trust": 5,
+      "lastInteraction": "turn_0",
+      "history": []
+    },
+    "crimson_blade_vanguard__shadow_gale_clan": {
+      "hostility": 6,
+      "cooperation": 3,
+      "competition": 7,
+      "trust": 3,
+      "lastInteraction": "turn_0",
+      "history": []
+    },
+    "crimson_blade_vanguard__silver_dutch_institute": {
+      "hostility": 3,
+      "cooperation": 6,
+      "competition": 5,
+      "trust": 6,
+      "lastInteraction": "turn_0",
+      "history": []
+    },
+    "moonlit_onmyo_guild__shadow_gale_clan": {
+      "hostility": 5,
+      "cooperation": 4,
+      "competition": 6,
+      "trust": 4,
+      "lastInteraction": "turn_0",
+      "history": []
+    },
+    "moonlit_onmyo_guild__silver_dutch_institute": {
+      "hostility": 3,
+      "cooperation": 7,
+      "competition": 4,
+      "trust": 6,
+      "lastInteraction": "turn_0",
+      "history": []
+    },
+    "shadow_gale_clan__silver_dutch_institute": {
+      "hostility": 7,
+      "cooperation": 2,
+      "competition": 7,
+      "trust": 2,
+      "lastInteraction": "turn_0",
+      "history": []
+    }
+  },
+  "turn": 1,
+  "worldAge": 1,
+  "narrativeContext": {
+    "era": "永禄の乱世",
+    "season": "初夏",
+    "weather": "霧を含む湿潤な風",
+    "headline": "諸家が密かに勢力圏の奪い合いを開始"
+  }
+}

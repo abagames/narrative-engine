@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>永禄の霧戦記 - Narrative Replay</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="data.js"></script>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="main-header">
+      <div class="container">
+        <nav class="main-nav">
+          <a href="index.html">🏠 Dashboard</a>
+          <a href="narrative.html" class="active">📖 Narrative</a>
+          <a href="playlog.html">📊 Playlog</a>
+          <a href="worldmap.html">🗺️ World Map</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Campaign Overview -->
+        <section class="campaign-overview">
+            <h1>📖 永禄の霧戦記 - Narrative Replay</h1>
+            <p class="subtitle">四勢力による戦国覇権争奪戦の詳細記録<br>
+            全15ターンの冒険を物語形式で再現、用語解説と相互リンク機能付き</p>
+        </section>
+
+        <!-- Character Introduction -->
+        <section class="adventurers-intro">
+            <h2>🎭 登場人物紹介</h2>
+
+            <div class="turn-section">
+                <div class="party-content">
+                    <div class="party-description">
+                        <h3>🌫️ 影颶の衆</h3>
+                        <p><strong>拠点</strong>: <span class="location tooltip" data-region="ise_shadow_vale" data-tooltip="伊勢国南部の険しい山間部。深い渓谷と濃霧に覆われた天然の要害であり、忍者の隠れ里として最適な立地。">伊勢影ヶ淵</span> | <strong>専門分野</strong>: 忍術諜報戦</p>
+
+                        <ul>
+                            <li><strong><span class="character shadow_gale tooltip" data-name="kiryu_aoi" data-tooltip="影颶の衆の頭領。冷静沈着な判断力と卓越した忍術により、勢力全体の戦略を統括する。">霧生 葵</span></strong> (影衆頭): 静謐で洞察深い性格、責任者として戦略立案と潜入を統括
+                                <br>- 口調: 簡潔で冷静な分析</li>
+                            <li><strong><span class="character shadow_gale tooltip" data-name="fuma_jin" data-tooltip="風魔党の出身。優れた身体能力と鋭敏な感覚により、敵情偵察と攪乱戦術を担当する。">風魔 迅</span></strong> (機先斥候): 皮肉屋で大胆、索敵と撹乱を担当
+                                <br>- 口調: 皮肉で挑発的</li>
+                            <li><strong><span class="character shadow_gale tooltip" data-name="nuedo_kogetsu" data-tooltip="毒薬と幻術の専門家。秘薬の調合と敵の無力化において他の追随を許さない技術を持つ。">鵺堂 紅月</span></strong> (毒薬師): 冷静沈着な性格で毒と幻術調合の専門家
+                                <br>- 口調: 物静かで技術的</li>
+                        </ul>
+
+                        <p><strong>🎯 初期目標</strong>: 伊賀上忍・百地丹波家の威信を保ちつつ、京洛での諜報網を確立し、帝都における影響力を獲得する</p>
+                        <p><strong>活動方針</strong>: 専門性に基づく情報主導戦略</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="turn-section">
+                <div class="party-content">
+                    <div class="party-description">
+                        <h3>🌙 月影陰陽寮</h3>
+                        <p><strong>拠点</strong>: <span class="location tooltip" data-region="kumano_spirit_shrine" data-tooltip="熊野三山の一つ。古来より霊験あらたかな聖地として知られ、陰陽道修行の根本道場。">熊野霊峰社</span> | <strong>専門分野</strong>: 陰陽妖術</p>
+
+                        <ul>
+                            <li><strong><span class="character moonlit_onmyo tooltip" data-name="manai_sakuya" data-tooltip="月影陰陽寮の筆頭陰陽師。強力な結界術と式神統制により、霊的防護の要となる。">真名井 朔夜</span></strong> (陰陽頭): 静かな情熱家、結界術の専門家
+                                <br>- 口調: 和歌を交えた格式ある発言</li>
+                            <li><strong><span class="character moonlit_onmyo tooltip" data-name="karasumaru_kaya" data-tooltip="式神の召喚と操縦に長けた陰陽師。戦闘においては多数の式神を駆使して敵を圧倒する。">烏丸 伽耶</span></strong> (式神使い): 豪胆で直感的、戦闘式神運用を担う
+                                <br>- 口調: 力強く直感的な指揮</li>
+                            <li><strong><span class="character moonlit_onmyo tooltip" data-name="ashiya_hotaru" data-tooltip="卓越した霊能力を持つ占術師。未来視により戦局を予測し、重要な戦略判断の助言を行う。">蘆屋 蛍</span></strong> (占術士): 内省的で観察眼鋭い、未来視と霊視を司る
+                                <br>- 口調: 静謐で洞察に富む</li>
+                        </ul>
+
+                        <p><strong>🎯 初期目標</strong>: 京洛公武調停衆・足利家として帝都の霊的守護者としての地位を確立し、朝廷からの信任を得る</p>
+                        <p><strong>活動方針</strong>: 伝統的権威による調和的統治</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="turn-section">
+                <div class="party-content">
+                    <div class="party-description">
+                        <h3>⚔️ 紅刃先鋒隊</h3>
+                        <p><strong>拠点</strong>: <span class="location tooltip" data-region="sakurai_dueling_fields" data-tooltip="大和国の古戦場。武士の練兵場として使われ、多くの武将が剣術と騎馬戦術を磨いた歴史ある戦場。">桜井試合原</span> | <strong>専門分野</strong>: 武士道剣術</p>
+
+                        <ul>
+                            <li><strong><span class="character crimson_blade tooltip" data-name="sanada_rekka" data-tooltip="武田流騎馬戦術の継承者。槍術に秀で、騎馬隊を率いて敵陣への突撃を指揮する。">真田 烈火</span></strong> (隊長): 豪胆で闘志旺盛、槍騎兵指揮の専門家
+                                <br>- 口調: 力強い戦場指揮</li>
+                            <li><strong><span class="character crimson_blade tooltip" data-name="yuki_sayone" data-tooltip="二刀流の達人。左右の剣を自在に操り、個人戦闘において驚異的な戦闘力を発揮する。">結城 鞘音</span></strong> (剣士): 冷静な求道者、二刀流剣術を極める
+                                <br>- 口調: 簡潔で実用的</li>
+                            <li><strong><span class="character crimson_blade tooltip" data-name="sasaki_rinkuro" data-tooltip="戦術理論に精通した軍師。部隊配置と戦場での間合い制御により、数的不利を覆す戦術を編み出す。">佐々木 凜九郎</span></strong> (軍師): 老練で策略家、布陣と間合い制御の達人
+                                <br>- 口調: 老練で思慮深い戦術分析</li>
+                        </ul>
+
+                        <p><strong>🎯 初期目標</strong>: 甲斐武田家の威信を高め、騎馬武者団として帝都防衛における主導権を握る</p>
+                        <p><strong>活動方針</strong>: 武士道に基づく正面戦略</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="turn-section">
+                <div class="party-content">
+                    <div class="party-description">
+                        <h3>⚙️ 銀蘭機巧院</h3>
+                        <p><strong>拠点</strong>: <span class="location tooltip" data-region="edo_arsenal_dock" data-tooltip="江戸湾岸の造船・技術研究施設。西洋技術の導入拠点として機能し、新式武器の開発が行われている。">江戸武備船渠</span> | <strong>専門分野</strong>: 西洋技術工学</p>
+
+                        <ul>
+                            <li><strong><span class="character silver_dutch tooltip" data-name="johan_stark" data-tooltip="オランダから来日した技術者。西洋の砲術技術に精通し、日本の戦術体系に革新をもたらす。">ヨハン・ファン・デル・スターク</span></strong> (技術院長): 理論派で几帳面、砲術工学の専門家
+                                <br>- 口調: 学術的で正確な技術説明</li>
+                            <li><strong><span class="character silver_dutch tooltip" data-name="okame_tsuyaku" data-tooltip="多言語に通じる通詞。外国人技術者との橋渡しを行い、政治的交渉においても重要な役割を担う。">通詞 お亀</span></strong> (外交通訳): 社交的で度胸がある、交渉と情報収集を担当
+                                <br>- 口調: 社交的で機転の利いた交渉</li>
+                            <li><strong><span class="character silver_dutch tooltip" data-name="hendrik_spiker" data-tooltip="機械工学に長けた技師。従来の武器に西洋技術を融合させた新型兵装の開発を手がける。">ヘンドリク・スパイカー</span></strong> (兵装技師): 好奇心旺盛な発明家、機巧武器設計の専門
+                                <br>- 口調: 興奮した発明家の探求心</li>
+                        </ul>
+
+                        <p><strong>🎯 初期目標</strong>: 長崎出島西洋技術奉行支局・大友家として先進技術の普及を図り、帝都での技術的優位を確立する</p>
+                        <p><strong>活動方針</strong>: 技術革新による協調的実用主義</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phase Evolution -->
+        <section class="card">
+            <h2>🌊 四段階進化</h2>
+            <div class="phase-evolution">
+                <div class="phase-timeline">
+                    <div class="phase military-phase">
+                        <h3>⚔️ 軍事征服段階 (Turn 1-5)</h3>
+                        <p>濃霧降臨から朝廷監察まで。雁行砲発見により軍事技術競争が激化し、各勢力が政治・技術・忍術の三戦線で覇権を争う。</p>
+                    </div>
+                    <div class="phase political-phase">
+                        <h3>⚖️ 政治権威段階 (Turn 6-10)</h3>
+                        <p>帝勅決闘から帝の裁定まで。帝の御前での公式な武術裁判により、暗闘が正式な権威争いへと格上げされる。</p>
+                    </div>
+                    <div class="phase legal-phase">
+                        <h3>📜 法的解決段階 (Turn 11-15)</h3>
+                        <p>桜井原奇襲から祭礼朝の新均衡まで。影颶の復讐と帝都三勢力の連携により、最終的な勢力配置が確定。</p>
+                    </div>
+                    <div class="phase final-phase">
+                        <h3>⚡ 最終決戦段階 (Turn 16-20)</h3>
+                        <p>江戸公開演習から嵐裂けし勝利まで。台風という自然の猛威の下で繰り広げられた帝都連衡と影颶の最終決戦。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Adventure Records -->
+        <section class="card">
+            <h2>📜 冒険記録</h2>
+
+            <!-- First Act: Mist-Shrouded Kyoto -->
+            <h3>第一幕：霧立つ京洛 (Turn 1-5)</h3>
+
+            <!-- Turn 1 -->
+            <section id="turn-1" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 1: 濃霧降臨 【🌫️ 環境変化】</h4>
+                    <nav class="turn-nav">
+                        <a href="playlog.html#turn-1" class="cross-link">📊 View Data</a>
+                        <a href="#turn-2" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <div class="term-explanation">
+                        <h5>💡 用語解説</h5>
+                        <p><strong><span class="organization tooltip" data-org="shadow_gale" data-tooltip="伊賀上忍・百地丹波家の配下で、忍術と諜報戦を専門とする集団。伊勢影ヶ淵を本拠地とし、京洛での諜報活動を展開。">影颶の衆</span></strong> - 伊賀上忍・百地丹波家配下の忍び衆。霧生葵を頭として、諜報戦と潜入作戦を専門とする。<strong><span class="organization tooltip" data-org="moonlit_onmyo" data-tooltip="足利家に属する陰陽師集団。熊野霊峰社を拠点とし、結界術と式神運用で京洛の霊的守護を担う。">月影陰陽寮</span></strong> - 足利家に属する陰陽師集団。真名井朔夜を筆頭に、結界術と式神運用で京洛の霊的守護を担う。</p>
+                    </div>
+
+                    <p>永禄の乱世、初夏の朝。濃霧が伊勢と京洛を覆い、夜闇の帳が昼間にも降りた。この超常の霧の中で、四つの勢力が静かに動き始めた。</p>
+
+                    <p><span class="character moonlit_onmyo tooltip" data-name="manai_sakuya" data-tooltip="月影陰陽寮の筆頭陰陽師。強力な結界術と式神統制により、霊的防護の要となる。">真名井朔夜</span>は、宮中路地で忍びの足跡と冷たい鉄臭を嗅ぎ取った。「霞こそ　結界の紐　結びおき」— 和歌で結界の骨組みを唱えながら、<span class="character moonlit_onmyo tooltip" data-name="karasumaru_kaya" data-tooltip="式神の召喚と操縦に長けた陰陽師。戦闘においては多数の式神を駆使して敵を圧倒する。">伽耶</span>に式神を四辻へ放つよう命じる。<span class="character moonlit_onmyo tooltip" data-name="ashiya_hotaru" data-tooltip="卓越した霊能力を持つ占術師。未来視により戦局を予測し、重要な戦略判断の助言を行う。">蘆屋蛍</span>が霊気の流れを測ると、伊賀衆が夜半に御所の文官宿舎で密書を奪う算段だと看破した。</p>
+
+                    <p>一方、近江の<span class="location tooltip" data-region="azuchi_foundry" data-tooltip="織田家の技術研究拠点。各種工芸品と武器の製造が行われる先進的な工房群。">安土機巧炉</span>では、<span class="organization tooltip" data-org="crimson_blade" data-tooltip="甲斐武田家の騎馬武者団。桜井試合原を本拠地とし、武士道剣術と騎馬戦術で帝都防衛の主導権を目指す。">紅刃先鋒隊</span>と<span class="organization tooltip" data-org="silver_dutch" data-tooltip="長崎出島西洋技術奉行支局・大友家の技術研究機関。江戸武備船渠を拠点とし、西洋技術の導入で技術的優位を確立しようとする。">銀蘭機巧院</span>が鍛造炉の主導権を争う火花を散らしていた。霧の向こうで、<span class="organization tooltip" data-org="shadow_gale" data-tooltip="伊賀上忍・百地丹波家の配下で、忍術と諜報戦を専門とする集団。伊勢影ヶ淵を本拠地とし、京洛での諜報活動を展開。">影颶の衆</span>は縄梯子を仕込み、<span class="organization tooltip" data-org="silver_dutch" data-tooltip="長崎出島西洋技術奉行支局・大友家の技術研究機関。江戸武備船渠を拠点とし、西洋技術の導入で技術的優位を確立しようとする。">銀蘭機巧院</span>は安土で炉心の歯車を整備しながら紅刃との技術競争に身を投じる。</p>
+
+                    <p>朔夜は静かに告げた。「霧は紐、敵は珠。絡め取って首座へ差し出すのみ」— 足利家の威信を保つため、都心での結界儀式を成功させ、伊賀の動きを逆手に取る算段だった。</p>
+                </div>
+            </section>
+
+            <!-- Turn 2 -->
+            <section id="turn-2" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 2: 雁行砲発見 【⚔️ 技術転換点】</h4>
+                    <nav class="turn-nav">
+                        <a href="#turn-1" class="prev-turn">← Previous Turn</a>
+                        <a href="playlog.html#turn-2" class="cross-link">📊 View Data</a>
+                        <a href="#turn-3" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <div class="term-explanation">
+                        <h5>💡 用語解説</h5>
+                        <p><strong><span class="weapon tooltip" data-tooltip="西洋式大筒の試作設計図。従来の火縄銃を超越した威力を持つ革命的武器。">雁行砲</span></strong> - 西洋式大筒の試作図。安土機巧炉で発見され、武田と大友の緊張を最高潮に押し上げた戦略兵器。<strong><span class="location tooltip" data-region="azuchi_foundry" data-tooltip="織田家の技術研究拠点。各種工芸品と武器の製造が行われる先進的な工房群。">安土機巧炉</span></strong> - 近江にある工業拠点で、西洋技術と日本の職人技が融合する場所。</p>
+                    </div>
+
+                    <p><span class="location tooltip" data-region="azuchi_foundry" data-tooltip="織田家の技術研究拠点。各種工芸品と武器の製造が行われる先進的な工房群。">安土機巧炉</span>で露見した<span class="weapon tooltip" data-tooltip="西洋式大筒の試作設計図。従来の火縄銃を超越した威力を持つ革命的武器。">雁行砲</span>図面が、戦局を一変させた。この西洋式大筒の試作図を巡り、<span class="organization tooltip" data-org="crimson_blade" data-tooltip="甲斐武田家の騎馬武者団。桜井試合原を本拠地とし、武士道剣術と騎馬戦術で帝都防衛の主導権を目指す。">紅刃先鋒隊</span>が炉心を押さえにかかる一方、<span class="organization tooltip" data-org="silver_dutch" data-tooltip="長崎出島西洋技術奉行支局・大友家の技術研究機関。江戸武備船渠を拠点とし、西洋技術の導入で技術的優位を確立しようとする。">銀蘭機巧院</span>は危険手当と外交で工匠と領主を抱き込み主導権を奪い返した。</p>
+
+                    <p><span class="character silver_dutch tooltip" data-name="johan_stark" data-tooltip="オランダから来日した技術者。西洋の砲術技術に精通し、日本の戦術体系に革新をもたらす。">ヨハン</span>は炉内の歯車室に並ぶ鍛冶衆の怯えを感じ取り、紅刃の槍が試作筒の芯を包囲していることを悟った。<span class="character silver_dutch tooltip" data-name="okame_tsuyaku" data-tooltip="多言語に通じる通詞。外国人技術者との橋渡しを行い、政治的交渉においても重要な役割を担う。">通詞お亀</span>は「領主に工匠保護の朱印を出させれば、槍を向けにくくなる」と提案し、<span class="character silver_dutch tooltip" data-name="hendrik_spiker" data-tooltip="機械工学に長けた技師。従来の武器に西洋技術を融合させた新型兵装の開発を手がける。">ヘンドリク</span>は「安定器を二重化すれば槍の突き込みでも砲架は揺れない」と主張した。</p>
+
+                    <div class="objective-shift">
+                        <h4>🔄 目標転換点</h4>
+                        <p>雁行砲発見により、単なる勢力争いから軍事技術を巡る本格的な覇権争いへ</p>
+                    </div>
+
+                    <p>銀蘭は危険手当二十貫と雁行砲完成後の分配を保証し、工匠を味方につけることに成功。守護代への献策で工房への武装進入を制限させ、技術を以て武力を退けた。この瞬間、技術革新が戦術を変える新時代の到来を予感させた。</p>
+                </div>
+            </section>
+
+            <!-- Turn 3 -->
+            <section id="turn-3" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 3: 火薬封鎖 【💰 経済戦略】</h4>
+                    <nav class="turn-nav">
+                        <a href="#turn-2" class="prev-turn">← Previous Turn</a>
+                        <a href="playlog.html#turn-3" class="cross-link">📊 View Data</a>
+                        <a href="#turn-4" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p>幕府巡察使が<span class="location tooltip" data-region="edo_arsenal_dock" data-tooltip="江戸湾岸の造船・技術研究施設。西洋技術の導入拠点として機能し、新式武器の開発が行われている。">江戸武備船渠</span>を封鎖し火薬検めを開始すると、諸勢力が火器調達路を巡る神経戦を展開した。火薬価格は一気に跳ね上がり、各勢力の補給線が揺らいだ。</p>
+
+                    <p><span class="character crimson_blade tooltip" data-name="sanada_rekka" data-tooltip="武田流騎馬戦術の継承者。槍術に秀で、騎馬隊を率いて敵陣への突撃を指揮する。">真田烈火</span>は桟橋へ突入し、巡察使を前に軍法を引用した。「武田家は天正以来の火砲運用を担う、押収より供出の方が幕府の益だ」— 武威と法の両面で圧をかけ、火薬樽の押収命令を武田名義で取り付けることに成功した。</p>
+
+                    <p>同時に<span class="organization tooltip" data-org="shadow_gale" data-tooltip="伊賀上忍・百地丹波家の配下で、忍術と諜報戦を専門とする集団。伊勢影ヶ淵を本拠地とし、京洛での諜報活動を展開。">影颶の衆</span>は巡察帳簿を書き換え、<span class="organization tooltip" data-org="moonlit_onmyo" data-tooltip="足利家に属する陰陽師集団。熊野霊峰社を拠点とし、結界術と式神運用で京洛の霊的守護を担う。">月影陰陽寮</span>は霊符を銀蘭へ送って火薬樽を合法的に確保させた。江戸港は火薬・情報・結界の三正面での争奪戦の舞台となった。</p>
+                </div>
+            </section>
+
+            <!-- Turn 4 -->
+            <section id="turn-4" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 4: 台風前線 【🌪️ 自然の試練】</h4>
+                    <nav class="turn-nav">
+                        <a href="#turn-3" class="prev-turn">← Previous Turn</a>
+                        <a href="playlog.html#turn-4" class="cross-link">📊 View Data</a>
+                        <a href="#turn-5" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p>台風前線が<span class="location tooltip" data-region="edo_arsenal_dock" data-tooltip="江戸湾岸の造船・技術研究施設。西洋技術の導入拠点として機能し、新式武器の開発が行われている。">江戸港</span>を荒らす中、<span class="organization tooltip" data-org="shadow_gale" data-tooltip="伊賀上忍・百地丹波家の配下で、忍術と諜報戦を専門とする集団。伊勢影ヶ淵を本拠地とし、京洛での諜報活動を展開。">影颶の衆</span>が巡察帳簿を書き換えて紅刃の押収命令を無効化し、嵐対応の官帳を掌握した。<span class="character shadow_gale tooltip" data-name="kiryu_aoi" data-tooltip="影颶の衆の頭領。冷静沈着な判断力と卓越した忍術により、勢力全体の戦略を統括する。">霧生葵</span>は「命令書を溶かせば火薬は宙ぶらりんだ」と冷静に算段し、<span class="character shadow_gale tooltip" data-name="fuma_jin" data-tooltip="風魔党の出身。優れた身体能力と鋭敏な感覚により、敵情偵察と攪乱戦術を担当する。">風魔迅</span>は「防波柵の影に潜れば巡察衆は気づかない」と囁いた。</p>
+
+                    <p>嵐音に紛れて帳簿差し替えと封蝋の偽造を同時に行い、<span class="character shadow_gale tooltip" data-name="nuedo_kogetsu" data-tooltip="毒薬と幻術の専門家。秘薬の調合と敵の無力化において他の追随を許さない技術を持つ。">鵺堂紅月</span>が護符を利用して再封印を完成させた。影颶が調整した帳簿が嵐後の唯一の正本となる算段だった。</p>
+                </div>
+            </section>
+
+            <!-- Turn 5 -->
+            <section id="turn-5" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 5: 朝廷監察 【👑 政治的試練】</h4>
+                    <nav class="turn-nav">
+                        <a href="#turn-4" class="prev-turn">← Previous Turn</a>
+                        <a href="playlog.html#turn-5" class="cross-link">📊 View Data</a>
+                        <a href="#turn-6" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <div class="term-explanation">
+                        <h5>💡 用語解説</h5>
+                        <p><strong>朝廷監察</strong> - 帝より派遣された調査官。京洛に到着し、忍びと陰陽の協議記録提出を要求した重要な政治的圧力。</p>
+                    </div>
+
+                    <p>朝廷監察が京洛に乗り込み、<span class="organization tooltip" data-org="moonlit_onmyo" data-tooltip="足利家に属する陰陽師集団。熊野霊峰社を拠点とし、結界術と式神運用で京洛の霊的守護を担う。">月影陰陽寮</span>が結界記録を奏上して嵐下の港の混乱を説明した。<span class="character moonlit_onmyo tooltip" data-name="manai_sakuya" data-tooltip="月影陰陽寮の筆頭陰陽師。強力な結界術と式神統制により、霊的防護の要となる。">真名井朔夜</span>は監察使に「雷脈と潮の推移がこの通り。嵐下での火薬護符は陰陽寮が施しました」と奏上し、<span class="character moonlit_onmyo tooltip" data-name="ashiya_hotaru" data-tooltip="卓越した霊能力を持つ占術師。未来視により戦局を予測し、重要な戦略判断の助言を行う。">蘆屋蛍</span>が影颶の帳簿を霊灯にかざして改竄の証拠を示した。</p>
+
+                    <div class="objective-shift">
+                        <h4>🎯 新目標</h4>
+                        <p>陰陽寮は朝廷の信頼を得て京洛の護符管轄を正式に委任され、政治交渉で優位に立つ</p>
+                    </div>
+
+                    <p>監察使は陰陽寮の説明を受け入れ護符管理を正式に委任、<span class="organization tooltip" data-org="crimson_blade" data-tooltip="甲斐武田家の騎馬武者団。桜井試合原を本拠地とし、武士道剣術と騎馬戦術で帝都防衛の主導権を目指す。">紅刃</span>と<span class="organization tooltip" data-org="silver_dutch" data-tooltip="長崎出島西洋技術奉行支局・大友家の技術研究機関。江戸武備船渠を拠点とし、西洋技術の導入で技術的優位を確立しようとする。">銀蘭</span>は共同試射の調印に応じて恩義を共有した。この第一幕で、技術・政治・忍術の三つの戦線が明確に形成された。</p>
+                </div>
+            </section>
+
+            <!-- Second Act -->
+            <h3>第二幕：帝前の決戦 (Turn 6-10)</h3>
+
+            <!-- Turn 6 -->
+            <section id="turn-6" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 6: 帝勅決闘宣告 【⚔️ 運命の決戦】</h4>
+                    <nav class="turn-nav">
+                        <a href="#turn-5" class="prev-turn">← Previous Turn</a>
+                        <a href="playlog.html#turn-6" class="cross-link">📊 View Data</a>
+                        <a href="#turn-7" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <div class="term-explanation">
+                        <h5>💡 用語解説</h5>
+                        <p><strong>帝勅決闘</strong> - 帝より下された緊急武術裁定の勅により行われる公式決闘。京洛術院区で陰陽寮と影颶の代表が臨むことになった歴史的な武術裁判。</p>
+                    </div>
+
+                    <p>帝の武術裁定が下るや、<span class="location tooltip" data-region="kyoto_arcane_quarter" data-tooltip="京都の秘術・学問地区。陰陽寮や各種術学研究所が集中する知識の中心地。">京洛術院区</span>は決闘の舞台へ変貌した。帝勅決闘—これは単なる私闘ではなく、帝の御前で行われる正式な武術裁判だった。</p>
+
+                    <p><span class="character shadow_gale tooltip" data-name="kiryu_aoi" data-tooltip="影颶の衆の頭領。冷静沈着な判断力と卓越した忍術により、勢力全体の戦略を統括する。">霧生葵</span>は決闘の輪に影を落とし、<span class="character shadow_gale tooltip" data-name="fuma_jin" data-tooltip="風魔党の出身。優れた身体能力と鋭敏な感覚により、敵情偵察と攪乱戦術を担当する。">風魔迅</span>は陰陽寮の祭具棚へ忍び込んで刃を仕掛けた。一方、<span class="character moonlit_onmyo tooltip" data-name="manai_sakuya" data-tooltip="月影陰陽寮の筆頭陰陽師。強力な結界術と式神統制により、霊的防護の要となる。">真名井朔夜</span>は暗器の気配に眉をひそめ、<span class="character moonlit_onmyo tooltip" data-name="karasumaru_kaya" data-tooltip="式神の召喚と操縦に長けた陰陽師。戦闘においては多数の式神を駆使して敵を圧倒する。">烏丸伽耶</span>は「護符を纏ってここに立て。式神が貴殿らを巻き込まぬよう調整する」と<span class="organization tooltip" data-org="crimson_blade" data-tooltip="甲斐武田家の騎馬武者団。桜井試合原を本拠地とし、武士道剣術と騎馬戦術で帝都防衛の主導権を目指す。">紅刃先鋒隊</span>に命じた。</p>
+
+                    <div class="objective-shift">
+                        <h4>🔄 目標転換点</h4>
+                        <p>帝の裁定により、これまでの暗闘が公式の決戦へと格上げされた</p>
+                        <p><strong>🎯 新目標</strong>: 影颶は帝勅決闘で陰陽寮を屈服させて帝都の諜報線を握り、陰陽寮は帝の前で忍びの不正を証明して政治的主導権を維持する</p>
+                    </div>
+
+                    <p><span class="location tooltip" data-region="azuchi_foundry" data-tooltip="織田家の技術研究拠点。各種工芸品と武器の製造が行われる先進的な工房群。">安土</span>から<span class="character silver_dutch tooltip" data-name="johan_stark" data-tooltip="オランダから来日した技術者。西洋の砲術技術に精通し、日本の戦術体系に革新をもたらす。">ヨハン</span>が早馬で「<span class="weapon tooltip" data-tooltip="西洋式大筒の試作設計図。従来の火縄銃を超越した威力を持つ革命的武器。">雁行砲</span>の装填完了。京洛で戦が広がれば砲撃支援を送れる」と伝書を差し出し、二正面の緊張が結びついた瞬間だった。</p>
+                </div>
+            </section>
+
+            <!-- Turn 7 -->
+            <section id="turn-7" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 7: 決闘輪準備 【⚔️ 武術裁定の舞台】</h4>
+                    <nav class="turn-nav">
+                        <a href="#turn-6" class="prev-turn">← Previous Turn</a>
+                        <a href="playlog.html#turn-7" class="cross-link">📊 View Data</a>
+                        <a href="#turn-8" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><span class="location tooltip" data-region="kyoto_arcane_quarter" data-tooltip="京都の秘術・学問地区。陰陽寮や各種術学研究所が集中する知識の中心地。">京洛術院区</span>に決闘輪が設営され、帝勅決闘の準備が本格化した。<span class="character moonlit_onmyo tooltip" data-name="manai_sakuya" data-tooltip="月影陰陽寮の筆頭陰陽師。強力な結界術と式神統制により、霊的防護の要となる。">真名井朔夜</span>は結界の配置を確認し、<span class="character shadow_gale tooltip" data-name="kiryu_aoi" data-tooltip="影颶の衆の頭領。冷静沈着な判断力と卓越した忍術により、勢力全体の戦略を統括する。">霧生葵</span>は暗器の仕込みを進めた。</p>
+
+                    <p>一方、<span class="character crimson_blade tooltip" data-name="sanada_rekka" data-tooltip="武田流騎馬戦術の継承者。槍術に秀で、騎馬隊を率いて敵陣への突撃を指揮する。">真田烈火</span>は<span class="location tooltip" data-region="azuchi_foundry" data-tooltip="織田家の技術研究拠点。各種工芸品と武器の製造が行われる先進的な工房群。">安土</span>からの砲撃支援を受け、観覧席の安全を確保。<span class="character silver_dutch tooltip" data-name="johan_stark" data-tooltip="オランダから来日した技術者。西洋の砲術技術に精通し、日本の戦術体系に革新をもたらす。">ヨハン</span>は<span class="weapon tooltip" data-tooltip="西洋式大筒の試作設計図。従来の火縄銃を超越した威力を持つ革命的武器。">雁行砲</span>の最終調整を行い、決闘を見守る態勢を整えた。</p>
+
+                    <p>決闘輪の周囲には帝の観覧席が設けられ、四勢力の運命を決する舞台が整った。陰陽寮と影颶の代表者が輪の中央で相対し、緊張が極限まで高まった。</p>
+                </div>
+            </section>
+
+            <!-- Turn 8 -->
+            <section id="turn-8" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 8: 決闘輪砕破 【⚡ 混戦への転換】</h4>
+                    <nav class="turn-nav">
+                        <a href="#turn-7" class="prev-turn">← Previous Turn</a>
+                        <a href="playlog.html#turn-8" class="cross-link">📊 View Data</a>
+                        <a href="#turn-9" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <div class="term-explanation">
+                        <h5>💡 用語解説</h5>
+                        <p><strong>決闘輪砕破</strong> - 雷撃により決闘輪が砕け、個別決闘から四勢力入り乱れる乱戦へ転換した重要な転換点。戦闘形式の根本的変化が発生。</p>
+                    </div>
+
+                    <p>決闘開始の刹那、雷撃が決闘輪を砕いた。個別決闘は瞬時に四勢力入り乱れる乱戦へと転換し、<span class="location tooltip" data-region="kyoto_arcane_quarter" data-tooltip="京都の秘術・学問地区。陰陽寮や各種術学研究所が集中する知識の中心地。">京洛術院区</span>は混沌の戦場と化した。</p>
+
+                    <p><span class="character moonlit_onmyo tooltip" data-name="karasumaru_kaya" data-tooltip="式神の召喚と操縦に長けた陰陽師。戦闘においては多数の式神を駆使して敵を圧倒する。">烏丸伽耶</span>の式神が砕けた輪の破片を吹き飛ばし、<span class="character shadow_gale tooltip" data-name="fuma_jin" data-tooltip="風魔党の出身。優れた身体能力と鋭敏な感覚により、敵情偵察と攪乱戦術を担当する。">風魔迅</span>は混乱に乗じて観覧席への潜入を図った。<span class="character crimson_blade tooltip" data-name="yuki_sayone" data-tooltip="二刀流の達人。左右の剣を自在に操り、個人戦闘において驚異的な戦闘力を発揮する。">結城鞘音</span>の二刀流が閃き、<span class="character silver_dutch tooltip" data-name="hendrik_spiker" data-tooltip="機械工学に長けた技師。従来の武器に西洋技術を融合させた新型兵装の開発を手がける。">ヘンドリク</span>の機巧兵器が火を噴いた。</p>
+
+                    <div class="objective-shift">
+                        <h4>🔄 戦術転換点</h4>
+                        <p>個別決闘から四勢力入り乱れる乱戦へ、戦闘形式が根本的に変化</p>
+                    </div>
+
+                    <p>帝の前で繰り広げられる未曾有の乱戦は、もはや誰にも制御できない混沌と化していた。雷光と刀剣、式神と機巧が乱舞する中、各勢力は生存をかけた戦いを続けた。</p>
+                </div>
+            </section>
+
+            <!-- Turn 9 -->
+            <section id="turn-9" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 9: 近衛府介入 【🛡️ 帝権の発動】</h4>
+                    <nav class="turn-nav">
+                        <a href="#turn-8" class="prev-turn">← Previous Turn</a>
+                        <a href="playlog.html#turn-9" class="cross-link">📊 View Data</a>
+                        <a href="#turn-10" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <div class="term-explanation">
+                        <h5>💡 用語解説</h5>
+                        <p><strong>近衛府介入</strong> - 帝権の発動により近衛府が乱戦を制止。十刻以内の停戦布告で政治的解決段階への移行が始まる。</p>
+                    </div>
+
+                    <p>乱戦が激化する中、帝権が発動された。近衛府の軍勢が術院区を包囲し、「十刻以内に武を納めよ」との停戦布告が響き渡った。</p>
+
+                    <p>近衛将監の威圧的な声に、四勢力は戦いを停止せざるを得なかった。<span class="character moonlit_onmyo tooltip" data-name="manai_sakuya" data-tooltip="月影陰陽寮の筆頭陰陽師。強力な結界術と式神統制により、霊的防護の要となる。">真名井朔夜</span>は式神を収め、<span class="character shadow_gale tooltip" data-name="kiryu_aoi" data-tooltip="影颶の衆の頭領。冷静沈着な判断力と卓越した忍術により、勢力全体の戦略を統括する。">霧生葵</span>は影に身を隠した。<span class="character crimson_blade tooltip" data-name="sanada_rekka" data-tooltip="武田流騎馬戦術の継承者。槍術に秀で、騎馬隊を率いて敵陣への突撃を指揮する。">真田烈火</span>は槍を地に突き、<span class="character silver_dutch tooltip" data-name="johan_stark" data-tooltip="オランダから来日した技術者。西洋の砲術技術に精通し、日本の戦術体系に革新をもたらす。">ヨハン</span>は機巧の動きを止めた。</p>
+
+                    <div class="objective-shift">
+                        <h4>🔄 政治的転換</h4>
+                        <p>帝権による強制停戦で武力解決から政治的解決段階への移行開始</p>
+                    </div>
+
+                    <p>砕けた決闘輪の残骸が散らばる術院区に静寂が戻り、各勢力は帝の最終裁定を待つこととなった。乱戦は終わったが、真の決着はまだ先に控えていた。</p>
+                </div>
+            </section>
+
+            <!-- Turn 10: Final Judgment -->
+            <section id="turn-10" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 10: 帝の裁定 【👑 勝敗決定】</h4>
+                    <nav class="turn-nav">
+                        <a href="#turn-9" class="prev-turn">← Previous Turn</a>
+                        <a href="playlog.html#turn-10" class="cross-link">📊 View Data</a>
+                        <a href="#turn-11" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <div class="term-explanation">
+                        <h5>💡 用語解説</h5>
+                        <p><strong>帝の裁定</strong> - 武術裁定の公式結果。月影陰陽寮が京洛防衛を継続、紅刃先鋒隊は近衛補佐、銀蘭機巧院は技術供出、影颶の衆は伊勢で監視下に置かれることが決定。</p>
+                    </div>
+
+                    <p><strong>🏆 帝の裁定が公布</strong>: <span class="organization tooltip" data-org="moonlit_onmyo" data-tooltip="足利家に属する陰陽師集団。熊野霊峰社を拠点とし、結界術と式神運用で京洛の霊的守護を担う。">月影陰陽寮</span>は京洛防衛を正式に継続、<span class="organization tooltip" data-org="crimson_blade" data-tooltip="甲斐武田家の騎馬武者団。桜井試合原を本拠地とし、武士道剣術と騎馬戦術で帝都防衛の主導権を目指す。">紅刃先鋒隊</span>は<span class="location tooltip" data-region="sakurai_dueling_fields" data-tooltip="大和国の古戦場。武士の練兵場として使われ、多くの武将が剣術と騎馬戦術を磨いた歴史ある戦場。">桜井試合原</span>で近衛補佐に就き、<span class="organization tooltip" data-org="silver_dutch" data-tooltip="長崎出島西洋技術奉行支局・大友家の技術研究機関。江戸武備船渠を拠点とし、西洋技術の導入で技術的優位を確立しようとする。">銀蘭機巧院</span>は砲術訓練キットを献上した。<span class="organization tooltip" data-org="shadow_gale" data-tooltip="伊賀上忍・百地丹波家の配下で、忍術と諜報戦を専門とする集団。伊勢影ヶ淵を本拠地とし、京洛での諜報活動を展開。">影颶の衆</span>は<span class="location tooltip" data-region="ise_shadow_vale" data-tooltip="伊勢国南部の険しい山間部。深い渓谷と濃霧に覆われた天然の要害であり、忍者の隠れ里として最適な立地。">伊勢影ヶ淵</span>へ引き上げ監視下に置かれる。</p>
+
+                    <p><span class="character moonlit_onmyo tooltip" data-name="manai_sakuya" data-tooltip="月影陰陽寮の筆頭陰陽師。強力な結界術と式神統制により、霊的防護の要となる。">真名井朔夜</span>は内裏の庭に敷かれた新たな結界図を見渡し、「勝利は守り続けてこそ意味がある」と静かに誓った。<span class="character crimson_blade tooltip" data-name="sanada_rekka" data-tooltip="武田流騎馬戦術の継承者。槍術に秀で、騎馬隊を率いて敵陣への突撃を指揮する。">真田烈火</span>は桜井原の風を受けて気持ちを新たにし、<span class="character silver_dutch tooltip" data-name="johan_stark" data-tooltip="オランダから来日した技術者。西洋の砲術技術に精通し、日本の戦術体系に革新をもたらす。">ヨハン</span>は工房に戻る準備に追われつつも技術が活かされる喜びを覚える。</p>
+
+                    <div class="objective-shift">
+                        <h4>🎯 最終目標確定</h4>
+                        <p>陰陽寮は帝都の守護者として地位を固め、紅刃は近衛補佐として、銀蘭は技術供出で信用を回復し、影颶は伊勢で次の影打ちを準備する構図が確定</p>
+                    </div>
+
+                    <p><span class="location tooltip" data-region="ise_shadow_vale" data-tooltip="伊勢国南部の険しい山間部。深い渓谷と濃霧に覆われた天然の要害であり、忍者の隠れ里として最適な立地。">伊勢</span>では<span class="character shadow_gale tooltip" data-name="kiryu_aoi" data-tooltip="影颶の衆の頭領。冷静沈着な判断力と卓越した忍術により、勢力全体の戦略を統括する。">霧生葵</span>が影の薬湯で兵を癒しながら、悔しさを噛み締めていた。「次は影の奥から手を伸ばす」— 敗走の悔しさを糧に結束を固める<span class="organization tooltip" data-org="shadow_gale" data-tooltip="伊賀上忍・百地丹波家の配下で、忍術と諜報戦を専門とする集団。伊勢影ヶ淵を本拠地とし、京洛での諜報活動を展開。">影颶</span>の意志は揺らいでいなかった。</p>
+                </div>
+            </section>
+
+            <!-- Third Phase: New Order Establishment -->
+            <h3>第三幕：新秩序の確立 (Turn 11-15)</h3>
+
+            <!-- Turn 11 -->
+            <section id="turn-11" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 11: 桜井原奇襲 【⚔️ 影颶の復讐】</h4>
+                    <nav class="turn-nav">
+                        <a href="#turn-10" class="prev-turn">← Previous Turn</a>
+                        <a href="playlog.html#turn-11" class="cross-link">📊 View Data</a>
+                        <a href="#turn-12" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p>帝の裁定に不服の<span class="organization tooltip" data-org="shadow_gale" data-tooltip="伊賀上忍・百地丹波家の配下で、忍術と諜報戦を専門とする集団。伊勢影ヶ淵を本拠地とし、京洛での諜報活動を展開。">影颶の衆</span>が<span class="location tooltip" data-region="sakurai_dueling_fields" data-tooltip="大和国の古戦場。武士の練兵場として使われ、多くの武将が剣術と騎馬戦術を磨いた歴史ある戦場。">桜井試合原</span>の帝都補給隊を急襲。<span class="character shadow_gale tooltip" data-name="kiryu_aoi" data-tooltip="影颶の衆の頭領。冷静沈着な判断力と卓越した忍術により、勢力全体の戦略を統括する。">霧生葵</span>率いる精鋭が煙幕と暗器で突入し、<span class="organization tooltip" data-org="crimson_blade" data-tooltip="甲斐武田家の騎馬武者団。桜井試合原を本拠地とし、武士道剣術と騎馬戦術で帝都防衛の主導権を目指す。">紅刃先鋒隊</span>との直接戦闘が勃発した。</p>
+
+                    <p><span class="character crimson_blade tooltip" data-name="sanada_rekka" data-tooltip="武田流騎馬戦術の継承者。槍術に秀で、騎馬隊を率いて敵陣への突撃を指揮する。">真田烈火</span>は「槍列、影を封じろ！」と槍壁で応戦し、<span class="character silver_dutch tooltip" data-name="johan_stark" data-tooltip="オランダから来日した技術者。西洋の砲術技術に精通し、日本の戦術体系に革新をもたらす。">ヨハン</span>の可搬砲が側面から弾丸の雨を降らせた。<span class="character moonlit_onmyo tooltip" data-name="manai_sakuya" data-tooltip="月影陰陽寮の筆頭陰陽師。強力な結界術と式神統制により、霊的防護の要となる。">真名井朔夜</span>は遠隔で雷鎖護符を送り、<span class="organization tooltip" data-org="crimson_blade" data-tooltip="甲斐武田家の騎馬武者団。桜井試合原を本拠地とし、武士道剣術と騎馬戦術で帝都防衛の主導権を目指す。">紅刃</span>の盾列を支援した。</p>
+
+                    <div class="objective-shift">
+                        <h4>🎯 復讐戦の開始</h4>
+                        <p>影颶が帝の裁定に反発し、帝都補給線への破壊工作で最後の抵抗を開始</p>
+                    </div>
+
+                    <p>激戦の末、<span class="organization tooltip" data-org="shadow_gale" data-tooltip="伊賀上忍・百地丹波家の配下で、忍術と諜報戦を専門とする集団。伊勢影ヶ淵を本拠地とし、京洛での諜報活動を展開。">影衆</span>は情報巻の一部を失いながらも霧へ後退。<span class="organization tooltip" data-org="crimson_blade" data-tooltip="甲斐武田家の騎馬武者団。桜井試合原を本拠地とし、武士道剣術と騎馬戦術で帝都防衛の主導権を目指す。">紅刃</span>は槍穂を損じつつ補給列を死守し、帝都連衡の結束がさらに強まった。</p>
+                </div>
+            </section>
+
+            <!-- Turn 12 -->
+            <section id="turn-12" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 12: 桜井原攻防戦 【⚔️ 継続する激闘】</h4>
+                    <nav class="turn-nav">
+                        <a href="#turn-11" class="prev-turn">← Previous Turn</a>
+                        <a href="playlog.html#turn-12" class="cross-link">📊 View Data</a>
+                        <a href="#turn-13" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><span class="organization tooltip" data-org="shadow_gale" data-tooltip="伊賀上忍・百地丹波家の配下で、忍術と諜報戦を専門とする集団。伊勢影ヶ淵を本拠地とし、京洛での諜報活動を展開。">影颶</span>の斬り込みで砲列が揺らぐ中、<span class="organization tooltip" data-org="crimson_blade" data-tooltip="甲斐武田家の騎馬武者団。桜井試合原を本拠地とし、武士道剣術と騎馬戦術で帝都防衛の主導権を目指す。">紅刃</span>の槍壁と<span class="organization tooltip" data-org="silver_dutch" data-tooltip="長崎出島西洋技術奉行支局・大友家の技術研究機関。江戸武備船渠を拠点とし、西洋技術の導入で技術的優位を確立しようとする。">銀蘭</span>の可搬砲が応酬する昼の<span class="location tooltip" data-region="sakurai_dueling_fields" data-tooltip="大和国の古戦場。武士の練兵場として使われ、多くの武将が剣術と騎馬戦術を磨いた歴史ある戦場。">桜井原</span>で再度の激闘が勃発。<span class="character moonlit_onmyo tooltip" data-name="manai_sakuya" data-tooltip="月影陰陽寮の筆頭陰陽師。強力な結界術と式神統制により、霊的防護の要となる。">真名井朔夜</span>は雷護符で士気を支え、補給列を死守する攻防が続いた。</p>
+
+                    <p><span class="character crimson_blade tooltip" data-name="sanada_rekka" data-tooltip="武田流騎馬戦術の継承者。槍術に秀で、騎馬隊を率いて敵陣への突撃を指揮する。">真田烈火</span>は「まだだ、槍をさらに縮めて影を押し潰せ！」と号令を下し、<span class="character silver_dutch tooltip" data-name="johan_stark" data-tooltip="オランダから来日した技術者。西洋の砲術技術に精通し、日本の戦術体系に革新をもたらす。">ヨハン</span>は「可搬砲の最終弾を撃って道を開ける」と決断した。</p>
+
+                    <p>砲撃で影衆の一角が吹き飛んだが、紅刃の槍も折れ、両軍が血を流す消耗戦となった。昼の雷鳴が桜井原を震わせる中、破れた帆布と焦げた砲車の残骸が戦場に散乱した。</p>
+                </div>
+            </section>
+
+            <!-- Turn 13 -->
+            <section id="turn-13" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 13: 戦闘終結宣言 【🛡️ 近衛府の裁定】</h4>
+                    <nav class="turn-nav">
+                        <a href="#turn-12" class="prev-turn">← Previous Turn</a>
+                        <a href="playlog.html#turn-13" class="cross-link">📊 View Data</a>
+                        <a href="#turn-14" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p>近衛府が桜井原の戦闘終結を宣言し、各勢力に戦後処理と再配置を命じた。<span class="organization tooltip" data-org="shadow_gale" data-tooltip="伊賀上忍・百地丹波家の配下で、忍術と諜報戦を専門とする集団。伊勢影ヶ淵を本拠地とし、京洛での諜報活動を展開。">影颶の衆</span>は<span class="location tooltip" data-region="ise_shadow_vale" data-tooltip="伊勢国南部の険しい山間部。深い渓谷と濃霧に覆われた天然の要害であり、忍者の隠れ里として最適な立地。">伊勢影ヶ淵</span>へ退却し、<span class="organization tooltip" data-org="crimson_blade" data-tooltip="甲斐武田家の騎馬武者団。桜井試合原を本拠地とし、武士道剣術と騎馬戦術で帝都防衛の主導権を目指す。">紅刃先鋒隊</span>は街道防衛へ転換した。</p>
+
+                    <p><span class="character shadow_gale tooltip" data-name="kiryu_aoi" data-tooltip="影颶の衆の頭領。冷静沈着な判断力と卓越した忍術により、勢力全体の戦略を統括する。">霧生葵</span>は「今は血を収めよ、影は次の夜を待つ」と負傷兵を伊勢の霧隠れの里へ誘導。<span class="character crimson_blade tooltip" data-name="sanada_rekka" data-tooltip="武田流騎馬戦術の継承者。槍術に秀で、騎馬隊を率いて敵陣への突撃を指揮する。">真田烈火</span>は「街道は武田が守る、帝の信頼を得る好機だ」と桜井原に柵と巡回路を敷いた。</p>
+
+                    <div class="objective-shift">
+                        <h4>🔄 戦後再編</h4>
+                        <p>近衛府の裁定により各勢力が役割分担を明確化し、次の局面への準備を開始</p>
+                    </div>
+
+                    <p><span class="character silver_dutch tooltip" data-name="johan_stark" data-tooltip="オランダから来日した技術者。西洋の砲術技術に精通し、日本の戦術体系に革新をもたらす。">ヨハン</span>は砲術訓練キットを帝室工房へ引き渡し、<span class="character moonlit_onmyo tooltip" data-name="manai_sakuya" data-tooltip="月影陰陽寮の筆頭陰陽師。強力な結界術と式神統制により、霊的防護の要となる。">真名井朔夜</span>は近衛府と防衛図面を共有。戦闘は終わったが、武術裁定後のバランスが整いつつあった。</p>
+                </div>
+            </section>
+
+            <!-- Turn 14 -->
+            <section id="turn-14" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 14: 京洛祭礼前夜 【🌙 最後の潜入】</h4>
+                    <nav class="turn-nav">
+                        <a href="#turn-13" class="prev-turn">← Previous Turn</a>
+                        <a href="playlog.html#turn-14" class="cross-link">📊 View Data</a>
+                        <a href="#turn-15" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p>祭礼前夜の<span class="location tooltip" data-region="kyoto_arcane_quarter" data-tooltip="京都の秘術・学問地区。陰陽寮や各種術学研究所が集中する知識の中心地。">京洛</span>で、<span class="organization tooltip" data-org="shadow_gale" data-tooltip="伊賀上忍・百地丹波家の配下で、忍術と諜報戦を専門とする集団。伊勢影ヶ淵を本拠地とし、京洛での諜報活動を展開。">影颶の衆</span>の精鋭が再び都へ潜入し<span class="organization tooltip" data-org="moonlit_onmyo" data-tooltip="足利家に属する陰陽師集団。熊野霊峰社を拠点とし、結界術と式神運用で京洛の霊的守護を担う。">月影陰陽寮</span>と激突。祭礼準備の混雑に紛れ、都の屋根で忍術・妖術・剣術・西洋機械が交錯した。</p>
+
+                    <p><span class="character shadow_gale tooltip" data-name="kiryu_aoi" data-tooltip="影颶の衆の頭領。冷静沈着な判断力と卓越した忍術により、勢力全体の戦略を統括する。">霧生葵</span>は屋根の瓦を滑りながら「香炉を割れ！影を散らせ！」と命じ、<span class="character moonlit_onmyo tooltip" data-name="manai_sakuya" data-tooltip="月影陰陽寮の筆頭陰陽師。強力な結界術と式神統制により、霊的防護の要となる。">真名井朔夜</span>は「雷鎖、七条に組み替え！」と式神を通じて対応した。</p>
+
+                    <p><span class="character silver_dutch tooltip" data-name="johan_stark" data-tooltip="オランダから来日した技術者。西洋の砲術技術に精通し、日本の戦術体系に革新をもたらす。">ヨハン</span>の電撃網が影衆を絡め取り、<span class="character crimson_blade tooltip" data-name="sanada_rekka" data-tooltip="武田流騎馬戦術の継承者。槍術に秀で、騎馬隊を率いて敵陣への突撃を指揮する。">真田烈火</span>の槍壁が残党を押し返した。祭礼は守られたが、都の屋根には雷光と電撃網の焦げ跡が残った。</p>
+
+                    <div class="objective-shift">
+                        <h4>🏮 祭礼防衛</h4>
+                        <p>影颶の最後の潜入作戦が失敗し、帝都側の三勢力連携が完全に確立</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 11-15 summary and continuation -->
+
+            <!-- Turn 11-15: Brief Summary -->
+            <section id="turn-15" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 15: 祭礼朝の新均衡 【🌅 新秩序の夜明け】</h4>
+                    <nav class="turn-nav">
+                        <a href="#turn-14" class="prev-turn">← Previous Turn</a>
+                        <a href="playlog.html#turn-15" class="cross-link">📊 View Data</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p>祭礼の朝、帝の宣旨が京洛に響き、四勢力の新たな配置が確定した。<span class="character shadow_gale tooltip" data-name="kiryu_aoi" data-tooltip="影颶の衆の頭領。冷静沈着な判断力と卓越した忍術により、勢力全体の戦略を統括する。">霧生葵</span>は宮中の旗が翻るのを見届けてから負傷者を伊勢への影道へ誘導し、<span class="character moonlit_onmyo tooltip" data-name="manai_sakuya" data-tooltip="月影陰陽寮の筆頭陰陽師。強力な結界術と式神統制により、霊的防護の要となる。">真名井朔夜</span>は近衛将監と共に新しい巡回表を広げた。</p>
+
+                    <p>「影は伊勢へ沈む。次は違う角度で攻める」と葵が低く命じる一方、朔夜は「帝より守護の委任状を預かりました。努めを果たしましょう」と結界師らに告げた。<span class="character crimson_blade tooltip" data-name="sanada_rekka" data-tooltip="武田流騎馬戦術の継承者。槍術に秀で、騎馬隊を率いて敵陣への突撃を指揮する。">真田烈火</span>は「巡回計画を共有する。武田と近衛で道を守る」と諸隊へ伝え、<span class="character silver_dutch tooltip" data-name="johan_stark" data-tooltip="オランダから来日した技術者。西洋の砲術技術に精通し、日本の戦術体系に革新をもたらす。">ヨハン</span>は「安全規範を正式に提出します。次は共同研究です」と技師たちに誓わせた。</p>
+
+                    <div class="objective-shift">
+                        <h4>🌅 京洛新秩序の確立</h4>
+                        <p>祭礼により京洛での四勢力の配置が確定し、第三段階が完結。しかし影颶の不屈の意志は新たな展開を予感させる</p>
+                    </div>
+
+                    <p>朝霧が薄れる京洛の大路に祭礼の鼓が鳴り、新たな均衡が静かに始まった。</p>
+                </div>
+            </section>
+
+            <!-- Fourth Act: Final Storm -->
+            <h3>第四幕：最後の嵐 (Turn 16-20)</h3>
+
+            <!-- Turn 16 -->
+            <section id="turn-16" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 16: 江戸公開演習 【🌊 帝の新命】</h4>
+                    <nav class="turn-nav">
+                        <a href="#turn-15" class="prev-turn">← Previous Turn</a>
+                        <a href="playlog.html#turn-16" class="cross-link">📊 View Data</a>
+                        <a href="#turn-17" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <div class="term-explanation">
+                        <h5>💡 用語解説</h5>
+                        <p><strong>江戸公開演習</strong> - 帝巡察団による公開軍事演習の命令。各勢力の技術と忠誠を試すため、江戸武備船渠での実戦形式演習が布告された。</p>
+                    </div>
+
+                    <p>祭礼後の束の間の平穏を破り、帝巡察団が<span class="location tooltip" data-region="edo_arsenal_dock" data-tooltip="江戸湾岸の造船・技術研究施設。西洋技術の導入拠点として機能し、新式武器の開発が行われている。">江戸武備船渠</span>での公開演習を命じた。<span class="character shadow_gale tooltip" data-name="kiryu_aoi" data-tooltip="影颶の衆の頭領。冷静沈着な判断力と卓越した忍術により、勢力全体の戦略を統括する。">霧生葵</span>は<span class="location tooltip" data-region="koga_mist_forest" data-tooltip="甲賀国の霧深い森林地帯。忍者の隠れ里として知られ、霧道の終点となる重要な戦略地点。">甲賀朧林</span>で霧道を再構築し、江戸への新たな侵入路を準備した。</p>
+
+                    <p><span class="character moonlit_onmyo tooltip" data-name="manai_sakuya" data-tooltip="月影陰陽寮の筆頭陰陽師。強力な結界術と式神統制により、霊的防護の要となる。">真名井朔夜</span>は<span class="location tooltip" data-region="kumano_spirit_shrine" data-tooltip="熊野三山の一つ。古来より霊験あらたかな聖地として知られ、陰陽道修行の根本道場。">熊野霊峰社</span>に結界ノードを築き、遠隔から江戸への護符供給線を確立。<span class="character crimson_blade tooltip" data-name="sanada_rekka" data-tooltip="武田流騎馬戦術の継承者。槍術に秀で、騎馬隊を率いて敵陣への突撃を指揮する。">真田烈火</span>は江戸桟橋に槍陣を展開し、<span class="character silver_dutch tooltip" data-name="johan_stark" data-tooltip="オランダから来日した技術者。西洋の砲術技術に精通し、日本の戦術体系に革新をもたらす。">ヨハン</span>は護符と安全機構を統合した新システムを完成させた。</p>
+
+                    <div class="objective-shift">
+                        <h4>🎯 新たな舞台設定</h4>
+                        <p>京洛から江戸へ戦場が移り、海上での技術実証と忠誠試験が始まる</p>
+                    </div>
+
+                    <p>各勢力は帝の視線が江戸へ向かう中、それぞれの思惑を胸に演習への準備を整えた。影颶は甲賀から江戸への霧道を延伸し、帝都三勢力は連携して巡察団の期待に応える算段を立てた。</p>
+                </div>
+            </section>
+
+            <!-- Turn 17 -->
+            <section id="turn-17" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 17: 台風接近演習 【🌪️ 嵐の予兆】</h4>
+                    <nav class="turn-nav">
+                        <a href="#turn-16" class="prev-turn">← Previous Turn</a>
+                        <a href="playlog.html#turn-17" class="cross-link">📊 View Data</a>
+                        <a href="#turn-18" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p>台風接近の知らせが届く中、帝巡察団は江戸演習の続行を宣言した。黒雲が江戸湾に迫り、各勢力は嵐を見据えた準備に追われた。</p>
+
+                    <p><span class="character shadow_gale tooltip" data-name="kiryu_aoi" data-tooltip="影颶の衆の頭領。冷静沈着な判断力と卓越した忍術により、勢力全体の戦略を統括する。">霧生葵</span>は甲賀の樹梢で霧糸を束ね、嵐を隠れ蓑とする新たな奇襲計画を練った。<span class="character moonlit_onmyo tooltip" data-name="manai_sakuya" data-tooltip="月影陰陽寮の筆頭陰陽師。強力な結界術と式神統制により、霊的防護の要となる。">真名井朔夜</span>は熊野で嵐鎮めの護符を量産し、<span class="character crimson_blade tooltip" data-name="sanada_rekka" data-tooltip="武田流騎馬戦術の継承者。槍術に秀で、騎馬隊を率いて敵陣への突撃を指揮する。">真田烈火</span>と<span class="character silver_dutch tooltip" data-name="johan_stark" data-tooltip="オランダから来日した技術者。西洋の砲術技術に精通し、日本の戦術体系に革新をもたらす。">ヨハン</span>は合同で台風演習操典を作成した。</p>
+
+                    <p>「嵐でも槍と砲は同じ合図で動かす」— 烈火とヨハンの協力で、護符と安全弁を統合した新システムが完成。一方、甲賀の霧に潜む影颶は、台風の混乱に乗じて江戸背後への道を探っていた。</p>
+                </div>
+            </section>
+
+            <!-- Turn 18 -->
+            <section id="turn-18" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 18: 台風奇襲戦 【⚡ 雷光決戦】</h4>
+                    <nav class="turn-nav">
+                        <a href="#turn-17" class="prev-turn">← Previous Turn</a>
+                        <a href="playlog.html#turn-18" class="cross-link">📊 View Data</a>
+                        <a href="#turn-19" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p>台風の暴風雨が江戸武備船渠を叩く中、<span class="organization tooltip" data-org="shadow_gale" data-tooltip="伊賀上忍・百地丹波家の配下で、忍術と諜報戦を専門とする集団。伊勢影ヶ淵を本拠地とし、京洛での諜報活動を展開。">影颶の衆</span>が水蜘蛛の足で桟橋へ躍り込んだ。帝巡察団の目前で、忍術・槍術・雷砲と波濤が交錯する壮絶な戦場が展開された。</p>
+
+                    <p><span class="character shadow_gale tooltip" data-name="kiryu_aoi" data-tooltip="影颶の衆の頭領。冷静沈着な判断力と卓越した忍術により、勢力全体の戦略を統括する。">霧生葵</span>は「水蜘蛛、波頭を裂いて雷砲の軸を斬れ！」と戦闘号令を発し、<span class="character crimson_blade tooltip" data-name="sanada_rekka" data-tooltip="武田流騎馬戦術の継承者。槍術に秀で、騎馬隊を率いて敵陣への突撃を指揮する。">真田烈火</span>は「半月槍列、桟橋を死守せよ！ 巡察団に恥は見せん！」と応じた。</p>
+
+                    <p><span class="character silver_dutch tooltip" data-name="johan_stark" data-tooltip="オランダから来日した技術者。西洋の砲術技術に精通し、日本の戦術体系に革新をもたらす。">ヨハン</span>の護符同期雷砲が逆襲の弧を描き、水蜘蛛の二名を吹き飛ばしたが、影衆の影の刃が砲座の金具を切り裂いた。熊野から<span class="character moonlit_onmyo tooltip" data-name="manai_sakuya" data-tooltip="月影陰陽寮の筆頭陰陽師。強力な結界術と式神統制により、霊的防護の要となる。">真名井朔夜</span>が送る護符の鎖が嵐を抱き、桟橋は三つ巴の激戦となった。</p>
+
+                    <div class="objective-shift">
+                        <h4>⚡ 雷光決戦</h4>
+                        <p>演習が実戦へと転化し、台風下での忍術・槍術・砲術の真の力が試される</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 19 -->
+            <section id="turn-19" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 19: 御前決戦宣告 【👑 帝命の刻】</h4>
+                    <nav class="turn-nav">
+                        <a href="#turn-18" class="prev-turn">← Previous Turn</a>
+                        <a href="playlog.html#turn-19" class="cross-link">📊 View Data</a>
+                        <a href="#turn-20" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <div class="term-explanation">
+                        <h5>💡 用語解説</h5>
+                        <p><strong>御前決戦</strong> - 帝命により台風演習が正式な武術裁定へと格上げされた最終決戦。江戸武備船渠が再び帝の御前決戦の舞台となった。</p>
+                    </div>
+
+                    <p>高潮を告げる軍鼓と帝命が重なり、<span class="location tooltip" data-region="edo_arsenal_dock" data-tooltip="江戸湾岸の造船・技術研究施設。西洋技術の導入拠点として機能し、新式武器の開発が行われている。">江戸武備船渠</span>は御前決戦の舞台へ変貌した。台風の目が港の真上に開き、稲光と豪雨が交互に桟橋を叩く中、運命の決戦が始まった。</p>
+
+                    <p><span class="character shadow_gale tooltip" data-name="kiryu_aoi" data-tooltip="影颶の衆の頭領。冷静沈着な判断力と卓越した忍術により、勢力全体の戦略を統括する。">霧生葵</span>は「潮の唸りと同時に爆ぜろ、影は帝前の足場を奪う！」と爆薬を仕掛け、<span class="character crimson_blade tooltip" data-name="sanada_rekka" data-tooltip="武田流騎馬戦術の継承者。槍術に秀で、騎馬隊を率いて敵陣への突撃を指揮する。">真田烈火</span>は「御前決戦、紅刃は槍の壁で帝を守る！」と防壁を築いた。</p>
+
+                    <p><span class="character silver_dutch tooltip" data-name="johan_stark" data-tooltip="オランダから来日した技術者。西洋の砲術技術に精通し、日本の戦術体系に革新をもたらす。">ヨハン</span>は雷砲と護符の完全同期を実現し、<span class="character moonlit_onmyo tooltip" data-name="manai_sakuya" data-tooltip="月影陰陽寮の筆頭陰陽師。強力な結界術と式神統制により、霊的防護の要となる。">真名井朔夜</span>は熊野から「風と雷を束ね、帝命の鎖となれ」と祝詞を送った。嵐の目に青白い鎖が浮かび、決戦前夜の均衡が極限まで研ぎ澄まされた。</p>
+                </div>
+            </section>
+
+            <!-- Turn 20 -->
+            <section id="turn-20" class="turn-section">
+                <header class="turn-header">
+                    <h4>Turn 20: 嵐裂けし勝利 【🌅 真の終章】</h4>
+                    <nav class="turn-nav">
+                        <a href="#turn-19" class="prev-turn">← Previous Turn</a>
+                        <a href="playlog.html#turn-20" class="cross-link">📊 View Data</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p>嵐の目が閉じ切る刹那、<span class="character shadow_gale tooltip" data-name="kiryu_aoi" data-tooltip="影颶の衆の頭領。冷静沈着な判断力と卓越した忍術により、勢力全体の戦略を統括する。">霧生葵</span>が爆薬を起爆し桟橋を揺らした瞬間、帝都連衡の総力が炸裂した。護符で補強された雷砲の皇雷一斉射が白光となって水蜘蛛班を吹き飛ばし、<span class="character shadow_gale tooltip" data-name="fuma_jin" data-tooltip="風魔党の出身。優れた身体能力と鋭敏な感覚により、敵情偵察と攪乱戦術を担当する。">風魔迅</span>が潮柱に叩き付けられ戦闘不能となった。</p>
+
+                    <p><span class="character crimson_blade tooltip" data-name="sanada_rekka" data-tooltip="武田流騎馬戦術の継承者。槍術に秀で、騎馬隊を率いて敵陣への突撃を指揮する。">真田烈火</span>の槍が葵の脇腹を貫き、影衆は霧道へ退避を強いられた。巡察団は帝命に応えた雷砲と槍列の連携を確認し、御前決戦の勝者を宣した。</p>
+
+                    <div class="objective-shift">
+                        <h4>🏆 最終決着</h4>
+                        <p>帝都連衡（月影陰陽寮・紅刃先鋒隊・銀蘭機巧院）が江戸武備船渠を守り抜き、影颶の衆は甲賀への撤退を余儀なくされる</p>
+                    </div>
+
+                    <p>雷鳴が遠ざかり、裂けた雲間から黎明の光が桟橋を照らす。焦げた板と散った護符の残骸が潮に揺れ、帝の勝利旗が濡れた風の中で翻った。</p>
+
+                    <p><span class="character shadow_gale tooltip" data-name="kiryu_aoi" data-tooltip="影颶の衆の頭領。冷静沈着な判断力と卓越した忍術により、勢力全体の戦略を統括する。">霧生葵</span>は脇腹を押さえながら「影は残る……だが今は退く」と血の泡を吐き、<span class="character crimson_blade tooltip" data-name="sanada_rekka" data-tooltip="武田流騎馬戦術の継承者。槍術に秀で、騎馬隊を率いて敵陣への突撃を指揮する。">真田烈火</span>は帝印の槍を掲げて深く礼をした。嵐が裂けて御前決戦が終わり、江戸武備船渠は帝都連衡の支配下にあることが確定した。</p>
+                </div>
+            </section>
+        </section>
+
+        <!-- Epilogue -->
+        <section class="card">
+            <h2>🏆 エピローグ</h2>
+
+            <h3>📈 目標進化: 四段階の戦い</h3>
+            <div class="phase-evolution">
+                <div class="phase-timeline">
+                    <div class="phase military-phase">
+                        <h4>第一段階 (Turn 1-5): 霧中の暗闘</h4>
+                        <p><strong>目標</strong>: 各勢力が初期の影響力圏確保を目指した探り合い</p>
+                        <p><strong>達成</strong>: 陰陽寮が朝廷の信頼を獲得、技術革新の兆しが現れる</p>
+                        <p><strong>象徴</strong>: 朔夜の「霧は紐、敵は珠」— 戦術的優位の確保</p>
+                    </div>
+                    <div class="phase political-phase">
+                        <h4>第二段階 (Turn 6-10): 帝前の決戦</h4>
+                        <p><strong>転換点</strong>: 帝勅決闘により暗闘が公式の武術裁判へ格上げ</p>
+                        <p><strong>目標</strong>: 帝の御前での正統性と主導権の確立</p>
+                        <p><strong>達成</strong>: 陰陽寮が京洛防衛を継続、帝都連衡体制の基盤が形成</p>
+                        <p><strong>象徴</strong>: 近衛将の「十刻後に武を納めよ」— 帝権による秩序回復</p>
+                    </div>
+                    <div class="phase legal-phase">
+                        <h4>第三段階 (Turn 11-15): 京洛新秩序</h4>
+                        <p><strong>転換点</strong>: 影颶の復讐と祭礼前夜の最終決戦</p>
+                        <p><strong>目標</strong>: 影颶は最後の一撃、帝都側は完全な新均衡</p>
+                        <p><strong>達成</strong>: 祭礼朝の新均衡で四勢力の配置が確定</p>
+                        <p><strong>象徴</strong>: 烈火の巡回計画と葵の「次は違う角度で攻める」— 武士道の責任と忍道の不屈</p>
+                    </div>
+                    <div class="phase final-phase">
+                        <h4>第四段階 (Turn 16-20): 江戸最終決戦</h4>
+                        <p><strong>転換点</strong>: 帝巡察団による江戸公開演習の命令</p>
+                        <p><strong>目標</strong>: 影颶は台風に乗じた最後の大奇襲、帝都連衡は技術の粋を尽くした防衛</p>
+                        <p><strong>達成</strong>: 嵐裂けし江戸武備船渠で帝都連衡が完全勝利、影颶は甲賀に撤退</p>
+                        <p><strong>象徴</strong>: 葵の「影は残る……だが今は退く」と烈火の帝印への礼— 不屈の意志と勝者の矜持</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>🌟 四勢力の役割変遷</h3>
+            <div class="faction-grid">
+                <div class="faction-card shadow_gale">
+                    <h4><span class="organization tooltip" data-org="shadow_gale" data-tooltip="伊賀上忍・百地丹波家の配下で、忍術と諜報戦を専門とする集団。伊勢影ヶ淵を本拠地とし、京洛での諜報活動を展開。">影颶の衆</span>: 諜報主導者 → 帝都挑戦者 → 甲賀潜伏者</h4>
+                    <p>霧生葵率いる伊賀の影は、初期の諜報戦で優位を握ろうとしたが、帝勅決闘での敗北を経て最終的に甲賀での潜伏再編を余儀なくされた。しかし「次は影の奥から手を伸ばす」との決意を新たに、復讐の機会を伺っている。</p>
+                </div>
+
+                <div class="faction-card moonlit_onmyo">
+                    <h4><span class="organization tooltip" data-org="moonlit_onmyo" data-tooltip="足利家に属する陰陽師集団。熊野霊峰社を拠点とし、結界術と式神運用で京洛の霊的守護を担う。">月影陰陽寮</span>: 霊的守護者 → 帝都正統派 → 近衛連携者</h4>
+                    <p>真名井朔夜が導く陰陽師集団は、一貫して帝都の霊的守護者として活動し、朝廷の信頼を獲得。最終的に近衛府との強固な連携体制を築き、京洛防衛の中核を担うまでになった。</p>
+                </div>
+
+                <div class="faction-card crimson_blade">
+                    <h4><span class="organization tooltip" data-org="crimson_blade" data-tooltip="甲斐武田家の騎馬武者団。桜井試合原を本拠地とし、武士道剣術と騎馬戦術で帝都防衛の主導権を目指す。">紅刃先鋒隊</span>: 武力主導者 → 帝命執行者 → 街道守護者</h4>
+                    <p>真田烈火の武田勢は、初期の火薬争奪戦での強行突破から、帝勅決闘での調停役を経て、最終的に帝都防衛と街道警備の任を正式に委任された。武士道の体現者として評価を確立した。</p>
+                </div>
+
+                <div class="faction-card silver_dutch">
+                    <h4><span class="organization tooltip" data-org="silver_dutch" data-tooltip="長崎出島西洋技術奉行支局・大友家の技術研究機関。江戸武備船渠を拠点とし、西洋技術の導入で技術的優位を確立しようとする。">銀蘭機巧院</span>: 技術革新者 → 協力提携者 → 帝室工房連携者</h4>
+                    <p>ヨハンが率いる西洋技術集団は、雁行砲発見での技術優位から暴発事故での信頼失墜を経て、最終的に護符と機巧の融合技術で新たな地位を確立。帝室工房との共同研究体制を築いた。</p>
+                </div>
+            </div>
+
+            <p><strong>最終的な力の均衡</strong>:</p>
+            <p>雷鳴が遠ざかり、裂けた雲間から黎明の光が桟橋を照らす。焦げた板と散った護符の残骸が潮に揺れ、帝の勝利旗が濡れた風の中で翻った。</p>
+            <p>永禄の霧戦記は幕を閉じたが、甲賀に潜む影の意志と、江戸に確立された新秩序の緊張は、次なる物語の序章として息づいている。忍術、妖術、剣術、西洋技術が交錯した20ターンの戦いは、京洛から江戸に至る壮大な舞台で、日本の戦国時代に新たな一章を刻んだのである。</p>
+
+            <p><strong>🌊 江戸決戦の意義</strong>: 京洛での政治的覇権争いから始まった四勢力の戦いは、最終的に江戸武備船渠での技術と意志の激突へと発展した。台風という自然の猛威の下で繰り広げられた最後の決戦は、各勢力の真の実力と絆を試す試練となり、帝都連衡の技術統合と影颶の不屈の忍道が激突した歴史的瞬間であった。</p>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>永禄の霧戦記 - Eiroku Mist Chronicles | ナラティブTRPGキャンペーン記録</p>
+    </footer>
+
+    <!-- Smooth scrolling for turn navigation -->
+    <script>
+        // Smooth scroll for anchor links
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click handlers for cross-links and turn navigation
+            const links = document.querySelectorAll('a[href^="#"]');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+
+                    if (targetElement) {
+                        e.preventDefault();
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+
+                        // Update URL without causing page jump
+                        window.history.pushState(null, null, this.getAttribute('href'));
+                    }
+                });
+            });
+
+            // Highlight current turn in viewport
+            const turnSections = document.querySelectorAll('.turn-section');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+                    } else {
+                        entry.target.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            turnSections.forEach(section => observer.observe(section));
+        });
+    </script>
+</body>
+</html>

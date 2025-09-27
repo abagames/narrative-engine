@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eiroku Mist Chronicles - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="data.js"></script>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="main-header">
+      <div class="container">
+        <nav class="main-nav">
+          <a href="index.html" class="active">🏠 Dashboard</a>
+          <a href="narrative.html">📖 Narrative</a>
+          <a href="playlog.html">📊 Playlog</a>
+          <a href="worldmap.html">🗺️ World Map</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Campaign Overview -->
+        <section class="campaign-overview">
+            <h1>🌫️ Eiroku Mist Chronicles</h1>
+            <p class="subtitle">Four-Faction Warring States Hegemony Battle - 20-Turn Narrative TRPG Campaign<br>
+            Set in the chaotic Eiroku era, in the mist-shrouded capital of Kyoto, four factions clash across political, military, and technological fronts: Shadow Gale Clan, Moonlit Onmyo Guild, Crimson Blade Vanguard, and Silver Dutch Institute.</p>
+        </section>
+
+        <!-- Campaign Statistics -->
+        <section class="card">
+            <h3>📊 Campaign Statistics</h3>
+            <div class="campaign-stats">
+                <div class="stat-item">
+                    <div class="stat-number">20</div>
+                    <div class="stat-label">Turns</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">Factions</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">Major Battles</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">Turning Points</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">7</div>
+                    <div class="stat-label">Regions</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">Diplomatic Negotiations</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Faction Overview -->
+        <section class="card">
+            <h3>⚔️ Faction Overview</h3>
+            <div class="faction-grid">
+                <!-- Shadow Gale Clan -->
+                <div class="faction-card shadow_gale">
+                    <div class="faction-header">
+                        <div class="faction-icon">🌫️</div>
+                        <div class="faction-info">
+                            <h4>Shadow Gale Clan</h4>
+                            <h5>Shadow Storm Warriors</h5>
+                            <div class="faction-result">Masters of Ninjutsu & Espionage</div>
+                        </div>
+                    </div>
+                    <div class="faction-details">
+                        <p><strong>Base:</strong><span class="tooltip" data-tooltip="A rugged mountainous region in southern Ise. A natural fortress covered in deep valleys and dense fog, providing an ideal location for a ninja stronghold.">Ise Shadow Vale</span></p>
+                        <p><strong>Affiliation:</strong>Iga Jōnin, Momochi Tanba Family</p>
+                        <p><strong>Specialty:</strong>Ninjutsu & Espionage</p>
+                        <p><strong>Strategic Doctrine:</strong>Shadow warfare through quiet observation and opportunistic calculation</p>
+                    </div>
+                    <div class="faction-members">
+                        <h5>Key Personnel</h5>
+                        <div class="member"><span class="tooltip" data-tooltip="Leader of the Shadow Gale Clan. With calm judgment and exceptional ninjutsu skills, oversees the strategic operations of the entire faction.">Kiryu Aoi</span> (Shadow Leader) - Strategy & Infiltration Command</div>
+                        <div class="member"><span class="tooltip" data-tooltip="Former member of the Fuma clan. With superior physical abilities and sharp senses, handles enemy reconnaissance and disruption tactics.">Fuma Jin</span> (Advanced Scout) - Reconnaissance & Disruption</div>
+                        <div class="member"><span class="tooltip" data-tooltip="Specialist in poisons and illusions. Possesses unmatched skills in brewing secret medicines and neutralizing enemies.">Nuedo Kogetsu</span> (Poison Master) - Poison & Illusion Synthesis</div>
+                    </div>
+                </div>
+
+                <!-- Moonlit Onmyo Guild -->
+                <div class="faction-card moonlit_onmyo">
+                    <div class="faction-header">
+                        <div class="faction-icon">🌙</div>
+                        <div class="faction-info">
+                            <h4>Moonlit Onmyo Guild</h4>
+                            <h5>Moonlight Yin-Yang Institute</h5>
+                            <div class="faction-result">Specialists in Onmyōdō & Barrier Arts</div>
+                        </div>
+                    </div>
+                    <div class="faction-details">
+                        <p><strong>Base:</strong><span class="tooltip" data-tooltip="One of the Kumano Sanzan shrines. Known since ancient times as a sacred site of spiritual power, functioning as the fundamental training ground for Onmyōdō practice.">Kumano Spirit Shrine</span></p>
+                        <p><strong>Affiliation:</strong>Kyoto Civil-Military Mediation Group, Ashikaga Family</p>
+                        <p><strong>Specialty:</strong>Onmyōdō & Barrier Arts</p>
+                        <p><strong>Strategic Doctrine:</strong>Spiritual protection through divinatory prediction and ceremonial consensus</p>
+                    </div>
+                    <div class="faction-members">
+                        <h5>Key Personnel</h5>
+                        <div class="member"><span class="tooltip" data-tooltip="Chief Onmyōji of the Moonlit Onmyo Guild. Serves as the cornerstone of spiritual defense through powerful barrier arts and shikigami control.">Manai Sakuya</span> (Onmyō Head) - Barrier Arts Specialist</div>
+                        <div class="member"><span class="tooltip" data-tooltip="Onmyōji skilled in summoning and controlling shikigami. In combat, overwhelms enemies by deploying multiple shikigami.">Karasumaru Kaya</span> (Shikigami User) - Combat Shikigami Operations</div>
+                        <div class="member"><span class="tooltip" data-tooltip="Diviner with exceptional spiritual abilities. Predicts battlefield outcomes through future sight and provides crucial strategic advice.">Ashiya Hotaru</span> (Diviner) - Future Sight & Spirit Vision</div>
+                    </div>
+                </div>
+
+                <!-- Crimson Blade Vanguard -->
+                <div class="faction-card crimson_blade">
+                    <div class="faction-header">
+                        <div class="faction-icon">⚔️</div>
+                        <div class="faction-info">
+                            <h4>Crimson Blade Vanguard</h4>
+                            <h5>Red Blade Vanguard Unit</h5>
+                            <div class="faction-result">Bushidō Swordsmanship & Cavalry Tactics</div>
+                        </div>
+                    </div>
+                    <div class="faction-details">
+                        <p><strong>Base:</strong><span class="tooltip" data-tooltip="An ancient battlefield in Yamato Province. Used as a warrior training ground where many generals honed their swordsmanship and cavalry tactics.">Sakurai Dueling Fields</span></p>
+                        <p><strong>Affiliation:</strong>Kai Takeda Family, Mounted Warrior Corps</p>
+                        <p><strong>Specialty:</strong>Bushidō Swordsmanship & Cavalry Tactics</p>
+                        <p><strong>Strategic Doctrine:</strong>Direct military command through decisive charges and martial valor</p>
+                    </div>
+                    <div class="faction-members">
+                        <h5>Key Personnel</h5>
+                        <div class="member"><span class="tooltip" data-tooltip="Inheritor of Takeda-style cavalry tactics. Excels in spear techniques and commands cavalry units in charges against enemy positions.">Sanada Rekka</span> (Captain) - Spear Cavalry Command Specialist</div>
+                        <div class="member"><span class="tooltip" data-tooltip="Master of dual-sword style. Wields left and right swords with ease, demonstrating formidable combat ability in individual battles.">Yuki Sayone</span> (Swordsman) - Dual-Sword Style Master</div>
+                        <div class="member"><span class="tooltip" data-tooltip="Strategist versed in tactical theory. Develops tactics that overcome numerical disadvantages through troop positioning and battlefield range control.">Sasaki Rinkuro</span> (Tactician) - Formation & Range Control Master</div>
+                    </div>
+                </div>
+
+                <!-- Silver Dutch Institute -->
+                <div class="faction-card silver_dutch">
+                    <div class="faction-header">
+                        <div class="faction-icon">⚙️</div>
+                        <div class="faction-info">
+                            <h4>Silver Dutch Institute</h4>
+                            <h5>Silver Netherlands Engineering Academy</h5>
+                            <div class="faction-result">Western Engineering & Mechanical Arts</div>
+                        </div>
+                    </div>
+                    <div class="faction-details">
+                        <p><strong>Base:</strong><span class="tooltip" data-tooltip="Shipbuilding and technical research facility on Edo Bay. Functions as a base for introducing Western technology, where new weapons are developed.">Edo Arsenal Dock</span></p>
+                        <p><strong>Affiliation:</strong>Nagasaki Dejima Western Technology Magistrate Branch, Ōtomo Family</p>
+                        <p><strong>Specialty:</strong>Western Engineering & Mechanical Arts</p>
+                        <p><strong>Strategic Doctrine:</strong>Technological innovation through iterative prototyping and multilingual councils</p>
+                    </div>
+                    <div class="faction-members">
+                        <h5>Key Personnel</h5>
+                        <div class="member"><span class="tooltip" data-tooltip="Engineer who came to Japan from the Netherlands. Well-versed in Western artillery technology, bringing innovation to Japanese tactical systems.">Johan van der Stark</span> (Technical Director) - Artillery Engineering Specialist</div>
+                        <div class="member"><span class="tooltip" data-tooltip="Multilingual interpreter. Serves as a bridge with foreign engineers and plays an important role in political negotiations.">Interpreter Okame</span> (Diplomatic Translator) - Negotiation & Intelligence Gathering</div>
+                        <div class="member"><span class="tooltip" data-tooltip="Engineer skilled in mechanical engineering. Develops new armaments that fuse Western technology with traditional weapons.">Hendrik Spiker</span> (Armament Engineer) - Mechanical Weapon Design</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phase Evolution -->
+        <section class="card">
+            <h3>🌊 Four-Phase Evolution</h3>
+            <div class="phase-evolution">
+                <div class="phase-timeline">
+                    <div class="phase military-phase">
+                        <h3>⚔️ Military Conquest Phase (T1-5)</h3>
+                        <p>From the mist's descent to the Imperial Duel decree, discovery of the Ganko Cannon intensifies military technology competition. Each faction aims to establish technological superiority.</p>
+                    </div>
+                    <div class="phase political-phase">
+                        <h3>⚖️ Political Authority Phase (T6-10)</h3>
+                        <p>From the Imperial Duel to Imperial Guard intervention, political leadership struggles involving the Imperial Court unfold. Official authority acquisition becomes the focal point.</p>
+                    </div>
+                    <div class="phase legal-phase">
+                        <h3>📜 Kyoto New Order Phase (T11-15)</h3>
+                        <p>Following Imperial Guard intervention, faction balance within legal frameworks in Kyoto and new order establishment through ceremonies progresses.</p>
+                    </div>
+                    <div class="phase final-phase">
+                        <h3>🌊 Edo Final Battle Phase (T16-20)</h3>
+                        <p>From the Imperial Inspection Corps' Edo exercise orders to the final battle before the Emperor under typhoon conditions, the last clash between technological integration and the way of the ninja unfolds.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Turning Points -->
+        <section class="card">
+            <h3>🔄 Major Turning Points</h3>
+            <div class="events-timeline">
+                <div class="event-item">
+                    <div class="event-turn">Turn 2</div>
+                    <div class="event-content">
+                        <h4>⚔️ <span class="tooltip" data-tooltip="Prototype design drawings for Western-style large cannons. A revolutionary weapon that attracted attention from all factions due to its power exceeding traditional matchlock guns.">Ganko Cannon</span> Discovery</h4>
+                        <p>Western-style large cannon prototype drawings discovered at <span class="tooltip" data-tooltip="Oda family's technical research base. Advanced workshop complex where various crafts and weapons are manufactured.">Azuchi Clockwork Foundry</span>, transforming a simple factional conflict into a full-scale hegemonic struggle over military technology.</p>
+                    </div>
+                </div>
+
+                <div class="event-item">
+                    <div class="event-turn">Turn 6</div>
+                    <div class="event-content">
+                        <h4>👑 Imperial Duel Proclamation</h4>
+                        <p>The Emperor issues a martial judgment, elevating the previous shadow war to an official decisive battle. <span class="tooltip" data-tooltip="Kyoto's academic and religious district. A prestigious location where many temples and schools are concentrated, where formal duels are held.">Kyoto Arcane Quarter</span> becomes the stage for the decisive battle.</p>
+                    </div>
+                </div>
+
+                <div class="event-item">
+                    <div class="event-turn">Turn 8</div>
+                    <div class="event-content">
+                        <h4>💥 Duel Ring Shattered</h4>
+                        <p>Lightning shatters the duel ring, transforming individual duels into a four-faction melee. A fundamental change in combat format occurs.</p>
+                    </div>
+                </div>
+
+                <div class="event-item">
+                    <div class="event-turn">Turn 9</div>
+                    <div class="event-content">
+                        <h4>🛡️ Imperial Guard Intervention</h4>
+                        <p>The Imperial Guard restrains the melee through the exercise of Imperial power. A ceasefire declaration within ten hours begins the transition to a political resolution phase.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation to Other Pages -->
+        <section class="card">
+            <h3>🗂️ Content Overview</h3>
+            <div class="navigation-grid">
+                <a href="narrative.html" class="nav-link">
+                    <div class="nav-icon">📖</div>
+                    <div class="nav-content">
+                        <h4>Narrative Replay</h4>
+                        <p>Detailed adventure records of all 15 turns depicted in narrative form. Includes terminology explanations and inter-turn cross-link functionality.</p>
+                    </div>
+                </a>
+
+                <a href="playlog.html" class="nav-link">
+                    <div class="nav-icon">📊</div>
+                    <div class="nav-content">
+                        <h4>Playlog Analysis</h4>
+                        <p>Records of faction transitions through statistical data and numerical analysis. Provides morale graphs and detailed turn-by-turn data.</p>
+                    </div>
+                </a>
+
+                <a href="worldmap.html" class="nav-link">
+                    <div class="nav-icon">🗺️</div>
+                    <div class="nav-content">
+                        <h4>World Map</h4>
+                        <p>Geographic information and faction sphere transitions. Interactive map display of each region's strategic value and control status.</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Campaign Summary -->
+        <section class="card">
+            <h3>🎯 Campaign Summary</h3>
+            <div class="world-info">
+                <div class="world-section">
+                    <h4>🌫️ The Chaotic Eiroku Era</h4>
+                    <p>On an early summer morning, dense fog covered Ise and Kyoto, and four factions quietly began to move within the supernatural mist. This fog was not merely a natural phenomenon but functioned as a symbolic stage where each faction's ambitions and conspiracies intersected.</p>
+
+                    <p>The Shadow Gale Clan sought to infiltrate Kyoto's political center through ninjutsu and espionage, while the Moonlit Onmyo Guild aimed to establish their position as spiritual guardians through barrier arts and shikigami operations. The Crimson Blade Vanguard pursued military superiority through bushidō and cavalry tactics, and the Silver Dutch Institute sought to gain leadership in technological innovation through the introduction of Western technology.</p>
+
+                    <p>This multidimensional conflict among the four factions developed as a comprehensive strategic competition for hegemony in political, technological, and spiritual fields, transcending mere armed conflict. It concluded as a grand tale spanning 20 turns, from political settlement in Kyoto to the technological final battle at Edo Arsenal Dock.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>Eiroku Mist Chronicles - Eiroku Era Fog Battle Chronicles | Narrative TRPG Campaign Record</p>
+    </footer>
+</body>
+</html>

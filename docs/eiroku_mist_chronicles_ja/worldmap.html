@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>永禄の霧戦記 - World Map</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="data.js"></script>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="main-header">
+      <div class="container">
+        <nav class="main-nav">
+          <a href="index.html">🏠 Dashboard</a>
+          <a href="narrative.html">📖 Narrative</a>
+          <a href="playlog.html">📊 Playlog</a>
+          <a href="worldmap.html" class="active">🗺️ World Map</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Campaign Overview -->
+        <section class="campaign-overview">
+            <h1>🗺️ 永禄の霧戦記 - World Map</h1>
+            <p class="subtitle">地理情報と勢力圏の変遷<br>
+            各地域の戦略価値と支配状況をインタラクティブマップで表示</p>
+        </section>
+
+        <!-- インタラクティブ世界マップ -->
+        <section id="interactive-map" class="card">
+            <h2>🗺️ インタラクティブ地域配置図</h2>
+            <div class="map-container">
+                <svg width="100%" height="600" viewBox="0 0 900 600" class="world-map-svg">
+                    <!-- 背景 -->
+                    <rect width="900" height="600" fill="#1a1a2e" stroke="none"/>
+
+                    <!-- 接続線 -->
+                    <g class="connections" stroke="#444" stroke-width="2" fill="none">
+                        <!-- Koga to Ise -->
+                        <line x1="400" y1="150" x2="200" y2="250" class="connection"/>
+                        <!-- Ise to Kyoto -->
+                        <line x1="200" y1="250" x2="400" y2="300" class="connection"/>
+                        <!-- Kyoto to Edo -->
+                        <line x1="400" y1="300" x2="650" y2="200" class="connection"/>
+                        <!-- Koga to Kumano -->
+                        <line x1="400" y1="150" x2="300" y2="400" class="connection"/>
+                        <!-- Kumano to Kyoto -->
+                        <line x1="300" y1="400" x2="400" y2="300" class="connection"/>
+                        <!-- Kumano to Sakurai -->
+                        <line x1="300" y1="400" x2="500" y2="450" class="connection"/>
+                        <!-- Edo to Azuchi -->
+                        <line x1="650" y1="200" x2="550" y2="350" class="connection"/>
+                        <!-- Azuchi to Sakurai -->
+                        <line x1="550" y1="350" x2="500" y2="450" class="connection"/>
+                    </g>
+
+                    <!-- 地域ノード -->
+                    <g class="regions">
+                        <!-- Ise Shadow Vale -->
+                        <g class="region-group">
+                            <circle cx="200" cy="250" r="40" class="region shadow_gale" data-region="ise_shadow_vale"/>
+                            <text x="200" y="225" text-anchor="middle" class="region-label">🌲</text>
+                            <text x="200" y="280" text-anchor="middle" class="region-name">伊勢影ヶ淵</text>
+                        </g>
+
+                        <!-- Koga Mist Forest -->
+                        <g class="region-group">
+                            <circle cx="400" cy="150" r="35" class="region neutral" data-region="koga_mist_forest"/>
+                            <text x="400" y="130" text-anchor="middle" class="region-label">🏔️</text>
+                            <text x="400" y="185" text-anchor="middle" class="region-name">甲賀朧林</text>
+                        </g>
+
+                        <!-- Kumano Spirit Shrine -->
+                        <g class="region-group">
+                            <circle cx="300" cy="400" r="40" class="region moonlit_onmyo" data-region="kumano_spirit_shrine"/>
+                            <text x="300" y="375" text-anchor="middle" class="region-label">🏯</text>
+                            <text x="300" y="435" text-anchor="middle" class="region-name">熊野霊峰社</text>
+                        </g>
+
+                        <!-- Kyoto Arcane Quarter -->
+                        <g class="region-group">
+                            <circle cx="400" cy="300" r="45" class="region contested" data-region="kyoto_arcane_quarter"/>
+                            <text x="400" y="275" text-anchor="middle" class="region-label">🏛️</text>
+                            <text x="400" y="340" text-anchor="middle" class="region-name">京洛術院区</text>
+                        </g>
+
+                        <!-- Edo Arsenal Dock -->
+                        <g class="region-group">
+                            <circle cx="650" cy="200" r="40" class="region silver_dutch" data-region="edo_arsenal_dock"/>
+                            <text x="650" y="175" text-anchor="middle" class="region-label">🚢</text>
+                            <text x="650" y="235" text-anchor="middle" class="region-name">江戸武備船渠</text>
+                        </g>
+
+                        <!-- Azuchi Clockwork Foundry -->
+                        <g class="region-group">
+                            <circle cx="550" cy="350" r="35" class="region silver_dutch" data-region="azuchi_clockwork_foundry"/>
+                            <text x="550" y="330" text-anchor="middle" class="region-label">⚙️</text>
+                            <text x="550" y="385" text-anchor="middle" class="region-name">安土機巧炉</text>
+                        </g>
+
+                        <!-- Sakurai Dueling Fields -->
+                        <g class="region-group">
+                            <circle cx="500" cy="450" r="40" class="region crimson_blade" data-region="sakurai_dueling_fields"/>
+                            <text x="500" y="425" text-anchor="middle" class="region-label">🗾</text>
+                            <text x="500" y="485" text-anchor="middle" class="region-name">桜井試合原</text>
+                        </g>
+                    </g>
+
+                    <!-- 勢力圏表示エリア -->
+                    <g class="influence-zones" opacity="0.3">
+                        <!-- 影颶の衆勢力圏 -->
+                        <circle cx="200" cy="250" r="80" fill="#2C3E50" class="influence-zone shadow_gale"/>
+
+                        <!-- 月影陰陽寮勢力圏 -->
+                        <circle cx="300" cy="400" r="70" fill="#663399" class="influence-zone moonlit_onmyo"/>
+
+                        <!-- 紅刃先鋒隊勢力圏 -->
+                        <circle cx="500" cy="450" r="70" fill="#DC3545" class="influence-zone crimson_blade"/>
+
+                        <!-- 銀蘭機巧院勢力圏 -->
+                        <circle cx="600" cy="275" r="90" fill="#17A2B8" class="influence-zone silver_dutch"/>
+                    </g>
+
+                    <!-- 凡例 -->
+                    <g class="legend" transform="translate(710, 380)">
+                        <rect x="0" y="0" width="180" height="200" fill="#2a2a3e" stroke="#555" rx="5"/>
+                        <text x="10" y="20" class="legend-title">勢力分布</text>
+
+                        <!-- 勢力アイコン -->
+                        <circle cx="20" cy="40" r="8" class="region shadow_gale"/>
+                        <text x="35" y="45" class="legend-text">🌫️ 影颶の衆</text>
+
+                        <circle cx="20" cy="60" r="8" class="region moonlit_onmyo"/>
+                        <text x="35" y="65" class="legend-text">🌙 月影陰陽寮</text>
+
+                        <circle cx="20" cy="80" r="8" class="region crimson_blade"/>
+                        <text x="35" y="85" class="legend-text">⚔️ 紅刃先鋒隊</text>
+
+                        <circle cx="20" cy="100" r="8" class="region silver_dutch"/>
+                        <text x="35" y="105" class="legend-text">⚙️ 銀蘭機巧院</text>
+
+                        <circle cx="20" cy="120" r="8" class="region contested"/>
+                        <text x="35" y="125" class="legend-text">🏛️ 係争地</text>
+
+                        <circle cx="20" cy="140" r="8" class="region neutral"/>
+                        <text x="35" y="145" class="legend-text">🗻 中立地域</text>
+
+                        <text x="10" y="170" class="legend-subtitle">操作方法</text>
+                        <text x="10" y="185" class="legend-small">地域をクリックで詳細表示</text>
+                    </g>
+
+                    <!-- 地域詳細情報 -->
+                    <g class="region-detail-panel" transform="translate(700, 50)">
+                        <rect x="0" y="0" width="180" height="320" fill="#2a2a3e" stroke="#FFD700" stroke-width="2" rx="5"/>
+                        <text x="10" y="20" class="legend-title" id="svg-region-title">📍 地域を選択</text>
+                        <foreignObject x="10" y="30" width="160" height="280">
+                            <div xmlns="http://www.w3.org/1999/xhtml" id="svg-region-info" style="color: #E0E0E0; font-size: 11px; line-height: 1.3;">
+                                <p style="margin: 5px 0; color: #A0A0A0;">地域をクリックして詳細を表示</p>
+                            </div>
+                        </foreignObject>
+                    </g>
+                </svg>
+            </div>
+        </section>
+
+
+        <!-- Faction Control Grid -->
+        <section class="card">
+            <h2>👑 勢力圏分析</h2>
+            <div class="faction-control-grid">
+                <div class="faction-control shadow_gale">
+                    <h3>🌫️ 影颶の衆</h3>
+                    <div class="control-details">
+                        <p><strong>🏠 本拠地</strong>: 伊勢影ヶ淵</p>
+                        <p><strong>🎯 侵攻目標</strong>: 京洛術院区（朝廷影響力獲得）</p>
+                        <p><strong>🛡️ 戦略</strong>: 霧を利用した諜報戦、甲賀朧林での影道構築</p>
+                    </div>
+                    <div class="controlled-regions">
+                        <h4>支配地域</h4>
+                        <div class="region-tag shadow_gale">伊勢影ヶ淵 (影響力: 62)</div>
+                        <div class="region-tag neutral">甲賀朧林 (最終撤退地)</div>
+                    </div>
+                </div>
+
+                <div class="faction-control moonlit_onmyo">
+                    <h3>🌙 月影陰陽寮</h3>
+                    <div class="control-details">
+                        <p><strong>🏠 本拠地</strong>: 熊野霊峰社</p>
+                        <p><strong>🎯 政治目標</strong>: 京洛術院区（護符管理権確立）</p>
+                        <p><strong>🛡️ 戦略</strong>: 霊脈ネットワークによる遠隔支援、朝廷との連携</p>
+                    </div>
+                    <div class="controlled-regions">
+                        <h4>支配地域</h4>
+                        <div class="region-tag moonlit_onmyo">熊野霊峰社 (影響力: 58)</div>
+                        <div class="region-tag contested">京洛術院区 (影響力: 22)</div>
+                    </div>
+                </div>
+
+                <div class="faction-control crimson_blade">
+                    <h3>⚔️ 紅刃先鋒隊</h3>
+                    <div class="control-details">
+                        <p><strong>🏠 本拠地</strong>: 桜井試合原</p>
+                        <p><strong>🎯 防衛目標</strong>: 京洛〜安土〜江戸の補給線確保</p>
+                        <p><strong>🛡️ 戦略</strong>: 機動力を活かした槍騎兵戦術、帝勅護衛</p>
+                    </div>
+                    <div class="controlled-regions">
+                        <h4>支配地域</h4>
+                        <div class="region-tag crimson_blade">桜井試合原 (影響力: 61)</div>
+                    </div>
+                </div>
+
+                <div class="faction-control silver_dutch">
+                    <h3>⚙️ 銀蘭機巧院</h3>
+                    <div class="control-details">
+                        <p><strong>🏠 本拠地</strong>: 江戸武備船渠</p>
+                        <p><strong>🎯 技術目標</strong>: 安土機巧炉（雁行砲実用化）</p>
+                        <p><strong>🛡️ 戦略</strong>: 西洋技術と護符の融合、海上補給線維持</p>
+                    </div>
+                    <div class="controlled-regions">
+                        <h4>支配地域</h4>
+                        <div class="region-tag silver_dutch">江戸武備船渠 (影響力: 65)</div>
+                        <div class="region-tag silver_dutch">安土機巧炉 (影響力: 18)</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Supply Lines -->
+        <section class="card">
+            <h2>🛤️ 交通・補給路分析</h2>
+            <div class="supply-lines-grid">
+                <div class="supply-route">
+                    <h3>主要街道</h3>
+                    <div class="route-item">
+                        <h4>🏛️ 京洛街道</h4>
+                        <p>伊勢影ヶ淵 ↔ 京洛術院区 ↔ 江戸武備船渠</p>
+                        <p>政治・貿易の大動脈。影颶と銀蘭の対立軸</p>
+                    </div>
+                    <div class="route-item">
+                        <h4>🏯 霊峰街道</h4>
+                        <p>甲賀朧林 ↔ 熊野霊峰社 ↔ 桜井試合原</p>
+                        <p>霊的ネットワークと武術訓練の連携路線</p>
+                    </div>
+                    <div class="route-item">
+                        <h4>⚙️ 機巧街道</h4>
+                        <p>江戸武備船渠 ↔ 安土機巧炉 ↔ 桜井試合原</p>
+                        <p>技術革新と軍事防衛の戦略路線</p>
+                    </div>
+                </div>
+
+                <div class="supply-vulnerabilities">
+                    <h3>補給線脆弱性</h3>
+                    <div class="vulnerability-item">
+                        <h4>🏛️ 京洛術院区</h4>
+                        <p>四方向からのアクセスで防御困難、政治的中立性必須</p>
+                    </div>
+                    <div class="vulnerability-item">
+                        <h4>⚙️ 安土機巧炉</h4>
+                        <p>技術資源の集中により奪取価値高、煙幕で視界制限</p>
+                    </div>
+                    <div class="vulnerability-item">
+                        <h4>🏔️ 甲賀朧林</h4>
+                        <p>中立地域だが影道の要衝、霧による隠蔽効果</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Strategic Points -->
+        <section class="card">
+            <h2>🎯 戦略要衝まとめ</h2>
+            <div class="strategic-grid">
+                <div class="strategic-point priority-high">
+                    <div class="priority-icon">🏆</div>
+                    <div class="point-content">
+                        <h4>勝利への鍵</h4>
+                        <p>京洛術院区の政治的支配権</p>
+                    </div>
+                </div>
+
+                <div class="strategic-point priority-medium">
+                    <div class="priority-icon">💰</div>
+                    <div class="point-content">
+                        <h4>経済支配</h4>
+                        <p>江戸武備船渠の貿易ネットワーク</p>
+                    </div>
+                </div>
+
+                <div class="strategic-point priority-medium">
+                    <div class="priority-icon">🔮</div>
+                    <div class="point-content">
+                        <h4>技術優位</h4>
+                        <p>安土機巧炉の雁行砲技術</p>
+                    </div>
+                </div>
+
+                <div class="strategic-point priority-low">
+                    <div class="priority-icon">👤</div>
+                    <div class="point-content">
+                        <h4>諜報制圧</h4>
+                        <p>甲賀朧林の影道ネットワーク</p>
+                    </div>
+                </div>
+
+                <div class="strategic-point priority-low">
+                    <div class="priority-icon">🏛️</div>
+                    <div class="point-content">
+                        <h4>精神的権威</h4>
+                        <p>熊野霊峰社の霊的正統性</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Historical Events by Location -->
+        <section class="card">
+            <h2>🎭 重要事件発生地</h2>
+
+            <div class="event-location">
+                <h3>📍 京洛術院区</h3>
+                <div class="event-details">
+                    <p><strong>T1-5</strong>: 濃霧中の結界攻防戦、影颶vs陰陽寮の諜報戦</p>
+                    <p><strong>T6-10</strong>: 帝勅決闘場設営、四勢力大乱戦の舞台</p>
+                    <p><strong>T11-15</strong>: 祭礼前夜潜入戦、技術総合戦</p>
+                </div>
+            </div>
+
+            <div class="event-location">
+                <h3>📍 江戸武備船渠</h3>
+                <div class="event-details">
+                    <p><strong>T1-5</strong>: 火薬封鎖突破、台風中の帳簿工作</p>
+                    <p><strong>T16-20</strong>: 台風演習→御前決戦、永禄乱世の決着地</p>
+                </div>
+            </div>
+
+            <div class="event-location">
+                <h3>📍 安土機巧炉</h3>
+                <div class="event-details">
+                    <p><strong>T1-5</strong>: 雁行砲図面発見、紅刃vs銀蘭の技術争奪戦</p>
+                </div>
+            </div>
+
+            <div class="event-location">
+                <h3>📍 桜井試合原</h3>
+                <div class="event-details">
+                    <p><strong>T11-15</strong>: 補給列襲撃、昼間決戦の激戦地</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>永禄の霧戦記 - Eiroku Mist Chronicles | ナラティブTRPGキャンペーン記録</p>
+    </footer>
+
+    <script>
+        // 地域データ
+        const regionData = {
+            ise_shadow_vale: {
+                name: "伊勢影ヶ淵",
+                type: "森林",
+                capacity: 2,
+                faction: "shadow_gale",
+                adjacentAreas: ["甲賀朧林", "京洛術院区"],
+                resources: "影蓮、絹契約書",
+                specialEffect: "夜帳: 隠密判定+2、霧沼: 移動コスト+1",
+                controlledBy: "影颶の衆 (影響力: 62)",
+                strategicValue: "忍術の聖地、京洛への隠密侵入ルート"
+            },
+            koga_mist_forest: {
+                name: "甲賀朧林",
+                type: "霧林",
+                capacity: 3,
+                faction: "neutral",
+                adjacentAreas: ["伊勢影ヶ淵", "熊野霊峰社"],
+                resources: "珍薬草、霧絹",
+                specialEffect: "霧幕: 斥候判定難化、隠し道: 秘密経路",
+                controlledBy: "なし（最終決戦後、影颶の衆撤退地）",
+                strategicValue: "霧に隠れた補給基地、影道の中継点"
+            },
+            kumano_spirit_shrine: {
+                name: "熊野霊峰社",
+                type: "神社",
+                capacity: 2,
+                faction: "moonlit_onmyo",
+                adjacentAreas: ["甲賀朧林", "京洛術院区", "桜井試合原"],
+                resources: "霊符、聖水",
+                specialEffect: "霊脈: 妖術判定+2、神恵: 祝詞成功率向上",
+                controlledBy: "月影陰陽寮 (影響力: 58)",
+                strategicValue: "陰陽道の聖域、霊的ネットワークの中枢"
+            },
+            kyoto_arcane_quarter: {
+                name: "京洛術院区",
+                type: "都市",
+                capacity: 4,
+                faction: "contested",
+                adjacentAreas: ["伊勢影ヶ淵", "熊野霊峰社", "江戸武備船渠"],
+                resources: "月銀、学問書、朝廷影響力",
+                specialEffect: "朝廷謀略: 外交判定+1、秘術図書館: 妖術研究効率+2",
+                controlledBy: "月影陰陽寮 (22)、影颶の衆 (10)",
+                strategicValue: "**帝都の政治中枢** - 決闘裁定の舞台"
+            },
+            edo_arsenal_dock: {
+                name: "江戸武備船渠",
+                type: "港湾",
+                capacity: 3,
+                faction: "silver_dutch",
+                adjacentAreas: ["京洛術院区", "安土機巧炉"],
+                resources: "黒色火薬、洋式銃、貿易契約",
+                specialEffect: "海軍補給: 補給効率+2、西洋接続: 外交交渉+2",
+                controlledBy: "銀蘭機巧院 (影響力: 65)",
+                strategicValue: "西洋技術の玄関口、最終決戦の舞台"
+            },
+            azuchi_clockwork_foundry: {
+                name: "安土機巧炉",
+                type: "工業",
+                capacity: 3,
+                faction: "silver_dutch",
+                adjacentAreas: ["江戸武備船渠", "桜井試合原"],
+                resources: "機巧部品、精錬鉄",
+                specialEffect: "歯車共鳴: 工学判定+2、煙幕: 視界-1",
+                controlledBy: "銀蘭機巧院 (影響力: 18)",
+                strategicValue: "雁行砲開発拠点、技術革新の中心"
+            },
+            sakurai_dueling_fields: {
+                name: "桜井試合原",
+                type: "平原",
+                capacity: 2,
+                faction: "crimson_blade",
+                adjacentAreas: ["熊野霊峰社", "安土機巧炉"],
+                resources: "折れ鋼、訓練場",
+                specialEffect: "激突練成: 剣術訓練成功率+2、旗風: 士気+1",
+                controlledBy: "紅刃先鋒隊 (影響力: 61)",
+                strategicValue: "武術修練の聖地、帝都防衛の要衝"
+            }
+        };
+
+        // インタラクティブ機能
+        document.addEventListener('DOMContentLoaded', function() {
+            // 地域クリックイベント（circle要素とregion-group両方に対応）
+            document.querySelectorAll('.region, .region-group').forEach(element => {
+                element.addEventListener('click', function(e) {
+                    e.stopPropagation();
+
+                    let regionKey;
+                    let regionCircle;
+
+                    if (this.classList.contains('region')) {
+                        // circleがクリックされた場合
+                        regionKey = this.dataset.region;
+                        regionCircle = this;
+                    } else {
+                        // region-groupがクリックされた場合
+                        regionCircle = this.querySelector('.region');
+                        regionKey = regionCircle ? regionCircle.dataset.region : null;
+                    }
+
+                    if (regionKey) {
+                        showRegionInfo(regionKey);
+
+                        // アクティブ状態の更新
+                        document.querySelectorAll('.region').forEach(r => r.classList.remove('active'));
+                        if (regionCircle) {
+                            regionCircle.classList.add('active');
+                        }
+                    }
+                });
+
+                // ホバーエフェクト
+                element.addEventListener('mouseenter', function() {
+                    let regionCircle;
+                    let regionKey;
+
+                    if (this.classList.contains('region')) {
+                        regionCircle = this;
+                        regionKey = this.dataset.region;
+                    } else {
+                        regionCircle = this.querySelector('.region');
+                        regionKey = regionCircle ? regionCircle.dataset.region : null;
+                    }
+
+                    if (regionCircle && regionKey) {
+                        const originalR = regionCircle.getAttribute('r');
+                        regionCircle.setAttribute('data-original-r', originalR);
+                        regionCircle.setAttribute('r', parseFloat(originalR) * 1.1);
+
+                        // マウスオーバー時の情報表示
+                        showRegionTooltip(regionKey, regionCircle);
+                    }
+                });
+
+                element.addEventListener('mouseleave', function() {
+                    let regionCircle;
+
+                    if (this.classList.contains('region')) {
+                        regionCircle = this;
+                    } else {
+                        regionCircle = this.querySelector('.region');
+                    }
+
+                    if (regionCircle) {
+                        const originalR = regionCircle.getAttribute('data-original-r');
+                        if (originalR) {
+                            regionCircle.setAttribute('r', originalR);
+                        }
+                    }
+
+                    // ツールチップを非表示
+                    hideRegionTooltip();
+                });
+            });
+
+            // 初期表示
+            showRegionInfo('kyoto_arcane_quarter');
+        });
+
+        function showRegionInfo(regionKey) {
+            const region = regionData[regionKey];
+            const titleDiv = document.getElementById('svg-region-title');
+            const infoDiv = document.getElementById('svg-region-info');
+
+            let factionIcon = '';
+            switch(region.faction) {
+                case 'shadow_gale':
+                    factionIcon = '🌫️';
+                    break;
+                case 'moonlit_onmyo':
+                    factionIcon = '🌙';
+                    break;
+                case 'crimson_blade':
+                    factionIcon = '⚔️';
+                    break;
+                case 'silver_dutch':
+                    factionIcon = '⚙️';
+                    break;
+                case 'neutral':
+                    factionIcon = '🗻';
+                    break;
+                case 'contested':
+                    factionIcon = '🏛️';
+                    break;
+            }
+
+            titleDiv.textContent = `${factionIcon} ${region.name}`;
+
+            infoDiv.innerHTML = `
+                <p style="margin: 3px 0;"><strong>タイプ:</strong><br/>${region.type}</p>
+                <p style="margin: 3px 0;"><strong>容量:</strong> ${region.capacity}</p>
+                <p style="margin: 3px 0;"><strong>隣接:</strong><br/>${region.adjacentAreas.join(', ')}</p>
+                <p style="margin: 3px 0;"><strong>資源:</strong><br/>${region.resources}</p>
+                <p style="margin: 3px 0;"><strong>特殊効果:</strong><br/>${region.specialEffect}</p>
+                <p style="margin: 3px 0;"><strong>支配勢力:</strong><br/>${region.controlledBy}</p>
+                <p style="margin: 3px 0; color: #FFD700;"><strong>戦略価値:</strong><br/>${region.strategicValue}</p>
+            `;
+        }
+
+        // ツールチップ表示
+        function showRegionTooltip(regionKey, element) {
+            const region = regionData[regionKey];
+            let tooltip = document.getElementById('region-tooltip');
+
+            if (!tooltip) {
+                tooltip = document.createElement('div');
+                tooltip.id = 'region-tooltip';
+                tooltip.style.cssText = `
+                    position: absolute;
+                    background: rgba(0, 0, 0, 0.9);
+                    color: #E0E0E0;
+                    padding: 0.75rem;
+                    border-radius: 8px;
+                    font-size: 0.8rem;
+                    pointer-events: none;
+                    z-index: 1000;
+                    max-width: 250px;
+                    border: 1px solid rgba(255, 255, 255, 0.2);
+                    backdrop-filter: blur(10px);
+                `;
+                document.body.appendChild(tooltip);
+            }
+
+            let factionIcon = '';
+            switch(region.faction) {
+                case 'shadow_gale': factionIcon = '🌫️'; break;
+                case 'moonlit_onmyo': factionIcon = '🌙'; break;
+                case 'crimson_blade': factionIcon = '⚔️'; break;
+                case 'silver_dutch': factionIcon = '⚙️'; break;
+                case 'neutral': factionIcon = '🗻'; break;
+                case 'contested': factionIcon = '🏛️'; break;
+            }
+
+            tooltip.innerHTML = `
+                <div style="font-weight: bold; margin-bottom: 0.5rem; color: #FFD700;">
+                    ${factionIcon} ${region.name}
+                </div>
+                <div style="margin-bottom: 0.25rem;">
+                    <strong>タイプ:</strong> ${region.type}
+                </div>
+                <div style="margin-bottom: 0.25rem;">
+                    <strong>支配:</strong> ${region.controlledBy}
+                </div>
+                <div style="margin-bottom: 0.25rem;">
+                    <strong>資源:</strong> ${region.resources}
+                </div>
+                <div style="color: #87CEEB; font-size: 0.75rem;">
+                    クリックで詳細表示
+                </div>
+            `;
+
+            tooltip.style.display = 'block';
+        }
+
+        // ツールチップ非表示
+        function hideRegionTooltip() {
+            const tooltip = document.getElementById('region-tooltip');
+            if (tooltip) {
+                tooltip.style.display = 'none';
+            }
+        }
+
+        // マウス位置でツールチップを追従
+        document.addEventListener('mousemove', function(e) {
+            const tooltip = document.getElementById('region-tooltip');
+            if (tooltip && tooltip.style.display === 'block') {
+                tooltip.style.left = (e.pageX + 15) + 'px';
+                tooltip.style.top = (e.pageY - 10) + 'px';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eiroku Mist Chronicles - Playlog Analysis</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="data.js"></script>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="main-header">
+      <div class="container">
+        <nav class="main-nav">
+          <a href="index.html">🏠 Dashboard</a>
+          <a href="narrative.html">📖 Narrative</a>
+          <a href="playlog.html" class="active">📊 Playlog</a>
+          <a href="worldmap.html">🗺️ World Map</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Campaign Overview -->
+        <section class="campaign-overview">
+            <h1>📊 Eiroku Mist Chronicles - Playlog Analysis</h1>
+            <p class="subtitle">Records of faction transitions through statistical data and numerical analysis<br>
+            Detailed data analysis and morale progression graphs across all 20 turns</p>
+        </section>
+
+        <!-- Final Rankings -->
+        <section class="card final-rankings">
+            <h2>🏆 Final Faction Rankings (by Morale)</h2>
+            <div class="ranking-list">
+                <div class="ranking-item">
+                    <span class="rank-icon">🥇</span>
+                    <span class="faction-name silver_dutch">⚙️ Silver Dutch Institute</span>
+                    <span class="score">Morale 9</span>
+                    <span class="achievement">Great success in technology and talisman fusion</span>
+                </div>
+                <div class="ranking-item">
+                    <span class="rank-icon">🥈</span>
+                    <span class="faction-name crimson_blade">⚔️ Crimson Blade Vanguard</span>
+                    <span class="score">Morale 8</span>
+                    <span class="achievement">Perfect martial achievements responding to Imperial decree</span>
+                </div>
+                <div class="ranking-item">
+                    <span class="rank-icon">🥉</span>
+                    <span class="faction-name moonlit_onmyo">🌙 Moonlit Onmyo Guild</span>
+                    <span class="score">Morale 7</span>
+                    <span class="achievement">Established talisman management rights and imperial capital defense authority</span>
+                </div>
+                <div class="ranking-item">
+                    <span class="rank-icon">📉</span>
+                    <span class="faction-name shadow_gale">🌫️ Shadow Gale Clan</span>
+                    <span class="score">Morale -2</span>
+                    <span class="achievement">Retreat to Koga, requires long-term recovery</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- MVP Awards -->
+        <section class="card mvp-awards">
+            <h2>🏅 MVP Awards</h2>
+            <div class="awards-grid">
+                <div class="award-item silver_dutch">
+                    <div class="award-icon">🛡️</div>
+                    <div class="award-content">
+                        <h5>Best Defense</h5>
+                        <p>Silver Dutch Institute</p>
+                        <small>Perfect lightning cannon defense through talisman technology integration</small>
+                    </div>
+                </div>
+
+                <div class="award-item moonlit_onmyo">
+                    <div class="award-icon">🕊️</div>
+                    <div class="award-content">
+                        <h5>Best Diplomacy</h5>
+                        <p>Moonlit Onmyo Guild</p>
+                        <small>Building trust with the Imperial Court and achieving political victory</small>
+                    </div>
+                </div>
+
+                <div class="award-item crimson_blade">
+                    <div class="award-icon">⚔️</div>
+                    <div class="award-content">
+                        <h5>Best Martial Achievement</h5>
+                        <p>Crimson Blade Vanguard</p>
+                        <small>Consistent spear mastery in response to Imperial decree</small>
+                    </div>
+                </div>
+
+                <div class="award-item shadow_gale">
+                    <div class="award-icon">🌙</div>
+                    <div class="award-content">
+                        <h5>Best Endurance</h5>
+                        <p>Shadow Gale Clan</p>
+                        <small>Successful retreat from devastating defeat at turn 15</small>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Initial Faction Status -->
+        <section class="card">
+            <h2>📊 Initial Faction Status</h2>
+            <div class="faction-stats-grid">
+                <div class="faction-stat shadow_gale">
+                    <h3><span class="character shadow_gale">🌫️ Shadow Gale Clan</span></h3>
+                    <p><strong>Base</strong>: Ise Shadow Depths | <strong>Specialty</strong>: Ninjutsu・Intelligence</p>
+                    <table class="stats-table">
+                        <tr><td>💰 Currency</td><td>180</td></tr>
+                        <tr><td>🗡️ Combat</td><td>6</td></tr>
+                        <tr><td>🏃 Exploration</td><td>7</td></tr>
+                        <tr><td>🤝 Diplomacy</td><td>4</td></tr>
+                        <tr><td>🔨 Craft</td><td>5</td></tr>
+                        <tr><td>👤 Infiltration</td><td>9</td></tr>
+                        <tr><td>📈 Initial Morale</td><td>8</td></tr>
+                    </table>
+                    <p><strong>Resources</strong>: Shadow Lotus 6, Smoke Bombs 12, Intelligence Seals 4</p>
+                    <p><strong>Members</strong>: Kiriu Aoi (Shadow Leader), Fuma Jin (Advance Scout), Nuedou Kouzuki (Poison Master)</p>
+                </div>
+
+                <div class="faction-stat moonlit_onmyo">
+                    <h3><span class="character moonlit_onmyo">🌙 Moonlit Onmyo Guild</span></h3>
+                    <p><strong>Base</strong>: Kumano Sacred Peak Shrine | <strong>Specialty</strong>: Onmyoji Arts・Barrier Magic</p>
+                    <table class="stats-table">
+                        <tr><td>💰 Currency</td><td>160</td></tr>
+                        <tr><td>🗡️ Combat</td><td>7</td></tr>
+                        <tr><td>🏃 Exploration</td><td>5</td></tr>
+                        <tr><td>🤝 Diplomacy</td><td>6</td></tr>
+                        <tr><td>🔨 Craft</td><td>6</td></tr>
+                        <tr><td>✨ Mystic Arts</td><td>9</td></tr>
+                        <tr><td>📈 Initial Morale</td><td>7</td></tr>
+                    </table>
+                    <p><strong>Resources</strong>: Spirit Talismans 9, Moon Silver 3, Incense Offerings 10</p>
+                    <p><strong>Members</strong>: Manai Sakuya (Onmyo Leader), Karasumaru Gaya (Shikigami User), Ashiya Hotaru (Diviner)</p>
+                </div>
+
+                <div class="faction-stat crimson_blade">
+                    <h3><span class="character crimson_blade">⚔️ Crimson Blade Vanguard</span></h3>
+                    <p><strong>Base</strong>: Sakurai Training Grounds | <strong>Specialty</strong>: Martial Arts・Tactics</p>
+                    <table class="stats-table">
+                        <tr><td>💰 Currency</td><td>150</td></tr>
+                        <tr><td>🗡️ Combat</td><td>9</td></tr>
+                        <tr><td>🏃 Exploration</td><td>4</td></tr>
+                        <tr><td>🤝 Diplomacy</td><td>5</td></tr>
+                        <tr><td>🔨 Craft</td><td>4</td></tr>
+                        <tr><td>🛡️ Tactics</td><td>8</td></tr>
+                        <tr><td>📈 Initial Morale</td><td>9</td></tr>
+                    </table>
+                    <p><strong>Resources</strong>: Folded Steel 8, War Horses 5, Banner Silk 6</p>
+                    <p><strong>Members</strong>: Sanada Rekka (Captain), Yuuki Sayane (Swordsman), Sasaki Rinkurou (Strategist)</p>
+                </div>
+
+                <div class="faction-stat silver_dutch">
+                    <h3><span class="character silver_dutch">⚙️ Silver Dutch Institute</span></h3>
+                    <p><strong>Base</strong>: Edo Naval Arsenal | <strong>Specialty</strong>: Western Technology・Engineering</p>
+                    <table class="stats-table">
+                        <tr><td>💰 Currency</td><td>210</td></tr>
+                        <tr><td>🗡️ Combat</td><td>5</td></tr>
+                        <tr><td>🏃 Exploration</td><td>6</td></tr>
+                        <tr><td>🤝 Diplomacy</td><td>7</td></tr>
+                        <tr><td>🔨 Craft</td><td>9</td></tr>
+                        <tr><td>⚙️ Engineering</td><td>10</td></tr>
+                        <tr><td>📈 Initial Morale</td><td>8</td></tr>
+                    </table>
+                    <p><strong>Resources</strong>: Mechanical Parts 10, Black Powder 14, Glass Mirrors 7</p>
+                    <p><strong>Members</strong>: Johan van der Stark (Technical Director), Interpreter Okame (Diplomatic Translator), Hendrik Spijker (Military Engineer)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Morale Chart -->
+        <section class="card">
+            <h2>📈 Morale Progression Chart (Complete 20-Turn Version)</h2>
+            <div class="chart-container">
+                <svg class="world-map-svg" viewBox="0 0 800 400" style="background: rgba(26, 26, 46, 0.5);">
+                    <!-- Grid lines -->
+                    <g stroke="#333" stroke-width="1" opacity="0.5">
+                        <!-- Horizontal lines -->
+                        <line x1="100" y1="50" x2="750" y2="50"/>
+                        <line x1="100" y1="100" x2="750" y2="100"/>
+                        <line x1="100" y1="150" x2="750" y2="150"/>
+                        <line x1="100" y1="200" x2="750" y2="200"/>
+                        <line x1="100" y1="250" x2="750" y2="250"/>
+                        <line x1="100" y1="300" x2="750" y2="300"/>
+                        <line x1="100" y1="350" x2="750" y2="350"/>
+
+                        <!-- Vertical lines (turns) -->
+                        <line x1="150" y1="50" x2="150" y2="350"/>
+                        <line x1="250" y1="50" x2="250" y2="350"/>
+                        <line x1="350" y1="50" x2="350" y2="350"/>
+                        <line x1="450" y1="50" x2="450" y2="350"/>
+                        <line x1="550" y1="50" x2="550" y2="350"/>
+                        <line x1="650" y1="50" x2="650" y2="650"/>
+                        <line x1="750" y1="50" x2="750" y2="350"/>
+                    </g>
+
+                    <!-- Axis labels -->
+                    <g class="axis-label">
+                        <text x="50" y="55">9</text>
+                        <text x="50" y="105">7</text>
+                        <text x="50" y="155">5</text>
+                        <text x="50" y="205">3</text>
+                        <text x="50" y="255">1</text>
+                        <text x="50" y="305">-1</text>
+                        <text x="50" y="355">-3</text>
+
+                        <text x="140" y="375">T1</text>
+                        <text x="240" y="375">T5</text>
+                        <text x="340" y="375">T10</text>
+                        <text x="540" y="375">T15</text>
+                        <text x="740" y="375">T20</text>
+                    </g>
+
+                    <!-- Morale lines -->
+                    <!-- Shadow Gale (declining trend) -->
+                    <polyline class="morale-line"
+                              points="150,90 200,110 250,130 300,180 350,230 400,250 450,270 500,290 550,310 600,330 650,350 700,370 750,390"
+                              stroke="#708090" stroke-width="3" fill="none" />
+
+                    <!-- Moonlit Onmyo (stable) -->
+                    <polyline class="morale-line"
+                              points="150,130 200,120 250,110 300,120 350,110 400,120 450,110 500,110 550,100 600,100 650,105 700,105 750,105"
+                              stroke="#9966CC" stroke-width="3" fill="none" />
+
+                    <!-- Crimson Blade (strong then declining then recovering) -->
+                    <polyline class="morale-line"
+                              points="150,80 200,90 250,100 300,120 350,140 400,160 450,140 500,120 550,110 600,100 650,95 700,90 750,85"
+                              stroke="#DC3545" stroke-width="3" fill="none" />
+
+                    <!-- Silver Dutch (gradual improvement to victory) -->
+                    <polyline class="morale-line"
+                              points="150,90 200,85 250,80 300,75 350,70 400,65 450,60 500,55 550,52 600,50 650,48 700,46 750,42"
+                              stroke="#17A2B8" stroke-width="3" fill="none" />
+
+                    <!-- Data points -->
+                    <g class="data-points">
+                        <!-- Add interactive data points for key turns -->
+                        <circle cx="250" cy="130" r="4" fill="#708090" class="data-point" data-turn="5" data-faction="shadow_gale" data-morale="5"/>
+                        <circle cx="350" cy="110" r="4" fill="#9966CC" class="data-point" data-turn="10" data-faction="moonlit_onmyo" data-morale="7"/>
+                        <circle cx="450" cy="140" r="4" fill="#DC3545" class="data-point" data-turn="12" data-faction="crimson_blade" data-morale="5"/>
+                        <circle cx="750" cy="42" r="4" fill="#17A2B8" class="data-point" data-turn="15" data-faction="silver_dutch" data-morale="9"/>
+                    </g>
+                </svg>
+
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color shadow_gale"></div>
+                        <span>🌫️ Shadow Gale Clan</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color moonlit_onmyo"></div>
+                        <span>🌙 Moonlit Onmyo Guild</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color crimson_blade"></div>
+                        <span>⚔️ Crimson Blade Vanguard</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color silver_dutch"></div>
+                        <span>⚙️ Silver Dutch Institute</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-instructions">
+                📊 Click points on the graph to display detailed information
+            </div>
+
+            <div id="chart-turn-info" class="chart-turn-info"></div>
+        </section>
+
+        <!-- Turn Logs -->
+        <section class="card">
+            <h2>🌫️ Turn-by-Turn Change Log</h2>
+
+            <!-- Turn 1 -->
+            <section id="turn-1" class="turn-section">
+                <header class="turn-header">
+                    <h3>Turn 1: Dense Fog Descends 🌫️</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-1" class="cross-link">📖 View Narrative</a>
+                        <a href="#turn-2" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GM Action</strong>: environmental_change</p>
+
+                    <h4>📍 Position Changes</h4>
+                    <ul>
+                        <li>🌫️ Shadow Gale Clan: Ise Shadow Depths → Kyoto Academy District (intelligence infiltration begins)</li>
+                        <li>🌙 Moonlit Onmyo Guild: Kumano Sacred Peak Shrine → Kyoto Academy District (barrier ritual deployment)</li>
+                        <li>⚔️ Crimson Blade Vanguard: Sakurai Training Grounds → Azuchi Craft Furnace (securing forging supremacy)</li>
+                        <li>⚙️ Silver Dutch Institute: Edo Naval Arsenal → Azuchi Craft Furnace (technology cooperation negotiations)</li>
+                    </ul>
+
+                    <h4>🎭 Inter-Faction Events</h4>
+                    <ul>
+                        <li>🌙🌫️ Moonlit Onmyo Guild vs Shadow Gale Clan: 🔮 Kyoto Barrier Siege - quiet intelligence war begins in the Imperial Court</li>
+                    </ul>
+
+                    <h4>📈 Morale Changes</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">Shadow Gale Clan: 8.0 → 8.0 (no change)</div>
+                        <div class="morale-item moonlit_onmyo">Moonlit Onmyo Guild: 7.0 → 7.0 (no change)</div>
+                        <div class="morale-item crimson_blade">Crimson Blade Vanguard: 9.0 → 9.0 (no change)</div>
+                        <div class="morale-item silver_dutch">Silver Dutch Institute: 8.0 → 8.0 (no change)</div>
+                    </div>
+
+                    <h4>🎒 Resource Changes</h4>
+                    <ul>
+                        <li>🌙 Moonlit Onmyo Guild: Incense Offerings 10→8 (-2) - barrier maintenance cost</li>
+                        <li>⚙️ Silver Dutch Institute: Currency 210→190 (-20), Mechanical Parts 10→8 (-2) - technology negotiation expenses</li>
+                    </ul>
+
+                    <div class="key-event">
+                        <strong>Key Event</strong>: Dense fog gives advantage to ninjutsu and mystical arts, while restricting Western firearms
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 2 -->
+            <section id="turn-2" class="turn-section">
+                <header class="turn-header">
+                    <h3>Turn 2: Wild Goose Cannon Discovery 📜【⚔️ Technological Turning Point】</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-2" class="cross-link">📖 View Narrative</a>
+                        <a href="#turn-1" class="prev-turn">← Previous Turn</a>
+                        <a href="#turn-3" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GM Action</strong>: discovery_event</p>
+
+                    <h4>🎭 Inter-Faction Events</h4>
+                    <ul>
+                        <li>⚙️⚔️ Silver Dutch Institute vs Crimson Blade Vanguard: 🔫 Wild Goose Cannon Development Competition - fierce technological struggle over Western-style cannons</li>
+                        <li>🏆 Result: Silver Dutch gains craftsman protection imperial seal, secures technological leadership</li>
+                    </ul>
+
+                    <h4>📈 Morale Changes</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">Shadow Gale Clan: 8.0 → 7.5 (-0.5) ⬇️</div>
+                        <div class="morale-item moonlit_onmyo">Moonlit Onmyo Guild: 7.0 → 7.2 (+0.2) ⬆️</div>
+                        <div class="morale-item crimson_blade">Crimson Blade Vanguard: 9.0 → 8.5 (-0.5) ⬇️</div>
+                        <div class="morale-item silver_dutch">Silver Dutch Institute: 8.0 → 8.3 (+0.3) ⬆️</div>
+                    </div>
+
+                    <h4>🎒 Resource Changes</h4>
+                    <ul>
+                        <li>🌫️ Shadow Gale Clan: Smoke Bombs 12→10 (-2), Intelligence Seals 4→5 (+1), Court Manipulation Tickets+2</li>
+                        <li>🌙 Moonlit Onmyo Guild: Spirit Talismans 9→8 (-1), Incense Offerings 8→6 (-2), Barrier Seals+2</li>
+                        <li>⚔️ Crimson Blade Vanguard: Currency 150→140 (-10), Wild Goose Cannon Core Parts+1</li>
+                        <li>⚙️ Silver Dutch Institute: Currency 190→150 (-40), Mechanical Parts 8→6 (-2), Gear Stabilizer+2</li>
+                    </ul>
+
+                    <div class="key-event">
+                        <strong>Key Event</strong>: Western technology vs martial arts conflict structure clarified, technological innovation spark ignited
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 3 -->
+            <section id="turn-3" class="turn-section">
+                <header class="turn-header">
+                    <h3>Turn 3: Shogunate Gunpowder Blockade 🚫【💰 Economic Strategy】</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-3" class="cross-link">📖 View Narrative</a>
+                        <a href="#turn-2" class="prev-turn">← Previous Turn</a>
+                        <a href="#turn-4" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GM Action</strong>: market_event</p>
+
+                    <h4>📍 Position Changes</h4>
+                    <ul>
+                        <li>🌫️ Shadow Gale Clan: Kyoto Academy District → Edo Naval Arsenal (ledger manipulation)</li>
+                        <li>⚔️ Crimson Blade Vanguard: Azuchi Craft Furnace → Edo Naval Arsenal (gunpowder seizure)</li>
+                    </ul>
+
+                    <h4>📈 Market Changes</h4>
+                    <div class="key-event">
+                        Black Powder Price: 46 → 52 (+6) 📈<br>
+                        Reason: Supply contraction due to Shogunate inspector gunpowder crackdown
+                    </div>
+
+                    <h4>🎭 Inter-Faction Events</h4>
+                    <ul>
+                        <li>⚔️🚫 Crimson Blade Vanguard vs Shogunate Inspectors: ⚔️ Gunpowder Barrel Seizure Operation - forceful breakthrough with martial power and legal authority</li>
+                        <li>🏆 Result: Successfully obtained seizure order</li>
+                    </ul>
+
+                    <h4>📈 Morale Changes</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">Shadow Gale Clan: 7.5 → 7.8 (+0.3) ⬆️</div>
+                        <div class="morale-item moonlit_onmyo">Moonlit Onmyo Guild: 7.2 → 7.0 (-0.2) ⬇️</div>
+                        <div class="morale-item crimson_blade">Crimson Blade Vanguard: 8.5 → 8.8 (+0.3) ⬆️</div>
+                        <div class="morale-item silver_dutch">Silver Dutch Institute: 8.3 → 8.1 (-0.2) ⬇️</div>
+                    </div>
+
+                    <h4>💰 Economic Activities</h4>
+                    <ul>
+                        <li>⚙️ Silver Dutch Institute: Purchased 4 units of Black Powder (52 price×4=208 Currency)</li>
+                    </ul>
+
+                    <div class="key-event">
+                        <strong>Key Event</strong>: Three-front war configuration established with Edo as the new battlefield
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 4 -->
+            <section id="turn-4" class="turn-section">
+                <header class="turn-header">
+                    <h3>Turn 4: Typhoon Front 🌪️【🌊 Trial by Nature】</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-4" class="cross-link">📖 View Narrative</a>
+                        <a href="#turn-3" class="prev-turn">← Previous Turn</a>
+                        <a href="#turn-5" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GM Action</strong>: environmental_change</p>
+
+                    <h4>🌪️ Environmental Change</h4>
+                    <div class="key-event">
+                        Typhoon front ravages Edo Port, mastering storm-response official records becomes new strategic objective
+                    </div>
+
+                    <h4>🎭 Inter-Faction Events</h4>
+                    <ul>
+                        <li>🌫️🌪️ Shadow Gale Clan vs Typhoon: 📋 Storm Ledger Falsification Operation - inspection record replacement and forgery</li>
+                        <li>🏆 Result: Shadow Gale creates ledgers that become the sole official record of inspection documents</li>
+                    </ul>
+
+                    <h4>📈 Morale Changes</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">Shadow Gale Clan: 7.8 → 8.1 (+0.3) ⬆️</div>
+                        <div class="morale-item moonlit_onmyo">Moonlit Onmyo Guild: 7.0 → 6.8 (-0.2) ⬇️</div>
+                        <div class="morale-item crimson_blade">Crimson Blade Vanguard: 8.5 → 8.2 (-0.3) ⬇️</div>
+                        <div class="morale-item silver_dutch">Silver Dutch Institute: 8.1 → 7.9 (-0.2) ⬇️</div>
+                    </div>
+
+                    <h4>🎒 Resource Changes</h4>
+                    <ul>
+                        <li>🌫️ Shadow Gale Clan: Talismans+1, Intelligence Seals 5→6 (+1) - forged ledger creation</li>
+                        <li>⚔️ Crimson Blade Vanguard: Currency 140→128 (-12) - storm response costs</li>
+                        <li>⚙️ Silver Dutch Institute: Mechanical Parts 6→5 (-1) - storm response equipment maintenance</li>
+                    </ul>
+
+                    <div class="key-event">
+                        <strong>Key Event</strong>: Natural disaster from typhoon creates new strategic opportunities, Shadow Gale gains advantage in information warfare
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 5 -->
+            <section id="turn-5" class="turn-section">
+                <header class="turn-header">
+                    <h3>Turn 5: Imperial Court Inspection 👑【🏛️ Political Trial】</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-5" class="cross-link">📖 View Narrative</a>
+                        <a href="#turn-4" class="prev-turn">← Previous Turn</a>
+                        <a href="#turn-6" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GM Action</strong>: discovery_event</p>
+
+                    <h4>📍 Position Changes</h4>
+                    <ul>
+                        <li>🌫️ Shadow Gale Clan: Edo Naval Arsenal → Kyoto Academy District (returning to capital with storm ledgers)</li>
+                        <li>⚔️ Crimson Blade Vanguard: Edo Naval Arsenal → Azuchi Craft Furnace (gunpowder escort)</li>
+                    </ul>
+
+                    <h4>🎭 Inter-Faction Events</h4>
+                    <ul>
+                        <li>🌙📋 Moonlit Onmyo Guild vs Imperial Court Inspection: 📜 Obtaining Talisman Management Authority Commission - exposing Shadow Gale's falsification through thundercloud records</li>
+                        <li>🏆 Result: Onmyo Guild gains official talisman management authority</li>
+                    </ul>
+
+                    <h4>📈 Trust Relationship Changes</h4>
+                    <div class="key-event">
+                        Moonlit Onmyo Guild ↔ Shadow Gale Clan: Trust level 4→3 (conflict intensifies)
+                    </div>
+
+                    <h4>📈 Morale Changes</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">Shadow Gale Clan: 7.8 → 6.5 (-1.3) ⬇️</div>
+                        <div class="morale-item moonlit_onmyo">Moonlit Onmyo Guild: 7.0 → 7.8 (+0.8) ⬆️</div>
+                        <div class="morale-item crimson_blade">Crimson Blade Vanguard: 8.8 → 8.5 (-0.3) ⬇️</div>
+                        <div class="morale-item silver_dutch">Silver Dutch Institute: 8.1 → 8.3 (+0.2) ⬆️</div>
+                    </div>
+
+                    <div class="key-event">
+                        <strong>🎯 New Objective</strong>: Onmyo Guild gains Imperial Court's trust and is officially commissioned with Kyoto's talisman jurisdiction, taking advantage in political negotiations
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 6 -->
+            <section id="turn-6" class="turn-section">
+                <header class="turn-header">
+                    <h3>Turn 6: Imperial Duel Declaration 👑【⚔️ Fateful Showdown】</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-6" class="cross-link">📖 View Narrative</a>
+                        <a href="#turn-5" class="prev-turn">← Previous Turn</a>
+                        <a href="#turn-7" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GM Action</strong>: discovery_event</p>
+
+                    <h4>👑 Imperial Decree Announcement</h4>
+                    <div class="key-event">
+                        The Emperor issues martial judgment, commanding official duel between Onmyo Guild and Shadow Gale in Kyoto Academy District
+                    </div>
+
+                    <h4>📈 Morale Changes</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">Shadow Gale Clan: 6.5 → 7.2 (+0.7) ⬆️</div>
+                        <div class="morale-item moonlit_onmyo">Moonlit Onmyo Guild: 7.8 → 8.0 (+0.2) ⬆️</div>
+                        <div class="morale-item crimson_blade">Crimson Blade Vanguard: 8.2 → 7.8 (-0.4) ⬇️</div>
+                        <div class="morale-item silver_dutch">Silver Dutch Institute: 7.9 → 8.2 (+0.3) ⬆️</div>
+                    </div>
+
+                    <div class="key-event">
+                        <strong>Key Event</strong>: Previous covert battles escalate to official martial judgment, decisive battle stage is set
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 7 -->
+            <section id="turn-7" class="turn-section">
+                <header class="turn-header">
+                    <h3>Turn 7: Duel Ring Preparation ⚔️【🎭 Martial Judgment Stage】</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-7" class="cross-link">📖 View Narrative</a>
+                        <a href="#turn-6" class="prev-turn">← Previous Turn</a>
+                        <a href="#turn-8" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GM Action</strong>: environmental_change</p>
+
+                    <h4>🎭 Duel Stage Setup</h4>
+                    <ul>
+                        <li>Duel ring construction completed in Kyoto Academy District</li>
+                        <li>Emperor's viewing stand installed</li>
+                        <li>Each faction's witness preparation</li>
+                    </ul>
+
+                    <h4>📈 Morale Changes</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">Shadow Gale Clan: 7.2 → 7.5 (+0.3) ⬆️</div>
+                        <div class="morale-item moonlit_onmyo">Moonlit Onmyo Guild: 8.0 → 7.8 (-0.2) ⬇️</div>
+                        <div class="morale-item crimson_blade">Crimson Blade Vanguard: 7.8 → 8.0 (+0.2) ⬆️</div>
+                        <div class="morale-item silver_dutch">Silver Dutch Institute: 8.2 → 8.1 (-0.1) ⬇️</div>
+                    </div>
+
+                    <div class="key-event">
+                        <strong>Key Event</strong>: Imperial decree duel stage is set, tension builds toward the fateful battle
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 8 -->
+            <section id="turn-8" class="turn-section">
+                <header class="turn-header">
+                    <h3>Turn 8: Duel Ring Shattered ⚡【💥 Shift to Melee】</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-8" class="cross-link">📖 View Narrative</a>
+                        <a href="#turn-7" class="prev-turn">← Previous Turn</a>
+                        <a href="#turn-9" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GM Action</strong>: discovery_event</p>
+
+                    <h4>⚡ Duel Ring Destruction</h4>
+                    <div class="key-event">
+                        Lightning strike shatters the duel ring, transforming individual duel into four-faction melee
+                    </div>
+
+                    <h4>📈 Morale Changes</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">Shadow Gale Clan: 7.5 → 6.8 (-0.7) ⬇️</div>
+                        <div class="morale-item moonlit_onmyo">Moonlit Onmyo Guild: 7.8 → 7.2 (-0.6) ⬇️</div>
+                        <div class="morale-item crimson_blade">Crimson Blade Vanguard: 8.0 → 7.5 (-0.5) ⬇️</div>
+                        <div class="morale-item silver_dutch">Silver Dutch Institute: 8.1 → 7.8 (-0.3) ⬇️</div>
+                    </div>
+
+                    <div class="key-event">
+                        <strong>Key Event</strong>: Individual duel transforms into four-faction melee, fundamental change in combat format
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 9 -->
+            <section id="turn-9" class="turn-section">
+                <header class="turn-header">
+                    <h3>Turn 9: Imperial Guard Intervention 🛡️【👑 Imperial Authority Activated】</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-9" class="cross-link">📖 View Narrative</a>
+                        <a href="#turn-8" class="prev-turn">← Previous Turn</a>
+                        <a href="#turn-10" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GM Action</strong>: discovery_event</p>
+
+                    <h4>🛡️ Forced Ceasefire</h4>
+                    <div class="key-event">
+                        Imperial Guard proclamation "lay down arms within ten hours," imperial authority activated
+                    </div>
+
+                    <h4>📈 Morale Changes</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">Shadow Gale Clan: 6.8 → 5.8 (-1.0) ⬇️</div>
+                        <div class="morale-item moonlit_onmyo">Moonlit Onmyo Guild: 7.2 → 7.5 (+0.3) ⬆️</div>
+                        <div class="morale-item crimson_blade">Crimson Blade Vanguard: 7.5 → 7.8 (+0.3) ⬆️</div>
+                        <div class="morale-item silver_dutch">Silver Dutch Institute: 7.8 → 8.0 (+0.2) ⬆️</div>
+                    </div>
+
+                    <div class="key-event">
+                        <strong>Key Event</strong>: Forced ceasefire by imperial authority begins transition from military to political resolution phase
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 10 -->
+            <section id="turn-10" class="turn-section">
+                <header class="turn-header">
+                    <h3>Turn 10: Imperial Judgment 👑【⚖️ Victory and Defeat Decided】</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-10" class="cross-link">📖 View Narrative</a>
+                        <a href="#turn-9" class="prev-turn">← Previous Turn</a>
+                        <a href="#turn-11" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GM Action</strong>: discovery_event</p>
+
+                    <h4>🏆 Imperial Judgment Proclamation</h4>
+                    <div class="key-event">
+                        <strong>Final Disposition</strong>: Moonlit Onmyo Guild continues Kyoto defense, Crimson Blade Vanguard assists Imperial Guard, Silver Dutch Institute provides technology, Shadow Gale Clan under surveillance in Ise
+                    </div>
+
+                    <h4>📈 Morale Changes</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">Shadow Gale Clan: 5.0 → 3.0 (-2.0) ⬇️</div>
+                        <div class="morale-item moonlit_onmyo">Moonlit Onmyo Guild: 6.5 → 7.0 (+0.5) ⬆️</div>
+                        <div class="morale-item crimson_blade">Crimson Blade Vanguard: 7.0 → 7.5 (+0.5) ⬆️</div>
+                        <div class="morale-item silver_dutch">Silver Dutch Institute: 8.0 → 8.2 (+0.2) ⬆️</div>
+                    </div>
+
+                    <h4>🎯 Final Objectives Confirmed</h4>
+                    <ul>
+                        <li>🌙 Onmyo Guild: Solidify position as guardian of imperial capital</li>
+                        <li>⚔️ Crimson Blade: Gain honor as Imperial Guard assistant</li>
+                        <li>⚙️ Silver Dutch: Restore trust through technology provision</li>
+                        <li>🌫️ Shadow Gale: Prepare next shadow strike in Ise</li>
+                    </ul>
+
+                    <div class="key-event">
+                        <strong>Key Event</strong>: Official results of imperial decree duel clearly determine each faction's future position
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 11 -->
+            <section id="turn-11" class="turn-section">
+                <header class="turn-header">
+                    <h3>Turn 11: Sakurai Plains Ambush ⚔️【🔥 Shadow Gale's Revenge】</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-11" class="cross-link">📖 View Narrative</a>
+                        <a href="#turn-10" class="prev-turn">← Previous Turn</a>
+                        <a href="#turn-12" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GM Action</strong>: discovery_event</p>
+
+                    <h4>📍 Position Changes</h4>
+                    <ul>
+                        <li>🌫️ Shadow Gale Clan: Ise Shadow Depths → Sakurai Training Grounds (ambush attack)</li>
+                        <li>⚙️ Silver Dutch Institute: Kyoto Academy District → Sakurai Training Grounds (artillery support)</li>
+                    </ul>
+
+                    <h4>🎭 Inter-Faction Events</h4>
+                    <ul>
+                        <li>🌫️⚔️ Shadow Gale Clan vs Crimson Blade Vanguard: ⚔️ Sakurai Plains Supply Unit Ambush - sabotage operation against imperial capital supply lines</li>
+                        <li>🏆 Result: Crimson Blade successfully defends supply convoy, Shadow Gale loses part of intelligence scrolls and retreats</li>
+                    </ul>
+
+                    <h4>📈 Morale Changes</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">Shadow Gale Clan: 3.0 → 4.0 (+1.0) ⬆️</div>
+                        <div class="morale-item moonlit_onmyo">Moonlit Onmyo Guild: 7.0 → 6.0 (-1.0) ⬇️</div>
+                        <div class="morale-item crimson_blade">Crimson Blade Vanguard: 7.5 → 5.0 (-2.5) ⬇️</div>
+                        <div class="morale-item silver_dutch">Silver Dutch Institute: 8.2 → 8.0 (-0.2) ⬇️</div>
+                    </div>
+
+                    <h4>🎒 Resource Changes</h4>
+                    <ul>
+                        <li>🌫️ Shadow Gale Clan: Shadow Lotus 3→2 (-1), Intelligence Seals 5→4 (-1), Battle Wounds 1→2 (+1)</li>
+                        <li>🌙 Moonlit Onmyo Guild: Storm Talismans 1→0 (-1), Barrier Recovery Bases 2→1 (-1)</li>
+                        <li>⚔️ Crimson Blade Vanguard: Folded Steel 4→3 (-1), War Horses 2→1 (-1), Banner Silk 3→2 (-1)</li>
+                        <li>⚙️ Silver Dutch Institute: Black Powder 7→5 (-2), Glass Mirrors 5→4 (-1)</li>
+                    </ul>
+
+                    <div class="key-event">
+                        <strong>Key Event</strong>: Shadow Gale rebels against Imperial judgment, begins last resistance with sabotage operations against imperial capital supply lines
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 12 -->
+            <section id="turn-12" class="turn-section">
+                <header class="turn-header">
+                    <h3>Turn 12: Sakurai Plains Siege ⚔️【🔥 Continuing Battle】</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-12" class="cross-link">📖 View Narrative</a>
+                        <a href="#turn-11" class="prev-turn">← Previous Turn</a>
+                        <a href="#turn-13" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GM Action</strong>: environmental_change</p>
+
+                    <h4>🎭 Continuing Combat</h4>
+                    <div class="key-event">
+                        Supply line defense battle continues at Sakurai Plains with Crimson Blade's Spear Wall and Silver Dutch's portable cannons
+                    </div>
+
+                    <h4>📈 Morale Changes</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">Shadow Gale Clan: 4.0 → 1.0 (-3.0) ⬇️</div>
+                        <div class="morale-item moonlit_onmyo">Moonlit Onmyo Guild: 6.0 → 7.0 (+1.0) ⬆️</div>
+                        <div class="morale-item crimson_blade">Crimson Blade Vanguard: 5.0 → 5.0 (no change)</div>
+                        <div class="morale-item silver_dutch">Silver Dutch Institute: 8.0 → 6.0 (-2.0) ⬇️</div>
+                    </div>
+
+                    <h4>🎒 Resource Changes</h4>
+                    <ul>
+                        <li>🌫️ Shadow Gale Clan: Shadow Lotus 2→1 (-1), Intelligence Seals 4→3 (-1), Battle Wounds 2→4 (+2), Recovery Herbs 2→1 (-1)</li>
+                        <li>🌙 Moonlit Onmyo Guild: Spirit Talismans 2→1 (-1), Barrier Recovery Bases 1→0 (-1)</li>
+                        <li>⚔️ Crimson Blade Vanguard: Folded Steel 3→2 (-1), Banner Silk 2→1 (-1)</li>
+                        <li>⚙️ Silver Dutch Institute: Black Powder 5→3 (-2), Glass Mirrors 4→3 (-1)</li>
+                    </ul>
+
+                    <div class="key-event">
+                        <strong>Key Event</strong>: War of attrition severely depletes Shadow Gale's forces, preparation for retreat begins
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 13 -->
+            <section id="turn-13" class="turn-section">
+                <header class="turn-header">
+                    <h3>Turn 13: Combat Cessation Declaration 🛡️【📜 Imperial Guard Judgment】</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-13" class="cross-link">📖 View Narrative</a>
+                        <a href="#turn-12" class="prev-turn">← Previous Turn</a>
+                        <a href="#turn-14" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GM Action</strong>: discovery_event</p>
+
+                    <h4>📍 Position Changes</h4>
+                    <ul>
+                        <li>🌫️ Shadow Gale Clan: Sakurai Training Grounds → Ise Shadow Depths (retreat)</li>
+                        <li>⚙️ Silver Dutch Institute: Sakurai Training Grounds → Kyoto Academy District (return)</li>
+                    </ul>
+
+                    <h4>🛡️ Imperial Guard Proclamation</h4>
+                    <div class="key-event">
+                        Declaration of Sakurai Plains combat cessation, orders each faction for post-war processing and redeployment
+                    </div>
+
+                    <h4>📈 Morale Changes</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">Shadow Gale Clan: 1.0 → 2.0 (+1.0) ⬆️</div>
+                        <div class="morale-item moonlit_onmyo">Moonlit Onmyo Guild: 7.0 → 7.0 (no change)</div>
+                        <div class="morale-item crimson_blade">Crimson Blade Vanguard: 5.0 → 6.0 (+1.0) ⬆️</div>
+                        <div class="morale-item silver_dutch">Silver Dutch Institute: 6.0 → 7.0 (+1.0) ⬆️</div>
+                    </div>
+
+                    <h4>🎒 Resource Changes</h4>
+                    <ul>
+                        <li>🌫️ Shadow Gale Clan: Recovery Herbs 1→3 (+2)</li>
+                        <li>🌙 Moonlit Onmyo Guild: Imperial Guard Grace 1→2 (+1)</li>
+                        <li>⚔️ Crimson Blade Vanguard: Folded Steel 2→1 (-1), Banner Silk 1→0 (-1)</li>
+                        <li>⚙️ Silver Dutch Institute: Imperial Training Kit 2→1 (-1)</li>
+                    </ul>
+
+                    <div class="key-event">
+                        <strong>Key Event</strong>: Imperial Guard judgment clarifies role distribution among factions, preparation for next phase begins
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 14 -->
+            <section id="turn-14" class="turn-section">
+                <header class="turn-header">
+                    <h3>Turn 14: Kyoto Festival Eve 🌙【🏮 Final Infiltration】</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-14" class="cross-link">📖 View Narrative</a>
+                        <a href="#turn-13" class="prev-turn">← Previous Turn</a>
+                        <a href="#turn-15" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GM Action</strong>: discovery_event</p>
+
+                    <h4>📍 Position Changes</h4>
+                    <ul>
+                        <li>🌫️ Shadow Gale Clan: Ise Shadow Depths → Kyoto Academy District (final infiltration)</li>
+                        <li>⚔️ Crimson Blade Vanguard: Sakurai Training Grounds → Kyoto Academy District (festival security)</li>
+                    </ul>
+
+                    <h4>🎭 Inter-Faction Events</h4>
+                    <ul>
+                        <li>🌫️🌙 Shadow Gale Clan vs Moonlit Onmyo Guild: 🏮 Festival Eve Infiltration Battle - final showdown on the capital's rooftops</li>
+                        <li>🏆 Result: Three-faction alliance of Onmyo Guild, Crimson Blade, and Silver Dutch repels Shadow Gale</li>
+                    </ul>
+
+                    <h4>📈 Morale Changes</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">Shadow Gale Clan: 2.0 → -1.0 (-3.0) ⬇️</div>
+                        <div class="morale-item moonlit_onmyo">Moonlit Onmyo Guild: 7.0 → 6.0 (-1.0) ⬇️</div>
+                        <div class="morale-item crimson_blade">Crimson Blade Vanguard: 6.0 → 7.0 (+1.0) ⬆️</div>
+                        <div class="morale-item silver_dutch">Silver Dutch Institute: 7.0 → 7.0 (no change)</div>
+                    </div>
+
+                    <h4>🎒 Resource Changes</h4>
+                    <ul>
+                        <li>🌫️ Shadow Gale Clan: Shadow Lotus 1→0 (-1), Intelligence Seals 3→2 (-1), Battle Wounds 4→6 (+2)</li>
+                        <li>🌙 Moonlit Onmyo Guild: Spirit Talismans 1→0 (-1)</li>
+                        <li>⚔️ Crimson Blade Vanguard: Folded Steel 1→0 (-1)</li>
+                        <li>⚙️ Silver Dutch Institute: Black Powder 3→1 (-2), Glass Mirrors 3→2 (-1)</li>
+                    </ul>
+
+                    <div class="key-event">
+                        <strong>Key Event</strong>: Shadow Gale's final infiltration operation fails, three-faction alliance on imperial capital side completely established
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 15 -->
+            <section id="turn-15" class="turn-section">
+                <header class="turn-header">
+                    <h3>Turn 15: New Equilibrium at Festival Dawn 🌅【🏛️ Dawn of New Order】</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-15" class="cross-link">📖 View Narrative</a>
+                        <a href="#turn-14" class="prev-turn">← Previous Turn</a>
+                        <a href="#turn-16" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GM Action</strong>: discovery_event</p>
+
+                    <h4>🎭 Final Order Establishment</h4>
+                    <ul>
+                        <li>👑🎌 Festival Dawn Imperial Decree: 🏛️ Final Order Establishment</li>
+                        <li>Shadow Gale complete retreat to Ise, Onmyo Guild imperial guard commission, Crimson Blade・Silver Dutch permanent imperial capital stationing system</li>
+                    </ul>
+
+                    <h4>📈 Final Morale</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">Shadow Gale Clan: 3.0 → -2.0 (-5.0) ⬇️ (devastating defeat)</div>
+                        <div class="morale-item moonlit_onmyo">Moonlit Onmyo Guild: 7.0 → 7.0 (stable maintenance)</div>
+                        <div class="morale-item crimson_blade">Crimson Blade Vanguard: 7.5 → 8.0 (+0.5) ⬆️</div>
+                        <div class="morale-item silver_dutch">Silver Dutch Institute: 8.2 → 9.0 (+0.8) ⬆️</div>
+                    </div>
+
+                    <h4>🎒 Final Resource Status</h4>
+                    <ul>
+                        <li>🌫️ Shadow Gale Clan: Battle Wounds 9 (devastating), all combat resources depleted</li>
+                        <li>🌙 Moonlit Onmyo Guild: Imperial Guard Grace+2, Barrier Recovery Bases+2</li>
+                        <li>⚔️ Crimson Blade Vanguard: Imperial Victory Banner+1, Imperial Guard Oath+1</li>
+                        <li>⚙️ Silver Dutch Institute: Imperial Lightning Volley+1, Barrier Resonance Device+2</li>
+                    </ul>
+
+                    <div class="key-event">
+                        <strong>Key Event</strong>: Imperial authority established at festival, permanent defense system constructed. Tentative conclusion to Eiroku period of chaos
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 16 -->
+            <section id="turn-16" class="turn-section">
+                <header class="turn-header">
+                    <h3>Turn 16: Edo Public Exercises 🌊【🎯 Imperial New Command】</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-16" class="cross-link">📖 View Narrative</a>
+                        <a href="#turn-15" class="prev-turn">← Previous Turn</a>
+                        <a href="#turn-17" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GM Action</strong>: discovery_event</p>
+
+                    <h4>📍 Position Changes</h4>
+                    <ul>
+                        <li>🌫️ Shadow Gale Clan: Ise Shadow Depths → Koga Mist Forest (mist path reconstruction)</li>
+                        <li>🌙 Moonlit Onmyo Guild: Kyoto Academy District → Kumano Sacred Peak Shrine (barrier node construction)</li>
+                        <li>⚔️ Crimson Blade Vanguard: Kyoto Academy District → Edo Naval Arsenal (exercise preparation)</li>
+                    </ul>
+
+                    <h4>🎯 Imperial Inspection Team Orders</h4>
+                    <div class="key-event">
+                        Imperial inspection team orders public exercises at Edo Naval Arsenal, testing each faction's technology and loyalty
+                    </div>
+
+                    <h4>📈 Morale Changes</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">Shadow Gale Clan: -2.0 → 1.0 (+3.0) ⬆️</div>
+                        <div class="morale-item moonlit_onmyo">Moonlit Onmyo Guild: 7.0 → 7.0 (no change)</div>
+                        <div class="morale-item crimson_blade">Crimson Blade Vanguard: 8.0 → 8.0 (no change)</div>
+                        <div class="morale-item silver_dutch">Silver Dutch Institute: 9.0 → 9.0 (no change)</div>
+                    </div>
+
+                    <h4>📈 Market Changes</h4>
+                    <div class="key-event">
+                        Black Powder Price: 52 → 55 (+3) 📈<br>
+                        Reason: Price increase due to increased exercise demand
+                    </div>
+
+                    <h4>🎒 Resource Changes</h4>
+                    <ul>
+                        <li>🌫️ Shadow Gale Clan: Battle Wounds 6→4 (-2), Recovery Herbs 3→2 (-1), Mist Thread+2</li>
+                        <li>🌙 Moonlit Onmyo Guild: Storm Talismans+1, Imperial Guard Grace 2→1 (-1), Barrier Recovery Bases+1</li>
+                        <li>⚔️ Crimson Blade Vanguard: War Horses 1→0 (-1), Imperial Guard Respect 2→3 (+1)</li>
+                        <li>⚙️ Silver Dutch Institute: Defense Artillery Position 1→2 (+1)</li>
+                    </ul>
+
+                    <div class="key-event">
+                        <strong>Key Event</strong>: Battlefield shifts from Kyoto to Edo, naval technological demonstration and loyalty testing begins
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 17 -->
+            <section id="turn-17" class="turn-section">
+                <header class="turn-header">
+                    <h3>Turn 17: Typhoon Approach Exercises 🌪️【⛈️ Storm Omens】</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-17" class="cross-link">📖 View Narrative</a>
+                        <a href="#turn-16" class="prev-turn">← Previous Turn</a>
+                        <a href="#turn-18" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GM Action</strong>: environmental_change</p>
+
+                    <h4>📍 Position Changes</h4>
+                    <ul>
+                        <li>⚙️ Silver Dutch Institute: Kyoto Academy District → Edo Naval Arsenal (exercise participation)</li>
+                    </ul>
+
+                    <h4>🌪️ Environmental Change</h4>
+                    <div class="key-event">
+                        Typhoon front approaches Edo Bay, imperial inspection team declares exercise continuation
+                    </div>
+
+                    <h4>📈 Morale Changes</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">Shadow Gale Clan: 1.0 → 2.0 (+1.0) ⬆️</div>
+                        <div class="morale-item moonlit_onmyo">Moonlit Onmyo Guild: 7.0 → 7.0 (no change)</div>
+                        <div class="morale-item crimson_blade">Crimson Blade Vanguard: 8.0 → 8.0 (no change)</div>
+                        <div class="morale-item silver_dutch">Silver Dutch Institute: 9.0 → 9.0 (no change)</div>
+                    </div>
+
+                    <h4>🎒 Resource Changes</h4>
+                    <ul>
+                        <li>🌫️ Shadow Gale Clan: Intelligence Seals 2→3 (+1), Battle Wounds 4→3 (-1), Recovery Herbs 2→1 (-1), Mist Thread+2</li>
+                        <li>🌙 Moonlit Onmyo Guild: Spirit Talismans+2, Storm Talismans 1→2 (+1), Barrier Recovery Bases 1→2 (+1)</li>
+                        <li>⚔️ Crimson Blade Vanguard: Joint Exercise Protocol+2, Imperial Guard Respect 3→4 (+1)</li>
+                        <li>⚙️ Silver Dutch Institute: Joint Exercise Protocol+2, Defense Artillery Position 2→3 (+1)</li>
+                    </ul>
+
+                    <div class="key-event">
+                        <strong>Key Event</strong>: Exercise continuation decided amid typhoon approach, each faction begins storm-focused preparations
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 18 -->
+            <section id="turn-18" class="turn-section">
+                <header class="turn-header">
+                    <h3>Turn 18: Typhoon Ambush Battle ⚡【⛈️ Lightning Showdown】</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-18" class="cross-link">📖 View Narrative</a>
+                        <a href="#turn-17" class="prev-turn">← Previous Turn</a>
+                        <a href="#turn-19" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GM Action</strong>: discovery_event</p>
+
+                    <h4>📍 Position Changes</h4>
+                    <ul>
+                        <li>🌫️ Shadow Gale Clan: Koga Mist Forest → Edo Naval Arsenal (typhoon ambush)</li>
+                    </ul>
+
+                    <h4>🎭 Inter-Faction Events</h4>
+                    <ul>
+                        <li>🌫️⚡ Shadow Gale Clan vs Imperial Capital Alliance: ⚡ Typhoon Exercise Ambush Battle - water spider pier assault and three-way fierce battle</li>
+                        <li>🏆 Result: Talisman-synchronized lightning cannons defeat water spider unit, Shadow Clan temporarily thwarted</li>
+                    </ul>
+
+                    <h4>📈 Trust Relationship Changes</h4>
+                    <div class="key-event">
+                        Shadow Gale Clan ↔ Silver Dutch Institute: Hostility +1 (combat intensifies)<br>
+                        Shadow Gale Clan ↔ Crimson Blade Vanguard: Hostility +1 (combat intensifies)
+                    </div>
+
+                    <h4>📈 Morale Changes</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">Shadow Gale Clan: 2.0 → 3.0 (+1.0) ⬆️</div>
+                        <div class="morale-item moonlit_onmyo">Moonlit Onmyo Guild: 7.0 → 7.0 (no change)</div>
+                        <div class="morale-item crimson_blade">Crimson Blade Vanguard: 8.0 → 8.0 (no change)</div>
+                        <div class="morale-item silver_dutch">Silver Dutch Institute: 9.0 → 9.0 (no change)</div>
+                    </div>
+
+                    <h4>🎒 Resource Changes</h4>
+                    <ul>
+                        <li>🌫️ Shadow Gale Clan: Test Shadow Blade+1, Battle Wounds 3→4 (+1), Mist Thread 2→1 (-1)</li>
+                        <li>🌙 Moonlit Onmyo Guild: Spirit Talismans 2→1 (-1), Storm Talismans 2→1 (-1)</li>
+                        <li>⚔️ Crimson Blade Vanguard: Storm Barrier Plate+1, Broken Spear Shaft 1→2 (+1), Imperial Guard Respect 4→5 (+1)</li>
+                        <li>⚙️ Silver Dutch Institute: Gear Stabilizer 1→2 (+1), Talisman Seal+1, Typhoon Shooting Pattern+1</li>
+                    </ul>
+
+                    <div class="key-event">
+                        <strong>Key Event</strong>: Exercise transforms into actual combat, true power of ninjutsu, spear arts, and artillery tested under typhoon conditions
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 19 -->
+            <section id="turn-19" class="turn-section">
+                <header class="turn-header">
+                    <h3>Turn 19: Imperial Final Battle Declaration 👑【⚡ Hour of Imperial Command】</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-19" class="cross-link">📖 View Narrative</a>
+                        <a href="#turn-18" class="prev-turn">← Previous Turn</a>
+                        <a href="#turn-20" class="next-turn">Next Turn →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GM Action</strong>: discovery_event</p>
+
+                    <h4>🌪️ Environmental Change</h4>
+                    <div class="key-event">
+                        Eye of the typhoon opens directly above the harbor, and amid alternating lightning and torrential rain, imperial command strikes the hour of the imperial presence battle
+                    </div>
+
+                    <h4>📈 Trust Relationship Changes</h4>
+                    <div class="key-event">
+                        Shadow Gale Clan ↔ Silver Dutch Institute: Final engagement<br>
+                        Shadow Gale Clan ↔ Crimson Blade Vanguard: Final engagement
+                    </div>
+
+                    <h4>📈 Morale Changes</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">Shadow Gale Clan: 3.0 → 3.0 (no change)</div>
+                        <div class="morale-item moonlit_onmyo">Moonlit Onmyo Guild: 7.0 → 7.0 (no change)</div>
+                        <div class="morale-item crimson_blade">Crimson Blade Vanguard: 8.0 → 8.0 (no change)</div>
+                        <div class="morale-item silver_dutch">Silver Dutch Institute: 9.0 → 9.0 (no change)</div>
+                    </div>
+
+                    <h4>🎒 Resource Changes</h4>
+                    <ul>
+                        <li>🌫️ Shadow Gale Clan: Intelligence Seals 3→4 (+1), Battle Wounds 4→5 (+1), Storm Concealment Bomb+1</li>
+                        <li>🌙 Moonlit Onmyo Guild: Spirit Talismans 1→0 (-1), Storm Talismans 1→0 (-1)</li>
+                        <li>⚔️ Crimson Blade Vanguard: Storm Barrier Plate 1→0 (-1), Imperial Guard Respect 5→6 (+1), Imperial Decree Duel Protocol+1</li>
+                        <li>⚙️ Silver Dutch Institute: Gear Stabilizer 2→1 (-1), Defense Artillery Position 3→4 (+1), Typhoon Shooting Pattern 1→0 (-1), Imperial Barrier Resonance+1, Storm Blockade Series+1</li>
+                    </ul>
+
+                    <div class="key-event">
+                        <strong>Key Event</strong>: Typhoon exercise officially elevated to martial judgment by imperial command, fateful decisive battle begins
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 20 -->
+            <section id="turn-20" class="turn-section">
+                <header class="turn-header">
+                    <h3>Turn 20: Victory as the Storm Breaks 🌅【🏆 True Final Chapter】</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-20" class="cross-link">📖 View Narrative</a>
+                        <a href="#turn-19" class="prev-turn">← Previous Turn</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GM Action</strong>: discovery_event</p>
+
+                    <h4>📍 Position Changes</h4>
+                    <ul>
+                        <li>🌫️ Shadow Gale Clan: Edo Naval Arsenal → Koga Mist Forest (defeat retreat)</li>
+                    </ul>
+
+                    <h4>🏆 Final Battle Results</h4>
+                    <div class="key-event">
+                        Imperial Capital Alliance (Moonlit Onmyo Guild・Crimson Blade Vanguard・Silver Dutch Institute) complete victory<br>
+                        Shadow Gale Clan forced to retreat to Koga
+                    </div>
+
+                    <h4>📈 Final Morale</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">Shadow Gale Clan: 3.0 → -2.0 (-5.0) ⬇️ (devastating defeat)</div>
+                        <div class="morale-item moonlit_onmyo">Moonlit Onmyo Guild: 7.0 → 7.0 (no change)</div>
+                        <div class="morale-item crimson_blade">Crimson Blade Vanguard: 8.0 → 8.0 (no change)</div>
+                        <div class="morale-item silver_dutch">Silver Dutch Institute: 9.0 → 9.0 (no change)</div>
+                    </div>
+
+                    <h4>🎒 Final Resource Status</h4>
+                    <ul>
+                        <li>🌫️ Shadow Gale Clan: Test Shadow Blade 1→0 (-1), Battle Wounds 5→9 (+4), Storm Concealment Bomb 1→0 (-1)</li>
+                        <li>🌙 Moonlit Onmyo Guild: Moon Silver 1→0 (-1), Imperial Decree Scroll 1→0 (-1)</li>
+                        <li>⚔️ Crimson Blade Vanguard: Joint Exercise Protocol 2→1 (-1), Imperial Guard Spear+1, Imperial Decree Duel Protocol 1→0 (-1), Imperial Victory Banner+1, Imperial Guard Oath+1</li>
+                        <li>⚙️ Silver Dutch Institute: Black Powder 1→0 (-1), Talisman Seal 1→0 (-1), Defense Artillery Position 4→3 (-1), Imperial Barrier Resonance 1→2 (+1), Storm Blockade Series 1→0 (-1), Imperial Lightning Volley+1</li>
+                    </ul>
+
+                    <div class="key-event">
+                        <strong>Key Event</strong>: Storm breaks and imperial presence battle concludes, Edo Naval Arsenal confirmed under complete control of Imperial Capital Alliance. Eiroku Mist War Chronicles, here concluded
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- Technology Development -->
+        <section class="card">
+            <h2>🔬 Technology Development Systems</h2>
+            <div class="faction-stats-grid">
+                <div class="faction-stat shadow_gale">
+                    <h4>🌫️ Ninjutsu Development</h4>
+                    <div class="tech-progression">
+                        <span class="tech-stage">Shadow Rope</span> →
+                        <span class="tech-stage">Mist Blade</span> →
+                        <span class="tech-stage">Water Spider</span> →
+                        <span class="tech-stage">Storm Concealment Bomb</span>
+                    </div>
+                    <p>Ninjutsu system evolved from intelligence activities to stealth tactics, ultimately developing into explosive sabotage</p>
+                </div>
+
+                <div class="faction-stat moonlit_onmyo">
+                    <h4>🌙 Mystical Arts Development</h4>
+                    <div class="tech-progression">
+                        <span class="tech-stage">Barriers</span> →
+                        <span class="tech-stage">Lightning Chains</span> →
+                        <span class="tech-stage">Talisman Integration</span> →
+                        <span class="tech-stage">Imperial Lightning Volley</span>
+                    </div>
+                    <p>From basic barrier arts to large-scale mystical arts through imperial cooperation</p>
+                </div>
+
+                <div class="faction-stat crimson_blade">
+                    <h4>⚔️ Martial Arts Development</h4>
+                    <div class="tech-progression">
+                        <span class="tech-stage">Spear Formation</span> →
+                        <span class="tech-stage">Spear Wall</span> →
+                        <span class="tech-stage">Assault Flanks</span> →
+                        <span class="tech-stage">Imperial Decree Guard</span>
+                    </div>
+                    <p>Complete bushido system from basic spear techniques to Imperial Court protection</p>
+                </div>
+
+                <div class="faction-stat silver_dutch">
+                    <h4>⚙️ Engineering Development</h4>
+                    <div class="tech-progression">
+                        <span class="tech-stage">Mechanisms</span> →
+                        <span class="tech-stage">Wild Goose Cannon</span> →
+                        <span class="tech-stage">Talisman Integration</span> →
+                        <span class="tech-stage">Lightning Cannon Control</span>
+                    </div>
+                    <p>Revolutionary weapons system through fusion of Western technology and Japanese talisman arts</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Events Timeline -->
+        <section class="card">
+            <h2>🎯 Key Events Summary by Phase</h2>
+
+            <div class="phase-evolution">
+                <div class="phase-timeline">
+                    <div class="phase military-phase">
+                        <h3>Phase 1 (T1-T5): Dense Fog and Gunpowder Blockade</h3>
+                        <ul>
+                            <li><strong>T1</strong>: Dense fog descends, first clash of four factions</li>
+                            <li><strong>T2</strong>: Wild Goose Cannon discovery, technology competition intensifies</li>
+                            <li><strong>T3</strong>: Gunpowder blockade, three-front war configuration</li>
+                            <li><strong>T4</strong>: Typhoon strikes, information warfare accelerates</li>
+                            <li><strong>T5</strong>: Imperial Court intervention, Onmyo Guild political victory</li>
+                        </ul>
+                    </div>
+
+                    <div class="phase political-phase">
+                        <h3>Phase 2 (T6-T10): Imperial Duel and Order Restoration</h3>
+                        <ul>
+                            <li><strong>T6</strong>: Imperial duel arena established</li>
+                            <li><strong>T7</strong>: Duel commences, becomes real combat</li>
+                            <li><strong>T8</strong>: Melee intensifies, becomes uncontrollable</li>
+                            <li><strong>T9</strong>: Imperial Guard ceasefire, forced termination</li>
+                            <li><strong>T10</strong>: Emperor's final judgment, role assignments confirmed</li>
+                        </ul>
+                    </div>
+
+                    <div class="phase legal-phase">
+                        <h3>Phase 3 (T11-T15): New Order Establishment</h3>
+                        <ul>
+                            <li><strong>T11-T12</strong>: Final resistance at Sakurai Plains</li>
+                            <li><strong>T13</strong>: Combat completely ends</li>
+                            <li><strong>T14</strong>: Final infiltration on festival eve</li>
+                            <li><strong>T15</strong>: Order established by Imperial authority</li>
+                        </ul>
+                    </div>
+
+                    <div class="phase recovery-phase">
+                        <h3>Phase 4 (T16-T20): Recovery and Final Judgment</h3>
+                        <ul>
+                            <li><strong>T16-T17</strong>: Naval exercises and storm preparation</li>
+                            <li><strong>T18</strong>: Typhoon ambush battle</li>
+                            <li><strong>T19</strong>: Imperial final battle declaration</li>
+                            <li><strong>T20</strong>: Complete victory and final order establishment</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>Eiroku Mist Chronicles - Eternal Record of the Mist War | Narrative TRPG Campaign Record</p>
+    </footer>
+
+    <script>
+        // Turn selector functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const turnSelect = document.getElementById('turn-select');
+            const turnDetail = document.getElementById('turn-detail');
+            const chartInfo = document.getElementById('chart-turn-info');
+
+            turnSelect.addEventListener('change', function() {
+                const selectedTurn = this.value;
+                if (selectedTurn) {
+                    const turnData = document.querySelector(`[data-turn="${selectedTurn}"]`);
+                    if (turnData) {
+                        turnDetail.innerHTML = turnData.innerHTML;
+                        turnDetail.style.display = 'block';
+                    }
+                } else {
+                    turnDetail.style.display = 'none';
+                }
+            });
+
+            // Chart interaction
+            const dataPoints = document.querySelectorAll('.data-point');
+            dataPoints.forEach(point => {
+                point.addEventListener('click', function() {
+                    const turn = this.getAttribute('data-turn');
+                    const faction = this.getAttribute('data-faction');
+                    const morale = this.getAttribute('data-morale');
+
+                    let factionName = '';
+                    switch(faction) {
+                        case 'shadow_gale': factionName = '🌫️ Shadow Gale Clan'; break;
+                        case 'moonlit_onmyo': factionName = '🌙 Moonlit Onmyo Guild'; break;
+                        case 'crimson_blade': factionName = '⚔️ Crimson Blade Vanguard'; break;
+                        case 'silver_dutch': factionName = '⚙️ Silver Dutch Institute'; break;
+                    }
+
+                    chartInfo.innerHTML = `
+                        <h4>Turn ${turn}: ${factionName}</h4>
+                        <p><strong>Morale:</strong> ${morale}</p>
+                        <a href="narrative.html#turn-${turn}" class="cross-link">📖 View Details in Narrative</a>
+                    `;
+
+                    // Highlight selected point
+                    dataPoints.forEach(p => p.setAttribute('r', '4'));
+                    this.setAttribute('r', '6');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

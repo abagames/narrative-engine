@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>永禄の霧戦記 - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="data.js"></script>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="main-header">
+      <div class="container">
+        <nav class="main-nav">
+          <a href="index.html" class="active">🏠 Dashboard</a>
+          <a href="narrative.html">📖 Narrative</a>
+          <a href="playlog.html">📊 Playlog</a>
+          <a href="worldmap.html">🗺️ World Map</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Campaign Overview -->
+        <section class="campaign-overview">
+            <h1>🌫️ 永禄の霧戦記</h1>
+            <p class="subtitle">四勢力による戦国覇権争奪戦 - 全20ターンのナラティブTRPGキャンペーン<br>
+            永禄の乱世、濃霧に包まれた京洛を舞台に、影颶の衆・月影陰陽寮・紅刃先鋒隊・銀蘭機巧院の四勢力が政治・軍事・技術の三戦線で激突。</p>
+        </section>
+
+        <!-- Campaign Statistics -->
+        <section class="card">
+            <h3>📊 キャンペーン統計</h3>
+            <div class="campaign-stats">
+                <div class="stat-item">
+                    <div class="stat-number">20</div>
+                    <div class="stat-label">ターン数</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">参加勢力</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">主要戦闘</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">転換点</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">7</div>
+                    <div class="stat-label">地域</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">外交交渉</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Faction Overview -->
+        <section class="card">
+            <h3>⚔️ 勢力紹介</h3>
+            <div class="faction-grid">
+                <!-- 影颶の衆 -->
+                <div class="faction-card shadow_gale">
+                    <div class="faction-header">
+                        <div class="faction-icon">🌫️</div>
+                        <div class="faction-info">
+                            <h4>影颶の衆</h4>
+                            <h5>Shadow Gale Clan</h5>
+                            <div class="faction-result">忍術・諜報戦の達人</div>
+                        </div>
+                    </div>
+                    <div class="faction-details">
+                        <p><strong>本拠地：</strong><span class="tooltip" data-tooltip="伊勢国南部の険しい山間部。深い渓谷と濃霧に覆われた天然の要害であり、忍者の隠れ里として最適な立地。">伊勢影ヶ淵</span></p>
+                        <p><strong>所属：</strong>伊賀上忍・百地丹波家</p>
+                        <p><strong>専門性：</strong>忍術・諜報戦</p>
+                        <p><strong>戦略方針：</strong>静謐な洞察と機会主義的計算による暗躍戦略</p>
+                    </div>
+                    <div class="faction-members">
+                        <h5>主要人物</h5>
+                        <div class="member"><span class="tooltip" data-tooltip="影颶の衆の頭領。冷静沈着な判断力と卓越した忍術により、勢力全体の戦略を統括する。">霧生 葵</span>（影衆頭）- 戦略立案と潜入統括</div>
+                        <div class="member"><span class="tooltip" data-tooltip="風魔党の出身。優れた身体能力と鋭敏な感覚により、敵情偵察と攪乱戦術を担当する。">風魔 迅</span>（機先斥候）- 索敵と撹乱</div>
+                        <div class="member"><span class="tooltip" data-tooltip="毒薬と幻術の専門家。秘薬の調合と敵の無力化において他の追随を許さない技術を持つ。">鵺堂 紅月</span>（毒薬師）- 毒と幻術調合</div>
+                    </div>
+                </div>
+
+                <!-- 月影陰陽寮 -->
+                <div class="faction-card moonlit_onmyo">
+                    <div class="faction-header">
+                        <div class="faction-icon">🌙</div>
+                        <div class="faction-info">
+                            <h4>月影陰陽寮</h4>
+                            <h5>Moonlit Onmyo Guild</h5>
+                            <div class="faction-result">陰陽道・結界術の専門家</div>
+                        </div>
+                    </div>
+                    <div class="faction-details">
+                        <p><strong>本拠地：</strong><span class="tooltip" data-tooltip="熊野三山の一つ。古来より霊験あらたかな聖地として知られ、陰陽道修行の根本道場として機能している。">熊野霊峰社</span></p>
+                        <p><strong>所属：</strong>京洛公武調停衆・足利家</p>
+                        <p><strong>専門性：</strong>陰陽道・結界術</p>
+                        <p><strong>戦略方針：</strong>占術的予測と儀礼的合意による霊的守護</p>
+                    </div>
+                    <div class="faction-members">
+                        <h5>主要人物</h5>
+                        <div class="member"><span class="tooltip" data-tooltip="月影陰陽寮の筆頭陰陽師。強力な結界術と式神統制により、霊的防護の要となる。">真名井 朔夜</span>（陰陽頭）- 結界術の専門家</div>
+                        <div class="member"><span class="tooltip" data-tooltip="式神の召喚と操縦に長けた陰陽師。戦闘においては多数の式神を駆使して敵を圧倒する。">烏丸 伽耶</span>（式神使い）- 戦闘式神運用</div>
+                        <div class="member"><span class="tooltip" data-tooltip="卓越した霊能力を持つ占術師。未来視により戦局を予測し、重要な戦略判断の助言を行う。">蘆屋 蛍</span>（占術士）- 未来視と霊視</div>
+                    </div>
+                </div>
+
+                <!-- 紅刃先鋒隊 -->
+                <div class="faction-card crimson_blade">
+                    <div class="faction-header">
+                        <div class="faction-icon">⚔️</div>
+                        <div class="faction-info">
+                            <h4>紅刃先鋒隊</h4>
+                            <h5>Crimson Blade Vanguard</h5>
+                            <div class="faction-result">武士道剣術・騎馬戦術</div>
+                        </div>
+                    </div>
+                    <div class="faction-details">
+                        <p><strong>本拠地：</strong><span class="tooltip" data-tooltip="大和国の古戦場。武士の練兵場として使われ、多くの武将が剣術と騎馬戦術を磨いた歴史ある戦場。">桜井試合原</span></p>
+                        <p><strong>所属：</strong>甲斐武田家・騎馬武者団</p>
+                        <p><strong>専門性：</strong>武士道剣術・騎馬戦術</p>
+                        <p><strong>戦略方針：</strong>決断的突撃と武辺による直截な軍事指揮</p>
+                    </div>
+                    <div class="faction-members">
+                        <h5>主要人物</h5>
+                        <div class="member"><span class="tooltip" data-tooltip="武田流騎馬戦術の継承者。槍術に秀で、騎馬隊を率いて敵陣への突撃を指揮する。">真田 烈火</span>（隊長）- 槍騎兵指揮の専門家</div>
+                        <div class="member"><span class="tooltip" data-tooltip="二刀流の達人。左右の剣を自在に操り、個人戦闘において驚異的な戦闘力を発揮する。">結城 鞘音</span>（剣士）- 二刀流剣術を極める</div>
+                        <div class="member"><span class="tooltip" data-tooltip="戦術理論に精通した軍師。部隊配置と戦場での間合い制御により、数的不利を覆す戦術を編み出す。">佐々木 凜九郎</span>（軍師）- 布陣と間合い制御の達人</div>
+                    </div>
+                </div>
+
+                <!-- 銀蘭機巧院 -->
+                <div class="faction-card silver_dutch">
+                    <div class="faction-header">
+                        <div class="faction-icon">⚙️</div>
+                        <div class="faction-info">
+                            <h4>銀蘭機巧院</h4>
+                            <h5>Silver Dutch Institute</h5>
+                            <div class="faction-result">西洋技術工学・機巧術</div>
+                        </div>
+                    </div>
+                    <div class="faction-details">
+                        <p><strong>本拠地：</strong><span class="tooltip" data-tooltip="江戸湾岸の造船・技術研究施設。西洋技術の導入拠点として機能し、新式武器の開発が行われている。">江戸武備船渠</span></p>
+                        <p><strong>所属：</strong>長崎出島西洋技術奉行支局・大友家</p>
+                        <p><strong>専門性：</strong>西洋技術工学・機巧術</p>
+                        <p><strong>戦略方針：</strong>反復試作と多言語議会による技術革新</p>
+                    </div>
+                    <div class="faction-members">
+                        <h5>主要人物</h5>
+                        <div class="member"><span class="tooltip" data-tooltip="オランダから来日した技術者。西洋の砲術技術に精通し、日本の戦術体系に革新をもたらす。">ヨハン・ファン・デル・スターク</span>（技術院長）- 砲術工学の専門家</div>
+                        <div class="member"><span class="tooltip" data-tooltip="多言語に通じる通詞。外国人技術者との橋渡しを行い、政治的交渉においても重要な役割を担う。">通詞 お亀</span>（外交通訳）- 交渉と情報収集</div>
+                        <div class="member"><span class="tooltip" data-tooltip="機械工学に長けた技師。従来の武器に西洋技術を融合させた新型兵装の開発を手がける。">ヘンドリク・スパイカー</span>（兵装技師）- 機巧武器設計</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phase Evolution -->
+        <section class="card">
+            <h3>🌊 四段階進化</h3>
+            <div class="phase-evolution">
+                <div class="phase-timeline">
+                    <div class="phase military-phase">
+                        <h3>⚔️ 軍事征服段階 (T1-5)</h3>
+                        <p>濃霧降臨から帝勅決闘まで、雁行砲発見による軍事技術競争が激化。各勢力が技術的優位の確立を目指す。</p>
+                    </div>
+                    <div class="phase political-phase">
+                        <h3>⚖️ 政治権威段階 (T6-10)</h3>
+                        <p>帝勅決闘から近衛府介入まで、朝廷を巻き込んだ政治的主導権争いが展開。公式な権威獲得が焦点となる。</p>
+                    </div>
+                    <div class="phase legal-phase">
+                        <h3>📜 京洛新秩序段階 (T11-15)</h3>
+                        <p>近衛府介入以降、京洛での法的枠組み内での勢力均衡と祭礼における新秩序確立が進展。</p>
+                    </div>
+                    <div class="phase final-phase">
+                        <h3>🌊 江戸最終決戦段階 (T16-20)</h3>
+                        <p>帝巡察団による江戸演習命令から台風下の御前決戦まで、技術統合と忍道の最後の激突が展開。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Turning Points -->
+        <section class="card">
+            <h3>🔄 主要転換点</h3>
+            <div class="events-timeline">
+                <div class="event-item">
+                    <div class="event-turn">Turn 2</div>
+                    <div class="event-content">
+                        <h4>⚔️ <span class="tooltip" data-tooltip="西洋式大筒の試作設計図。従来の火縄銃を超越した威力を持つ革命的武器として各勢力の注目を集めた。">雁行砲</span>発見</h4>
+                        <p><span class="tooltip" data-tooltip="織田家の技術研究拠点。各種工芸品と武器の製造が行われる先進的な工房群。">安土機巧炉</span>で西洋式大筒の試作図が発見され、単なる勢力争いから軍事技術を巡る本格的な覇権争いへ転換。</p>
+                    </div>
+                </div>
+
+                <div class="event-item">
+                    <div class="event-turn">Turn 6</div>
+                    <div class="event-content">
+                        <h4>👑 帝勅決闘宣告</h4>
+                        <p>帝より武術裁定が下され、これまでの暗闘が公式の決戦へ格上げ。<span class="tooltip" data-tooltip="京都の学術・宗教地区。多くの寺社と学問所が集中し、公式な決闘が行われる格式高い場所。">京洛術院区</span>が決戦の舞台となる。</p>
+                    </div>
+                </div>
+
+                <div class="event-item">
+                    <div class="event-turn">Turn 8</div>
+                    <div class="event-content">
+                        <h4>💥 決闘輪砕破</h4>
+                        <p>雷撃により決闘輪が砕け、個別決闘から四勢力入り乱れる乱戦へ転換。戦闘形式の根本的変化が発生。</p>
+                    </div>
+                </div>
+
+                <div class="event-item">
+                    <div class="event-turn">Turn 9</div>
+                    <div class="event-content">
+                        <h4>🛡️ 近衛府介入</h4>
+                        <p>帝権の発動により近衛府が乱戦を制止。十刻以内の停戦布告で政治的解決段階への移行が始まる。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation to Other Pages -->
+        <section class="card">
+            <h3>🗂️ コンテンツ一覧</h3>
+            <div class="navigation-grid">
+                <a href="narrative.html" class="nav-link">
+                    <div class="nav-icon">📖</div>
+                    <div class="nav-content">
+                        <h4>Narrative Replay</h4>
+                        <p>物語形式で描かれた全15ターンの詳細な冒険記録。用語解説とターン間クロスリンク機能付き。</p>
+                    </div>
+                </a>
+
+                <a href="playlog.html" class="nav-link">
+                    <div class="nav-icon">📊</div>
+                    <div class="nav-content">
+                        <h4>Playlog Analysis</h4>
+                        <p>統計データと数値分析による勢力変遷の記録。士気グラフと詳細なターン別データを提供。</p>
+                    </div>
+                </a>
+
+                <a href="worldmap.html" class="nav-link">
+                    <div class="nav-icon">🗺️</div>
+                    <div class="nav-content">
+                        <h4>World Map</h4>
+                        <p>地理情報と勢力圏の変遷。各地域の戦略価値と支配状況をインタラクティブマップで表示。</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Campaign Summary -->
+        <section class="card">
+            <h3>🎯 キャンペーン総括</h3>
+            <div class="world-info">
+                <div class="world-section">
+                    <h4>🌫️ 永禄の乱世</h4>
+                    <p>初夏の朝、濃霧が伊勢と京洛を覆い、超常の霧の中で四つの勢力が静かに動き始めた。この霧は単なる自然現象ではなく、各勢力の野望と陰謀が交錯する象徴的な舞台装置として機能した。</p>
+
+                    <p>影颶の衆は忍術と諜報により京洛の政治中枢への潜入を図り、月影陰陽寮は結界術と式神運用で霊的守護者としての地位確立を目指した。紅刃先鋒隊は武士道と騎馬戦術で軍事的優位を追求し、銀蘭機巧院は西洋技術の導入により技術革新の主導権を握ろうとした。</p>
+
+                    <p>この四勢力による多次元的な争いは、単なる武力衝突を超えて政治・技術・霊術の各分野での覇権を巡る総合的な戦略競争として展開。京洛での政治的決着から江戸武備船渠での技術的最終決戦まで、20ターンにわたる壮大な物語として完結した。</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>永禄の霧戦記 - Eiroku Mist Chronicles | ナラティブTRPGキャンペーン記録</p>
+    </footer>
+</body>
+</html>

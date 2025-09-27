@@ -20,6 +20,12 @@ The following directories contain replays of TRPG sessions actually generated an
 
 ![replay_screenshot](docs/thunder_storm_campaign/screenshot.png)
 
+### Eiroku Mist Chronicles ([View](https://abagames.github.io/narrative-engine/eiroku_mist_chronicles/))
+
+- **Directory**: [`docs/eiroku_mist_chronicles/`](docs/eiroku_mist_chronicles/)
+- **Content**: A Sengoku-era campaign chronicling four rival factions navigating mist-laden provinces during the chaotic Eiroku period
+- **Features**: Focus on multi-faction espionage, onmyōdō barrier warfare, and technological brinkmanship between ninja clans and engineering institutes
+
 ### Triple Light Linked Ring ([View](https://abagames.github.io/narrative-engine/triple_light_linked_ring/))
 
 - **Directory**: [`docs/triple_light_linked_ring/`](docs/triple_light_linked_ring/)

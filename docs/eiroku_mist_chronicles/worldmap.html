@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eiroku Mist Chronicles - World Map</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="data.js"></script>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="main-header">
+      <div class="container">
+        <nav class="main-nav">
+          <a href="index.html">🏠 Dashboard</a>
+          <a href="narrative.html">📖 Narrative</a>
+          <a href="playlog.html">📊 Playlog</a>
+          <a href="worldmap.html" class="active">🗺️ World Map</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Campaign Overview -->
+        <section class="campaign-overview">
+            <h1>🗺️ Eiroku Mist Chronicles - World Map</h1>
+            <p class="subtitle">Geographic information and transitions in territorial control<br>
+            Interactive map displaying strategic value and control status of each region</p>
+        </section>
+
+        <!-- Interactive World Map -->
+        <section id="interactive-map" class="card">
+            <h2>🗺️ Interactive Regional Layout Map</h2>
+            <div class="map-container">
+                <svg width="100%" height="600" viewBox="0 0 900 600" class="world-map-svg">
+                    <!-- Background -->
+                    <rect width="900" height="600" fill="#1a1a2e" stroke="none"/>
+
+                    <!-- Connection lines -->
+                    <g class="connections" stroke="#444" stroke-width="2" fill="none">
+                        <!-- Koga to Ise -->
+                        <line x1="400" y1="150" x2="200" y2="250" class="connection"/>
+                        <!-- Ise to Kyoto -->
+                        <line x1="200" y1="250" x2="400" y2="300" class="connection"/>
+                        <!-- Kyoto to Edo -->
+                        <line x1="400" y1="300" x2="650" y2="200" class="connection"/>
+                        <!-- Koga to Kumano -->
+                        <line x1="400" y1="150" x2="300" y2="400" class="connection"/>
+                        <!-- Kumano to Kyoto -->
+                        <line x1="300" y1="400" x2="400" y2="300" class="connection"/>
+                        <!-- Kumano to Sakurai -->
+                        <line x1="300" y1="400" x2="500" y2="450" class="connection"/>
+                        <!-- Edo to Azuchi -->
+                        <line x1="650" y1="200" x2="550" y2="350" class="connection"/>
+                        <!-- Azuchi to Sakurai -->
+                        <line x1="550" y1="350" x2="500" y2="450" class="connection"/>
+                    </g>
+
+                    <!-- Region nodes -->
+                    <g class="regions">
+                        <!-- Ise Shadow Vale -->
+                        <g class="region-group">
+                            <circle cx="200" cy="250" r="40" class="region shadow_gale" data-region="ise_shadow_vale"/>
+                            <text x="200" y="225" text-anchor="middle" class="region-label">🌲</text>
+                            <text x="200" y="280" text-anchor="middle" class="region-name">Ise Shadow Vale</text>
+                        </g>
+
+                        <!-- Koga Mist Forest -->
+                        <g class="region-group">
+                            <circle cx="400" cy="150" r="35" class="region neutral" data-region="koga_mist_forest"/>
+                            <text x="400" y="130" text-anchor="middle" class="region-label">🏔️</text>
+                            <text x="400" y="185" text-anchor="middle" class="region-name">Koga Mist Forest</text>
+                        </g>
+
+                        <!-- Kumano Spirit Shrine -->
+                        <g class="region-group">
+                            <circle cx="300" cy="400" r="40" class="region moonlit_onmyo" data-region="kumano_spirit_shrine"/>
+                            <text x="300" y="375" text-anchor="middle" class="region-label">🏯</text>
+                            <text x="300" y="435" text-anchor="middle" class="region-name">Kumano Spirit Shrine</text>
+                        </g>
+
+                        <!-- Kyoto Arcane Quarter -->
+                        <g class="region-group">
+                            <circle cx="400" cy="300" r="45" class="region contested" data-region="kyoto_arcane_quarter"/>
+                            <text x="400" y="275" text-anchor="middle" class="region-label">🏛️</text>
+                            <text x="400" y="340" text-anchor="middle" class="region-name">Kyoto Arcane Quarter</text>
+                        </g>
+
+                        <!-- Edo Arsenal Dock -->
+                        <g class="region-group">
+                            <circle cx="650" cy="200" r="40" class="region silver_dutch" data-region="edo_arsenal_dock"/>
+                            <text x="650" y="175" text-anchor="middle" class="region-label">🚢</text>
+                            <text x="650" y="235" text-anchor="middle" class="region-name">Edo Arsenal Dock</text>
+                        </g>
+
+                        <!-- Azuchi Clockwork Foundry -->
+                        <g class="region-group">
+                            <circle cx="550" cy="350" r="35" class="region silver_dutch" data-region="azuchi_clockwork_foundry"/>
+                            <text x="550" y="330" text-anchor="middle" class="region-label">⚙️</text>
+                            <text x="550" y="385" text-anchor="middle" class="region-name">Azuchi Clockwork Foundry</text>
+                        </g>
+
+                        <!-- Sakurai Dueling Fields -->
+                        <g class="region-group">
+                            <circle cx="500" cy="450" r="40" class="region crimson_blade" data-region="sakurai_dueling_fields"/>
+                            <text x="500" y="425" text-anchor="middle" class="region-label">🗾</text>
+                            <text x="500" y="485" text-anchor="middle" class="region-name">Sakurai Dueling Fields</text>
+                        </g>
+                    </g>
+
+                    <!-- Influence zones display area -->
+                    <g class="influence-zones" opacity="0.3">
+                        <!-- Shadow Gale Clan influence zone -->
+                        <circle cx="200" cy="250" r="80" fill="#2C3E50" class="influence-zone shadow_gale"/>
+
+                        <!-- Moonlit Onmyō Guild influence zone -->
+                        <circle cx="300" cy="400" r="70" fill="#663399" class="influence-zone moonlit_onmyo"/>
+
+                        <!-- Crimson Blade Vanguard influence zone -->
+                        <circle cx="500" cy="450" r="70" fill="#DC3545" class="influence-zone crimson_blade"/>
+
+                        <!-- Silver Dutch Institute influence zone -->
+                        <circle cx="600" cy="275" r="90" fill="#17A2B8" class="influence-zone silver_dutch"/>
+                    </g>
+
+                    <!-- Legend -->
+                    <g class="legend" transform="translate(710, 380)">
+                        <rect x="0" y="0" width="180" height="200" fill="#2a2a3e" stroke="#555" rx="5"/>
+                        <text x="10" y="20" class="legend-title">Faction Distribution</text>
+
+                        <!-- Faction icons -->
+                        <circle cx="20" cy="40" r="8" class="region shadow_gale"/>
+                        <text x="35" y="45" class="legend-text">🌫️ Shadow Gale Clan</text>
+
+                        <circle cx="20" cy="60" r="8" class="region moonlit_onmyo"/>
+                        <text x="35" y="65" class="legend-text">🌙 Moonlit Onmyō Guild</text>
+
+                        <circle cx="20" cy="80" r="8" class="region crimson_blade"/>
+                        <text x="35" y="85" class="legend-text">⚔️ Crimson Blade Vanguard</text>
+
+                        <circle cx="20" cy="100" r="8" class="region silver_dutch"/>
+                        <text x="35" y="105" class="legend-text">⚙️ Silver Dutch Institute</text>
+
+                        <circle cx="20" cy="120" r="8" class="region contested"/>
+                        <text x="35" y="125" class="legend-text">🏛️ Contested territory</text>
+
+                        <circle cx="20" cy="140" r="8" class="region neutral"/>
+                        <text x="35" y="145" class="legend-text">🗻 Neutral territory</text>
+
+                        <text x="10" y="170" class="legend-subtitle">Controls</text>
+                        <text x="10" y="185" class="legend-small">Click regions for details</text>
+                    </g>
+
+                    <!-- Region detail information -->
+                    <g class="region-detail-panel" transform="translate(700, 50)">
+                        <rect x="0" y="0" width="180" height="320" fill="#2a2a3e" stroke="#FFD700" stroke-width="2" rx="5"/>
+                        <text x="10" y="20" class="legend-title" id="svg-region-title">📍 Select Region</text>
+                        <foreignObject x="10" y="30" width="160" height="280">
+                            <div xmlns="http://www.w3.org/1999/xhtml" id="svg-region-info" style="color: #E0E0E0; font-size: 11px; line-height: 1.3;">
+                                <p style="margin: 5px 0; color: #A0A0A0;">Click region to display details</p>
+                            </div>
+                        </foreignObject>
+                    </g>
+                </svg>
+            </div>
+        </section>
+
+
+        <!-- Faction Control Grid -->
+        <section class="card">
+            <h2>👑 Faction Territory Analysis</h2>
+            <div class="faction-control-grid">
+                <div class="faction-control shadow_gale">
+                    <h3>🌫️ Shadow Gale Clan</h3>
+                    <div class="control-details">
+                        <p><strong>🏠 Base</strong>: Ise Shadow Vale</p>
+                        <p><strong>🎯 Invasion Target</strong>: Kyoto Arcane Quarter (acquiring Imperial influence)</p>
+                        <p><strong>🛡️ Strategy</strong>: Intelligence warfare using mist, shadow path construction in Koga Mist Forest</p>
+                    </div>
+                    <div class="controlled-regions">
+                        <h4>Controlled Regions</h4>
+                        <div class="region-tag shadow_gale">Ise Shadow Vale (Influence: 62)</div>
+                        <div class="region-tag neutral">Koga Mist Forest (Final retreat location)</div>
+                    </div>
+                </div>
+
+                <div class="faction-control moonlit_onmyo">
+                    <h3>🌙 Moonlit Onmyō Guild</h3>
+                    <div class="control-details">
+                        <p><strong>🏠 Base</strong>: Kumano Spirit Shrine</p>
+                        <p><strong>🎯 Political Objective</strong>: Kyoto Arcane Quarter (establishing talisman management authority)</p>
+                        <p><strong>🛡️ Strategy</strong>: Remote support through spiritual ley network, coordination with Imperial court</p>
+                    </div>
+                    <div class="controlled-regions">
+                        <h4>Controlled Regions</h4>
+                        <div class="region-tag moonlit_onmyo">Kumano Spirit Shrine (Influence: 58)</div>
+                        <div class="region-tag contested">Kyoto Arcane Quarter (Influence: 22)</div>
+                    </div>
+                </div>
+
+                <div class="faction-control crimson_blade">
+                    <h3>⚔️ Crimson Blade Vanguard</h3>
+                    <div class="control-details">
+                        <p><strong>🏠 Base</strong>: Sakurai Dueling Fields</p>
+                        <p><strong>🎯 Defense Objective</strong>: Securing supply lines from Kyoto to Azuchi to Edo</p>
+                        <p><strong>🛡️ Strategy</strong>: Mobile spear cavalry tactics, Imperial edict protection</p>
+                    </div>
+                    <div class="controlled-regions">
+                        <h4>Controlled Regions</h4>
+                        <div class="region-tag crimson_blade">Sakurai Dueling Fields (Influence: 61)</div>
+                    </div>
+                </div>
+
+                <div class="faction-control silver_dutch">
+                    <h3>⚙️ Silver Dutch Institute</h3>
+                    <div class="control-details">
+                        <p><strong>🏠 Base</strong>: Edo Arsenal Dock</p>
+                        <p><strong>🎯 Technical Objective</strong>: Azuchi Clockwork Foundry (V-formation cannon deployment)</p>
+                        <p><strong>🛡️ Strategy</strong>: Fusion of Western technology and talismans, maintaining maritime supply lines</p>
+                    </div>
+                    <div class="controlled-regions">
+                        <h4>Controlled Regions</h4>
+                        <div class="region-tag silver_dutch">Edo Arsenal Dock (Influence: 65)</div>
+                        <div class="region-tag silver_dutch">Azuchi Clockwork Foundry (Influence: 18)</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Supply Lines -->
+        <section class="card">
+            <h2>🛤️ Transportation & Supply Route Analysis</h2>
+            <div class="supply-lines-grid">
+                <div class="supply-route">
+                    <h3>Major Highways</h3>
+                    <div class="route-item">
+                        <h4>🏛️ Kyoto Highway</h4>
+                        <p>Ise Shadow Vale ↔ Kyoto Arcane Quarter ↔ Edo Arsenal Dock</p>
+                        <p>Main artery for politics and trade. Axis of Shadow Gale vs Silver Dutch conflict</p>
+                    </div>
+                    <div class="route-item">
+                        <h4>🏯 Spirit Peak Highway</h4>
+                        <p>Koga Mist Forest ↔ Kumano Spirit Shrine ↔ Sakurai Dueling Fields</p>
+                        <p>Coordination route linking spiritual networks and martial training</p>
+                    </div>
+                    <div class="route-item">
+                        <h4>⚙️ Clockwork Highway</h4>
+                        <p>Edo Arsenal Dock ↔ Azuchi Clockwork Foundry ↔ Sakurai Dueling Fields</p>
+                        <p>Strategic route for technological innovation and military defense</p>
+                    </div>
+                </div>
+
+                <div class="supply-vulnerabilities">
+                    <h3>Supply Line Vulnerabilities</h3>
+                    <div class="vulnerability-item">
+                        <h4>🏛️ Kyoto Arcane Quarter</h4>
+                        <p>Difficult to defend due to four-directional access, political neutrality essential</p>
+                    </div>
+                    <div class="vulnerability-item">
+                        <h4>⚙️ Azuchi Clockwork Foundry</h4>
+                        <p>High capture value due to concentrated technical resources, vision limited by smoke screens</p>
+                    </div>
+                    <div class="vulnerability-item">
+                        <h4>🏔️ Koga Mist Forest</h4>
+                        <p>Neutral territory but key shadow path junction, concealment effect from mist</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Strategic Points -->
+        <section class="card">
+            <h2>🎯 Strategic Strongholds Summary</h2>
+            <div class="strategic-grid">
+                <div class="strategic-point priority-high">
+                    <div class="priority-icon">🏆</div>
+                    <div class="point-content">
+                        <h4>Key to Victory</h4>
+                        <p>Political control of Kyoto Arcane Quarter</p>
+                    </div>
+                </div>
+
+                <div class="strategic-point priority-medium">
+                    <div class="priority-icon">💰</div>
+                    <div class="point-content">
+                        <h4>Economic Control</h4>
+                        <p>Trade network of Edo Arsenal Dock</p>
+                    </div>
+                </div>
+
+                <div class="strategic-point priority-medium">
+                    <div class="priority-icon">🔮</div>
+                    <div class="point-content">
+                        <h4>Technological Advantage</h4>
+                        <p>V-formation cannon technology of Azuchi Clockwork Foundry</p>
+                    </div>
+                </div>
+
+                <div class="strategic-point priority-low">
+                    <div class="priority-icon">👤</div>
+                    <div class="point-content">
+                        <h4>Intelligence Control</h4>
+                        <p>Shadow path network of Koga Mist Forest</p>
+                    </div>
+                </div>
+
+                <div class="strategic-point priority-low">
+                    <div class="priority-icon">🏛️</div>
+                    <div class="point-content">
+                        <h4>Spiritual Authority</h4>
+                        <p>Spiritual legitimacy of Kumano Spirit Shrine</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Historical Events by Location -->
+        <section class="card">
+            <h2>🎭 Major Event Locations</h2>
+
+            <div class="event-location">
+                <h3>📍 Kyoto Arcane Quarter</h3>
+                <div class="event-details">
+                    <p><strong>T1-5</strong>: Barrier siege in dense fog, Shadow Gale vs Onmyō Guild intelligence warfare</p>
+                    <p><strong>T6-10</strong>: Imperial edict duel arena establishment, stage for four-faction great battle</p>
+                    <p><strong>T11-15</strong>: Festival eve infiltration warfare, comprehensive technical battle</p>
+                </div>
+            </div>
+
+            <div class="event-location">
+                <h3>📍 Edo Arsenal Dock</h3>
+                <div class="event-details">
+                    <p><strong>T1-5</strong>: Gunpowder blockade breakthrough, ledger manipulation during typhoon</p>
+                    <p><strong>T16-20</strong>: Typhoon drill → Imperial final battle, decisive location of the Eiroku era turmoil</p>
+                </div>
+            </div>
+
+            <div class="event-location">
+                <h3>📍 Azuchi Clockwork Foundry</h3>
+                <div class="event-details">
+                    <p><strong>T1-5</strong>: V-formation cannon blueprint discovery, Crimson Blade vs Silver Dutch technical rivalry</p>
+                </div>
+            </div>
+
+            <div class="event-location">
+                <h3>📍 Sakurai Dueling Fields</h3>
+                <div class="event-details">
+                    <p><strong>T11-15</strong>: Supply convoy raid, fierce battleground of daylight decisive battle</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>Eiroku Mist Chronicles | Narrative TRPG Campaign Records</p>
+    </footer>
+
+    <script>
+        // Region data
+        const regionData = {
+            ise_shadow_vale: {
+                name: "Ise Shadow Vale",
+                type: "Forest",
+                capacity: 2,
+                faction: "shadow_gale",
+                adjacentAreas: ["Koga Mist Forest", "Kyoto Arcane Quarter"],
+                resources: "Shadow lotus, silk contracts",
+                specialEffect: "Night curtain: Stealth roll +2, Mist swamp: Movement cost +1",
+                controlledBy: "Shadow Gale Clan (Influence: 62)",
+                strategicValue: "Sacred ground of ninjutsu, covert infiltration route to Kyoto"
+            },
+            koga_mist_forest: {
+                name: "Koga Mist Forest",
+                type: "Mist forest",
+                capacity: 3,
+                faction: "neutral",
+                adjacentAreas: ["Ise Shadow Vale", "Kumano Spirit Shrine"],
+                resources: "Rare medicinal herbs, mist silk",
+                specialEffect: "Mist screen: Scout roll difficulty, Hidden path: Secret routes",
+                controlledBy: "None (Shadow Gale Clan retreat location after final battle)",
+                strategicValue: "Supply base hidden in mist, shadow path relay point"
+            },
+            kumano_spirit_shrine: {
+                name: "Kumano Spirit Shrine",
+                type: "Shrine",
+                capacity: 2,
+                faction: "moonlit_onmyo",
+                adjacentAreas: ["Koga Mist Forest", "Kyoto Arcane Quarter", "Sakurai Dueling Fields"],
+                resources: "Spirit talismans, holy water",
+                specialEffect: "Spirit veins: Mystic arts roll +2, Divine blessing: Prayer success rate improvement",
+                controlledBy: "Moonlit Onmyō Guild (Influence: 58)",
+                strategicValue: "Sacred realm of Onmyōdō, core of spiritual network"
+            },
+            kyoto_arcane_quarter: {
+                name: "Kyoto Arcane Quarter",
+                type: "City",
+                capacity: 4,
+                faction: "contested",
+                adjacentAreas: ["Ise Shadow Vale", "Kumano Spirit Shrine", "Edo Arsenal Dock"],
+                resources: "Moon silver, academic texts, Imperial court influence",
+                specialEffect: "Court intrigue: Diplomacy roll +1, Arcane library: Mystic arts research efficiency +2",
+                controlledBy: "Moonlit Onmyō Guild (22), Shadow Gale Clan (10)",
+                strategicValue: "**Political center of the Imperial capital** - Stage for duel arbitration"
+            },
+            edo_arsenal_dock: {
+                name: "Edo Arsenal Dock",
+                type: "Harbor",
+                capacity: 3,
+                faction: "silver_dutch",
+                adjacentAreas: ["Kyoto Arcane Quarter", "Azuchi Clockwork Foundry"],
+                resources: "Black gunpowder, Western firearms, trade contracts",
+                specialEffect: "Naval supply: Supply efficiency +2, Western connection: Diplomatic negotiation +2",
+                controlledBy: "Silver Dutch Institute (Influence: 65)",
+                strategicValue: "Gateway for Western technology, stage for final battle"
+            },
+            azuchi_clockwork_foundry: {
+                name: "Azuchi Clockwork Foundry",
+                type: "Industrial",
+                capacity: 3,
+                faction: "silver_dutch",
+                adjacentAreas: ["Edo Arsenal Dock", "Sakurai Dueling Fields"],
+                resources: "Clockwork components, refined iron",
+                specialEffect: "Gear resonance: Engineering roll +2, Smoke screen: Vision -1",
+                controlledBy: "Silver Dutch Institute (Influence: 18)",
+                strategicValue: "V-formation cannon development base, center of technological innovation"
+            },
+            sakurai_dueling_fields: {
+                name: "Sakurai Dueling Fields",
+                type: "Plains",
+                capacity: 2,
+                faction: "crimson_blade",
+                adjacentAreas: ["Kumano Spirit Shrine", "Azuchi Clockwork Foundry"],
+                resources: "Folded steel, training grounds",
+                specialEffect: "Clash training: Swordsmanship training success rate +2, Banner wind: Morale +1",
+                controlledBy: "Crimson Blade Vanguard (Influence: 61)",
+                strategicValue: "Sacred ground of martial training, strategic point for Imperial capital defense"
+            }
+        };
+
+        // Interactive functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Region click event (supports both circle elements and region-group)
+            document.querySelectorAll('.region, .region-group').forEach(element => {
+                element.addEventListener('click', function(e) {
+                    e.stopPropagation();
+
+                    let regionKey;
+                    let regionCircle;
+
+                    if (this.classList.contains('region')) {
+                        // When circle is clicked
+                        regionKey = this.dataset.region;
+                        regionCircle = this;
+                    } else {
+                        // When region-group is clicked
+                        regionCircle = this.querySelector('.region');
+                        regionKey = regionCircle ? regionCircle.dataset.region : null;
+                    }
+
+                    if (regionKey) {
+                        showRegionInfo(regionKey);
+
+                        // Update active state
+                        document.querySelectorAll('.region').forEach(r => r.classList.remove('active'));
+                        if (regionCircle) {
+                            regionCircle.classList.add('active');
+                        }
+                    }
+                });
+
+                // Hover effects
+                element.addEventListener('mouseenter', function() {
+                    let regionCircle;
+                    let regionKey;
+
+                    if (this.classList.contains('region')) {
+                        regionCircle = this;
+                        regionKey = this.dataset.region;
+                    } else {
+                        regionCircle = this.querySelector('.region');
+                        regionKey = regionCircle ? regionCircle.dataset.region : null;
+                    }
+
+                    if (regionCircle && regionKey) {
+                        const originalR = regionCircle.getAttribute('r');
+                        regionCircle.setAttribute('data-original-r', originalR);
+                        regionCircle.setAttribute('r', parseFloat(originalR) * 1.1);
+
+                        // Display information on mouse over
+                        showRegionTooltip(regionKey, regionCircle);
+                    }
+                });
+
+                element.addEventListener('mouseleave', function() {
+                    let regionCircle;
+
+                    if (this.classList.contains('region')) {
+                        regionCircle = this;
+                    } else {
+                        regionCircle = this.querySelector('.region');
+                    }
+
+                    if (regionCircle) {
+                        const originalR = regionCircle.getAttribute('data-original-r');
+                        if (originalR) {
+                            regionCircle.setAttribute('r', originalR);
+                        }
+                    }
+
+                    // Hide tooltip
+                    hideRegionTooltip();
+                });
+            });
+
+            // Initial display
+            showRegionInfo('kyoto_arcane_quarter');
+        });
+
+        function showRegionInfo(regionKey) {
+            const region = regionData[regionKey];
+            const titleDiv = document.getElementById('svg-region-title');
+            const infoDiv = document.getElementById('svg-region-info');
+
+            let factionIcon = '';
+            switch(region.faction) {
+                case 'shadow_gale':
+                    factionIcon = '🌫️';
+                    break;
+                case 'moonlit_onmyo':
+                    factionIcon = '🌙';
+                    break;
+                case 'crimson_blade':
+                    factionIcon = '⚔️';
+                    break;
+                case 'silver_dutch':
+                    factionIcon = '⚙️';
+                    break;
+                case 'neutral':
+                    factionIcon = '🗻';
+                    break;
+                case 'contested':
+                    factionIcon = '🏛️';
+                    break;
+            }
+
+            titleDiv.textContent = `${factionIcon} ${region.name}`;
+
+            infoDiv.innerHTML = `
+                <p style="margin: 3px 0;"><strong>Type:</strong><br/>${region.type}</p>
+                <p style="margin: 3px 0;"><strong>Capacity:</strong> ${region.capacity}</p>
+                <p style="margin: 3px 0;"><strong>Adjacent:</strong><br/>${region.adjacentAreas.join(', ')}</p>
+                <p style="margin: 3px 0;"><strong>Resources:</strong><br/>${region.resources}</p>
+                <p style="margin: 3px 0;"><strong>Special Effects:</strong><br/>${region.specialEffect}</p>
+                <p style="margin: 3px 0;"><strong>Controlled By:</strong><br/>${region.controlledBy}</p>
+                <p style="margin: 3px 0; color: #FFD700;"><strong>Strategic Value:</strong><br/>${region.strategicValue}</p>
+            `;
+        }
+
+        // Show tooltip
+        function showRegionTooltip(regionKey, element) {
+            const region = regionData[regionKey];
+            let tooltip = document.getElementById('region-tooltip');
+
+            if (!tooltip) {
+                tooltip = document.createElement('div');
+                tooltip.id = 'region-tooltip';
+                tooltip.style.cssText = `
+                    position: absolute;
+                    background: rgba(0, 0, 0, 0.9);
+                    color: #E0E0E0;
+                    padding: 0.75rem;
+                    border-radius: 8px;
+                    font-size: 0.8rem;
+                    pointer-events: none;
+                    z-index: 1000;
+                    max-width: 250px;
+                    border: 1px solid rgba(255, 255, 255, 0.2);
+                    backdrop-filter: blur(10px);
+                `;
+                document.body.appendChild(tooltip);
+            }
+
+            let factionIcon = '';
+            switch(region.faction) {
+                case 'shadow_gale': factionIcon = '🌫️'; break;
+                case 'moonlit_onmyo': factionIcon = '🌙'; break;
+                case 'crimson_blade': factionIcon = '⚔️'; break;
+                case 'silver_dutch': factionIcon = '⚙️'; break;
+                case 'neutral': factionIcon = '🗻'; break;
+                case 'contested': factionIcon = '🏛️'; break;
+            }
+
+            tooltip.innerHTML = `
+                <div style="font-weight: bold; margin-bottom: 0.5rem; color: #FFD700;">
+                    ${factionIcon} ${region.name}
+                </div>
+                <div style="margin-bottom: 0.25rem;">
+                    <strong>Type:</strong> ${region.type}
+                </div>
+                <div style="margin-bottom: 0.25rem;">
+                    <strong>Controlled:</strong> ${region.controlledBy}
+                </div>
+                <div style="margin-bottom: 0.25rem;">
+                    <strong>Resources:</strong> ${region.resources}
+                </div>
+                <div style="color: #87CEEB; font-size: 0.75rem;">
+                    Click for details
+                </div>
+            `;
+
+            tooltip.style.display = 'block';
+        }
+
+        // Hide tooltip
+        function hideRegionTooltip() {
+            const tooltip = document.getElementById('region-tooltip');
+            if (tooltip) {
+                tooltip.style.display = 'none';
+            }
+        }
+
+        // Follow tooltip with mouse position
+        document.addEventListener('mousemove', function(e) {
+            const tooltip = document.getElementById('region-tooltip');
+            if (tooltip && tooltip.style.display === 'block') {
+                tooltip.style.left = (e.pageX + 15) + 'px';
+                tooltip.style.top = (e.pageY - 10) + 'px';
+            }
+        });
+    </script>
+</body>
+</html>

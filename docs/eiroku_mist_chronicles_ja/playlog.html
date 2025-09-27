@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>永禄の霧戦記 - Playlog Analysis</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="data.js"></script>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="main-header">
+      <div class="container">
+        <nav class="main-nav">
+          <a href="index.html">🏠 Dashboard</a>
+          <a href="narrative.html">📖 Narrative</a>
+          <a href="playlog.html" class="active">📊 Playlog</a>
+          <a href="worldmap.html">🗺️ World Map</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Campaign Overview -->
+        <section class="campaign-overview">
+            <h1>📊 永禄の霧戦記 - Playlog Analysis</h1>
+            <p class="subtitle">統計データと数値分析による勢力変遷の記録<br>
+            20ターン全域の詳細なデータ分析と士気推移グラフ</p>
+        </section>
+
+        <!-- Final Rankings -->
+        <section class="card final-rankings">
+            <h2>🏆 最終勢力ランキング（士気順）</h2>
+            <div class="ranking-list">
+                <div class="ranking-item">
+                    <span class="rank-icon">🥇</span>
+                    <span class="faction-name silver_dutch">⚙️ 銀蘭機巧院</span>
+                    <span class="score">士気 9</span>
+                    <span class="achievement">技術と護符融合の大成功</span>
+                </div>
+                <div class="ranking-item">
+                    <span class="rank-icon">🥈</span>
+                    <span class="faction-name crimson_blade">⚔️ 紅刃先鋒隊</span>
+                    <span class="score">士気 8</span>
+                    <span class="achievement">帝勅に応じた完璧な武功</span>
+                </div>
+                <div class="ranking-item">
+                    <span class="rank-icon">🥉</span>
+                    <span class="faction-name moonlit_onmyo">🌙 月影陰陽寮</span>
+                    <span class="score">士気 7</span>
+                    <span class="achievement">護符管理権と帝都防衛権確立</span>
+                </div>
+                <div class="ranking-item">
+                    <span class="rank-icon">📉</span>
+                    <span class="faction-name shadow_gale">🌫️ 影颶の衆</span>
+                    <span class="score">士気 -2</span>
+                    <span class="achievement">甲賀撤退、長期再起要</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- MVP Awards -->
+        <section class="card mvp-awards">
+            <h2>🏅 MVP表彰</h2>
+            <div class="awards-grid">
+                <div class="award-item silver_dutch">
+                    <div class="award-icon">🛡️</div>
+                    <div class="award-content">
+                        <h5>最優秀防衛</h5>
+                        <p>銀蘭機巧院</p>
+                        <small>護符技術統合による完璧な雷砲防衛</small>
+                    </div>
+                </div>
+
+                <div class="award-item moonlit_onmyo">
+                    <div class="award-icon">🕊️</div>
+                    <div class="award-content">
+                        <h5>最優秀外交</h5>
+                        <p>月影陰陽寮</p>
+                        <small>朝廷との信頼関係構築と政治的勝利</small>
+                    </div>
+                </div>
+
+                <div class="award-item crimson_blade">
+                    <div class="award-icon">⚔️</div>
+                    <div class="award-content">
+                        <h5>最優秀武功</h5>
+                        <p>紅刃先鋒隊</p>
+                        <small>帝勅に応じた一貫した槍術発揮</small>
+                    </div>
+                </div>
+
+                <div class="award-item shadow_gale">
+                    <div class="award-icon">🌙</div>
+                    <div class="award-content">
+                        <h5>最優秀耐久</h5>
+                        <p>影颶の衆</p>
+                        <small>15ターン壊滅的敗北からの撤退成功</small>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Initial Faction Status -->
+        <section class="card">
+            <h2>📊 初期勢力状況</h2>
+            <div class="faction-stats-grid">
+                <div class="faction-stat shadow_gale">
+                    <h3><span class="character shadow_gale">🌫️ 影颶の衆</span></h3>
+                    <p><strong>本拠地</strong>: 伊勢影ヶ淵 | <strong>専門性</strong>: 忍術・諜報</p>
+                    <table class="stats-table">
+                        <tr><td>💰 通貨</td><td>180</td></tr>
+                        <tr><td>🗡️ 戦闘力</td><td>6</td></tr>
+                        <tr><td>🏃 探索力</td><td>7</td></tr>
+                        <tr><td>🤝 外交力</td><td>4</td></tr>
+                        <tr><td>🔨 技巧力</td><td>5</td></tr>
+                        <tr><td>👤 潜入力</td><td>9</td></tr>
+                        <tr><td>📈 初期士気</td><td>8</td></tr>
+                    </table>
+                    <p><strong>資源</strong>: 影蓮6、煙玉12、情報印章4</p>
+                    <p><strong>メンバー</strong>: 霧生葵（影衆頭）、風魔迅（機先斥候）、鵺堂紅月（毒薬師）</p>
+                </div>
+
+                <div class="faction-stat moonlit_onmyo">
+                    <h3><span class="character moonlit_onmyo">🌙 月影陰陽寮</span></h3>
+                    <p><strong>本拠地</strong>: 熊野霊峰社 | <strong>専門性</strong>: 陰陽道・結界術</p>
+                    <table class="stats-table">
+                        <tr><td>💰 通貨</td><td>160</td></tr>
+                        <tr><td>🗡️ 戦闘力</td><td>7</td></tr>
+                        <tr><td>🏃 探索力</td><td>5</td></tr>
+                        <tr><td>🤝 外交力</td><td>6</td></tr>
+                        <tr><td>🔨 技巧力</td><td>6</td></tr>
+                        <tr><td>✨ 秘術力</td><td>9</td></tr>
+                        <tr><td>📈 初期士気</td><td>7</td></tr>
+                    </table>
+                    <p><strong>資源</strong>: 霊符9、月銀3、香供10</p>
+                    <p><strong>メンバー</strong>: 真名井朔夜（陰陽頭）、烏丸伽耶（式神使い）、蘆屋蛍（占術士）</p>
+                </div>
+
+                <div class="faction-stat crimson_blade">
+                    <h3><span class="character crimson_blade">⚔️ 紅刃先鋒隊</span></h3>
+                    <p><strong>本拠地</strong>: 桜井試合原 | <strong>専門性</strong>: 武術・戦術</p>
+                    <table class="stats-table">
+                        <tr><td>💰 通貨</td><td>150</td></tr>
+                        <tr><td>🗡️ 戦闘力</td><td>9</td></tr>
+                        <tr><td>🏃 探索力</td><td>4</td></tr>
+                        <tr><td>🤝 外交力</td><td>5</td></tr>
+                        <tr><td>🔨 技巧力</td><td>4</td></tr>
+                        <tr><td>🛡️ 戦術力</td><td>8</td></tr>
+                        <tr><td>📈 初期士気</td><td>9</td></tr>
+                    </table>
+                    <p><strong>資源</strong>: 折れ鋼8、軍馬5、旗絹6</p>
+                    <p><strong>メンバー</strong>: 真田烈火（隊長）、結城鞘音（剣士）、佐々木凜九郎（軍師）</p>
+                </div>
+
+                <div class="faction-stat silver_dutch">
+                    <h3><span class="character silver_dutch">⚙️ 銀蘭機巧院</span></h3>
+                    <p><strong>本拠地</strong>: 江戸武備船渠 | <strong>専門性</strong>: 西洋技術・工学</p>
+                    <table class="stats-table">
+                        <tr><td>💰 通貨</td><td>210</td></tr>
+                        <tr><td>🗡️ 戦闘力</td><td>5</td></tr>
+                        <tr><td>🏃 探索力</td><td>6</td></tr>
+                        <tr><td>🤝 外交力</td><td>7</td></tr>
+                        <tr><td>🔨 技巧力</td><td>9</td></tr>
+                        <tr><td>⚙️ 工学力</td><td>10</td></tr>
+                        <tr><td>📈 初期士気</td><td>8</td></tr>
+                    </table>
+                    <p><strong>資源</strong>: 機巧部品10、黒色火薬14、ガラス鏡7</p>
+                    <p><strong>メンバー</strong>: ヨハン・ファン・デル・スターク（技術院長）、通詞お亀（外交通訳）、ヘンドリク・スパイカー（兵装技師）</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Morale Chart -->
+        <section class="card">
+            <h2>📈 士気推移グラフ（20ターン完全版）</h2>
+            <div class="chart-container">
+                <svg class="world-map-svg" viewBox="0 0 800 400" style="background: rgba(26, 26, 46, 0.5);">
+                    <!-- Grid lines -->
+                    <g stroke="#333" stroke-width="1" opacity="0.5">
+                        <!-- Horizontal lines -->
+                        <line x1="100" y1="50" x2="750" y2="50"/>
+                        <line x1="100" y1="100" x2="750" y2="100"/>
+                        <line x1="100" y1="150" x2="750" y2="150"/>
+                        <line x1="100" y1="200" x2="750" y2="200"/>
+                        <line x1="100" y1="250" x2="750" y2="250"/>
+                        <line x1="100" y1="300" x2="750" y2="300"/>
+                        <line x1="100" y1="350" x2="750" y2="350"/>
+
+                        <!-- Vertical lines (turns) -->
+                        <line x1="150" y1="50" x2="150" y2="350"/>
+                        <line x1="250" y1="50" x2="250" y2="350"/>
+                        <line x1="350" y1="50" x2="350" y2="350"/>
+                        <line x1="450" y1="50" x2="450" y2="350"/>
+                        <line x1="550" y1="50" x2="550" y2="350"/>
+                        <line x1="650" y1="50" x2="650" y2="650"/>
+                        <line x1="750" y1="50" x2="750" y2="350"/>
+                    </g>
+
+                    <!-- Axis labels -->
+                    <g class="axis-label">
+                        <text x="50" y="55">9</text>
+                        <text x="50" y="105">7</text>
+                        <text x="50" y="155">5</text>
+                        <text x="50" y="205">3</text>
+                        <text x="50" y="255">1</text>
+                        <text x="50" y="305">-1</text>
+                        <text x="50" y="355">-3</text>
+
+                        <text x="140" y="375">T1</text>
+                        <text x="240" y="375">T5</text>
+                        <text x="340" y="375">T10</text>
+                        <text x="540" y="375">T15</text>
+                        <text x="740" y="375">T20</text>
+                    </g>
+
+                    <!-- Morale lines -->
+                    <!-- Shadow Gale (declining trend) -->
+                    <polyline class="morale-line"
+                              points="150,90 200,110 250,130 300,180 350,230 400,250 450,270 500,290 550,310 600,330 650,350 700,370 750,390"
+                              stroke="#708090" stroke-width="3" fill="none" />
+
+                    <!-- Moonlit Onmyo (stable) -->
+                    <polyline class="morale-line"
+                              points="150,130 200,120 250,110 300,120 350,110 400,120 450,110 500,110 550,100 600,100 650,105 700,105 750,105"
+                              stroke="#9966CC" stroke-width="3" fill="none" />
+
+                    <!-- Crimson Blade (strong then declining then recovering) -->
+                    <polyline class="morale-line"
+                              points="150,80 200,90 250,100 300,120 350,140 400,160 450,140 500,120 550,110 600,100 650,95 700,90 750,85"
+                              stroke="#DC3545" stroke-width="3" fill="none" />
+
+                    <!-- Silver Dutch (gradual improvement to victory) -->
+                    <polyline class="morale-line"
+                              points="150,90 200,85 250,80 300,75 350,70 400,65 450,60 500,55 550,52 600,50 650,48 700,46 750,42"
+                              stroke="#17A2B8" stroke-width="3" fill="none" />
+
+                    <!-- Data points -->
+                    <g class="data-points">
+                        <!-- Add interactive data points for key turns -->
+                        <circle cx="250" cy="130" r="4" fill="#708090" class="data-point" data-turn="5" data-faction="shadow_gale" data-morale="5"/>
+                        <circle cx="350" cy="110" r="4" fill="#9966CC" class="data-point" data-turn="10" data-faction="moonlit_onmyo" data-morale="7"/>
+                        <circle cx="450" cy="140" r="4" fill="#DC3545" class="data-point" data-turn="12" data-faction="crimson_blade" data-morale="5"/>
+                        <circle cx="750" cy="42" r="4" fill="#17A2B8" class="data-point" data-turn="15" data-faction="silver_dutch" data-morale="9"/>
+                    </g>
+                </svg>
+
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color shadow_gale"></div>
+                        <span>🌫️ 影颶の衆</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color moonlit_onmyo"></div>
+                        <span>🌙 月影陰陽寮</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color crimson_blade"></div>
+                        <span>⚔️ 紅刃先鋒隊</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color silver_dutch"></div>
+                        <span>⚙️ 銀蘭機巧院</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-instructions">
+                📊 グラフ上の点をクリックすると詳細情報が表示されます
+            </div>
+
+            <div id="chart-turn-info" class="chart-turn-info"></div>
+        </section>
+
+        <!-- Turn Logs -->
+        <section class="card">
+            <h2>🌫️ ターン別変化ログ</h2>
+
+            <!-- Turn 1 -->
+            <section id="turn-1" class="turn-section">
+                <header class="turn-header">
+                    <h3>ターン 1: 濃霧降臨 🌫️</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-1" class="cross-link">📖 ナラティブを見る</a>
+                        <a href="#turn-2" class="next-turn">次のターン →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GMアクション</strong>: environmental_change</p>
+
+                    <h4>📍 位置変更</h4>
+                    <ul>
+                        <li>🌫️ 影颶の衆: 伊勢影ヶ淵 → 京洛術院区 (諜報潜入開始)</li>
+                        <li>🌙 月影陰陽寮: 熊野霊峰社 → 京洛術院区 (結界儀式展開)</li>
+                        <li>⚔️ 紅刃先鋒隊: 桜井試合原 → 安土機巧炉 (鍛造主導権確保)</li>
+                        <li>⚙️ 銀蘭機巧院: 江戸武備船渠 → 安土機巧炉 (技術協力交渉)</li>
+                    </ul>
+
+                    <h4>🎭 勢力間イベント</h4>
+                    <ul>
+                        <li>🌙🌫️ 月影陰陽寮 vs 影颶の衆: 🔮 京洛結界攻防戦 - 宮中で静かな諜報戦が開始</li>
+                    </ul>
+
+                    <h4>📈 士気変化</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">影颶の衆: 8.0 → 8.0 (変化なし)</div>
+                        <div class="morale-item moonlit_onmyo">月影陰陽寮: 7.0 → 7.0 (変化なし)</div>
+                        <div class="morale-item crimson_blade">紅刃先鋒隊: 9.0 → 9.0 (変化なし)</div>
+                        <div class="morale-item silver_dutch">銀蘭機巧院: 8.0 → 8.0 (変化なし)</div>
+                    </div>
+
+                    <h4>🎒 リソース変化</h4>
+                    <ul>
+                        <li>🌙 月影陰陽寮: 香供 10→8 (-2) - 結界維持コスト</li>
+                        <li>⚙️ 銀蘭機巧院: 通貨 210→190 (-20), 機巧部品 10→8 (-2) - 技術交渉費用</li>
+                    </ul>
+
+                    <div class="key-event">
+                        <strong>重要事件</strong>: 濃霧により忍術・妖術が優位となり、西洋火器に制約発生
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 2 -->
+            <section id="turn-2" class="turn-section">
+                <header class="turn-header">
+                    <h3>ターン 2: 雁行砲発見 📜【⚔️ 技術転換点】</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-2" class="cross-link">📖 ナラティブを見る</a>
+                        <a href="#turn-1" class="prev-turn">← 前のターン</a>
+                        <a href="#turn-3" class="next-turn">次のターン →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GMアクション</strong>: discovery_event</p>
+
+                    <h4>🎭 勢力間イベント</h4>
+                    <ul>
+                        <li>⚙️⚔️ 銀蘭機巧院 vs 紅刃先鋒隊: 🔫 雁行砲開発競争 - 西洋式大筒を巡る激しい技術争奪戦</li>
+                        <li>🏆 結果: 銀蘭が工匠保護の朱印状獲得、技術主導権確保</li>
+                    </ul>
+
+                    <h4>📈 士気変化</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">影颶の衆: 8.0 → 7.5 (-0.5) ⬇️</div>
+                        <div class="morale-item moonlit_onmyo">月影陰陽寮: 7.0 → 7.2 (+0.2) ⬆️</div>
+                        <div class="morale-item crimson_blade">紅刃先鋒隊: 9.0 → 8.5 (-0.5) ⬇️</div>
+                        <div class="morale-item silver_dutch">銀蘭機巧院: 8.0 → 8.3 (+0.3) ⬆️</div>
+                    </div>
+
+                    <h4>🎒 リソース変化</h4>
+                    <ul>
+                        <li>🌫️ 影颶の衆: 煙玉 12→10 (-2), 情報印章 4→5 (+1), 朝廷工作券+2</li>
+                        <li>🌙 月影陰陽寮: 霊符 9→8 (-1), 香供 8→6 (-2), 結界印章+2</li>
+                        <li>⚔️ 紅刃先鋒隊: 通貨 150→140 (-10), 雁行砲中核部品+1</li>
+                        <li>⚙️ 銀蘭機巧院: 通貨 190→150 (-40), 機巧部品 8→6 (-2), 歯車安定装置+2</li>
+                    </ul>
+
+                    <div class="key-event">
+                        <strong>重要事件</strong>: 西洋技術vs武術の対立構造明確化、技術革新の火種投下
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 3 -->
+            <section id="turn-3" class="turn-section">
+                <header class="turn-header">
+                    <h3>ターン 3: 幕府火薬封鎖 🚫【💰 経済戦略】</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-3" class="cross-link">📖 ナラティブを見る</a>
+                        <a href="#turn-2" class="prev-turn">← 前のターン</a>
+                        <a href="#turn-4" class="next-turn">次のターン →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GMアクション</strong>: market_event</p>
+
+                    <h4>📍 位置変更</h4>
+                    <ul>
+                        <li>🌫️ 影颶の衆: 京洛術院区 → 江戸武備船渠 (帳簿工作)</li>
+                        <li>⚔️ 紅刃先鋒隊: 安土機巧炉 → 江戸武備船渠 (火薬強奪)</li>
+                    </ul>
+
+                    <h4>📈 市場変化</h4>
+                    <div class="key-event">
+                        黒色火薬価格: 46 → 52 (+6) 📈<br>
+                        理由: 幕府巡察使による火薬摘発で供給縮小
+                    </div>
+
+                    <h4>🎭 勢力間イベント</h4>
+                    <ul>
+                        <li>⚔️🚫 紅刃先鋒隊 vs 幕府巡察使: ⚔️ 火薬樽押収作戦 - 武威と法理で強硬突破</li>
+                        <li>🏆 結果: 押収命令書獲得成功</li>
+                    </ul>
+
+                    <h4>📈 士気変化</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">影颶の衆: 7.5 → 7.8 (+0.3) ⬆️</div>
+                        <div class="morale-item moonlit_onmyo">月影陰陽寮: 7.2 → 7.0 (-0.2) ⬇️</div>
+                        <div class="morale-item crimson_blade">紅刃先鋒隊: 8.5 → 8.8 (+0.3) ⬆️</div>
+                        <div class="morale-item silver_dutch">銀蘭機巧院: 8.3 → 8.1 (-0.2) ⬇️</div>
+                    </div>
+
+                    <h4>💰 経済活動</h4>
+                    <ul>
+                        <li>⚙️ 銀蘭機巧院: 黒色火薬4単位購入 (52価格×4=208通貨)</li>
+                    </ul>
+
+                    <div class="key-event">
+                        <strong>重要事件</strong>: 江戸を新戦場とした三正面戦争の構図確立
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 4 -->
+            <section id="turn-4" class="turn-section">
+                <header class="turn-header">
+                    <h3>ターン 4: 台風前線 🌪️【🌊 自然の試練】</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-4" class="cross-link">📖 ナラティブを見る</a>
+                        <a href="#turn-3" class="prev-turn">← 前のターン</a>
+                        <a href="#turn-5" class="next-turn">次のターン →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GMアクション</strong>: environmental_change</p>
+
+                    <h4>🌪️ 環境変化</h4>
+                    <div class="key-event">
+                        台風前線が江戸港を荒らし、嵐対応の官帳掌握が新たな戦略目標に
+                    </div>
+
+                    <h4>🎭 勢力間イベント</h4>
+                    <ul>
+                        <li>🌫️🌪️ 影颶の衆 vs 台風: 📋 嵐帳簿書換工作 - 巡察帳簿の差し替えと偽造</li>
+                        <li>🏆 結果: 影颶が巡察記録の唯一正本となる帳簿を作成</li>
+                    </ul>
+
+                    <h4>📈 士気変化</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">影颶の衆: 7.8 → 8.1 (+0.3) ⬆️</div>
+                        <div class="morale-item moonlit_onmyo">月影陰陽寮: 7.0 → 6.8 (-0.2) ⬇️</div>
+                        <div class="morale-item crimson_blade">紅刃先鋒隊: 8.5 → 8.2 (-0.3) ⬇️</div>
+                        <div class="morale-item silver_dutch">銀蘭機巧院: 8.1 → 7.9 (-0.2) ⬇️</div>
+                    </div>
+
+                    <h4>🎒 リソース変化</h4>
+                    <ul>
+                        <li>🌫️ 影颶の衆: 護符+1, 情報印章 5→6 (+1) - 偽造帳簿作成</li>
+                        <li>⚔️ 紅刃先鋒隊: 通貨 140→128 (-12) - 嵐対応費用</li>
+                        <li>⚙️ 銀蘭機巧院: 機巧部品 6→5 (-1) - 嵐対応機器整備</li>
+                    </ul>
+
+                    <div class="key-event">
+                        <strong>重要事件</strong>: 台風による自然災害が新たな戦略機会を創出、影颶が情報戦で優位獲得
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 5 -->
+            <section id="turn-5" class="turn-section">
+                <header class="turn-header">
+                    <h3>ターン 5: 朝廷監察 👑【🏛️ 政治的試練】</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-5" class="cross-link">📖 ナラティブを見る</a>
+                        <a href="#turn-4" class="prev-turn">← 前のターン</a>
+                        <a href="#turn-6" class="next-turn">次のターン →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GMアクション</strong>: discovery_event</p>
+
+                    <h4>📍 位置変更</h4>
+                    <ul>
+                        <li>🌫️ 影颶の衆: 江戸武備船渠 → 京洛術院区 (嵐帳簿持参で帰京)</li>
+                        <li>⚔️ 紅刃先鋒隊: 江戸武備船渠 → 安土機巧炉 (火薬護送)</li>
+                    </ul>
+
+                    <h4>🎭 勢力間イベント</h4>
+                    <ul>
+                        <li>🌙📋 月影陰陽寮 vs 朝廷監察: 📜 護符管理権委任獲得 - 雷雲記録で影颶の改竄を暴露</li>
+                        <li>🏆 結果: 陰陽寮が正式護符管理権獲得</li>
+                    </ul>
+
+                    <h4>📈 信頼関係変化</h4>
+                    <div class="key-event">
+                        月影陰陽寮 ↔ 影颶の衆: 信頼度 4→3 (対立激化)
+                    </div>
+
+                    <h4>📈 士気変化</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">影颶の衆: 7.8 → 6.5 (-1.3) ⬇️</div>
+                        <div class="morale-item moonlit_onmyo">月影陰陽寮: 7.0 → 7.8 (+0.8) ⬆️</div>
+                        <div class="morale-item crimson_blade">紅刃先鋒隊: 8.8 → 8.5 (-0.3) ⬇️</div>
+                        <div class="morale-item silver_dutch">銀蘭機巧院: 8.1 → 8.3 (+0.2) ⬆️</div>
+                    </div>
+
+                    <div class="key-event">
+                        <strong>🎯 新目標</strong>: 陰陽寮は朝廷の信頼を得て京洛の護符管轄を正式に委任され、政治交渉で優位に立つ
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 6 -->
+            <section id="turn-6" class="turn-section">
+                <header class="turn-header">
+                    <h3>ターン 6: 帝勅決闘宣告 👑【⚔️ 運命の決戦】</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-6" class="cross-link">📖 ナラティブを見る</a>
+                        <a href="#turn-5" class="prev-turn">← 前のターン</a>
+                        <a href="#turn-7" class="next-turn">次のターン →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GMアクション</strong>: discovery_event</p>
+
+                    <h4>👑 帝勅宣告</h4>
+                    <div class="key-event">
+                        帝より武術裁定が下され、京洛術院区で陰陽寮と影颶の公式決闘が命じられる
+                    </div>
+
+                    <h4>📈 士気変化</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">影颶の衆: 6.5 → 7.2 (+0.7) ⬆️</div>
+                        <div class="morale-item moonlit_onmyo">月影陰陽寮: 7.8 → 8.0 (+0.2) ⬆️</div>
+                        <div class="morale-item crimson_blade">紅刃先鋒隊: 8.2 → 7.8 (-0.4) ⬇️</div>
+                        <div class="morale-item silver_dutch">銀蘭機巧院: 7.9 → 8.2 (+0.3) ⬆️</div>
+                    </div>
+
+                    <div class="key-event">
+                        <strong>重要事件</strong>: これまでの暗闘が公式の武術裁定へ格上げ、決戦舞台が整う
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 7 -->
+            <section id="turn-7" class="turn-section">
+                <header class="turn-header">
+                    <h3>ターン 7: 決闘輪準備 ⚔️【🎭 武術裁定の舞台】</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-7" class="cross-link">📖 ナラティブを見る</a>
+                        <a href="#turn-6" class="prev-turn">← 前のターン</a>
+                        <a href="#turn-8" class="next-turn">次のターン →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GMアクション</strong>: environmental_change</p>
+
+                    <h4>🎭 決闘舞台設営</h4>
+                    <ul>
+                        <li>京洛術院区に決闘輪設営完了</li>
+                        <li>帝の観覧席設置</li>
+                        <li>各勢力の立会い準備</li>
+                    </ul>
+
+                    <h4>📈 士気変化</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">影颶の衆: 7.2 → 7.5 (+0.3) ⬆️</div>
+                        <div class="morale-item moonlit_onmyo">月影陰陽寮: 8.0 → 7.8 (-0.2) ⬇️</div>
+                        <div class="morale-item crimson_blade">紅刃先鋒隊: 7.8 → 8.0 (+0.2) ⬆️</div>
+                        <div class="morale-item silver_dutch">銀蘭機巧院: 8.2 → 8.1 (-0.1) ⬇️</div>
+                    </div>
+
+                    <div class="key-event">
+                        <strong>重要事件</strong>: 帝勅決闘の舞台が整い、運命の戦いへの緊張が高まる
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 8 -->
+            <section id="turn-8" class="turn-section">
+                <header class="turn-header">
+                    <h3>ターン 8: 決闘輪砕破 ⚡【💥 混戦への転換】</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-8" class="cross-link">📖 ナラティブを見る</a>
+                        <a href="#turn-7" class="prev-turn">← 前のターン</a>
+                        <a href="#turn-9" class="next-turn">次のターン →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GMアクション</strong>: discovery_event</p>
+
+                    <h4>⚡ 決闘輪破壊</h4>
+                    <div class="key-event">
+                        雷撃により決闘輪が砕け、個別決闘から四勢力入り乱れる乱戦へ転換
+                    </div>
+
+                    <h4>📈 士気変化</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">影颶の衆: 7.5 → 6.8 (-0.7) ⬇️</div>
+                        <div class="morale-item moonlit_onmyo">月影陰陽寮: 7.8 → 7.2 (-0.6) ⬇️</div>
+                        <div class="morale-item crimson_blade">紅刃先鋒隊: 8.0 → 7.5 (-0.5) ⬇️</div>
+                        <div class="morale-item silver_dutch">銀蘭機巧院: 8.1 → 7.8 (-0.3) ⬇️</div>
+                    </div>
+
+                    <div class="key-event">
+                        <strong>重要事件</strong>: 個別決闘が四勢力乱戦に変化、戦闘形式の根本的転換
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 9 -->
+            <section id="turn-9" class="turn-section">
+                <header class="turn-header">
+                    <h3>ターン 9: 近衛府介入 🛡️【👑 帝権の発動】</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-9" class="cross-link">📖 ナラティブを見る</a>
+                        <a href="#turn-8" class="prev-turn">← 前のターン</a>
+                        <a href="#turn-10" class="next-turn">次のターン →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GMアクション</strong>: discovery_event</p>
+
+                    <h4>🛡️ 強制停戦</h4>
+                    <div class="key-event">
+                        近衛府による「十刻以内に武を納めよ」との停戦布告、帝権発動
+                    </div>
+
+                    <h4>📈 士気変化</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">影颶の衆: 6.8 → 5.8 (-1.0) ⬇️</div>
+                        <div class="morale-item moonlit_onmyo">月影陰陽寮: 7.2 → 7.5 (+0.3) ⬆️</div>
+                        <div class="morale-item crimson_blade">紅刃先鋒隊: 7.5 → 7.8 (+0.3) ⬆️</div>
+                        <div class="morale-item silver_dutch">銀蘭機巧院: 7.8 → 8.0 (+0.2) ⬆️</div>
+                    </div>
+
+                    <div class="key-event">
+                        <strong>重要事件</strong>: 帝権による強制停戦で武力解決から政治的解決段階へ移行開始
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 10 -->
+            <section id="turn-10" class="turn-section">
+                <header class="turn-header">
+                    <h3>ターン 10: 帝の裁定 👑【⚖️ 勝敗決定】</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-10" class="cross-link">📖 ナラティブを見る</a>
+                        <a href="#turn-9" class="prev-turn">← 前のターン</a>
+                        <a href="#turn-11" class="next-turn">次のターン →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GMアクション</strong>: discovery_event</p>
+
+                    <h4>🏆 帝の裁定公布</h4>
+                    <div class="key-event">
+                        <strong>最終処分</strong>: 月影陰陽寮は京洛防衛継続、紅刃先鋒隊は近衛補佐、銀蘭機巧院は技術供出、影颶の衆は伊勢で監視下
+                    </div>
+
+                    <h4>📈 士気変化</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">影颶の衆: 5.0 → 3.0 (-2.0) ⬇️</div>
+                        <div class="morale-item moonlit_onmyo">月影陰陽寮: 6.5 → 7.0 (+0.5) ⬆️</div>
+                        <div class="morale-item crimson_blade">紅刃先鋒隊: 7.0 → 7.5 (+0.5) ⬆️</div>
+                        <div class="morale-item silver_dutch">銀蘭機巧院: 8.0 → 8.2 (+0.2) ⬆️</div>
+                    </div>
+
+                    <h4>🎯 最終目標確定</h4>
+                    <ul>
+                        <li>🌙 陰陽寮: 帝都の守護者として地位を固める</li>
+                        <li>⚔️ 紅刃: 近衛補佐としての栄誉を得る</li>
+                        <li>⚙️ 銀蘭: 技術供出で信用を回復</li>
+                        <li>🌫️ 影颶: 伊勢で次の影打ちを準備</li>
+                    </ul>
+
+                    <div class="key-event">
+                        <strong>重要事件</strong>: 帝勅決闘の公式結果により、各勢力の今後の立場が明確に確定
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 11 -->
+            <section id="turn-11" class="turn-section">
+                <header class="turn-header">
+                    <h3>ターン 11: 桜井原奇襲 ⚔️【🔥 影颶の復讐】</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-11" class="cross-link">📖 ナラティブを見る</a>
+                        <a href="#turn-10" class="prev-turn">← 前のターン</a>
+                        <a href="#turn-12" class="next-turn">次のターン →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GMアクション</strong>: discovery_event</p>
+
+                    <h4>📍 位置変更</h4>
+                    <ul>
+                        <li>🌫️ 影颶の衆: 伊勢影ヶ淵 → 桜井試合原 (奇襲攻撃)</li>
+                        <li>⚙️ 銀蘭機巧院: 京洛術院区 → 桜井試合原 (砲撃支援)</li>
+                    </ul>
+
+                    <h4>🎭 勢力間イベント</h4>
+                    <ul>
+                        <li>🌫️⚔️ 影颶の衆 vs 紅刃先鋒隊: ⚔️ 桜井原補給隊奇襲 - 帝都補給線への破壊工作</li>
+                        <li>🏆 結果: 紅刃が補給列を死守、影颶は情報巻の一部を失い後退</li>
+                    </ul>
+
+                    <h4>📈 士気変化</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">影颶の衆: 3.0 → 4.0 (+1.0) ⬆️</div>
+                        <div class="morale-item moonlit_onmyo">月影陰陽寮: 7.0 → 6.0 (-1.0) ⬇️</div>
+                        <div class="morale-item crimson_blade">紅刃先鋒隊: 7.5 → 5.0 (-2.5) ⬇️</div>
+                        <div class="morale-item silver_dutch">銀蘭機巧院: 8.2 → 8.0 (-0.2) ⬇️</div>
+                    </div>
+
+                    <h4>🎒 リソース変化</h4>
+                    <ul>
+                        <li>🌫️ 影颶の衆: 影蓮 3→2 (-1), 情報印章 5→4 (-1), 戦傷 1→2 (+1)</li>
+                        <li>🌙 月影陰陽寮: 嵐護符 1→0 (-1), 結界復旧拠点 2→1 (-1)</li>
+                        <li>⚔️ 紅刃先鋒隊: 折れ鋼 4→3 (-1), 軍馬 2→1 (-1), 旗絹 3→2 (-1)</li>
+                        <li>⚙️ 銀蘭機巧院: 黒色火薬 7→5 (-2), ガラス鏡 5→4 (-1)</li>
+                    </ul>
+
+                    <div class="key-event">
+                        <strong>重要事件</strong>: 影颶が帝の裁定に反発し、帝都補給線への破壊工作で最後の抵抗を開始
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 12 -->
+            <section id="turn-12" class="turn-section">
+                <header class="turn-header">
+                    <h3>ターン 12: 桜井原攻防戦 ⚔️【🔥 継続する激闘】</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-12" class="cross-link">📖 ナラティブを見る</a>
+                        <a href="#turn-11" class="prev-turn">← 前のターン</a>
+                        <a href="#turn-13" class="next-turn">次のターン →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GMアクション</strong>: environmental_change</p>
+
+                    <h4>🎭 継続戦闘</h4>
+                    <div class="key-event">
+                        桜井原で紅刃の槍壁と銀蘭の可搬砲による補給列防衛戦が継続
+                    </div>
+
+                    <h4>📈 士気変化</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">影颶の衆: 4.0 → 1.0 (-3.0) ⬇️</div>
+                        <div class="morale-item moonlit_onmyo">月影陰陽寮: 6.0 → 7.0 (+1.0) ⬆️</div>
+                        <div class="morale-item crimson_blade">紅刃先鋒隊: 5.0 → 5.0 (変化なし)</div>
+                        <div class="morale-item silver_dutch">銀蘭機巧院: 8.0 → 6.0 (-2.0) ⬇️</div>
+                    </div>
+
+                    <h4>🎒 リソース変化</h4>
+                    <ul>
+                        <li>🌫️ 影颶の衆: 影蓮 2→1 (-1), 情報印章 4→3 (-1), 戦傷 2→4 (+2), 回復薬草 2→1 (-1)</li>
+                        <li>🌙 月影陰陽寮: 霊符 2→1 (-1), 結界復旧拠点 1→0 (-1)</li>
+                        <li>⚔️ 紅刃先鋒隊: 折れ鋼 3→2 (-1), 旗絹 2→1 (-1)</li>
+                        <li>⚙️ 銀蘭機巧院: 黒色火薬 5→3 (-2), ガラス鏡 4→3 (-1)</li>
+                    </ul>
+
+                    <div class="key-event">
+                        <strong>重要事件</strong>: 消耗戦により影颶の戦力が大幅に減退、撤退への準備開始
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 13 -->
+            <section id="turn-13" class="turn-section">
+                <header class="turn-header">
+                    <h3>ターン 13: 戦闘終結宣言 🛡️【📜 近衛府の裁定】</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-13" class="cross-link">📖 ナラティブを見る</a>
+                        <a href="#turn-12" class="prev-turn">← 前のターン</a>
+                        <a href="#turn-14" class="next-turn">次のターン →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GMアクション</strong>: discovery_event</p>
+
+                    <h4>📍 位置変更</h4>
+                    <ul>
+                        <li>🌫️ 影颶の衆: 桜井試合原 → 伊勢影ヶ淵 (撤退)</li>
+                        <li>⚙️ 銀蘭機巧院: 桜井試合原 → 京洛術院区 (復帰)</li>
+                    </ul>
+
+                    <h4>🛡️ 近衛府布告</h4>
+                    <div class="key-event">
+                        桜井原の戦闘終結宣言、各勢力に戦後処理と再配置を命令
+                    </div>
+
+                    <h4>📈 士気変化</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">影颶の衆: 1.0 → 2.0 (+1.0) ⬆️</div>
+                        <div class="morale-item moonlit_onmyo">月影陰陽寮: 7.0 → 7.0 (変化なし)</div>
+                        <div class="morale-item crimson_blade">紅刃先鋒隊: 5.0 → 6.0 (+1.0) ⬆️</div>
+                        <div class="morale-item silver_dutch">銀蘭機巧院: 6.0 → 7.0 (+1.0) ⬆️</div>
+                    </div>
+
+                    <h4>🎒 リソース変化</h4>
+                    <ul>
+                        <li>🌫️ 影颶の衆: 回復薬草 1→3 (+2)</li>
+                        <li>🌙 月影陰陽寮: 帝近衛恩恵 1→2 (+1)</li>
+                        <li>⚔️ 紅刃先鋒隊: 折れ鋼 2→1 (-1), 旗絹 1→0 (-1)</li>
+                        <li>⚙️ 銀蘭機巧院: 帝室訓練キット 2→1 (-1)</li>
+                    </ul>
+
+                    <div class="key-event">
+                        <strong>重要事件</strong>: 近衛府の裁定により各勢力が役割分担を明確化、次の局面への準備開始
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 14 -->
+            <section id="turn-14" class="turn-section">
+                <header class="turn-header">
+                    <h3>ターン 14: 京洛祭礼前夜 🌙【🏮 最後の潜入】</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-14" class="cross-link">📖 ナラティブを見る</a>
+                        <a href="#turn-13" class="prev-turn">← 前のターン</a>
+                        <a href="#turn-15" class="next-turn">次のターン →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GMアクション</strong>: discovery_event</p>
+
+                    <h4>📍 位置変更</h4>
+                    <ul>
+                        <li>🌫️ 影颶の衆: 伊勢影ヶ淵 → 京洛術院区 (最後の潜入)</li>
+                        <li>⚔️ 紅刃先鋒隊: 桜井試合原 → 京洛術院区 (祭礼警備)</li>
+                    </ul>
+
+                    <h4>🎭 勢力間イベント</h4>
+                    <ul>
+                        <li>🌫️🌙 影颶の衆 vs 月影陰陽寮: 🏮 祭礼前夜潜入戦 - 都の屋根での最終決戦</li>
+                        <li>🏆 結果: 陰陽寮・紅刃・銀蘭の三勢力連携で影颶を撃退</li>
+                    </ul>
+
+                    <h4>📈 士気変化</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">影颶の衆: 2.0 → -1.0 (-3.0) ⬇️</div>
+                        <div class="morale-item moonlit_onmyo">月影陰陽寮: 7.0 → 6.0 (-1.0) ⬇️</div>
+                        <div class="morale-item crimson_blade">紅刃先鋒隊: 6.0 → 7.0 (+1.0) ⬆️</div>
+                        <div class="morale-item silver_dutch">銀蘭機巧院: 7.0 → 7.0 (変化なし)</div>
+                    </div>
+
+                    <h4>🎒 リソース変化</h4>
+                    <ul>
+                        <li>🌫️ 影颶の衆: 影蓮 1→0 (-1), 情報印章 3→2 (-1), 戦傷 4→6 (+2)</li>
+                        <li>🌙 月影陰陽寮: 霊符 1→0 (-1)</li>
+                        <li>⚔️ 紅刃先鋒隊: 折れ鋼 1→0 (-1)</li>
+                        <li>⚙️ 銀蘭機巧院: 黒色火薬 3→1 (-2), ガラス鏡 3→2 (-1)</li>
+                    </ul>
+
+                    <div class="key-event">
+                        <strong>重要事件</strong>: 影颶の最後の潜入作戦が失敗、帝都側の三勢力連携が完全確立
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 15 -->
+            <section id="turn-15" class="turn-section">
+                <header class="turn-header">
+                    <h3>ターン 15: 祭礼朝の新均衡 🌅【🏛️ 新秩序の夜明け】</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-15" class="cross-link">📖 ナラティブを見る</a>
+                        <a href="#turn-14" class="prev-turn">← 前のターン</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GMアクション</strong>: discovery_event</p>
+
+                    <h4>🎭 最終的秩序確立</h4>
+                    <ul>
+                        <li>👑🎌 祭礼朝帝宣旨: 🏛️ 最終的秩序確立</li>
+                        <li>影颶伊勢完全撤退、陰陽寮近衛委任状、紅刃・銀蘭帝都常駐体制</li>
+                    </ul>
+
+                    <h4>📈 最終士気</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">影颶の衆: 3.0 → -2.0 (-5.0) ⬇️ (壊滅的敗北)</div>
+                        <div class="morale-item moonlit_onmyo">月影陰陽寮: 7.0 → 7.0 (安定維持)</div>
+                        <div class="morale-item crimson_blade">紅刃先鋒隊: 7.5 → 8.0 (+0.5) ⬆️</div>
+                        <div class="morale-item silver_dutch">銀蘭機巧院: 8.2 → 9.0 (+0.8) ⬆️</div>
+                    </div>
+
+                    <h4>🎒 最終資源状況</h4>
+                    <ul>
+                        <li>🌫️ 影颶の衆: 戦傷9 (壊滅的), 全戦闘資源消耗</li>
+                        <li>🌙 月影陰陽寮: 帝近衛恩恵+2, 結界復旧拠点+2</li>
+                        <li>⚔️ 紅刃先鋒隊: 帝勝利旗+1, 帝近衛誓約+1</li>
+                        <li>⚙️ 銀蘭機巧院: 帝室雷光斉射+1, 結界共鳴装置+2</li>
+                    </ul>
+
+                    <div class="key-event">
+                        <strong>重要事件</strong>: 祭礼での帝権威確立、恒久的防衛体制構築。永禄乱世の一応の決着
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 16 -->
+            <section id="turn-16" class="turn-section">
+                <header class="turn-header">
+                    <h3>ターン 16: 江戸公開演習 🌊【🎯 帝の新命】</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-16" class="cross-link">📖 ナラティブを見る</a>
+                        <a href="#turn-15" class="prev-turn">← 前のターン</a>
+                        <a href="#turn-17" class="next-turn">次のターン →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GMアクション</strong>: discovery_event</p>
+
+                    <h4>📍 位置変更</h4>
+                    <ul>
+                        <li>🌫️ 影颶の衆: 伊勢影ヶ淵 → 甲賀朧林 (霧道再構築)</li>
+                        <li>🌙 月影陰陽寮: 京洛術院区 → 熊野霊峰社 (結界ノード構築)</li>
+                        <li>⚔️ 紅刃先鋒隊: 京洛術院区 → 江戸武備船渠 (演習準備)</li>
+                    </ul>
+
+                    <h4>🎯 帝巡察団命令</h4>
+                    <div class="key-event">
+                        帝巡察団が江戸武備船渠での公開演習を命令、各勢力の技術と忠誠を試験
+                    </div>
+
+                    <h4>📈 士気変化</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">影颶の衆: -2.0 → 1.0 (+3.0) ⬆️</div>
+                        <div class="morale-item moonlit_onmyo">月影陰陽寮: 7.0 → 7.0 (変化なし)</div>
+                        <div class="morale-item crimson_blade">紅刃先鋒隊: 8.0 → 8.0 (変化なし)</div>
+                        <div class="morale-item silver_dutch">銀蘭機巧院: 9.0 → 9.0 (変化なし)</div>
+                    </div>
+
+                    <h4>📈 市場変化</h4>
+                    <div class="key-event">
+                        黒色火薬価格: 52 → 55 (+3) 📈<br>
+                        理由: 演習需要増加による価格上昇
+                    </div>
+
+                    <h4>🎒 リソース変化</h4>
+                    <ul>
+                        <li>🌫️ 影颶の衆: 戦傷 6→4 (-2), 回復薬草 3→2 (-1), 霧糸+2</li>
+                        <li>🌙 月影陰陽寮: 嵐護符+1, 帝近衛恩恵 2→1 (-1), 結界復旧拠点+1</li>
+                        <li>⚔️ 紅刃先鋒隊: 軍馬 1→0 (-1), 帝近衛敬意 2→3 (+1)</li>
+                        <li>⚙️ 銀蘭機巧院: 防衛砲座 1→2 (+1)</li>
+                    </ul>
+
+                    <div class="key-event">
+                        <strong>重要事件</strong>: 京洛から江戸へ戦場が移り、海上での技術実証と忠誠試験が開始
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 17 -->
+            <section id="turn-17" class="turn-section">
+                <header class="turn-header">
+                    <h3>ターン 17: 台風接近演習 🌪️【⛈️ 嵐の予兆】</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-17" class="cross-link">📖 ナラティブを見る</a>
+                        <a href="#turn-16" class="prev-turn">← 前のターン</a>
+                        <a href="#turn-18" class="next-turn">次のターン →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GMアクション</strong>: environmental_change</p>
+
+                    <h4>📍 位置変更</h4>
+                    <ul>
+                        <li>⚙️ 銀蘭機巧院: 京洛術院区 → 江戸武備船渠 (演習参加)</li>
+                    </ul>
+
+                    <h4>🌪️ 環境変化</h4>
+                    <div class="key-event">
+                        台風前線が江戸湾に接近、帝巡察団は演習続行を宣言
+                    </div>
+
+                    <h4>📈 士気変化</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">影颶の衆: 1.0 → 2.0 (+1.0) ⬆️</div>
+                        <div class="morale-item moonlit_onmyo">月影陰陽寮: 7.0 → 7.0 (変化なし)</div>
+                        <div class="morale-item crimson_blade">紅刃先鋒隊: 8.0 → 8.0 (変化なし)</div>
+                        <div class="morale-item silver_dutch">銀蘭機巧院: 9.0 → 9.0 (変化なし)</div>
+                    </div>
+
+                    <h4>🎒 リソース変化</h4>
+                    <ul>
+                        <li>🌫️ 影颶の衆: 情報印章 2→3 (+1), 戦傷 4→3 (-1), 回復薬草 2→1 (-1), 霧糸+2</li>
+                        <li>🌙 月影陰陽寮: 霊符+2, 嵐護符 1→2 (+1), 結界復旧拠点 1→2 (+1)</li>
+                        <li>⚔️ 紅刃先鋒隊: 合同試験規約+2, 帝近衛敬意 3→4 (+1)</li>
+                        <li>⚙️ 銀蘭機巧院: 合同試験規約+2, 防衛砲座 2→3 (+1)</li>
+                    </ul>
+
+                    <div class="key-event">
+                        <strong>重要事件</strong>: 台風接近の中で演習強行が決定、各勢力が嵐を見据えた準備を開始
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 18 -->
+            <section id="turn-18" class="turn-section">
+                <header class="turn-header">
+                    <h3>ターン 18: 台風奇襲戦 ⚡【⛈️ 雷光決戦】</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-18" class="cross-link">📖 ナラティブを見る</a>
+                        <a href="#turn-17" class="prev-turn">← 前のターン</a>
+                        <a href="#turn-19" class="next-turn">次のターン →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GMアクション</strong>: discovery_event</p>
+
+                    <h4>📍 位置変更</h4>
+                    <ul>
+                        <li>🌫️ 影颶の衆: 甲賀朧林 → 江戸武備船渠 (台風奇襲)</li>
+                    </ul>
+
+                    <h4>🎭 勢力間イベント</h4>
+                    <ul>
+                        <li>🌫️⚡ 影颶の衆 vs 帝都連衡: ⚡ 台風演習奇襲戦 - 水蜘蛛による桟橋奇襲と三つ巴激戦</li>
+                        <li>🏆 結果: 護符同期雷砲が水蜘蛛班を撃破、影衆は一時頓挫</li>
+                    </ul>
+
+                    <h4>📈 信頼関係変化</h4>
+                    <div class="key-event">
+                        影颶の衆 ↔ 銀蘭機巧院: 敵対度 +1 (戦闘激化)<br>
+                        影颶の衆 ↔ 紅刃先鋒隊: 敵対度 +1 (戦闘激化)
+                    </div>
+
+                    <h4>📈 士気変化</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">影颶の衆: 2.0 → 3.0 (+1.0) ⬆️</div>
+                        <div class="morale-item moonlit_onmyo">月影陰陽寮: 7.0 → 7.0 (変化なし)</div>
+                        <div class="morale-item crimson_blade">紅刃先鋒隊: 8.0 → 8.0 (変化なし)</div>
+                        <div class="morale-item silver_dutch">銀蘭機巧院: 9.0 → 9.0 (変化なし)</div>
+                    </div>
+
+                    <h4>🎒 リソース変化</h4>
+                    <ul>
+                        <li>🌫️ 影颶の衆: 試験影刃+1, 戦傷 3→4 (+1), 霧糸 2→1 (-1)</li>
+                        <li>🌙 月影陰陽寮: 霊符 2→1 (-1), 嵐護符 2→1 (-1)</li>
+                        <li>⚔️ 紅刃先鋒隊: 嵐防壁板+1, 砕けた槍柄 1→2 (+1), 帝近衛敬意 4→5 (+1)</li>
+                        <li>⚙️ 銀蘭機巧院: 歯車安定装置 1→2 (+1), 護符封印+1, 台風射撃パターン+1</li>
+                    </ul>
+
+                    <div class="key-event">
+                        <strong>重要事件</strong>: 演習が実戦へと転化、台風下での忍術・槍術・砲術の真の力が試される
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 19 -->
+            <section id="turn-19" class="turn-section">
+                <header class="turn-header">
+                    <h3>ターン 19: 御前決戦宣告 👑【⚡ 帝命の刻】</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-19" class="cross-link">📖 ナラティブを見る</a>
+                        <a href="#turn-18" class="prev-turn">← 前のターン</a>
+                        <a href="#turn-20" class="next-turn">次のターン →</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GMアクション</strong>: discovery_event</p>
+
+                    <h4>🌪️ 環境変化</h4>
+                    <div class="key-event">
+                        台風の目が港の真上に開き、稲光と豪雨が交互に襲う中、帝命で御前決戦の刻が打たれる
+                    </div>
+
+                    <h4>📈 信頼関係変化</h4>
+                    <div class="key-event">
+                        影颶の衆 ↔ 銀蘭機巧院: 最後の交戦<br>
+                        影颶の衆 ↔ 紅刃先鋒隊: 最後の交戦
+                    </div>
+
+                    <h4>📈 士気変化</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">影颶の衆: 3.0 → 3.0 (変化なし)</div>
+                        <div class="morale-item moonlit_onmyo">月影陰陽寮: 7.0 → 7.0 (変化なし)</div>
+                        <div class="morale-item crimson_blade">紅刃先鋒隊: 8.0 → 8.0 (変化なし)</div>
+                        <div class="morale-item silver_dutch">銀蘭機巧院: 9.0 → 9.0 (変化なし)</div>
+                    </div>
+
+                    <h4>🎒 リソース変化</h4>
+                    <ul>
+                        <li>🌫️ 影颶の衆: 情報印章 3→4 (+1), 戦傷 4→5 (+1), 嵐隠れ爆弾+1</li>
+                        <li>🌙 月影陰陽寮: 霊符 1→0 (-1), 嵐護符 1→0 (-1)</li>
+                        <li>⚔️ 紅刃先鋒隊: 嵐防壁板 1→0 (-1), 帝近衛敬意 5→6 (+1), 帝勅決闘要綱+1</li>
+                        <li>⚙️ 銀蘭機巧院: 歯車安定装置 2→1 (-1), 防衛砲座 3→4 (+1), 台風射撃パターン 1→0 (-1), 帝室結界共鳴+1, 嵐封鎖系列+1</li>
+                    </ul>
+
+                    <div class="key-event">
+                        <strong>重要事件</strong>: 帝命により台風演習が正式な武術裁定へ格上げ、運命の決戦が開始
+                    </div>
+                </div>
+            </section>
+
+            <!-- Turn 20 -->
+            <section id="turn-20" class="turn-section">
+                <header class="turn-header">
+                    <h3>ターン 20: 嵐裂けし勝利 🌅【🏆 真の終章】</h3>
+                    <nav class="turn-nav">
+                        <a href="narrative.html#turn-20" class="cross-link">📖 ナラティブを見る</a>
+                        <a href="#turn-19" class="prev-turn">← 前のターン</a>
+                    </nav>
+                </header>
+                <div class="turn-content">
+                    <p><strong>GMアクション</strong>: discovery_event</p>
+
+                    <h4>📍 位置変更</h4>
+                    <ul>
+                        <li>🌫️ 影颶の衆: 江戸武備船渠 → 甲賀朧林 (敗北撤退)</li>
+                    </ul>
+
+                    <h4>🏆 最終決戦結果</h4>
+                    <div class="key-event">
+                        帝都連衡（月影陰陽寮・紅刃先鋒隊・銀蘭機巧院）完全勝利<br>
+                        影颶の衆は甲賀への撤退を余儀なくされる
+                    </div>
+
+                    <h4>📈 最終士気</h4>
+                    <div class="morale-changes">
+                        <div class="morale-item shadow_gale">影颶の衆: 3.0 → -2.0 (-5.0) ⬇️ (壊滅的敗北)</div>
+                        <div class="morale-item moonlit_onmyo">月影陰陽寮: 7.0 → 7.0 (変化なし)</div>
+                        <div class="morale-item crimson_blade">紅刃先鋒隊: 8.0 → 8.0 (変化なし)</div>
+                        <div class="morale-item silver_dutch">銀蘭機巧院: 9.0 → 9.0 (変化なし)</div>
+                    </div>
+
+                    <h4>🎒 最終資源状況</h4>
+                    <ul>
+                        <li>🌫️ 影颶の衆: 試験影刃 1→0 (-1), 戦傷 5→9 (+4), 嵐隠れ爆弾 1→0 (-1)</li>
+                        <li>🌙 月影陰陽寮: 月銀 1→0 (-1), 帝勅巻物 1→0 (-1)</li>
+                        <li>⚔️ 紅刃先鋒隊: 合同試験規約 2→1 (-1), 帝近衛槍+1, 帝勅決闘要綱 1→0 (-1), 帝勝利旗+1, 帝近衛誓約+1</li>
+                        <li>⚙️ 銀蘭機巧院: 黒色火薬 1→0 (-1), 護符封印 1→0 (-1), 防衛砲座 4→3 (-1), 帝室結界共鳴 1→2 (+1), 嵐封鎖系列 1→0 (-1), 帝室雷光斉射+1</li>
+                    </ul>
+
+                    <div class="key-event">
+                        <strong>重要事件</strong>: 嵐が裂けて御前決戦が終結、江戸武備船渠は帝都連衡の完全支配下に確定。永禄の霧戦記、ここに完結
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- Technology Development -->
+        <section class="card">
+            <h2>🔬 技術発展系統</h2>
+            <div class="faction-stats-grid">
+                <div class="faction-stat shadow_gale">
+                    <h4>🌫️ 忍術発展</h4>
+                    <div class="tech-progression">
+                        <span class="tech-stage">影縄</span> →
+                        <span class="tech-stage">霧刃</span> →
+                        <span class="tech-stage">水蜘蛛</span> →
+                        <span class="tech-stage">嵐隠れ爆弾</span>
+                    </div>
+                    <p>諜報活動から隠密戦術、最終的には爆破工作まで発展した忍術体系</p>
+                </div>
+
+                <div class="faction-stat moonlit_onmyo">
+                    <h4>🌙 妖術発展</h4>
+                    <div class="tech-progression">
+                        <span class="tech-stage">結界</span> →
+                        <span class="tech-stage">雷鎖</span> →
+                        <span class="tech-stage">護符統合</span> →
+                        <span class="tech-stage">皇雷斉射</span>
+                    </div>
+                    <p>基礎的な結界術から帝室との連携による大規模妖術まで</p>
+                </div>
+
+                <div class="faction-stat crimson_blade">
+                    <h4>⚔️ 武術発展</h4>
+                    <div class="tech-progression">
+                        <span class="tech-stage">槍陣</span> →
+                        <span class="tech-stage">槍壁</span> →
+                        <span class="tech-stage">突撃側翼</span> →
+                        <span class="tech-stage">帝勅守護</span>
+                    </div>
+                    <p>基本的な槍術から帝室警護に至る完成された武士道体系</p>
+                </div>
+
+                <div class="faction-stat silver_dutch">
+                    <h4>⚙️ 工学発展</h4>
+                    <div class="tech-progression">
+                        <span class="tech-stage">機巧</span> →
+                        <span class="tech-stage">雁行砲</span> →
+                        <span class="tech-stage">護符統合</span> →
+                        <span class="tech-stage">雷砲制御</span>
+                    </div>
+                    <p>西洋技術と日本の護符術の融合による革新的兵器システム</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Events Timeline -->
+        <section class="card">
+            <h2>🎯 各段階重要事件まとめ</h2>
+
+            <div class="phase-evolution">
+                <div class="phase-timeline">
+                    <div class="phase military-phase">
+                        <h3>第一段階（T1-T5）: 濃霧と火薬封鎖</h3>
+                        <ul>
+                            <li><strong>T1</strong>: 濃霧降臨、四勢力初激突</li>
+                            <li><strong>T2</strong>: 雁行砲発見、技術競争激化</li>
+                            <li><strong>T3</strong>: 火薬封鎖、三正面戦争構図</li>
+                            <li><strong>T4</strong>: 台風来襲、情報戦加速</li>
+                            <li><strong>T5</strong>: 朝廷介入、陰陽寮政治的勝利</li>
+                        </ul>
+                    </div>
+
+                    <div class="phase political-phase">
+                        <h3>第二段階（T6-T10）: 帝勅決闘と秩序回復</h3>
+                        <ul>
+                            <li><strong>T6</strong>: 帝勅決闘場設営</li>
+                            <li><strong>T7</strong>: 決闘開戦、実戦化</li>
+                            <li><strong>T8</strong>: 乱戦激化、制御不能</li>
+                            <li><strong>T9</strong>: 近衛府停戦、強制終息</li>
+                            <li><strong>T10</strong>: 帝最終裁定、役割分担確定</li>
+                        </ul>
+                    </div>
+
+                    <div class="phase legal-phase">
+                        <h3>第三段階（T11-T15）: 新秩序確立</h3>
+                        <ul>
+                            <li><strong>T11-T12</strong>: 桜井原での最後の抵抗</li>
+                            <li><strong>T13</strong>: 戦闘完全終息</li>
+                            <li><strong>T14</strong>: 祭礼前夜の最終潜入</li>
+                            <li><strong>T15</strong>: 帝権威による秩序確立</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>永禄の霧戦記 - Eiroku Mist Chronicles | ナラティブTRPGキャンペーン記録</p>
+    </footer>
+
+    <script>
+        // Turn selector functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const turnSelect = document.getElementById('turn-select');
+            const turnDetail = document.getElementById('turn-detail');
+            const chartInfo = document.getElementById('chart-turn-info');
+
+            turnSelect.addEventListener('change', function() {
+                const selectedTurn = this.value;
+                if (selectedTurn) {
+                    const turnData = document.querySelector(`[data-turn="${selectedTurn}"]`);
+                    if (turnData) {
+                        turnDetail.innerHTML = turnData.innerHTML;
+                        turnDetail.style.display = 'block';
+                    }
+                } else {
+                    turnDetail.style.display = 'none';
+                }
+            });
+
+            // Chart interaction
+            const dataPoints = document.querySelectorAll('.data-point');
+            dataPoints.forEach(point => {
+                point.addEventListener('click', function() {
+                    const turn = this.getAttribute('data-turn');
+                    const faction = this.getAttribute('data-faction');
+                    const morale = this.getAttribute('data-morale');
+
+                    let factionName = '';
+                    switch(faction) {
+                        case 'shadow_gale': factionName = '🌫️ 影颶の衆'; break;
+                        case 'moonlit_onmyo': factionName = '🌙 月影陰陽寮'; break;
+                        case 'crimson_blade': factionName = '⚔️ 紅刃先鋒隊'; break;
+                        case 'silver_dutch': factionName = '⚙️ 銀蘭機巧院'; break;
+                    }
+
+                    chartInfo.innerHTML = `
+                        <h4>Turn ${turn}: ${factionName}</h4>
+                        <p><strong>士気:</strong> ${morale}</p>
+                        <a href="narrative.html#turn-${turn}" class="cross-link">📖 Narrative で詳細を見る</a>
+                    `;
+
+                    // Highlight selected point
+                    dataPoints.forEach(p => p.setAttribute('r', '4'));
+                    this.setAttribute('r', '6');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
