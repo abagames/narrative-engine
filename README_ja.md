@@ -22,7 +22,7 @@ Narrative Engine は、AI 駆動による完全自律型 TRPG システムであ
 
 ### Eiroku Mist Chronicles (永禄霧記) ([閲覧](https://abagames.github.io/narrative-engine/eiroku_mist_chronicles_ja/))
 
-- **ディレクトリ**: [`docs/eiroku_mist_chronicles/`](docs/eiroku_mist_chronicles_ja/)
+- **ディレクトリ**: [`docs/eiroku_mist_chronicles_ja/`](docs/eiroku_mist_chronicles_ja/)
 - **内容**: 永禄期の混乱を背景に、霧に包まれた諸国で四勢力が暗闘を繰り広げるキャンペーン
 - **特徴**: 忍術による諜報戦、陰陽道結界戦、諸派の技術競争といった多勢力同時進行型の駆け引きを描写
 
