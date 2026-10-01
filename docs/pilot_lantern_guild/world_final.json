@@ -1,0 +1,1737 @@
+{
+  "turn": 7,
+  "worldAge": 1,
+  "narrativeContext": {
+    "setting": "The harbor city of Velmora, where the Lantern Guild hands out contracts from a single oak board",
+    "rumors": [
+      "The magistrate's court opens in eight days",
+      "Something sickens the dead in the old catacombs",
+      "Vell has taken a room above the Saltgate fish market and bars the door at night",
+      "Plague carts were seen leaving the Old Quarter at night",
+      "The court opens at dawn; Vell has asked for a carriage at the back gate",
+      "Vell's body washed up under the pier"
+    ]
+  },
+  "guild": {
+    "name": "Lantern Guild",
+    "season": {
+      "endsAtTurn": 10,
+      "promotionSlots": 1,
+      "midDraftTurn": 5
+    },
+    "standings": [
+      {
+        "partyId": "silver_quill",
+        "name": "Silver Quill",
+        "reputation": 2,
+        "questsCompleted": 1
+      },
+      {
+        "partyId": "ash_lanterns",
+        "name": "Ash Lanterns",
+        "reputation": 1,
+        "questsCompleted": 1
+      },
+      {
+        "partyId": "iron_wolves",
+        "name": "Iron Wolves",
+        "reputation": 0,
+        "questsCompleted": 0
+      }
+    ],
+    "promoted": [
+      "silver_quill"
+    ]
+  },
+  "regions": {
+    "guildhall": {
+      "id": "guildhall",
+      "name": "Lantern Guildhall",
+      "type": "settlement",
+      "capacity": 10,
+      "neighbors": [
+        "harbor",
+        "old_quarter"
+      ],
+      "occupantParties": [],
+      "resources": [],
+      "specialEffects": [
+        "quest_board"
+      ],
+      "influence": {}
+    },
+    "harbor": {
+      "id": "harbor",
+      "name": "Saltgate Harbor",
+      "type": "settlement",
+      "capacity": 8,
+      "neighbors": [
+        "guildhall",
+        "smugglers_cove"
+      ],
+      "occupantParties": [
+        "ash_lanterns",
+        "iron_wolves"
+      ],
+      "resources": [
+        "fish",
+        "rope"
+      ],
+      "specialEffects": [
+        "market_access",
+        "smuggler_controlled"
+      ],
+      "influence": {}
+    },
+    "old_quarter": {
+      "id": "old_quarter",
+      "name": "Old Quarter",
+      "type": "settlement",
+      "capacity": 6,
+      "neighbors": [
+        "guildhall",
+        "catacombs"
+      ],
+      "occupantParties": [],
+      "resources": [],
+      "specialEffects": [
+        "narrow_alleys",
+        "plague_quarantine"
+      ],
+      "influence": {}
+    },
+    "catacombs": {
+      "id": "catacombs",
+      "name": "Velmora Catacombs",
+      "type": "ruins",
+      "capacity": 4,
+      "neighbors": [
+        "old_quarter",
+        "smugglers_cove"
+      ],
+      "occupantParties": [
+        "silver_quill"
+      ],
+      "resources": [
+        "grave_salt"
+      ],
+      "specialEffects": [
+        "darkness",
+        "plague_air",
+        "risen_dead"
+      ],
+      "influence": {}
+    },
+    "smugglers_cove": {
+      "id": "smugglers_cove",
+      "name": "Smugglers' Cove",
+      "type": "coast",
+      "capacity": 5,
+      "neighbors": [
+        "harbor",
+        "catacombs"
+      ],
+      "occupantParties": [],
+      "resources": [
+        "contraband"
+      ],
+      "specialEffects": [
+        "ambush_terrain"
+      ],
+      "influence": {}
+    }
+  },
+  "parties": {
+    "iron_wolves": {
+      "id": "iron_wolves",
+      "name": "Iron Wolves",
+      "location": "harbor",
+      "resources": {
+        "currency": 40
+      },
+      "morale": 2,
+      "reputation": 0,
+      "inventory": [],
+      "capabilities": {
+        "combat": 9,
+        "exploration": 5,
+        "investigation": 3,
+        "diplomacy": 2
+      },
+      "goals": [
+        "Be promoted before the Silver Quill",
+        "Prove that sellswords can be trusted"
+      ],
+      "flaws": [
+        {
+          "name": "Pride",
+          "trigger": "the Silver Quill asks for help or offers terms",
+          "effect": "refuses, whatever the cost"
+        }
+      ],
+      "knowledge": [
+        {
+          "text": "Captain Ora pays the dock gangs",
+          "source": "a drunk dockhand",
+          "turn": 0,
+          "truth": true
+        },
+        {
+          "text": "Vell asked Sister Ilse whether the court building has a back door",
+          "source": "Sister Ilse",
+          "turn": 3,
+          "truth": true
+        },
+        {
+          "text": "Vell plans to slip out of the court's back door with the evidence chest",
+          "truth": true,
+          "source": "a court porter",
+          "turn": 5
+        }
+      ],
+      "characterProfile": {
+        "leadershipStyle": "commanding",
+        "decisionMaking": "decisive",
+        "communicationStyle": "blunt",
+        "partyMembers": [
+          {
+            "name": "Brask",
+            "role": "Leader",
+            "personality": "Stubborn",
+            "speechStyle": "Short, gruff orders",
+            "specialization": "Shield wall"
+          },
+          {
+            "name": "Lio",
+            "role": "Scout",
+            "personality": "Restless",
+            "speechStyle": "Quick jokes under pressure",
+            "specialization": "Ambush detection"
+          },
+          {
+            "name": "Hedda",
+            "role": "Medic",
+            "personality": "Dry",
+            "speechStyle": "Flat, practical remarks",
+            "specialization": "Field surgery"
+          }
+        ],
+        "speechPatterns": {
+          "internal": "Terse and loyal",
+          "external": "Curt, intimidating"
+        }
+      }
+    },
+    "silver_quill": {
+      "id": "silver_quill",
+      "name": "Silver Quill",
+      "location": "catacombs",
+      "resources": {
+        "currency": 30
+      },
+      "morale": 3,
+      "reputation": 2,
+      "inventory": [
+        "tunnel_map"
+      ],
+      "capabilities": {
+        "combat": 3,
+        "exploration": 6,
+        "investigation": 9,
+        "diplomacy": 8
+      },
+      "goals": [
+        "Expose the corruption behind the harbor contracts",
+        "Win promotion without bloodshed"
+      ],
+      "flaws": [
+        {
+          "name": "Curiosity",
+          "trigger": "a client's story does not add up",
+          "effect": "investigates even if it costs the quest"
+        }
+      ],
+      "knowledge": [
+        {
+          "text": "Merchant Vell is an honest man",
+          "source": "guild gossip",
+          "turn": 0,
+          "truth": false
+        },
+        {
+          "text": "Ora does not care whether Vell lives; she wants the ledger he carries",
+          "truth": true,
+          "source": "a clerk in Ora's pay",
+          "turn": 1
+        },
+        {
+          "text": "Ora's ledger buyer waits in a sea cave under the cove",
+          "truth": true,
+          "source": "a cove fisherman",
+          "turn": 5
+        }
+      ],
+      "characterProfile": {
+        "leadershipStyle": "collaborative_democracy",
+        "decisionMaking": "cautious_analytical",
+        "communicationStyle": "diplomatic_direct",
+        "partyMembers": [
+          {
+            "name": "Aria",
+            "role": "Leader",
+            "personality": "Analytical",
+            "speechStyle": "Calm, precise",
+            "specialization": "Records and law"
+          },
+          {
+            "name": "Pell",
+            "role": "Negotiator",
+            "personality": "Warm",
+            "speechStyle": "Friendly, persuasive",
+            "specialization": "Reading people"
+          },
+          {
+            "name": "Nim",
+            "role": "Scholar",
+            "personality": "Curious",
+            "speechStyle": "Rambling, excited",
+            "specialization": "Old scripts"
+          }
+        ],
+        "speechPatterns": {
+          "internal": "Polite debate",
+          "external": "Courteous, probing"
+        }
+      }
+    },
+    "ash_lanterns": {
+      "id": "ash_lanterns",
+      "name": "Ash Lanterns",
+      "location": "harbor",
+      "resources": {
+        "currency": 80
+      },
+      "morale": 1,
+      "reputation": 1,
+      "inventory": [],
+      "capabilities": {
+        "combat": 5,
+        "exploration": 8,
+        "investigation": 6,
+        "diplomacy": 4
+      },
+      "goals": [
+        "Get rich or get promoted, whichever comes first"
+      ],
+      "flaws": [
+        {
+          "name": "Greed",
+          "trigger": "a better-paying offer appears mid-quest",
+          "effect": "takes it, even if it betrays an ally"
+        }
+      ],
+      "knowledge": [
+        {
+          "text": "Ora will add 40 coin if Vell's ledger reaches her hands",
+          "source": "Ora's runner at the guild door",
+          "turn": 1,
+          "truth": true
+        }
+      ],
+      "characterProfile": {
+        "leadershipStyle": "opportunistic",
+        "decisionMaking": "risk_taking",
+        "communicationStyle": "charming",
+        "partyMembers": [
+          {
+            "name": "Corvin",
+            "role": "Leader",
+            "personality": "Charming liar",
+            "speechStyle": "Smooth, flattering",
+            "specialization": "Deals"
+          },
+          {
+            "name": "Tessa",
+            "role": "Pathfinder",
+            "personality": "Cautious",
+            "speechStyle": "Quiet warnings",
+            "specialization": "Tunnels"
+          }
+        ],
+        "speechPatterns": {
+          "internal": "Sardonic",
+          "external": "Flattering"
+        }
+      }
+    }
+  },
+  "npcs": {
+    "merchant_vell": {
+      "name": "Merchant Vell",
+      "wants": "to reach the court alive and walk away rich",
+      "disposition": {
+        "iron_wolves": -1
+      },
+      "memory": [
+        "turn 7: iron_wolves did not deliver \"Escort Vell to the Magistrate\""
+      ]
+    },
+    "captain_ora": {
+      "name": "Captain Ora",
+      "wants": "control of Saltgate Harbor",
+      "disposition": {
+        "ash_lanterns": 1
+      },
+      "memory": [
+        "turn 6: ash_lanterns completed \"Bring the Ledger to Captain Ora\"",
+        "turn 7: ash_lanterns did not deliver \"Keep Vell from Testifying\""
+      ]
+    },
+    "abbess_mira": {
+      "name": "Abbess Mira",
+      "wants": "the catacombs sealed before the sickness spreads",
+      "disposition": {
+        "silver_quill": 2
+      },
+      "memory": [
+        "turn 3: silver_quill completed \"Chart the Smugglers' Tunnels\""
+      ]
+    },
+    "magistrate_oren": {
+      "name": "Magistrate Oren",
+      "wants": "evidence that will hang Ora",
+      "disposition": {
+        "iron_wolves": -1
+      },
+      "memory": [
+        "turn 6: iron_wolves did not deliver \"Recover Vell's Ledger for the Court\""
+      ]
+    }
+  },
+  "quests": {
+    "escort_vell": {
+      "id": "escort_vell",
+      "type": "exclusive",
+      "requiredProgress": 3,
+      "status": "expired",
+      "issuedTurn": 1,
+      "title": "Escort Vell to the Magistrate",
+      "client": "merchant_vell",
+      "description": "Vell will testify against the smugglers if he survives the walk from the harbor to the court.",
+      "location": "harbor",
+      "deadlineTurn": 6,
+      "reward": {
+        "reputation": 3,
+        "currency": 30,
+        "items": [
+          "vell_seal"
+        ]
+      },
+      "conflictsWith": [
+        "silence_vell"
+      ],
+      "secret": {
+        "truth": "Vell will steal the court's evidence ledger once inside",
+        "revealedTo": [
+          "silver_quill"
+        ]
+      },
+      "onFail": [
+        {
+          "target": "narrativeContext/rumors",
+          "operation": "add",
+          "value": "Vell's body washed up under the pier"
+        }
+      ],
+      "advancesClock": {
+        "clockId": "smugglers_rise",
+        "amount": 1
+      },
+      "contract": true,
+      "acceptedBy": [
+        "iron_wolves"
+      ],
+      "abandonedBy": [],
+      "progress": {
+        "iron_wolves": 1
+      },
+      "resolvedTurn": 7
+    },
+    "silence_vell": {
+      "id": "silence_vell",
+      "type": "exclusive",
+      "requiredProgress": 3,
+      "status": "expired",
+      "issuedTurn": 1,
+      "title": "Keep Vell from Testifying",
+      "client": "captain_ora",
+      "description": "Ora pays well to make sure Vell never reaches the court. 'Persuade him, scare him, or worse.'",
+      "location": "harbor",
+      "deadlineTurn": 6,
+      "reward": {
+        "reputation": 2,
+        "currency": 60
+      },
+      "conflictsWith": [
+        "escort_vell"
+      ],
+      "secret": {
+        "truth": "Ora is the smugglers' patron and wants Vell's ledger for herself",
+        "revealedTo": []
+      },
+      "onComplete": [
+        {
+          "target": "clocks/smugglers_rise/filled",
+          "operation": "add",
+          "value": 1
+        }
+      ],
+      "contract": true,
+      "acceptedBy": [
+        "ash_lanterns"
+      ],
+      "abandonedBy": [],
+      "progress": {
+        "ash_lanterns": 0
+      },
+      "resolvedTurn": 7
+    },
+    "seal_catacombs": {
+      "id": "seal_catacombs",
+      "type": "joint",
+      "requiredProgress": 5,
+      "status": "accepted",
+      "issuedTurn": 1,
+      "title": "Seal the Catacombs",
+      "client": "abbess_mira",
+      "description": "The sickness rises from the lower crypts. It needs a fighter to hold the dead back and a scholar to read the old wards.",
+      "location": "catacombs",
+      "minParties": 2,
+      "deadlineTurn": 8,
+      "reward": {
+        "reputation": 4
+      },
+      "onFail": [
+        {
+          "target": "regions/old_quarter/specialEffects",
+          "operation": "add",
+          "value": "plague_quarantine"
+        }
+      ],
+      "advancesClock": {
+        "clockId": "catacomb_plague",
+        "amount": 2
+      },
+      "acceptedBy": [
+        "silver_quill"
+      ],
+      "abandonedBy": [],
+      "progress": {
+        "silver_quill": 4
+      }
+    },
+    "cove_map": {
+      "id": "cove_map",
+      "type": "exclusive",
+      "requiredProgress": 2,
+      "status": "completed",
+      "issuedTurn": 1,
+      "title": "Chart the Smugglers' Tunnels",
+      "client": "abbess_mira",
+      "description": "Someone moves goods between the cove and the crypts. Find the route.",
+      "location": "smugglers_cove",
+      "deadlineTurn": 5,
+      "reward": {
+        "reputation": 2,
+        "items": [
+          "tunnel_map"
+        ]
+      },
+      "acceptedBy": [
+        "silver_quill"
+      ],
+      "abandonedBy": [],
+      "progress": {
+        "silver_quill": 2
+      },
+      "completedBy": [
+        "silver_quill"
+      ],
+      "resolvedTurn": 3
+    },
+    "recover_ledger": {
+      "id": "recover_ledger",
+      "type": "exclusive",
+      "requiredProgress": 2,
+      "status": "failed",
+      "issuedTurn": 4,
+      "title": "Recover Vell's Ledger for the Court",
+      "client": "magistrate_oren",
+      "description": "The court needs Vell's ledger itself, not just his word.",
+      "location": "harbor",
+      "contract": true,
+      "deadlineTurn": 8,
+      "reward": {
+        "reputation": 3
+      },
+      "conflictsWith": [
+        "ledger_to_ora"
+      ],
+      "secret": {
+        "truth": "Oren will burn the pages that name his own brother",
+        "revealedTo": []
+      },
+      "acceptedBy": [
+        "iron_wolves"
+      ],
+      "abandonedBy": [],
+      "progress": {},
+      "resolvedTurn": 6
+    },
+    "ledger_to_ora": {
+      "id": "ledger_to_ora",
+      "type": "exclusive",
+      "requiredProgress": 2,
+      "status": "completed",
+      "issuedTurn": 4,
+      "title": "Bring the Ledger to Captain Ora",
+      "client": "captain_ora",
+      "description": "Ora pays well for a book of numbers and asks no questions about how it was got.",
+      "location": "harbor",
+      "contract": true,
+      "deadlineTurn": 8,
+      "reward": {
+        "reputation": 1,
+        "currency": 80
+      },
+      "conflictsWith": [
+        "recover_ledger"
+      ],
+      "onComplete": [
+        {
+          "target": "clocks/smugglers_rise/filled",
+          "operation": "add",
+          "value": 2
+        }
+      ],
+      "acceptedBy": [
+        "ash_lanterns"
+      ],
+      "abandonedBy": [],
+      "progress": {
+        "ash_lanterns": 2
+      },
+      "completedBy": [
+        "ash_lanterns"
+      ],
+      "resolvedTurn": 6
+    },
+    "expose_buyer": {
+      "id": "expose_buyer",
+      "type": "exclusive",
+      "requiredProgress": 2,
+      "status": "open",
+      "issuedTurn": 6,
+      "title": "Catch Ora's Ledger Buyer",
+      "client": "magistrate_oren",
+      "description": "Whoever buys Vell's ledger for Ora must be caught in the act and brought to court.",
+      "location": "smugglers_cove",
+      "deadlineTurn": 9,
+      "reward": {
+        "reputation": 3
+      },
+      "onComplete": [
+        {
+          "target": "clocks/smugglers_rise/filled",
+          "operation": "add",
+          "value": -2
+        }
+      ],
+      "acceptedBy": [],
+      "abandonedBy": [],
+      "progress": {}
+    }
+  },
+  "clocks": {
+    "smugglers_rise": {
+      "id": "smugglers_rise",
+      "segments": 4,
+      "filled": 4,
+      "triggered": true,
+      "name": "Smugglers seize the harbor",
+      "tickPerTurn": 0,
+      "visible": true,
+      "consequence": "Ora's gangs own the docks; honest work at the harbor dries up",
+      "onComplete": [
+        {
+          "target": "regions/harbor/specialEffects",
+          "operation": "add",
+          "value": "smuggler_controlled"
+        }
+      ],
+      "triggeredTurn": 7
+    },
+    "catacomb_plague": {
+      "id": "catacomb_plague",
+      "segments": 6,
+      "filled": 6,
+      "triggered": true,
+      "name": "Catacomb plague spreads",
+      "tickPerTurn": 1,
+      "visible": true,
+      "consequence": "The Old Quarter is quarantined",
+      "onComplete": [
+        {
+          "target": "regions/old_quarter/specialEffects",
+          "operation": "add",
+          "value": "plague_quarantine"
+        }
+      ],
+      "triggeredTurn": 7
+    }
+  },
+  "favors": {},
+  "threads": {
+    "vell_ledger": {
+      "setup": "Vell carries a ledger he never lets out of his sight",
+      "turn": 1,
+      "status": "open"
+    },
+    "ora_runner": {
+      "setup": "Ora's runner whispers to the Lanterns at the guild door",
+      "turn": 1,
+      "status": "resolved"
+    },
+    "dock_gang": {
+      "setup": "Ora's dock gang starts watching Vell's door",
+      "turn": 2,
+      "status": "open"
+    }
+  },
+  "relationships": {
+    "iron_wolves__silver_quill": {
+      "hostility": 7,
+      "cooperation": 2,
+      "competition": 8,
+      "trust": 2,
+      "lastInteraction": "turn_0",
+      "history": []
+    },
+    "ash_lanterns__iron_wolves": {
+      "hostility": 6,
+      "cooperation": 5,
+      "competition": 5,
+      "trust": 4,
+      "lastInteraction": "turn_0",
+      "history": []
+    },
+    "ash_lanterns__silver_quill": {
+      "hostility": 4,
+      "cooperation": 4,
+      "competition": 6,
+      "trust": 3,
+      "lastInteraction": "turn_0",
+      "history": []
+    }
+  },
+  "recruits": {
+    "sister_ilse": {
+      "id": "sister_ilse",
+      "status": "departed",
+      "term": 4,
+      "name": "Sister Ilse",
+      "role": "Field healer",
+      "personality": "Gentle but unbending",
+      "grants": {
+        "capabilities": {
+          "healing": 8,
+          "diplomacy": 6
+        }
+      },
+      "unlocks": [
+        "treat_plague_victims"
+      ],
+      "wants": "to save lives; refuses to serve anyone who kills the helpless",
+      "leavesIf": "her party kills or abandons a helpless person",
+      "rivalEmployer": "Abbess Mira's hospice",
+      "ifUnhired": [
+        {
+          "target": "clocks/catacomb_plague/filled",
+          "operation": "add",
+          "value": -1
+        }
+      ],
+      "hiredTurn": 1,
+      "hiredUntilTurn": 4,
+      "formerEmployer": "iron_wolves"
+    },
+    "grim": {
+      "id": "grim",
+      "status": "departed",
+      "term": 4,
+      "name": "Grim of the Tunnels",
+      "role": "Tracker",
+      "personality": "Silent, mercenary",
+      "grants": {
+        "capabilities": {
+          "exploration": 8,
+          "investigation": 6
+        }
+      },
+      "unlocks": [
+        "use_smuggler_tunnels"
+      ],
+      "wants": "coin, paid up front",
+      "leavesIf": "someone offers him double",
+      "rivalEmployer": "Captain Ora",
+      "ifUnhired": [
+        {
+          "target": "clocks/smugglers_rise/filled",
+          "operation": "add",
+          "value": 1
+        }
+      ],
+      "hiredTurn": 1,
+      "hiredUntilTurn": 4,
+      "formerEmployer": "ash_lanterns"
+    },
+    "marta": {
+      "id": "marta",
+      "status": "hired",
+      "term": 4,
+      "name": "Marta Wardbreaker",
+      "role": "Ward scholar",
+      "personality": "Impatient genius",
+      "grants": {
+        "capabilities": {
+          "investigation": 8,
+          "exploration": 6
+        }
+      },
+      "unlocks": [
+        "break_crypt_wards"
+      ],
+      "wants": "to see the old crypt wards before they are sealed forever",
+      "leavesIf": "her party abandons the catacombs",
+      "rivalEmployer": "the abbess's cloister",
+      "ifUnhired": [],
+      "hiredBy": "ash_lanterns",
+      "hiredTurn": 5,
+      "hiredUntilTurn": 8
+    },
+    "bruno": {
+      "id": "bruno",
+      "status": "hired",
+      "term": 4,
+      "name": "Bruno Hookhand",
+      "role": "Dock bruiser",
+      "personality": "Bitter, loyal to whoever pays",
+      "grants": {
+        "capabilities": {
+          "combat": 8
+        }
+      },
+      "unlocks": [
+        "dock_brawl"
+      ],
+      "wants": "revenge on Ora, who took his hand",
+      "leavesIf": "his party works for Ora",
+      "rivalEmployer": "Captain Ora",
+      "ifUnhired": [
+        {
+          "target": "clocks/smugglers_rise/filled",
+          "operation": "add",
+          "value": 1
+        }
+      ],
+      "hiredBy": "silver_quill",
+      "hiredTurn": 5,
+      "hiredUntilTurn": 8
+    }
+  },
+  "items": {
+    "warded_lantern": {
+      "id": "warded_lantern",
+      "status": "available",
+      "name": "Warded Lantern",
+      "description": "Its light shows wards and lies alike",
+      "bonus": {
+        "capability": "investigation",
+        "amount": 1
+      }
+    },
+    "harbor_writ": {
+      "id": "harbor_writ",
+      "status": "available",
+      "name": "Magistrate's Harbor Writ",
+      "description": "A sealed writ that opens doors at the docks",
+      "bonus": {
+        "capability": "diplomacy",
+        "amount": 1
+      }
+    },
+    "plague_mask": {
+      "id": "plague_mask",
+      "status": "available",
+      "name": "Beaked Plague Mask",
+      "description": "Lets the wearer breathe in the crypt air",
+      "bonus": {
+        "capability": "healing",
+        "amount": 1
+      }
+    }
+  },
+  "intel": {
+    "ora_ledger": {
+      "title": "What Captain Ora really wants",
+      "fact": {
+        "text": "Ora does not care whether Vell lives; she wants the ledger he carries",
+        "truth": true
+      },
+      "source": "a clerk in Ora's pay",
+      "boughtBy": "silver_quill"
+    },
+    "vell_route": {
+      "title": "The route Vell will take to court",
+      "fact": {
+        "text": "Vell will be smuggled to court through the catacombs, not the streets",
+        "truth": false
+      },
+      "source": "a harbor rumor-monger"
+    },
+    "court_back_door": {
+      "title": "What Vell plans at the court",
+      "fact": {
+        "text": "Vell plans to slip out of the court's back door with the evidence chest",
+        "truth": true
+      },
+      "source": "a court porter",
+      "boughtBy": "iron_wolves"
+    },
+    "ora_safehouse": {
+      "title": "Where Ora keeps her buyers",
+      "fact": {
+        "text": "Ora's ledger buyer waits in a sea cave under the cove",
+        "truth": true
+      },
+      "source": "a cove fisherman",
+      "boughtBy": "silver_quill"
+    }
+  },
+  "draft": {
+    "status": "closed",
+    "label": "Mid-season draft",
+    "picksPerParty": 2,
+    "pool": {
+      "contracts": [],
+      "recruits": [],
+      "items": [
+        "plague_mask"
+      ],
+      "intel": [],
+      "invites": [
+        "seal_catacombs"
+      ]
+    },
+    "id": "draft_t5",
+    "turn": 5,
+    "picks": [
+      {
+        "index": 0,
+        "party": "ash_lanterns",
+        "kind": "contract",
+        "id": "ledger_to_ora",
+        "reasoning": "Take Ora's ledger contract first; it also stands between the Wolves and their magistrate",
+        "voices": {
+          "Corvin": "Eighty coins for a book. I would steal the library for that.",
+          "Tessa": "Two contracts against the Wolves now. They will not stop at chasing us out of a cellar."
+        }
+      },
+      {
+        "index": 1,
+        "party": "iron_wolves",
+        "kind": "contract",
+        "id": "recover_ledger",
+        "reasoning": "The ledger is the real prize; the Lanterns just took Ora's side of it",
+        "voices": {
+          "Brask": "The book goes to the court. With Vell or without him."
+        }
+      },
+      {
+        "index": 2,
+        "party": "silver_quill",
+        "kind": "intel",
+        "id": "ora_safehouse",
+        "reasoning": "Both contracts are gone and the plague invitation has no one who could accept. Our lever is knowledge: find where Ora's buyer waits",
+        "voices": {
+          "Aria": "Nobody can join us. That is the guild's failure, not ours.",
+          "Pell": "And the plague?"
+        }
+      },
+      {
+        "index": 3,
+        "party": "silver_quill",
+        "kind": "recruit",
+        "id": "bruno",
+        "reasoning": "Deny Ora her bruiser and give ourselves a fist for the sea cave",
+        "voices": {
+          "Pell": "He wants Ora. So do we.",
+          "Bruno": "Point me at her people."
+        }
+      },
+      {
+        "index": 4,
+        "party": "iron_wolves",
+        "kind": "intel",
+        "id": "court_back_door",
+        "reasoning": "Confirm what Vell is planning before we deliver him",
+        "voices": {
+          "Brask": "If he runs, I want to know which door."
+        }
+      },
+      {
+        "index": 5,
+        "party": "ash_lanterns",
+        "kind": "recruit",
+        "id": "marta",
+        "reasoning": "We need someone who can find a hidden book; we will promise her the crypts later",
+        "voices": {
+          "Corvin": "Of course we will take you to the crypts. After one small errand.",
+          "Marta": "You are lying, but I have read worse contracts."
+        }
+      }
+    ],
+    "invites": [],
+    "swaps": [],
+    "swapRequests": [],
+    "pickIndex": 6,
+    "baseOrder": [
+      "ash_lanterns",
+      "iron_wolves",
+      "silver_quill"
+    ],
+    "sequence": [
+      "ash_lanterns",
+      "iron_wolves",
+      "silver_quill",
+      "silver_quill",
+      "iron_wolves",
+      "ash_lanterns"
+    ],
+    "awaiting": [],
+    "leftovers": {
+      "contracts": [],
+      "recruits": [],
+      "items": [
+        "plague_mask"
+      ],
+      "intel": []
+    }
+  },
+  "rng": {
+    "seed": 20261001
+  },
+  "checkLog": [
+    {
+      "id": "read_vell_story",
+      "turn": 1,
+      "requestId": "request_silver_quill_1790854572753",
+      "actor": "silver_quill",
+      "description": "Nim cross-checks Vell's trading records with the clerk's tip about the ledger",
+      "capability": "investigation",
+      "rolls": [
+        2,
+        1
+      ],
+      "modifier": 2,
+      "total": 5,
+      "outcome": "failure"
+    },
+    {
+      "id": "dock_gang_test",
+      "turn": 2,
+      "requestId": "request_GM_1790854618780",
+      "actor": "iron_wolves",
+      "description": "Ora's dock gang tests the Wolves' line outside Vell's door",
+      "capability": "combat",
+      "rolls": [
+        6,
+        6
+      ],
+      "modifier": 2,
+      "total": 14,
+      "outcome": "success"
+    },
+    {
+      "id": "through_the_cellar",
+      "turn": 2,
+      "requestId": "request_ash_lanterns_1790854619482",
+      "actor": "ash_lanterns",
+      "description": "Grim leads Corvin and Tessa up through the fish-cellar hatch beneath Vell's room, past the Wolves' watch",
+      "capability": "exploration",
+      "rolls": [
+        6,
+        1
+      ],
+      "modifier": 2,
+      "total": 9,
+      "outcome": "success",
+      "opposed": {
+        "party": "iron_wolves",
+        "capability": "exploration",
+        "rolls": [
+          4,
+          2
+        ],
+        "modifier": 0,
+        "total": 6
+      }
+    },
+    {
+      "id": "hold_the_door",
+      "turn": 2,
+      "requestId": "request_iron_wolves_1790854619318",
+      "actor": "iron_wolves",
+      "description": "Brask's shield line holds Vell's stairway while Lio watches the roofs",
+      "capability": "combat",
+      "rolls": [
+        4,
+        2
+      ],
+      "modifier": 2,
+      "total": 8,
+      "outcome": "partial"
+    },
+    {
+      "id": "chart_cove_mouths",
+      "turn": 2,
+      "requestId": "request_silver_quill_1790854619447",
+      "actor": "silver_quill",
+      "description": "Aria maps the tunnel mouths in the cove cliffs while Pell distracts the lookouts with gossip",
+      "capability": "exploration",
+      "rolls": [
+        3,
+        1
+      ],
+      "modifier": 0,
+      "total": 4,
+      "outcome": "failure"
+    },
+    {
+      "id": "vell_signs",
+      "turn": 3,
+      "requestId": "request_ash_lanterns_1790854710735",
+      "actor": "ash_lanterns",
+      "description": "Corvin brings Vell a letter to sign withdrawing his testimony, sweetened with Ora's coin",
+      "capability": "diplomacy",
+      "rolls": [
+        2,
+        2
+      ],
+      "modifier": 0,
+      "total": 4,
+      "outcome": "failure"
+    },
+    {
+      "id": "seal_the_cellar",
+      "turn": 3,
+      "requestId": "request_iron_wolves_1790854710214",
+      "actor": "iron_wolves",
+      "description": "Brask drags the Lanterns' cellar plank into the street and posts Lio below; the Wolves go after Corvin's crew",
+      "capability": "combat",
+      "rolls": [
+        4,
+        2
+      ],
+      "modifier": 2,
+      "total": 8,
+      "outcome": "success",
+      "opposed": {
+        "party": "ash_lanterns",
+        "capability": "combat",
+        "rolls": [
+          4,
+          1
+        ],
+        "modifier": 0,
+        "total": 5
+      }
+    },
+    {
+      "id": "hold_the_door_again",
+      "turn": 3,
+      "requestId": "request_iron_wolves_1790854710214",
+      "actor": "iron_wolves",
+      "description": "The rest of the line keeps Vell's stair",
+      "capability": "combat",
+      "rolls": [
+        3,
+        6
+      ],
+      "modifier": 2,
+      "total": 11,
+      "outcome": "success"
+    },
+    {
+      "id": "chart_from_the_water",
+      "turn": 3,
+      "requestId": "request_silver_quill_1790854710305",
+      "actor": "silver_quill",
+      "description": "Having seen where the lookouts stand, Aria charts the tunnel mouths from a rowboat under the cliffs",
+      "capability": "exploration",
+      "rolls": [
+        5,
+        4
+      ],
+      "modifier": 1,
+      "total": 10,
+      "outcome": "success"
+    },
+    {
+      "id": "panic_the_crowd",
+      "turn": 4,
+      "requestId": "request_ash_lanterns_1790854755384",
+      "actor": "ash_lanterns",
+      "description": "Grim sets off a firecrack in the tunnels under the market to scatter the Wolves' escort",
+      "capability": "exploration",
+      "rolls": [
+        2,
+        4
+      ],
+      "modifier": 1,
+      "total": 7,
+      "outcome": "success",
+      "opposed": {
+        "party": "iron_wolves",
+        "capability": "exploration",
+        "rolls": [
+          3,
+          1
+        ],
+        "modifier": 0,
+        "total": 4
+      }
+    },
+    {
+      "id": "clear_the_way",
+      "turn": 4,
+      "requestId": "request_iron_wolves_1790854755794",
+      "actor": "iron_wolves",
+      "description": "The Wolves clear the street from Vell's door to the court steps",
+      "capability": "combat",
+      "rolls": [
+        5,
+        3
+      ],
+      "modifier": 2,
+      "total": 10,
+      "outcome": "success"
+    },
+    {
+      "id": "tunnel_ledger_trail",
+      "turn": 4,
+      "requestId": "request_silver_quill_1790854755502",
+      "actor": "silver_quill",
+      "description": "With the tunnel map, Nim traces which crates Vell shipped through Ora's tunnels",
+      "capability": "investigation",
+      "rolls": [
+        1,
+        4
+      ],
+      "modifier": 2,
+      "total": 7,
+      "outcome": "partial"
+    },
+    {
+      "id": "marta_finds_the_ledger",
+      "turn": 5,
+      "requestId": "request_ash_lanterns_1790854937706",
+      "actor": "ash_lanterns",
+      "description": "Marta reads the wards Vell carved into his sea chest and finds the false bottom",
+      "capability": "investigation",
+      "rolls": [
+        4,
+        4
+      ],
+      "modifier": 1,
+      "total": 9,
+      "outcome": "partial",
+      "bonuses": {
+        "recruit": "marta"
+      }
+    },
+    {
+      "id": "trip_the_escort",
+      "turn": 5,
+      "requestId": "request_ash_lanterns_1790854937706",
+      "actor": "ash_lanterns",
+      "description": "Tessa leads the Wolves' line into a dead-end alley",
+      "capability": "exploration",
+      "rolls": [
+        6,
+        6
+      ],
+      "modifier": 1,
+      "total": 13,
+      "outcome": "success",
+      "opposed": {
+        "party": "iron_wolves",
+        "capability": "exploration",
+        "rolls": [
+          1,
+          4
+        ],
+        "modifier": 0,
+        "total": 5
+      }
+    },
+    {
+      "id": "steps_of_the_court",
+      "turn": 5,
+      "requestId": "request_iron_wolves_1790854937462",
+      "actor": "iron_wolves",
+      "description": "The Wolves walk Vell up the court steps at dawn, Brask's hand on his collar",
+      "capability": "combat",
+      "rolls": [
+        6,
+        1
+      ],
+      "modifier": 2,
+      "total": 9,
+      "outcome": "partial"
+    },
+    {
+      "id": "guard_the_back_gate",
+      "turn": 5,
+      "requestId": "request_iron_wolves_1790854937462",
+      "actor": "iron_wolves",
+      "description": "Lio waits at the back gate for Vell's carriage and the evidence chest",
+      "capability": "exploration",
+      "rolls": [
+        1,
+        5
+      ],
+      "modifier": 0,
+      "total": 6,
+      "outcome": "failure"
+    },
+    {
+      "id": "hold_the_crypt_mouth",
+      "turn": 5,
+      "requestId": "request_silver_quill_1790854938133",
+      "actor": "silver_quill",
+      "description": "Bruno holds the crypt mouth against the risen dead while Nim copies the old wards",
+      "capability": "combat",
+      "rolls": [
+        5,
+        4
+      ],
+      "modifier": 1,
+      "total": 10,
+      "outcome": "success",
+      "bonuses": {
+        "recruit": "bruno"
+      }
+    },
+    {
+      "id": "open_the_false_bottom",
+      "turn": 6,
+      "requestId": "request_ash_lanterns_1790854954182",
+      "actor": "ash_lanterns",
+      "description": "Marta finishes the wards on the false bottom while Corvin talks",
+      "capability": "investigation",
+      "rolls": [
+        2,
+        5
+      ],
+      "modifier": 1,
+      "total": 8,
+      "outcome": "partial",
+      "bonuses": {
+        "recruit": "marta"
+      }
+    },
+    {
+      "id": "take_the_chest",
+      "turn": 6,
+      "requestId": "request_iron_wolves_1790854953529",
+      "actor": "iron_wolves",
+      "description": "Brask goes straight for the Lanterns at Vell's chest before Marta can finish",
+      "capability": "combat",
+      "rolls": [
+        1,
+        2
+      ],
+      "modifier": 2,
+      "total": 5,
+      "outcome": "failure",
+      "opposed": {
+        "party": "ash_lanterns",
+        "capability": "combat",
+        "rolls": [
+          4,
+          2
+        ],
+        "modifier": 0,
+        "total": 6
+      }
+    },
+    {
+      "id": "last_walk",
+      "turn": 6,
+      "requestId": "request_iron_wolves_1790854953529",
+      "actor": "iron_wolves",
+      "description": "Hedda and Lio drag Vell back to the court for his testimony",
+      "capability": "combat",
+      "rolls": [
+        1,
+        4
+      ],
+      "modifier": 1,
+      "total": 6,
+      "outcome": "failure"
+    },
+    {
+      "id": "copy_the_wards",
+      "turn": 6,
+      "requestId": "request_silver_quill_1790854954088",
+      "actor": "silver_quill",
+      "description": "Nim copies the crypt wards by lamplight while Bruno holds the stair",
+      "capability": "investigation",
+      "rolls": [
+        5,
+        3
+      ],
+      "modifier": 2,
+      "total": 10,
+      "outcome": "success"
+    }
+  ],
+  "chronicle": [
+    {
+      "turn": 1,
+      "kind": "draft_started",
+      "summary": "Draft Season opening draft opens. Order: iron_wolves → silver_quill → ash_lanterns",
+      "parties": [
+        "iron_wolves",
+        "silver_quill",
+        "ash_lanterns"
+      ]
+    },
+    {
+      "turn": 1,
+      "kind": "draft_order",
+      "summary": "Pick order: iron_wolves, silver_quill, ash_lanterns, ash_lanterns, silver_quill, iron_wolves",
+      "parties": [
+        "iron_wolves",
+        "silver_quill",
+        "ash_lanterns"
+      ]
+    },
+    {
+      "turn": 1,
+      "kind": "draft_pick",
+      "summary": "iron_wolves takes the contract \"Escort Vell to the Magistrate\"",
+      "parties": [
+        "iron_wolves"
+      ]
+    },
+    {
+      "turn": 1,
+      "kind": "draft_pick",
+      "summary": "silver_quill buys a piece of intel",
+      "parties": [
+        "silver_quill"
+      ]
+    },
+    {
+      "turn": 1,
+      "kind": "draft_pick",
+      "summary": "ash_lanterns takes the contract \"Keep Vell from Testifying\"",
+      "parties": [
+        "ash_lanterns"
+      ]
+    },
+    {
+      "turn": 1,
+      "kind": "draft_pick",
+      "summary": "ash_lanterns hires Grim of the Tunnels",
+      "parties": [
+        "ash_lanterns"
+      ]
+    },
+    {
+      "turn": 1,
+      "kind": "draft_invite",
+      "summary": "silver_quill invites iron_wolves to share \"Seal the Catacombs\"",
+      "parties": [
+        "silver_quill",
+        "iron_wolves"
+      ]
+    },
+    {
+      "turn": 1,
+      "kind": "draft_invite",
+      "summary": "iron_wolves turns down silver_quill's invitation to \"Seal the Catacombs\"",
+      "parties": [
+        "iron_wolves",
+        "silver_quill"
+      ]
+    },
+    {
+      "turn": 1,
+      "kind": "draft_pick",
+      "summary": "iron_wolves hires Sister Ilse",
+      "parties": [
+        "iron_wolves"
+      ]
+    },
+    {
+      "turn": 1,
+      "kind": "draft_closed",
+      "summary": "Draft Season opening draft closes after 6 picks",
+      "parties": []
+    },
+    {
+      "turn": 2,
+      "kind": "clock_ticked",
+      "clockId": "catacomb_plague",
+      "summary": "Catacomb plague spreads advances to 1/6 (time passes)"
+    },
+    {
+      "turn": 3,
+      "kind": "clock_ticked",
+      "clockId": "catacomb_plague",
+      "summary": "Catacomb plague spreads advances to 2/6 (time passes)"
+    },
+    {
+      "turn": 3,
+      "kind": "quest_completed",
+      "questId": "cove_map",
+      "parties": [
+        "silver_quill"
+      ],
+      "summary": "Chart the Smugglers' Tunnels completed by silver_quill",
+      "details": {
+        "shares": {
+          "silver_quill": 1
+        },
+        "reward": {
+          "reputation": 2,
+          "items": [
+            "tunnel_map"
+          ]
+        }
+      }
+    },
+    {
+      "turn": 4,
+      "kind": "clock_ticked",
+      "clockId": "catacomb_plague",
+      "summary": "Catacomb plague spreads advances to 3/6 (time passes)"
+    },
+    {
+      "turn": 5,
+      "kind": "recruit_departed",
+      "parties": [
+        "iron_wolves"
+      ],
+      "summary": "Sister Ilse leaves iron_wolves as the contract ends"
+    },
+    {
+      "turn": 5,
+      "kind": "recruit_departed",
+      "parties": [
+        "ash_lanterns"
+      ],
+      "summary": "Grim of the Tunnels leaves ash_lanterns as the contract ends"
+    },
+    {
+      "turn": 5,
+      "kind": "clock_ticked",
+      "clockId": "catacomb_plague",
+      "summary": "Catacomb plague spreads advances to 4/6 (time passes)"
+    },
+    {
+      "turn": 5,
+      "kind": "draft_started",
+      "summary": "Draft Mid-season draft opens. Order: ash_lanterns → iron_wolves → silver_quill",
+      "parties": [
+        "ash_lanterns",
+        "iron_wolves",
+        "silver_quill"
+      ]
+    },
+    {
+      "turn": 5,
+      "kind": "draft_order",
+      "summary": "Pick order: ash_lanterns, iron_wolves, silver_quill, silver_quill, iron_wolves, ash_lanterns",
+      "parties": [
+        "ash_lanterns",
+        "iron_wolves",
+        "silver_quill"
+      ]
+    },
+    {
+      "turn": 5,
+      "kind": "draft_pick",
+      "summary": "ash_lanterns takes the contract \"Bring the Ledger to Captain Ora\"",
+      "parties": [
+        "ash_lanterns"
+      ]
+    },
+    {
+      "turn": 5,
+      "kind": "draft_pick",
+      "summary": "iron_wolves takes the contract \"Recover Vell's Ledger for the Court\"",
+      "parties": [
+        "iron_wolves"
+      ]
+    },
+    {
+      "turn": 5,
+      "kind": "draft_pick",
+      "summary": "silver_quill buys a piece of intel",
+      "parties": [
+        "silver_quill"
+      ]
+    },
+    {
+      "turn": 5,
+      "kind": "draft_pick",
+      "summary": "silver_quill hires Bruno Hookhand",
+      "parties": [
+        "silver_quill"
+      ]
+    },
+    {
+      "turn": 5,
+      "kind": "draft_pick",
+      "summary": "iron_wolves buys a piece of intel",
+      "parties": [
+        "iron_wolves"
+      ]
+    },
+    {
+      "turn": 5,
+      "kind": "draft_pick",
+      "summary": "ash_lanterns hires Marta Wardbreaker",
+      "parties": [
+        "ash_lanterns"
+      ]
+    },
+    {
+      "turn": 5,
+      "kind": "draft_closed",
+      "summary": "Draft Mid-season draft closes after 6 picks",
+      "parties": []
+    },
+    {
+      "turn": 6,
+      "kind": "clock_ticked",
+      "clockId": "catacomb_plague",
+      "summary": "Catacomb plague spreads advances to 5/6 (time passes)"
+    },
+    {
+      "turn": 6,
+      "kind": "quest_completed",
+      "questId": "ledger_to_ora",
+      "parties": [
+        "ash_lanterns"
+      ],
+      "summary": "Bring the Ledger to Captain Ora completed by ash_lanterns",
+      "details": {
+        "shares": {
+          "ash_lanterns": 1
+        },
+        "reward": {
+          "reputation": 1,
+          "currency": 80
+        }
+      }
+    },
+    {
+      "turn": 6,
+      "kind": "quest_failed",
+      "questId": "recover_ledger",
+      "parties": [
+        "iron_wolves"
+      ],
+      "summary": "Recover Vell's Ledger for the Court: made impossible by the completion of Bring the Ledger to Captain Ora"
+    },
+    {
+      "turn": 7,
+      "kind": "quest_expired",
+      "questId": "escort_vell",
+      "parties": [
+        "iron_wolves"
+      ],
+      "summary": "Escort Vell to the Magistrate: deadline (turn 6) passed"
+    },
+    {
+      "turn": 7,
+      "kind": "clock_ticked",
+      "clockId": "smugglers_rise",
+      "summary": "Smugglers seize the harbor advances to 4/4 (quest escort_vell expired)"
+    },
+    {
+      "turn": 7,
+      "kind": "quest_expired",
+      "questId": "silence_vell",
+      "parties": [
+        "ash_lanterns"
+      ],
+      "summary": "Keep Vell from Testifying: deadline (turn 6) passed"
+    },
+    {
+      "turn": 7,
+      "kind": "clock_ticked",
+      "clockId": "catacomb_plague",
+      "summary": "Catacomb plague spreads advances to 6/6 (time passes)"
+    },
+    {
+      "turn": 7,
+      "kind": "clock_triggered",
+      "clockId": "smugglers_rise",
+      "summary": "Smugglers seize the harbor has run out: Ora's gangs own the docks; honest work at the harbor dries up"
+    },
+    {
+      "turn": 7,
+      "kind": "clock_triggered",
+      "clockId": "catacomb_plague",
+      "summary": "Catacomb plague spreads has run out: The Old Quarter is quarantined"
+    },
+    {
+      "turn": 7,
+      "kind": "season_end",
+      "parties": [
+        "silver_quill"
+      ],
+      "summary": "Season closes. Promoted: silver_quill",
+      "details": {
+        "standings": [
+          {
+            "partyId": "silver_quill",
+            "name": "Silver Quill",
+            "reputation": 2,
+            "questsCompleted": 1
+          },
+          {
+            "partyId": "ash_lanterns",
+            "name": "Ash Lanterns",
+            "reputation": 1,
+            "questsCompleted": 1
+          },
+          {
+            "partyId": "iron_wolves",
+            "name": "Iron Wolves",
+            "reputation": 0,
+            "questsCompleted": 0
+          }
+        ]
+      }
+    }
+  ],
+  "upkeepTurn": 7,
+  "phase": "action"
+}
