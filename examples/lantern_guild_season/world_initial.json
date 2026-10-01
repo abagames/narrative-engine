@@ -354,8 +354,7 @@
       "advancesClock": {
         "clockId": "smugglers_rise",
         "amount": 1
-      },
-      "contract": true
+      }
     },
     "silence_vell": {
       "title": "Keep Vell from Testifying",
@@ -382,8 +381,7 @@
           "operation": "add",
           "value": 1
         }
-      ],
-      "contract": true
+      ]
     },
     "seal_catacombs": {
       "title": "Seal the Catacombs",
@@ -584,10 +582,6 @@
     "label": "Season opening draft",
     "picksPerParty": 2,
     "pool": {
-      "contracts": [
-        "escort_vell",
-        "silence_vell"
-      ],
       "recruits": [
         "sister_ilse",
         "grim"
@@ -600,8 +594,11 @@
         "ora_ledger",
         "vell_route"
       ],
-      "invites": [
-        "seal_catacombs"
+      "quests": [
+        "escort_vell",
+        "silence_vell",
+        "seal_catacombs",
+        "cove_map"
       ]
     }
   }

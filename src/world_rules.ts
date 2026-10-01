@@ -41,6 +41,7 @@ export interface CheckResult {
   modifier: number;
   total: number;
   bonuses?: { recruit?: string; item?: string };
+  showdown?: { winner: string; loser: string; winnerQuest?: string; loserQuest?: string };
   opposed?: {
     party: string;
     capability: string;
@@ -63,6 +64,7 @@ export interface EngineEvent {
     | 'season_end'
     | 'quest_abandoned'
     | 'recruit_departed'
+    | 'showdown'
     | 'recruit_lured'
     | 'draft_started'
     | 'draft_order'
@@ -87,9 +89,14 @@ export interface RuleError {
   details?: any;
 }
 
-export const MAX_ACTIVE_QUESTS = 2;
+export const MAX_ACTIVE_QUESTS = 1;
 export const MAX_CHECKS_PER_RESPONSE = 2;
 export const MAX_RECRUITS = 2;
+/** Sabotage removes at most this much of a rival's progress per check */
+export const MAX_SABOTAGE = 1;
+/** After this many opposed clashes over quests, the next one between the same pair is a showdown */
+export const SHOWDOWN_AFTER = 2;
+export const SHOWDOWN_GAIN = 2;
 export const SITUATIONAL_LIMIT = 1;
 export const MISSING_CAPABILITY_MODIFIER = -1;
 
@@ -108,6 +115,9 @@ const ENGINE_ONLY_PATHS = [
   'clocks/*/triggered',
   'guild/standings',
   'guild/promoted',
+  'rivalries',
+  'rivalries/*',
+  'rivalries/*/*',
   'phase',
   'draft/*',
   'draft/*/*',
@@ -316,16 +326,6 @@ interface PermissionContext {
   viaCheck?: CheckDeclaration;
 }
 
-/**
- * A quest with a non-empty `offeredTo` list is a private offer: only those
- * parties see it on the board and may accept it.
- */
-export function isOfferedTo(quest: any, partyId: string): boolean {
-  const offeredTo = quest?.offeredTo;
-  if (!Array.isArray(offeredTo) || offeredTo.length === 0) return true;
-  return offeredTo.includes(partyId) || (quest.acceptedBy || []).includes(partyId);
-}
-
 function relationshipIncludes(key: string, partyId: string): boolean {
   return key.split('__').includes(partyId);
 }
@@ -412,7 +412,13 @@ function checkPlayerPermission(
       return denied(effect, `${sub} has not accepted quest ${id}`);
     }
     if (effect.value > 0) return null; // assisting another party
-    if (sub === opposed) return null; // sabotage requires an opposed check
+    if (sub === opposed) {
+      // sabotage requires an opposed check, and only chips away
+      if (effect.value < -MAX_SABOTAGE) {
+        return denied(effect, `sabotage removes at most ${MAX_SABOTAGE} progress per check`);
+      }
+      return null;
+    }
     return denied(effect, 'reducing another party\'s progress requires a check opposed by that party');
   }
 
@@ -448,12 +454,6 @@ function checkPlayerPermission(
       const value = Array.isArray(effect.value) ? effect.value : [effect.value];
       if (effect.operation !== 'add' || value.length !== 1 || value[0] !== partyId) {
         return denied(effect, 'a party may only add itself to acceptedBy');
-      }
-      if (!isOfferedTo(quest, partyId)) {
-        return denied(effect, `quest ${id} was not offered to ${partyId}`);
-      }
-      if (quest.contract) {
-        return denied(effect, `quest ${id} is a contract; contracts are taken in the draft`);
       }
       return null;
     }
@@ -703,6 +703,7 @@ export function normalizeWorld(world: any): void {
   world.intel = world.intel || {};
   world.threads = world.threads || {};
   world.checkLog = Array.isArray(world.checkLog) ? world.checkLog : [];
+  world.rivalries = world.rivalries && typeof world.rivalries === 'object' ? world.rivalries : {};
   world.chronicle = Array.isArray(world.chronicle) ? world.chronicle : [];
 }
 
@@ -941,11 +942,16 @@ export function executeResponse(response: any, world: any): ExecutionResult {
     const invalid = validateCheckDeclaration(check, actor, world, i);
     if (invalid) return { success: false, ...invalid };
     for (const outcome of ['success', 'partial', 'failure'] as const) {
+      let sabotage = 0;
       for (const effect of check.outcomes[outcome]) {
         const denial = checkPermission(actor, effect, world, { viaCheck: check });
         if (denial) {
           return { success: false, error: `checks[${i}].outcomes.${outcome}: ${denial.error}`, details: denial.details };
         }
+        if (actor.role === 'Player' && isRivalProgressLoss(effect, check.actor)) sabotage += effect.value;
+      }
+      if (sabotage < -MAX_SABOTAGE) {
+        return { success: false, error: `checks[${i}].outcomes.${outcome}: sabotage removes at most ${MAX_SABOTAGE} progress per check` };
       }
     }
   }
@@ -961,8 +967,10 @@ export function executeResponse(response: any, world: any): ExecutionResult {
   }
 
   const results: CheckResult[] = [];
+  const showdowns: CheckResult[] = [];
   for (let i = 0; i < checks.length; i++) {
     const result = rollCheck(draft, checks[i], response.requestId, i, actor.role);
+    if (trackRivalry(draft, checks[i], result)) showdowns.push(result);
     results.push(result);
     for (const effect of checks[i].outcomes[result.outcome]) {
       const err = applyEffect(effect, draft);
@@ -976,6 +984,9 @@ export function executeResponse(response: any, world: any): ExecutionResult {
   const violation = enforceInvariants(world, draft, actor);
   if (violation) return { success: false, ...violation };
 
+  // Showdown consequences are the engine's, so they bypass the actor's location rules
+  for (const result of showdowns) applyShowdown(draft, result);
+
   draft.checkLog.push(...results);
 
   // Commit the draft
@@ -983,6 +994,87 @@ export function executeResponse(response: any, world: any): ExecutionResult {
   Object.assign(world, draft);
 
   return { success: true, actor, checks: results, appliedEffects: applied };
+}
+
+// ---------------------------------------------------------------------------
+// Rivalries and showdowns
+// ---------------------------------------------------------------------------
+
+function isRivalProgressLoss(effect: Effect, actorParty: string): boolean {
+  const parts = splitPath(effect.target);
+  return parts[0] === 'quests' && parts[2] === 'progress' && parts.length === 4 &&
+    parts[3] !== actorParty && typeof effect.value === 'number' && effect.value < 0;
+}
+
+export function rivalryKey(a: string, b: string): string {
+  return [a, b].sort().join('__');
+}
+
+function touchesQuestProgress(check: CheckDeclaration): boolean {
+  const parties = [check.actor, check.opposedBy?.party];
+  return (['success', 'partial', 'failure'] as const).some(outcome =>
+    (check.outcomes[outcome] || []).some(effect => {
+      const parts = splitPath(effect.target);
+      return parts[0] === 'quests' && parts[2] === 'progress' && parties.includes(parts[3]);
+    })
+  );
+}
+
+/** The quest a party is pursuing (parties hold one quest at a time) */
+export function activeQuestOf(world: any, partyId: string): string | undefined {
+  return Object.values<any>(world.quests || {}).find(
+    q => (q.acceptedBy || []).includes(partyId) && (q.status === 'open' || q.status === 'accepted')
+  )?.id;
+}
+
+/**
+ * Counts opposed clashes over quests between two parties. Once they have
+ * clashed SHOWDOWN_AFTER times, the next clash is a showdown: no partial
+ * result, the winner surges ahead and the loser's progress is wiped.
+ * Returns true when this check is a showdown.
+ */
+function trackRivalry(world: any, check: CheckDeclaration, result: CheckResult): boolean {
+  if (!check.opposedBy || !result.opposed || !touchesQuestProgress(check)) return false;
+  const key = rivalryKey(check.actor, check.opposedBy.party);
+  const rivalry = world.rivalries[key] || { clashes: 0, showdowns: 0 };
+  world.rivalries[key] = rivalry;
+  rivalry.lastTurn = Number(world.turn) || 0;
+
+  if (rivalry.clashes < SHOWDOWN_AFTER) {
+    rivalry.clashes++;
+    return false;
+  }
+
+  const margin = result.total - result.opposed.total;
+  result.outcome = margin >= 0 ? 'success' : 'failure';
+  const winner = margin >= 0 ? check.actor : check.opposedBy.party;
+  const loser = winner === check.actor ? check.opposedBy.party : check.actor;
+  result.showdown = { winner, loser, winnerQuest: activeQuestOf(world, winner), loserQuest: activeQuestOf(world, loser) };
+  rivalry.clashes = 0;
+  rivalry.showdowns++;
+  return true;
+}
+
+function applyShowdown(world: any, result: CheckResult): void {
+  const showdown = result.showdown!;
+  const turn = Number(world.turn) || 0;
+  if (showdown.winnerQuest) {
+    const quest = world.quests[showdown.winnerQuest];
+    quest.progress[showdown.winner] = Math.max(0, quest.progress[showdown.winner] || 0) + SHOWDOWN_GAIN;
+  }
+  if (showdown.loserQuest) {
+    const quest = world.quests[showdown.loserQuest];
+    quest.progress[showdown.loser] = 0;
+  }
+  world.chronicle.push({
+    turn,
+    kind: 'showdown',
+    parties: [showdown.winner, showdown.loser],
+    summary: `Showdown: ${showdown.winner} defeats ${showdown.loser}` +
+      (showdown.winnerQuest ? `, surging ahead on ${world.quests[showdown.winnerQuest].title || showdown.winnerQuest}` : '') +
+      (showdown.loserQuest ? `; ${showdown.loser} loses all progress on ${world.quests[showdown.loserQuest].title || showdown.loserQuest}` : ''),
+    details: { check: result.id, rolls: result.rolls, opposed: result.opposed }
+  });
 }
 
 // ---------------------------------------------------------------------------

@@ -124,7 +124,8 @@ A party's purpose is to **rise in the guild by completing quests**. Combat, trav
 ### Step 0: What Does the Party Want?
 Read from `contextData`:
 - `guildBoard`: open and accepted quests. You see `yourProgress` exactly and `rivalProgress` only roughly (`none` / `started` / `close`)
-- `activeQuests`, `questSlotsFree`: at most 2 active quests per party
+- `activeQuests`, `questSlotsFree`: one quest per party at a time
+- `rivalries`: clash counts with each rival; `nextOpposedClashIsShowdown` warns that the next opposed check over quests decides everything
 - `standings`, `seasonEndsAtTurn`: who leads and how much time is left. Only the top party is promoted
 - `favors`: debts you owe and are owed
 - `knowledge`: what the party believes. It may be wrong
@@ -442,7 +443,7 @@ Switch to GM Perspective:
 | `quests/<id>/acceptedBy`, `abandonedBy` (add yourself) | ✅ | ✅ |
 | `quests/<id>/progress/<self>` | ❌ | ✅ (you must be at the quest location) |
 | `quests/<id>/progress/<other>` positive (assist) | ❌ | ✅ (at the quest location) |
-| `quests/<id>/progress/<rival>` negative, `parties/<rival>/morale/resources/inventory` | ❌ | ✅ only with `opposedBy` = that rival (progress: at the quest location) |
+| `quests/<id>/progress/<rival>` negative (at most -1 per branch), `parties/<rival>/morale/resources/inventory` | ❌ | ✅ only with `opposedBy` = that rival (progress: at the quest location) |
 | `quests/<id>/secret/revealedTo` (add yourself) | ❌ | ✅ |
 | `relationships/<pair containing you>/...` | ✅ | ✅ |
 | `favors/<id>` (a debt you owe), `favors/<id>/status` (your debt) | ✅ | ✅ |
@@ -484,7 +485,7 @@ Switch to GM Perspective:
   "capability": "exploration",
   "opposedBy": {"party": "iron_wolves", "capability": "exploration"},
   "outcomes": {
-    "success": [{"target": "quests/escort_vell/progress/iron_wolves", "operation": "add", "value": -2}],
+    "success": [{"target": "quests/escort_vell/progress/iron_wolves", "operation": "add", "value": -1}],
     "partial": [{"target": "quests/escort_vell/progress/iron_wolves", "operation": "add", "value": -1},
                 {"target": "relationships/iron_wolves__silver_quill/hostility", "operation": "add", "value": 2}],
     "failure": [{"target": "relationships/iron_wolves__silver_quill/hostility", "operation": "add", "value": 3},

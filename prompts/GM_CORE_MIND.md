@@ -235,7 +235,7 @@ Use `contextData.questBoard.signals` (facts only; you decide):
 ### Quest Design Patterns (prefer patterns that make parties interact)
 | Pattern | How to build it | What it produces |
 |---|---|---|
-| **Collision** | Two clients issue incompatible quests (`conflictsWith` on both), offered privately (`offeredTo`) to different parties | Opposition without any GM-forced conflict |
+| **Collision** | Two clients issue incompatible quests (`conflictsWith` on both) | Opposition without any GM-forced conflict |
 | **Race** | One `exclusive` quest that several parties accept | Sabotage, shortcuts, temporary truces |
 | **Joint** | `type: "joint"`, `minParties: 2`, reward split by effort | Negotiation, free-riding, betrayal temptation |
 | **Hidden truth** | `secret.truth` known only to the GM | Exposure, blackmail, defection from the client |
@@ -245,10 +245,10 @@ Rules of thumb:
 - Keep `activeQuestCount` around **party count + 1**. More scatters parties; fewer leaves some idle.
 - Put quest locations in **few regions** so parties meet.
 - Every quest carries **one dilemma** (a cost, a doubt about the client, or a rival).
-- Offer a conflicting quest privately (`offeredTo`) to a party that does **not** hold the other side. Parties never see `conflictsWith`, and they do not see private offers made to others.
+- Every quest is public and parties hold one quest each. Parties never see `conflictsWith`, so a collision surfaces when one side completes.
 
 ### Drafts
-Before the season and at `guild.season.midDraftTurn`, parties pick contracts, recruits, items, intel and invitations in turn. When `worldSummary.draftDueNextTurn` is true, prepare the pool this turn. The draft is where collisions get their sides. Rules and pool design: `DRAFT_SYSTEM.md`.
+Before the season and at `guild.season.midDraftTurn`, parties pick their quest (with an optional invitation for joint quests), recruits, items and intel in turn. When `worldSummary.draftDueNextTurn` is true, prepare the pool this turn. The draft is where collisions get their sides. Rules and pool design: `DRAFT_SYSTEM.md`.
 
 ### Progress Clocks
 Clocks are threats that advance whether or not anyone acts (`tickPerTurn`) or when quests fail (`advancesClock`). When full, the engine applies `onComplete` effects. Create 1-2 clocks at the start; add one when a new threat appears. Advancing a clock is a GM action (`clocks/<id>/filled` add).
@@ -391,7 +391,6 @@ Relationship changes follow the event that happened (see the change rules above)
   "deadlineTurn": 8,
   "reward": {"reputation": 3, "currency": 30},
   "conflictsWith": ["escort_vell"],
-  "offeredTo": ["ash_lanterns"],
   "secret": {"truth": "Ora is the smugglers' patron", "revealedTo": []},
   "onComplete": [{"target": "npcs/merchant_vell/status", "operation": "set", "value": "dead"}],
   "onFail": [{"target": "narrativeContext/rumors", "operation": "add", "value": "Ora's men were seen fleeing the harbor"}],

@@ -29,7 +29,6 @@ This document defines the world's central mechanism: **parties compete and coope
       "deadlineTurn": 8,
       "reward": { "reputation": 3, "currency": 40, "items": ["vell_seal"] },
       "conflictsWith": ["silence_vell"],
-      "offeredTo": [],
       "secret": { "truth": "Vell plans to flee with the court's evidence", "revealedTo": [] },
       "onComplete": [],
       "onFail": [{ "target": "narrativeContext/rumors", "operation": "add", "value": "Vell's body washed ashore" }],
@@ -75,9 +74,7 @@ This document defines the world's central mechanism: **parties compete and coope
 | Field | Written by | Notes |
 |---|---|---|
 | `quests/*` definition | GM | Created with `set` on `quests/<id>`. An existing quest cannot be replaced |
-| `quests/*/contract` | GM | `true`: an exclusive contract taken only in the draft (`DRAFT_SYSTEM.md`) |
-| `quests/*/offeredTo` | GM | Empty or absent: public on the board. Non-empty: a private offer that only those parties see and may accept |
-| `quests/*/acceptedBy`, `abandonedBy` | Party (itself only), GM | Max 2 active quests per party. An abandoned quest cannot be taken up again |
+| `quests/*/acceptedBy`, `abandonedBy` | Party (itself only), GM | One quest per party at a time. Every quest is public; several parties may pursue the same quest. Taken up in the draft or, when a party has no quest, at any time. An abandoned quest cannot be taken up again |
 | `quests/*/progress/*` | Check outcomes only, at the quest location | Clamped at 0 at the end of the turn, so the order of responses does not matter |
 | `quests/*/status`, `completedBy`, `resolvedTurn` | Engine | `open` → `accepted` → `completed` / `failed` / `expired` |
 | `quests/*/secret/revealedTo` | Check outcomes (party adds itself), GM | Parties see `secret` only once revealed to them |
@@ -85,7 +82,7 @@ This document defines the world's central mechanism: **parties compete and coope
 | `parties/*/capabilities` | GM | Basis of check modifiers |
 | `clocks/*/filled` | GM, engine | `triggered` is engine-managed |
 | `recruits/*`, `items/*`, `intel/*`, `draft` | GM (draft picks: engine) | See `DRAFT_SYSTEM.md`. Recruits raise check capabilities; items give +1 |
-| `rng`, `checkLog`, `chronicle`, `guild/standings`, `guild/promoted` | Engine | Read-only for AI agents |
+| `rng`, `checkLog`, `chronicle`, `rivalries`, `guild/standings`, `guild/promoted` | Engine | Read-only for AI agents |
 
 ## 🎲 Checks
 
@@ -129,6 +126,16 @@ Dice come from `hash(seed, turn, actor, check index)`. Resubmitting a response y
 | `partial` | The goal advances with a cost (+1 progress and lost morale, a witness, a debt, a rival alerted) |
 | `failure` | A real setback: lost morale or resources, worsened relationship, a clock advance, or a position lost |
 
+## ⚔️ Sabotage and Showdowns
+
+- **Sabotage chips away**: a check may reduce a rival's progress by at most **1** (per outcome branch), and only when opposed by that rival and at the quest location. Advancing (+2 on success) outpaces sabotage, so a contested quest still moves
+- **Rivalries escalate**: every opposed check between two parties that touches quest progress counts as a clash (`rivalries`). After **2** clashes, their next such opposed check is a **showdown**:
+  - No partial result: the higher total wins (ties go to the actor)
+  - The declared `success` (actor wins) or `failure` (opponent wins) branch applies
+  - The winner gains **+2** progress on its own quest; the loser's progress on its quest drops to **0**
+  - The clash count resets
+- `contextData.rivalries` shows each party its clash counts and whether the next clash is a showdown. A showdown is the climax of a rivalry: write its branches accordingly
+
 ## 🔄 Quest Lifecycle
 
 ```
@@ -155,7 +162,7 @@ All engine events are appended to `chronicle` and copied into the playlog entry'
 
 | Pattern | Setup | Interaction it creates |
 |---|---|---|
-| **Collision** | Two clients, two quests with mutual `conflictsWith`, offered privately (`offeredTo`) to different parties | Opposition that neither side chose |
+| **Collision** | Two clients, two quests with mutual `conflictsWith` (hidden from parties) | Opposition that neither side chose |
 | **Race** | One `exclusive` quest open to all | Sabotage (opposed checks), alliances against the leader |
 | **Joint** | `type: "joint"`, `minParties: 2` | Negotiation over effort and share, free-riding, betrayal |
 | **Hidden truth** | `secret.truth` contradicts the client's story | Investigation, exposure, switching sides |
@@ -180,7 +187,7 @@ All engine events are appended to `chronicle` and copied into the playlog entry'
 
 ## 📋 Player Quest Strategy
 
-1. **Choose quests by standings**: The leader protects its lead; trailing parties take risks
+1. **Choose quests by standings**: The leader protects its lead; trailing parties take risks. You hold one quest, so choose deliberately
 2. **Watch rivals**: `rivalProgress: "close"` on your quest means act now, interfere, or negotiate
 3. **Investigate before finishing**: A client with a secret may make the reward worthless or the quest wrong
 4. **Trade help for favors**: An `assist` paid with a recorded favor can be called in later

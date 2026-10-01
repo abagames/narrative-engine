@@ -55,15 +55,6 @@ function questWorld(): any {
         reward: { reputation: 3 },
         secret: { truth: 'The abbess staged the theft herself.' },
         conflictsWith: []
-      },
-      // A private offer the Owls must not see
-      bury_the_truth: {
-        title: 'Bury the Truth',
-        client: 'abbess_mira',
-        location: 'guildhall',
-        requiredProgress: 2,
-        reward: { reputation: 2 },
-        offeredTo: ['red_hounds']
       }
     },
     clocks: { plague: { name: 'Plague in the catacombs', segments: 4, filled: 0, tickPerTurn: 1 } },
@@ -155,8 +146,6 @@ describe('quest-driven turn flow (integration)', () => {
     expect(gmRequest.contextData.questBoard.signals.idleParties).toEqual(['red_hounds', 'white_owls']);
 
     const houndsRequestId = await requestIdFor('red_hounds');
-    const houndsRequest = JSON.parse(await fs.readFile(path.join(requestsDir, `${houndsRequestId}.json`), 'utf-8'));
-    expect(houndsRequest.contextData.guildBoard.map((q: any) => q.id)).toContain('bury_the_truth');
 
     await writeResponse({
       requestId: gmRequestId,

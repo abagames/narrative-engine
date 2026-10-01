@@ -254,7 +254,6 @@ strategicConsiderations = {
       "deadlineTurn": "[Turn]",
       "reward": { "reputation": 3, "currency": 30, "items": [] },
       "conflictsWith": ["[quest_id that cannot also succeed]"],
-      "offeredTo": ["[Optional: party ids for a private offer]"],
       "secret": { "truth": "[What the client hides]", "revealedTo": [] },
       "onComplete": [],
       "onFail": [],
@@ -269,7 +268,7 @@ strategicConsiderations = {
   "recruits": { "[recruit_id]": { "name": "[Name]", "role": "[Role]", "grants": { "capabilities": { "[capability]": 8 } }, "term": 4, "wants": "[What they want]" } },
   "items": { "[item_id]": { "name": "[Name]", "bonus": { "capability": "[capability]", "amount": 1 } } },
   "intel": { "[intel_id]": { "title": "[Public title]", "fact": { "text": "[What the buyer learns]", "truth": true } } },
-  "draft": "[Optional season-start draft: { status: 'pending', picksPerParty: 2, pool: { contracts, recruits, items, intel, invites } } — see DRAFT_SYSTEM.md]",
+  "draft": "[Optional season-start draft: { status: 'pending', picksPerParty: 2, pool: { quests, recruits, items, intel } } — see DRAFT_SYSTEM.md]",
   "market": "[Optional: { currentPrices: {...}, priceHistory: [], completedTrades: [] }]",
   "relationships": {
     "[party1_id]__[party2_id]": {

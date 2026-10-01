@@ -235,7 +235,7 @@ NPC行動パターン記録:
 ### 依頼設計パターン（パーティー同士が関わるものを優先する）
 | パターン | 作り方 | 生まれるもの |
 |---|---|---|
-| **衝突** | 2人の依頼主が両立しない依頼を、別々のパーティーに非公開で（`offeredTo`）出す（双方に`conflictsWith`） | GMが仕組まなくても生じる対立 |
+| **衝突** | 2人の依頼主が両立しない依頼を出す（双方に`conflictsWith`） | GMが仕組まなくても生じる対立 |
 | **競争** | 複数パーティーが受ける`exclusive`依頼 | 妨害・近道・一時休戦 |
 | **共同** | `type: "joint"`、`minParties: 2`、報酬は貢献度で分配 | 交渉・ただ乗り・裏切りの誘惑 |
 | **隠された真相** | GMだけが知る`secret.truth` | 暴露・脅迫・依頼主からの離反 |
@@ -245,10 +245,10 @@ NPC行動パターン記録:
 - `activeQuestCount`を**パーティー数+1**程度に保つ。多いと散らばり、少ないと暇なパーティーが出る
 - 依頼の目的地を**少数の地域**に集め、パーティーを出会わせる
 - 各依頼に**ジレンマを1つ**入れる（代償、依頼主への疑念、競合相手のいずれか）
-- 衝突する依頼は、反対側を持って**いない**パーティーに非公開で（`offeredTo`）出す。パーティーには`conflictsWith`も、他者への非公開の依頼も見えない
+- 依頼はすべて公開され、各パーティーは1件ずつ持つ。パーティーには`conflictsWith`が見えないので、衝突は片方の達成で表面化する
 
 ### ドラフト
-シーズン開始時と`guild.season.midDraftTurn`に、パーティーが専属依頼・冒険者・アイテム・情報・誘いを順番に指名する。`worldSummary.draftDueNextTurn`がtrueなら、このターンに候補を用意する。衝突依頼のどちら側に誰が立つかは、ドラフトで決まる。規則と候補の設計は`DRAFT_SYSTEM.md`を参照。
+シーズン開始時と`guild.season.midDraftTurn`に、パーティーが自分の依頼（共同依頼には誘いを付けられる）・冒険者・アイテム・情報を順番に指名する。`worldSummary.draftDueNextTurn`がtrueなら、このターンに候補を用意する。衝突依頼のどちら側に誰が立つかは、ドラフトで決まる。規則と候補の設計は`DRAFT_SYSTEM.md`を参照。
 
 ### 進行クロック
 クロックは、誰が行動してもしなくても進む（`tickPerTurn`）、または依頼の失敗で進む（`advancesClock`）脅威である。満了するとエンジンが`onComplete`効果を適用する。開始時に1〜2個作り、新たな脅威が現れたら追加する。クロックを進めるのはGMの行動である（`clocks/<id>/filled`にadd）。
@@ -391,7 +391,6 @@ NPCや環境がパーティーを脅かすとき、またはパーティー同�
   "deadlineTurn": 8,
   "reward": {"reputation": 3, "currency": 30},
   "conflictsWith": ["escort_vell"],
-  "offeredTo": ["ash_lanterns"],
   "secret": {"truth": "オラは密輸団の後ろ盾である", "revealedTo": []},
   "onComplete": [{"target": "npcs/merchant_vell/status", "operation": "set", "value": "dead"}],
   "onFail": [{"target": "narrativeContext/rumors", "operation": "add", "value": "オラの手下が港から逃げるのが目撃された"}],

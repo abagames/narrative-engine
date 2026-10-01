@@ -52,7 +52,7 @@ Parties compete and cooperate over guild quests in a region graph. AI agents dec
 - **World Pressure**: Deadlines expire, progress clocks advance and trigger, failed quests escalate; consequences stand
 - **Unequal Information**: Parties see a public quest board, rough rival progress and their own (possibly false) knowledge; the GM sees everything
 - **Season & Standings**: Reputation from quests decides who is promoted at season end
-- **Draft**: Before the season and at mid-season, heroes pick contracts, recruits, unique items, intel and invitations in snake order; picks are public reactions to each other, and order can be bought with favors
+- **Draft**: Before the season and at mid-season, heroes pick the one quest they will pursue (shared quests become races; joint quests can come with an invitation), recruits, unique items and intel in snake order; picks are public reactions to each other, and order can be bought with favors
 - **Regional & Social Systems**: Movement along the region graph, relationships, favors owed, NPC clients who remember; the market is optional background
 
 ### AI Agent Thinking Framework

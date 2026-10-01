@@ -1,6 +1,6 @@
 import * as fs from 'fs/promises';
 import * as path from 'path';
-import { checkModifier, computeStandings, isOfferedTo, MAX_ACTIVE_QUESTS } from './world_rules.js';
+import { checkModifier, computeStandings, MAX_ACTIVE_QUESTS, SHOWDOWN_AFTER } from './world_rules.js';
 import { currentDraftActors, publicDraftView } from './draft.js';
 const GM_INSTRUCTIONS = 'worldStateFileを読み込んで世界状態を分析し、適切なフレームワークを適用してGMとしての最適な行動を決定してください。' +
     '依頼掲示板が手薄なら、パーティー同士が交差する依頼（競合・衝突・共同・隠された真相）を発行してください。' +
@@ -11,7 +11,7 @@ const PLAYER_INSTRUCTIONS = 'worldStateFileを読み込んで世界状態を分�
 const DRAFT_INSTRUCTIONS = {
     order: 'ドラフトの指名順を決める段階です。自分が貸しを持つ相手（favors）より後に指名する場合、proposal.draft.swap.favorIdでその貸しを使い、順番を入れ替えられます。' +
         '使わない場合はproposal.draftを空オブジェクトにしてください。DRAFT_SYSTEM.mdを参照してください',
-    pick: 'ドラフトであなたの指名番です。draft.poolから1つ選び、proposal.draft.pickに書いてください（contract/recruit/item/intel/invite/pass）。' +
+    pick: 'ドラフトであなたの指名番です。draft.poolから1つ選び、proposal.draft.pickに書いてください（quest/recruit/item/intel/pass）。依頼は1件しか持てず、他のパーティーと同じ依頼を選ぶこともできます（pursuedByを確認）。共同依頼にはtargetで他のパーティーを誘えます。' +
         'これまでの指名（draft.picksSoFar）と競合相手の状況（rivals）を読み、自分にとっての価値と相手に渡した場合の損失を比べてください。' +
         '自分宛ての誘い（draft.invitesForYou）があれば、proposal.draft.respondで先に答えてください。受けるとこの指名を使います。DRAFT_SYSTEM.mdを参照してください',
     answer: 'ドラフトの指名は終わりました。自分宛ての誘い（draft.invitesForYou）に、proposal.draft.respondで受諾か辞退を答えてください。DRAFT_SYSTEM.mdを参照してください'
@@ -71,7 +71,7 @@ function describeRivals(partyId, worldState) {
         goals: rival.goals,
         capabilities: rival.capabilities,
         activeQuests: Object.values(worldState.quests || {})
-            .filter(q => ACTIVE_STATUSES.includes(q.status) && (q.acceptedBy || []).includes(id) && isOfferedTo(q, partyId))
+            .filter(q => ACTIVE_STATUSES.includes(q.status) && (q.acceptedBy || []).includes(id))
             .map(q => q.id),
         recruits: Object.values(worldState.recruits || {})
             .filter(r => r.status === 'hired' && r.hiredBy === id)
@@ -138,6 +138,7 @@ export function generateGMContextData(worldState, recentHistory) {
         clocks: Object.values(worldState.clocks || {}),
         standings: computeStandings(worldState),
         favors: Object.entries(worldState.favors || {}).map(([id, f]) => ({ id, ...f })),
+        rivalries: worldState.rivalries || {},
         npcs: worldState.npcs || {},
         recruits: worldState.recruits || {},
         items: worldState.items || {},
@@ -275,8 +276,6 @@ function publicQuestView(quest, partyId) {
     };
     if (quest.type === 'joint')
         view.minParties = quest.minParties ?? 2;
-    if (quest.contract)
-        view.contract = true;
     if (quest.secret && (quest.secret.revealedTo || []).includes(partyId)) {
         view.secret = quest.secret.truth;
     }
@@ -284,8 +283,7 @@ function publicQuestView(quest, partyId) {
 }
 export function generatePartyContextData(partyId, party, worldState, recentHistory) {
     const quests = Object.values(worldState.quests || {});
-    // Private offers stay hidden from parties they were not offered to
-    const board = quests.filter(q => ACTIVE_STATUSES.includes(q.status) && isOfferedTo(q, partyId));
+    const board = quests.filter(q => ACTIVE_STATUSES.includes(q.status));
     const mine = board.filter(q => (q.acceptedBy || []).includes(partyId));
     const partyRecentHistory = recentHistory.filter(event => event.participants?.includes(partyId) || event.actor === partyId);
     const context = {
@@ -332,6 +330,14 @@ export function generatePartyContextData(partyId, party, worldState, recentHisto
             .map(([id, npc]) => [id, { name: npc.name, towardYou: npc.disposition?.[partyId] || 0 }])),
         standings: computeStandings(worldState),
         seasonEndsAtTurn: worldState.guild?.season?.endsAtTurn,
+        rivalries: Object.entries(worldState.rivalries || {})
+            .filter(([key]) => key.split('__').includes(partyId))
+            .map(([key, r]) => ({
+            with: key.split('__').find(p => p !== partyId),
+            clashes: r.clashes,
+            showdowns: r.showdowns,
+            nextOpposedClashIsShowdown: r.clashes >= SHOWDOWN_AFTER
+        })),
         visibleClocks: Object.values(worldState.clocks || {})
             .filter(c => c.visible !== false)
             .map(c => ({ id: c.id, name: c.name, filled: c.filled, segments: c.segments, triggered: c.triggered })),

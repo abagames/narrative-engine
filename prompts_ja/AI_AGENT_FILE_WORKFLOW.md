@@ -254,7 +254,6 @@ strategicConsiderations = {
       "deadlineTurn": "[ターン]",
       "reward": { "reputation": 3, "currency": 30, "items": [] },
       "conflictsWith": ["[同時には成功しえないquest_id]"],
-      "offeredTo": ["[任意: 非公開で依頼するパーティーID]"],
       "secret": { "truth": "[依頼主が隠していること]", "revealedTo": [] },
       "onComplete": [],
       "onFail": [],
@@ -269,7 +268,7 @@ strategicConsiderations = {
   "recruits": { "[recruit_id]": { "name": "[名前]", "role": "[役割]", "grants": { "capabilities": { "[能力]": 8 } }, "term": 4, "wants": "[望むもの]" } },
   "items": { "[item_id]": { "name": "[名前]", "bonus": { "capability": "[能力]", "amount": 1 } } },
   "intel": { "[intel_id]": { "title": "[公開される題名]", "fact": { "text": "[買った者が知ること]", "truth": true } } },
-  "draft": "[任意のシーズン開始ドラフト: { status: 'pending', picksPerParty: 2, pool: { contracts, recruits, items, intel, invites } } — DRAFT_SYSTEM.md参照]",
+  "draft": "[任意のシーズン開始ドラフト: { status: 'pending', picksPerParty: 2, pool: { quests, recruits, items, intel } } — DRAFT_SYSTEM.md参照]",
   "market": "[任意: { currentPrices: {...}, priceHistory: [], completedTrades: [] }]",
   "relationships": {
     "[party1_id]__[party2_id]": {

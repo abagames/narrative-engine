@@ -102,11 +102,6 @@ function validateQuestSetup(world) {
                 throw new Error(`Quest ${questId} conflicts with unknown quest: ${other}`);
             }
         }
-        for (const partyId of quest.offeredTo || []) {
-            if (!world.parties?.[partyId]) {
-                throw new Error(`Quest ${questId} offered to unknown party: ${partyId}`);
-            }
-        }
         for (const partyId of quest.acceptedBy || []) {
             if (!world.parties?.[partyId]) {
                 throw new Error(`Quest ${questId} accepted by unknown party: ${partyId}`);

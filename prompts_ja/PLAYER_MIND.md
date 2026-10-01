@@ -124,7 +124,8 @@ Wizard最適化：
 ### ステップ0: パーティーは何を望むか
 `contextData`から読む:
 - `guildBoard`: 受注可能・受注中の依頼。`yourProgress`は正確に見えるが、`rivalProgress`は大まかにしか見えない（`none` / `started` / `close`）
-- `activeQuests`、`questSlotsFree`: 1パーティーが同時に持てる依頼は最大2件
+- `activeQuests`、`questSlotsFree`: 1パーティーが同時に持てる依頼は1件
+- `rivalries`: 各競合相手との衝突回数。`nextOpposedClashIsShowdown`がtrueなら、依頼をめぐる次の対抗checkですべてが決まる
 - `standings`、`seasonEndsAtTurn`: 誰が首位か、残り時間はどれだけか。昇格するのは首位のパーティーだけである
 - `favors`: 自分が負っている借りと、相手に貸しているもの
 - `knowledge`: パーティーが信じていること。誤りの場合もある
@@ -442,7 +443,7 @@ GM視点への切り替え：
 | `quests/<id>/acceptedBy`、`abandonedBy`（自分を追加） | ✅ | ✅ |
 | `quests/<id>/progress/<自分>` | ❌ | ✅（依頼の場所にいること） |
 | `quests/<id>/progress/<他者>`への加算（支援） | ❌ | ✅（依頼の場所にいること） |
-| `quests/<id>/progress/<競合相手>`の減算、`parties/<競合相手>/morale・resources・inventory` | ❌ | ✅ `opposedBy`がその相手の場合のみ（進捗は依頼の場所で） |
+| `quests/<id>/progress/<競合相手>`の減算（分岐1つにつき最大-1）、`parties/<競合相手>/morale・resources・inventory` | ❌ | ✅ `opposedBy`がその相手の場合のみ（進捗は依頼の場所で） |
 | `quests/<id>/secret/revealedTo`（自分を追加） | ❌ | ✅ |
 | `relationships/<自分を含むペア>/...` | ✅ | ✅ |
 | `favors/<id>`（自分が負う借り）、`favors/<id>/status`（自分の借り） | ✅ | ✅ |
@@ -484,7 +485,7 @@ GM視点への切り替え：
   "capability": "exploration",
   "opposedBy": {"party": "iron_wolves", "capability": "exploration"},
   "outcomes": {
-    "success": [{"target": "quests/escort_vell/progress/iron_wolves", "operation": "add", "value": -2}],
+    "success": [{"target": "quests/escort_vell/progress/iron_wolves", "operation": "add", "value": -1}],
     "partial": [{"target": "quests/escort_vell/progress/iron_wolves", "operation": "add", "value": -1},
                 {"target": "relationships/iron_wolves__silver_quill/hostility", "operation": "add", "value": 2}],
     "failure": [{"target": "relationships/iron_wolves__silver_quill/hostility", "operation": "add", "value": 3},

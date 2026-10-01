@@ -43,6 +43,12 @@ export interface CheckResult {
         recruit?: string;
         item?: string;
     };
+    showdown?: {
+        winner: string;
+        loser: string;
+        winnerQuest?: string;
+        loserQuest?: string;
+    };
     opposed?: {
         party: string;
         capability: string;
@@ -54,7 +60,7 @@ export interface CheckResult {
 }
 export interface EngineEvent {
     turn: number;
-    kind: 'quest_completed' | 'quest_failed' | 'quest_expired' | 'clock_triggered' | 'clock_ticked' | 'tie_break' | 'season_end' | 'quest_abandoned' | 'recruit_departed' | 'recruit_lured' | 'draft_started' | 'draft_order' | 'draft_pick' | 'draft_invite' | 'draft_closed' | 'engine_warning';
+    kind: 'quest_completed' | 'quest_failed' | 'quest_expired' | 'clock_triggered' | 'clock_ticked' | 'tie_break' | 'season_end' | 'quest_abandoned' | 'recruit_departed' | 'showdown' | 'recruit_lured' | 'draft_started' | 'draft_order' | 'draft_pick' | 'draft_invite' | 'draft_closed' | 'engine_warning';
     summary: string;
     questId?: string;
     clockId?: string;
@@ -69,9 +75,14 @@ export interface RuleError {
     error: string;
     details?: any;
 }
-export declare const MAX_ACTIVE_QUESTS = 2;
+export declare const MAX_ACTIVE_QUESTS = 1;
 export declare const MAX_CHECKS_PER_RESPONSE = 2;
 export declare const MAX_RECRUITS = 2;
+/** Sabotage removes at most this much of a rival's progress per check */
+export declare const MAX_SABOTAGE = 1;
+/** After this many opposed clashes over quests, the next one between the same pair is a showdown */
+export declare const SHOWDOWN_AFTER = 2;
+export declare const SHOWDOWN_GAIN = 2;
 export declare const SITUATIONAL_LIMIT = 1;
 export declare const MISSING_CAPABILITY_MODIFIER = -1;
 /**
@@ -105,11 +116,6 @@ interface PermissionContext {
     viaCheck?: CheckDeclaration;
 }
 /**
- * A quest with a non-empty `offeredTo` list is a private offer: only those
- * parties see it on the board and may accept it.
- */
-export declare function isOfferedTo(quest: any, partyId: string): boolean;
-/**
  * Returns null when the effect is allowed, otherwise an error.
  */
 export declare function checkPermission(actor: Actor, effect: Effect, world: any, ctx?: PermissionContext): RuleError | null;
@@ -134,6 +140,9 @@ export interface ExecutionResult {
  * world is left untouched.
  */
 export declare function executeResponse(response: any, world: any): ExecutionResult;
+export declare function rivalryKey(a: string, b: string): string;
+/** The quest a party is pursuing (parties hold one quest at a time) */
+export declare function activeQuestOf(world: any, partyId: string): string | undefined;
 /**
  * Resolves quests whose progress requirement has been met. Runs after all
  * responses of a turn so that simultaneous finishes are settled fairly.

@@ -19,7 +19,7 @@ This repo hosts the Narrative Engine. It implements a region graph-based world w
     - `GUILD_MANAGEMENT.md` - Guild management system
     - `ALLIANCE_STRATEGY.md` - Alliance strategy
     - `QUEST_MANAGEMENT.md` - Quests and adjudication rules (world data model, checks, permissions, quest lifecycle, stop conditions)
-    - `DRAFT_SYSTEM.md` - Sequential draft before the season and at mid-season (contracts, recruits, items, intel, invitations)
+    - `DRAFT_SYSTEM.md` - Sequential draft before the season and at mid-season (each party's quest, recruits, items, intel; invitations to joint quests)
     - `ACHIEVEMENT_PURSUIT.md` - Achievement pursuit system
     - `COMPETITIVE_EVENTS.md` - Competitive events
   - **Novel Generation System:**

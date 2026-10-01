@@ -2,13 +2,14 @@
  * Draft: the sequential preparation phase.
  *
  * Before a stretch of action turns, parties take turns picking from a pool the
- * GM prepared: exclusive contracts, recruits, unique items, intel, or an
- * invitation to another party to share a joint quest. Picks are public, so each
- * pick is a reaction to the ones before it. The engine enforces the order and
+ * GM prepared: the quest they will pursue (with an optional invitation to
+ * another party when the quest is a joint one), recruits, unique items or
+ * intel. Quests are not exclusive: several parties may pick the same quest and
+ * race for it. Picks are public, so each pick is a reaction to the ones before it. The engine enforces the order and
  * the rules; the parties decide what to pick.
  */
 import { EngineEvent, RuleError } from './world_rules.js';
-export type PickKind = 'contract' | 'recruit' | 'item' | 'intel' | 'invite' | 'pass';
+export type PickKind = 'quest' | 'recruit' | 'item' | 'intel' | 'pass';
 export type DraftMode = 'order' | 'pick' | 'answer';
 export interface DraftPickInput {
     kind: PickKind;

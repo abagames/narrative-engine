@@ -29,7 +29,6 @@
       "deadlineTurn": 8,
       "reward": { "reputation": 3, "currency": 40, "items": ["vell_seal"] },
       "conflictsWith": ["silence_vell"],
-      "offeredTo": [],
       "secret": { "truth": "ヴェルは法廷の証拠を持ち逃げするつもりである", "revealedTo": [] },
       "onComplete": [],
       "onFail": [{ "target": "narrativeContext/rumors", "operation": "add", "value": "ヴェルの遺体が浜に打ち上げられた" }],
@@ -75,9 +74,7 @@
 | フィールド | 書き込む者 | 備考 |
 |---|---|---|
 | `quests/*`の定義 | GM | `quests/<id>`への`set`で作成する。既存の依頼は置き換えられない |
-| `quests/*/contract` | GM | `true`: ドラフトでのみ取れる専属依頼（`DRAFT_SYSTEM.md`） |
-| `quests/*/offeredTo` | GM | 空または未指定なら掲示板に公開。指定すると非公開の依頼になり、そのパーティーだけが見て受注できる |
-| `quests/*/acceptedBy`、`abandonedBy` | パーティー（自分のみ）、GM | 1パーティーの受注中依頼は最大2件。放棄した依頼は再受注できない |
+| `quests/*/acceptedBy`、`abandonedBy` | パーティー（自分のみ）、GM | 1パーティーが同時に持てる依頼は1件。依頼はすべて公開され、複数のパーティーが同じ依頼を追ってよい。ドラフトで、または依頼を持たないときはいつでも受注できる。放棄した依頼は再受注できない |
 | `quests/*/progress/*` | 依頼の場所でのcheckの結果のみ | ターン終了時に0未満を0に丸める。応答の処理順は結果に影響しない |
 | `quests/*/status`、`completedBy`、`resolvedTurn` | エンジン | `open` → `accepted` → `completed` / `failed` / `expired` |
 | `quests/*/secret/revealedTo` | checkの結果（パーティーが自分を追加）、GM | パーティーには明かされた後でのみ`secret`が見える |
@@ -85,7 +82,7 @@
 | `parties/*/capabilities` | GM | check修正値の基礎 |
 | `clocks/*/filled` | GM、エンジン | `triggered`はエンジン管理 |
 | `recruits/*`、`items/*`、`intel/*`、`draft` | GM（指名の適用はエンジン） | `DRAFT_SYSTEM.md`参照。冒険者はcheckの能力値を引き上げ、アイテムは+1を与える |
-| `rng`、`checkLog`、`chronicle`、`guild/standings`、`guild/promoted` | エンジン | AIエージェントは読み取りのみ |
+| `rng`、`checkLog`、`chronicle`、`rivalries`、`guild/standings`、`guild/promoted` | エンジン | AIエージェントは読み取りのみ |
 
 ## 🎲 check（判定）
 
@@ -129,6 +126,16 @@
 | `partial` | 代償つきで目的が進む（進捗+1と士気の低下、目撃者、借り、競合相手に気づかれる） |
 | `failure` | 実際の後退: 士気や資源の喪失、関係の悪化、クロックの進行、位置の喪失 |
 
+## ⚔️ 妨害と決着戦
+
+- **妨害は削るだけ**: checkで競合相手の進捗を減らせるのは、結果分岐1つにつき最大**1**である。その相手が対抗し、依頼の場所にいることが条件になる。前進（成功で+2）は妨害を上回るので、争われている依頼でも進む
+- **因縁は激化する**: 依頼の進捗に関わる、2パーティー間の対抗checkは衝突として数える（`rivalries`）。衝突が**2**回たまると、次の同様の対抗checkは**決着戦**になる:
+  - 部分成功はない。合計の高い側が勝つ（同点はactorの勝ち）
+  - 宣言した`success`（actorの勝ち）または`failure`（相手の勝ち）の分岐が適用される
+  - 勝者は自分の依頼の進捗を**+2**、敗者は自分の依頼の進捗が**0**になる
+  - 衝突回数は0に戻る
+- `contextData.rivalries`に、各パーティーの衝突回数と、次の衝突が決着戦かどうかが出る。決着戦は因縁の山場である。分岐はそのつもりで書く
+
 ## 🔄 依頼のライフサイクル
 
 ```
@@ -155,7 +162,7 @@ GMが依頼を発行 (status: open)
 
 | パターン | 構成 | 生まれる相互作用 |
 |---|---|---|
-| **衝突** | 2人の依頼主、相互に`conflictsWith`を持つ2つの依頼を、別々のパーティーへ非公開で（`offeredTo`） | どちらも選んでいない対立 |
+| **衝突** | 2人の依頼主、相互に`conflictsWith`を持つ2つの依頼（パーティーには見えない） | どちらも選んでいない対立 |
 | **競争** | 誰でも受けられる`exclusive`依頼1つ | 妨害（対抗check）、首位に対する同盟 |
 | **共同** | `type: "joint"`、`minParties: 2` | 労力と取り分の交渉、ただ乗り、裏切り |
 | **隠された真相** | `secret.truth`が依頼主の説明と食い違う | 調査、暴露、寝返り |
@@ -180,7 +187,7 @@ GMが依頼を発行 (status: open)
 
 ## 📋 プレイヤーの依頼戦略
 
-1. **順位で依頼を選ぶ**: 首位はリードを守り、追う側はリスクを取る
+1. **順位で依頼を選ぶ**: 首位はリードを守り、追う側はリスクを取る。持てる依頼は1件なので、慎重に選ぶ
 2. **競合相手を見る**: 自分の依頼で`rivalProgress: "close"`なら、今動くか、妨害するか、交渉する
 3. **達成前に調べる**: 秘密を持つ依頼主のもとでは、報酬が無価値になったり、依頼自体が誤りだったりする
 4. **支援を貸しと交換する**: 貸しを記録した`assist`は、後で回収できる

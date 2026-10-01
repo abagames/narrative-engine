@@ -203,15 +203,15 @@ export function validateDraftInput(draft) {
         return ["proposal.draft must be an object"];
     }
     if (draft.pick !== undefined) {
-        const kinds = ["contract", "recruit", "item", "intel", "invite", "pass"];
+        const kinds = ["quest", "recruit", "item", "intel", "pass"];
         if (!draft.pick || !kinds.includes(draft.pick.kind)) {
             errors.push(`proposal.draft.pick.kind must be one of ${kinds.join(", ")}`);
         }
         else if (draft.pick.kind !== "pass" && typeof draft.pick.id !== "string") {
             errors.push("proposal.draft.pick.id is required");
         }
-        if (draft.pick?.kind === "invite" && typeof draft.pick.target !== "string") {
-            errors.push("proposal.draft.pick.target (the invited party) is required for invitations");
+        if (draft.pick?.target !== undefined && (draft.pick.kind !== "quest" || typeof draft.pick.target !== "string")) {
+            errors.push("proposal.draft.pick.target (an invited party) is only allowed with a quest pick");
         }
     }
     if (draft.respond !== undefined) {

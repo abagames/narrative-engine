@@ -33,10 +33,10 @@ function draftWorld(): any {
       crypt: { id: 'crypt', neighbors: ['hall'], occupantParties: [] }
     },
     quests: {
-      guard_caravan: { title: 'Guard the Caravan', contract: true, location: 'hall', requiredProgress: 2, reward: { reputation: 2 } },
-      rob_caravan: { title: 'Rob the Caravan', contract: true, location: 'hall', requiredProgress: 2, reward: { reputation: 2 }, conflictsWith: ['guard_caravan'] },
+      guard_caravan: { title: 'Guard the Caravan', location: 'hall', requiredProgress: 2, reward: { reputation: 2 }, conflictsWith: ['rob_caravan'] },
+      rob_caravan: { title: 'Rob the Caravan', location: 'hall', requiredProgress: 2, reward: { reputation: 2 }, conflictsWith: ['guard_caravan'] },
       seal_crypt: { title: 'Seal the Crypt', type: 'joint', minParties: 2, location: 'crypt', requiredProgress: 4, reward: { reputation: 4 } },
-      public_bounty: { title: 'Rat Bounty', location: 'hall', requiredProgress: 2, reward: { reputation: 1 } }
+      rat_bounty: { title: 'Rat Bounty', location: 'hall', requiredProgress: 2, reward: { reputation: 1 } }
     },
     recruits: {
       sister_ilse: { name: 'Sister Ilse', role: 'Healer', grants: { capabilities: { healing: 9 } }, term: 3, leavesIf: 'asked to harm the innocent' },
@@ -56,11 +56,10 @@ function draftWorld(): any {
       label: 'Season opening',
       picksPerParty: 2,
       pool: {
-        contracts: ['guard_caravan', 'rob_caravan'],
+        quests: ['guard_caravan', 'rob_caravan', 'seal_crypt'],
         recruits: ['sister_ilse', 'grim'],
         items: ['warded_lantern'],
-        intel: ['caravan_route'],
-        invites: ['seal_crypt']
+        intel: ['caravan_route']
       }
     }
   };
@@ -83,11 +82,14 @@ describe('draft rules', () => {
     expect(currentDraftActors(world)).toEqual([{ party: 'quill', mode: 'pick' }]);
   });
 
-  it('rejects a pool that refers to non-contract quests', () => {
+  it('rejects a pool that refers to unknown or resolved quests', () => {
     const world = draftWorld();
-    world.draft.pool.contracts.push('public_bounty');
-    const result = startDraft(world) as any;
-    expect(result.error).toContain('must have "contract": true');
+    world.draft.pool.quests.push('no_such_quest');
+    expect((startDraft(world) as any).error).toContain('unknown quest');
+    const world2 = draftWorld();
+    world2.quests.rat_bounty.status = 'completed';
+    world2.draft.pool.quests.push('rat_bounty');
+    expect((startDraft(world2) as any).error).toContain('already completed');
   });
 
   it('only the current picker may pick, and only what is in the pool', () => {
@@ -98,35 +100,55 @@ describe('draft rules', () => {
     expect(validateDraftResponse(world, 'quill', {})?.error).toContain('A pick is required');
   });
 
-  it('applies each kind of pick', () => {
+  it('quests are not exclusive: several parties may take up the same quest', () => {
+    const world = draftWorld();
+    startDraft(world);
+    pick(world, 'quill', { pick: { kind: 'quest', id: 'guard_caravan' } });
+    pick(world, 'lanterns', { pick: { kind: 'quest', id: 'guard_caravan' } });
+    expect(world.quests.guard_caravan.acceptedBy).toEqual(['quill', 'lanterns']);
+    expect(world.draft.pool.quests).toContain('guard_caravan');
+    const view = publicDraftView(world, 'wolves');
+    expect(view.pool.quests.find((q: any) => q.id === 'guard_caravan').pursuedBy).toEqual(['quill', 'lanterns']);
+    expect(JSON.stringify(view)).not.toContain('conflictsWith');
+  });
+
+  it('a party pursues one quest at a time', () => {
+    const world = draftWorld();
+    startDraft(world);
+    pick(world, 'quill', { pick: { kind: 'quest', id: 'guard_caravan' } });
+    pick(world, 'lanterns', { pick: { kind: 'pass' } });
+    pick(world, 'wolves', { pick: { kind: 'pass' } });
+    pick(world, 'wolves', { pick: { kind: 'pass' } });
+    pick(world, 'lanterns', { pick: { kind: 'pass' } });
+    expect(validateDraftResponse(world, 'quill', { pick: { kind: 'quest', id: 'rob_caravan' } })?.error).toContain('already pursues a quest');
+  });
+
+  it('applies recruit, item and intel picks', () => {
     const world = draftWorld();
     startDraft(world);
     pick(world, 'quill', { pick: { kind: 'item', id: 'warded_lantern' } });
-    pick(world, 'lanterns', { pick: { kind: 'contract', id: 'rob_caravan' } });
+    pick(world, 'lanterns', { pick: { kind: 'quest', id: 'rob_caravan' } });
     pick(world, 'wolves', { pick: { kind: 'recruit', id: 'sister_ilse' } });
     pick(world, 'wolves', { pick: { kind: 'intel', id: 'caravan_route' } });
 
     expect(world.items.warded_lantern.heldBy).toBe('quill');
     expect(checkModifier(world, 'quill', 'investigation').modifier).toBe(2); // +1 capability, +1 lantern
-
-    expect(world.quests.rob_caravan.acceptedBy).toEqual(['lanterns']);
-    expect(world.draft.pool.contracts).toEqual(['guard_caravan']);
-
     expect(world.recruits.sister_ilse).toMatchObject({ status: 'hired', hiredBy: 'wolves', hiredUntilTurn: 3 });
     expect(checkModifier(world, 'wolves', 'healing')).toMatchObject({ modifier: 2, recruit: 'sister_ilse' });
 
     expect(world.parties.wolves.knowledge[0].text).toContain('north gate');
-    // Others see that intel was bought, not which
     const view = publicDraftView(world, 'quill');
     expect(view.picksSoFar.find((p: any) => p.kind === 'intel').id).toBeUndefined();
     expect(publicDraftView(world, 'wolves').picksSoFar.find((p: any) => p.kind === 'intel').id).toBe('caravan_route');
     expect(JSON.stringify(view)).not.toContain('north gate');
   });
 
-  it('an invitation must be answered first, and accepting uses the pick', () => {
+  it('a joint quest pick can invite a party that has no quest yet; accepting uses the pick', () => {
     const world = draftWorld();
     startDraft(world);
-    pick(world, 'quill', { pick: { kind: 'invite', id: 'seal_crypt', target: 'wolves' } });
+    expect(validateDraftResponse(world, 'quill', { pick: { kind: 'quest', id: 'guard_caravan', target: 'wolves' } })?.error).toContain('Only joint quests');
+    pick(world, 'quill', { pick: { kind: 'quest', id: 'seal_crypt', target: 'wolves' } });
+    expect(world.quests.seal_crypt.acceptedBy).toEqual(['quill']);
     pick(world, 'lanterns', { pick: { kind: 'pass' } });
 
     const invite = world.draft.invites[0];
@@ -137,18 +159,20 @@ describe('draft rules', () => {
 
     pick(world, 'wolves', { respond: [{ inviteId: invite.id, accept: true }] });
     expect(world.quests.seal_crypt.acceptedBy).toEqual(['quill', 'wolves']);
-    expect(world.quests.seal_crypt.status).toBe('accepted');
     expect(world.draft.pickIndex).toBe(3);
   });
 
-  it('a declined invitation returns the quest to the pool', () => {
+  it('an invitation cannot target, or be accepted by, a party that already has a quest', () => {
     const world = draftWorld();
     startDraft(world);
-    pick(world, 'quill', { pick: { kind: 'invite', id: 'seal_crypt', target: 'lanterns' } });
-    pick(world, 'lanterns', { respond: [{ inviteId: world.draft.invites[0].id, accept: false }], pick: { kind: 'recruit', id: 'grim' } });
+    pick(world, 'quill', { pick: { kind: 'quest', id: 'seal_crypt', target: 'lanterns' } });
+    expect(
+      validateDraftResponse(world, 'lanterns', { respond: [{ inviteId: world.draft.invites[0].id, accept: false }], pick: { kind: 'quest', id: 'rob_caravan', target: 'wolves' } })?.error
+    ).toContain('Only joint quests');
+    pick(world, 'lanterns', { respond: [{ inviteId: world.draft.invites[0].id, accept: false }], pick: { kind: 'quest', id: 'rob_caravan' } });
     expect(world.draft.invites[0].status).toBe('declined');
-    expect(world.draft.pool.invites).toEqual(['seal_crypt']);
-    expect(world.recruits.grim.hiredBy).toBe('lanterns');
+    expect(world.quests.seal_crypt.acceptedBy).toEqual(['quill']);
+    expect(validateDraftResponse(world, 'wolves', { pick: { kind: 'quest', id: 'seal_crypt', target: 'lanterns' } })?.error).toContain('already pursues a quest');
   });
 
   it('collects late answers after the last pick, then closes with leftovers', () => {
@@ -157,18 +181,19 @@ describe('draft rules', () => {
     startDraft(world);
     pick(world, 'quill', { pick: { kind: 'pass' } });
     pick(world, 'lanterns', { pick: { kind: 'pass' } });
-    pick(world, 'wolves', { pick: { kind: 'invite', id: 'seal_crypt', target: 'quill' } });
+    pick(world, 'wolves', { pick: { kind: 'quest', id: 'seal_crypt', target: 'quill' } });
 
     expect(world.draft.status).toBe('answering');
     expect(currentDraftActors(world)).toEqual([{ party: 'quill', mode: 'answer' }]);
     expect(validateDraftResponse(world, 'quill', { respond: [{ inviteId: world.draft.invites[0].id, accept: false }], pick: { kind: 'pass' } })?.error).toContain('No picks remain');
 
-    pick(world, 'quill', { respond: [{ inviteId: world.draft.invites[0].id, accept: false }] });
+    pick(world, 'quill', { respond: [{ inviteId: world.draft.invites[0].id, accept: true }] });
     expect(world.draft.status).toBe('closed');
     expect(isDraftActive(world)).toBe(false);
+    expect(world.quests.seal_crypt.acceptedBy).toEqual(['wolves', 'quill']);
     expect(world.recruits.grim.status).toBe('rival');
     expect(world.narrativeContext.grimSignedWith).toBe('smugglers');
-    expect(world.draft.leftovers.contracts).toEqual(['guard_caravan', 'rob_caravan']);
+    expect(world.draft.leftovers.quests).toEqual(['guard_caravan', 'rob_caravan']);
   });
 
   it('a creditor can call in a favor to take the debtor\'s place', () => {
@@ -196,19 +221,6 @@ describe('draft rules', () => {
     );
     expect(result.success).toBe(true);
     expect(world.draft.status).toBe('pending');
-  });
-
-  it('contracts cannot be accepted outside the draft', () => {
-    const world = draftWorld();
-    const result = executeResponse(
-      {
-        requestId: 'request_quill_1',
-        proposal: { type: 'accept_quest', participants: ['quill'], effects: [{ target: 'quests/guard_caravan/acceptedBy', operation: 'add', value: 'quill' }] }
-      },
-      world
-    );
-    expect(result.success).toBe(false);
-    expect(result.error).toContain('contracts are taken in the draft');
   });
 
   it('recruits leave when their term ends, and can be lured by an opposed check', () => {
@@ -297,7 +309,7 @@ describe('draft through the tools (integration)', () => {
     expect(request.contextData.phase).toBe('draft');
     expect(request.contextData.draft.pool.recruits.map((r: any) => r.id)).toEqual(['sister_ilse', 'grim']);
     expect(JSON.stringify(request.contextData)).not.toContain('asked to harm the innocent');
-    await answer(request, { pick: { kind: 'contract', id: 'guard_caravan' } });
+    await answer(request, { pick: { kind: 'quest', id: 'guard_caravan' } });
     let processed = await processAiResponses(sessionId);
     expect(processed.nextStatus).toBe('draft_in_progress');
 
@@ -307,13 +319,13 @@ describe('draft through the tools (integration)', () => {
     expect(next.turnGenerated).toBe(1);
     request = await onlyRequest();
     expect(request.framework.actorId).toBe('lanterns');
-    expect(request.contextData.draft.picksSoFar).toEqual([{ index: 0, party: 'quill', kind: 'contract', id: 'guard_caravan' }]);
+    expect(request.contextData.draft.picksSoFar).toEqual([{ index: 0, party: 'quill', kind: 'quest', id: 'guard_caravan' }]);
     await answer({ ...request, framework: { actorId: 'wolves' }, requestId: 'request_wolves_999' }, { pick: { kind: 'pass' } });
     processed = await processAiResponses(sessionId);
     expect(processed.errors[0].error).toContain("Not wolves's turn");
     await fs.rm(path.join(responsesDir, 'failed'), { recursive: true, force: true });
 
-    await answer(request, { pick: { kind: 'contract', id: 'rob_caravan' } });
+    await answer(request, { pick: { kind: 'quest', id: 'rob_caravan' } });
     expect((await processAiResponses(sessionId)).nextStatus).toBe('draft_in_progress');
 
     await generateNextTurn(sessionId);
@@ -340,8 +352,8 @@ describe('draft through the tools (integration)', () => {
     expect((await appendPlaylog(sessionId, 'turn_playlog.json')).success).toBe(true);
     const entry = JSON.parse((await fs.readFile(path.join(sessionDir, 'playlog.jsonl'), 'utf-8')).trim());
     expect(entry.draft.picks.map((p: any) => [p.party, p.kind, p.id])).toEqual([
-      ['quill', 'contract', 'guard_caravan'],
-      ['lanterns', 'contract', 'rob_caravan'],
+      ['quill', 'quest', 'guard_caravan'],
+      ['lanterns', 'quest', 'rob_caravan'],
       ['wolves', 'recruit', 'sister_ilse']
     ]);
     expect(entry.draft.picks[0].reasoning).toBe('quill picks');
@@ -356,7 +368,7 @@ describe('draft through the tools (integration)', () => {
     const quillFile = files.find(f => f.startsWith('request_quill_'))!;
     const quillRequest = JSON.parse(await fs.readFile(path.join(requestsDir, quillFile), 'utf-8'));
     const board = quillRequest.contextData.guildBoard.map((q: any) => q.id);
-    expect(board).toEqual(expect.arrayContaining(['guard_caravan', 'rob_caravan'])); // drafted contracts are public knowledge
+    expect(board).toEqual(expect.arrayContaining(['guard_caravan', 'rob_caravan'])); // every quest is public
     const rob = quillRequest.contextData.guildBoard.find((q: any) => q.id === 'rob_caravan');
     expect(rob.acceptedBy).toEqual(['lanterns']);
     expect(rob.conflictsWith).toBeUndefined();

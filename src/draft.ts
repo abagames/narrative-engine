@@ -2,9 +2,10 @@
  * Draft: the sequential preparation phase.
  *
  * Before a stretch of action turns, parties take turns picking from a pool the
- * GM prepared: exclusive contracts, recruits, unique items, intel, or an
- * invitation to another party to share a joint quest. Picks are public, so each
- * pick is a reaction to the ones before it. The engine enforces the order and
+ * GM prepared: the quest they will pursue (with an optional invitation to
+ * another party when the quest is a joint one), recruits, unique items or
+ * intel. Quests are not exclusive: several parties may pick the same quest and
+ * race for it. Picks are public, so each pick is a reaction to the ones before it. The engine enforces the order and
  * the rules; the parties decide what to pick.
  */
 import {
@@ -20,7 +21,7 @@ import {
   Effect
 } from './world_rules.js';
 
-export type PickKind = 'contract' | 'recruit' | 'item' | 'intel' | 'invite' | 'pass';
+export type PickKind = 'quest' | 'recruit' | 'item' | 'intel' | 'pass';
 export type DraftMode = 'order' | 'pick' | 'answer';
 
 export interface DraftPickInput {
@@ -56,15 +57,14 @@ export interface DraftInvite {
 }
 
 export const DEFAULT_PICKS_PER_PARTY = 2;
-const POOL_KINDS = ['contracts', 'recruits', 'items', 'intel', 'invites'] as const;
+const POOL_KINDS = ['quests', 'recruits', 'items', 'intel'] as const;
 
 function poolKey(kind: PickKind): (typeof POOL_KINDS)[number] | null {
   switch (kind) {
-    case 'contract': return 'contracts';
+    case 'quest': return 'quests';
     case 'recruit': return 'recruits';
     case 'item': return 'items';
     case 'intel': return 'intel';
-    case 'invite': return 'invites';
     default: return null;
   }
 }
@@ -89,15 +89,12 @@ function event(world: any, kind: EngineEvent['kind'], summary: string, parties: 
 
 function validatePool(world: any): RuleError | null {
   const pool = world.draft.pool || {};
-  for (const id of pool.contracts || []) {
+  for (const id of pool.quests || []) {
     const quest = world.quests?.[id];
-    if (!quest) return { error: `Draft pool: unknown contract quest ${id}` };
-    if (!quest.contract) return { error: `Draft pool: quest ${id} must have "contract": true` };
-  }
-  for (const id of pool.invites || []) {
-    const quest = world.quests?.[id];
-    if (!quest) return { error: `Draft pool: unknown joint quest ${id}` };
-    if (quest.type !== 'joint') return { error: `Draft pool: invitations need a joint quest (${id})` };
+    if (!quest) return { error: `Draft pool: unknown quest ${id}` };
+    if (quest.status && quest.status !== 'open' && quest.status !== 'accepted') {
+      return { error: `Draft pool: quest ${id} is already ${quest.status}` };
+    }
   }
   for (const id of pool.recruits || []) {
     if (!world.recruits?.[id]) return { error: `Draft pool: unknown recruit ${id}` };
@@ -232,10 +229,7 @@ export function validateDraftResponse(world: any, partyId: string, input: DraftR
     if (answer.accept) {
       accepted++;
       if (activeQuestCount(world, partyId) + accepted > MAX_ACTIVE_QUESTS) {
-        return { error: `Quest limit exceeded: ${partyId} cannot take on another quest` };
-      }
-      if (activeQuestCount(world, invite.from) >= MAX_ACTIVE_QUESTS) {
-        return { error: `${invite.from} can no longer take on the invited quest` };
+        return { error: `Quest limit exceeded: ${partyId} already pursues a quest and cannot accept` };
       }
     }
   }
@@ -267,25 +261,26 @@ export function validateDraftResponse(world: any, partyId: string, input: DraftR
   }
 
   switch (kind) {
-    case 'contract':
-      if (world.quests?.[id]?.status !== 'open') {
-        return { error: `Contract ${id} is no longer open` };
+    case 'quest': {
+      const quest = world.quests?.[id];
+      if (!quest || (quest.status !== 'open' && quest.status !== 'accepted')) {
+        return { error: `Quest ${id} is no longer available` };
       }
       if (activeQuestCount(world, partyId) >= MAX_ACTIVE_QUESTS) {
-        return { error: `Quest limit exceeded: ${partyId} may hold at most ${MAX_ACTIVE_QUESTS} active quests` };
+        return { error: `Quest limit exceeded: ${partyId} already pursues a quest` };
+      }
+      if (target !== undefined) {
+        if (quest.type !== 'joint') return { error: 'Only joint quests can come with an invitation' };
+        if (target === partyId || !world.parties?.[target]) return { error: 'An invitation needs another party as target' };
+        if (activeQuestCount(world, target) >= MAX_ACTIVE_QUESTS) {
+          return { error: `${target} already pursues a quest and could not accept` };
+        }
       }
       return null;
+    }
     case 'recruit':
       if (hiredCount(world, partyId) >= MAX_RECRUITS) {
         return { error: `Recruit limit exceeded: ${partyId} may employ at most ${MAX_RECRUITS} recruits` };
-      }
-      return null;
-    case 'invite':
-      if (!target || target === partyId || !world.parties?.[target]) {
-        return { error: 'An invitation needs another party as target' };
-      }
-      if (activeQuestCount(world, partyId) >= MAX_ACTIVE_QUESTS) {
-        return { error: `Quest limit exceeded: ${partyId} cannot lead another quest` };
       }
       return null;
     default:
@@ -329,16 +324,13 @@ export function applyDraftResponse(
     const quest = world.quests[invite.questId];
     if (answer.accept) {
       invite.status = 'accepted';
-      // Public like every pick; locked to the pair like a contract
-      quest.acceptedBy = [invite.from, invite.to];
-      quest.contract = true;
+      quest.acceptedBy = [...new Set([...(quest.acceptedBy || []), invite.to])];
       quest.status = 'accepted';
       usedPick = actor.mode === 'pick';
       draft.picks.push({ index: draft.pickIndex, party: partyId, kind: 'accept_invite', inviteId: invite.id, id: invite.questId, target: invite.from, ...meta });
       events.push(event(world, 'draft_invite', `${partyId} accepts ${invite.from}'s invitation to "${quest.title || quest.id}"`, [partyId, invite.from]));
     } else {
       invite.status = 'declined';
-      draft.pool.invites.push(invite.questId); // the quest can be offered again
       events.push(event(world, 'draft_invite', `${partyId} turns down ${invite.from}'s invitation to "${quest.title || quest.id}"`, [partyId, invite.from]));
     }
   }
@@ -348,14 +340,30 @@ export function applyDraftResponse(
     const record: DraftPickRecord = { index: draft.pickIndex, party: partyId, kind, ...(id ? { id } : {}), ...(target ? { target } : {}), ...meta };
 
     switch (kind) {
-      case 'contract': {
-        // Draft picks are public, so the contract stays visible on the board;
-        // being a contract, nobody else can accept it
+      case 'quest': {
+        // Quests are not exclusive: the quest stays in the pool for others to join
         const quest = world.quests[id!];
-        quest.acceptedBy = [partyId];
+        quest.acceptedBy = [...(quest.acceptedBy || []), partyId];
         quest.status = 'accepted';
-        removeFromPool(draft, 'contracts', id!);
-        events.push(event(world, 'draft_pick', `${partyId} takes the contract "${quest.title || id}"`, [partyId]));
+        const rivals = quest.acceptedBy.filter((p: string) => p !== partyId);
+        events.push(event(
+          world,
+          'draft_pick',
+          `${partyId} takes up "${quest.title || id}"${rivals.length ? ` (already pursued by ${rivals.join(', ')})` : ''}`,
+          [partyId, ...rivals]
+        ));
+        if (target) {
+          const invite: DraftInvite = {
+            id: `inv_${draft.id}_${draft.pickIndex}`,
+            from: partyId,
+            to: target,
+            questId: id!,
+            status: 'pending',
+            pickIndex: draft.pickIndex
+          };
+          draft.invites.push(invite);
+          events.push(event(world, 'draft_invite', `${partyId} invites ${target} to share "${quest.title || id}"`, [partyId, target]));
+        }
         break;
       }
       case 'recruit': {
@@ -384,21 +392,6 @@ export function applyDraftResponse(
         removeFromPool(draft, 'intel', id!);
         // Others learn only that intel changed hands
         events.push(event(world, 'draft_pick', `${partyId} buys a piece of intel`, [partyId]));
-        break;
-      }
-      case 'invite': {
-        const quest = world.quests[id!];
-        const invite: DraftInvite = {
-          id: `inv_${draft.id}_${draft.pickIndex}`,
-          from: partyId,
-          to: target!,
-          questId: id!,
-          status: 'pending',
-          pickIndex: draft.pickIndex
-        };
-        draft.invites.push(invite);
-        removeFromPool(draft, 'invites', id!);
-        events.push(event(world, 'draft_invite', `${partyId} invites ${target} to share "${quest.title || id}"`, [partyId, target!]));
         break;
       }
       case 'pass':
@@ -469,8 +462,9 @@ function closeDraft(world: any, events: EngineEvent[]): void {
     if (invite.status === 'pending') invite.status = 'expired';
   }
 
+  const untaken = (draft.pool.quests || []).filter((id: string) => !(world.quests[id]?.acceptedBy || []).length);
   const leftovers = {
-    contracts: [...draft.pool.contracts],
+    quests: untaken,
     recruits: [...draft.pool.recruits],
     items: [...draft.pool.items],
     intel: [...draft.pool.intel]
@@ -483,10 +477,10 @@ function closeDraft(world: any, events: EngineEvent[]): void {
     events.push(event(world, 'draft_closed', `Nobody hired ${recruit.name || id}; ${recruit.name || id} signs with ${recruit.rivalEmployer || 'a rival outfit'}`));
     applyLeftoverEffects(world, recruit.ifUnhired, events, `recruit ${id}`);
   }
-  // Unclaimed contracts stay unclaimed until they expire
-  for (const id of leftovers.contracts) {
+  // Quests nobody took stay on the board; left alone they run into their deadlines
+  for (const id of leftovers.quests) {
     const quest = world.quests[id];
-    events.push(event(world, 'draft_closed', `No party took the contract "${quest.title || id}"; it will lapse at its deadline`));
+    events.push(event(world, 'draft_closed', `No party took up "${quest.title || id}"; it stays on the board until its deadline`));
   }
 
   draft.leftovers = leftovers;
@@ -507,7 +501,7 @@ export function publicDraftView(world: any, partyId: string): Record<string, any
   const draft = world.draft;
   const describeQuest = (id: string) => {
     const q = world.quests?.[id] || {};
-    return { id, title: q.title, client: q.client, description: q.description, location: q.location, type: q.type, minParties: q.minParties, requiredProgress: q.requiredProgress, deadlineTurn: q.deadlineTurn, reward: q.reward };
+    return { id, title: q.title, client: q.client, description: q.description, location: q.location, type: q.type, minParties: q.minParties, requiredProgress: q.requiredProgress, deadlineTurn: q.deadlineTurn, reward: q.reward, pursuedBy: q.acceptedBy || [] };
   };
   const describeRecruit = (id: string) => {
     const r = world.recruits?.[id] || {};
@@ -536,11 +530,10 @@ export function publicDraftView(world: any, partyId: string): Record<string, any
       ...(p.target ? { target: p.target } : {})
     })),
     pool: {
-      contracts: (draft.pool?.contracts || []).map(describeQuest),
+      quests: (draft.pool?.quests || []).map(describeQuest),
       recruits: (draft.pool?.recruits || []).map(describeRecruit),
       items: (draft.pool?.items || []).map(describeItem),
-      intel: (draft.pool?.intel || []).map(describeIntel),
-      invites: (draft.pool?.invites || []).map(describeQuest)
+      intel: (draft.pool?.intel || []).map(describeIntel)
     },
     invitesForYou: (draft.invites || []).filter((i: DraftInvite) => i.to === partyId && i.status === 'pending'),
     invitesYouSent: (draft.invites || []).filter((i: DraftInvite) => i.from === partyId),

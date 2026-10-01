@@ -328,6 +328,78 @@ describe('world_rules: executeResponse', () => {
     expect(result.error).toContain('must be pursued at harbor');
   });
 
+  it('sabotage removes at most 1 progress per check', () => {
+    const world = createWorld();
+    world.quests.escort_vell.progress = { iron_wolves: 2 };
+    const heavy: CheckDeclaration = {
+      id: 'heavy', actor: 'ash_lanterns', capability: 'combat',
+      opposedBy: { party: 'iron_wolves', capability: 'combat' },
+      outcomes: {
+        success: [{ target: 'quests/escort_vell/progress/iron_wolves', operation: 'add', value: -2 }],
+        partial: [],
+        failure: []
+      }
+    };
+    world.parties.ash_lanterns.location = 'harbor';
+    expect(executeResponse(playerResponse('ash_lanterns', [], [heavy]), structuredClone(world)).error).toContain('at most 1 progress');
+    const stacked = structuredClone(heavy);
+    stacked.outcomes.success = [
+      { target: 'quests/escort_vell/progress/iron_wolves', operation: 'add', value: -1 },
+      { target: 'quests/escort_vell/progress/iron_wolves', operation: 'add', value: -1 }
+    ];
+    expect(executeResponse(playerResponse('ash_lanterns', [], [stacked]), structuredClone(world)).error).toContain('at most 1 progress');
+  });
+
+  it('the third opposed clash between the same pair is a showdown', () => {
+    const world = createWorld(11);
+    world.parties.ash_lanterns.location = 'harbor';
+    world.quests.escort_vell.acceptedBy = ['iron_wolves'];
+    world.quests.escort_vell.progress = { iron_wolves: 1 };
+    world.quests.silence_vell.acceptedBy = ['ash_lanterns'];
+    world.quests.silence_vell.progress = { ash_lanterns: 2 };
+    world.quests.seal_the_breach.acceptedBy = ['silver_quill'];
+    const clash: CheckDeclaration = {
+      id: 'clash', actor: 'ash_lanterns', capability: 'combat',
+      opposedBy: { party: 'iron_wolves', capability: 'combat' },
+      outcomes: {
+        success: [{ target: 'quests/escort_vell/progress/iron_wolves', operation: 'add', value: -1 }],
+        partial: [{ target: 'quests/silence_vell/progress/ash_lanterns', operation: 'add', value: 1 }],
+        failure: [{ target: 'parties/ash_lanterns/morale', operation: 'add', value: -1 }]
+      }
+    };
+    for (let t = 1; t <= 2; t++) {
+      world.turn = t;
+      const r = executeResponse(playerResponse('ash_lanterns', [], [clash]), world);
+      expect(r.success).toBe(true);
+      expect(r.checks![0].showdown).toBeUndefined();
+    }
+    expect(world.rivalries['ash_lanterns__iron_wolves'].clashes).toBe(2);
+
+    world.turn = 3;
+    const before = structuredClone(world);
+    const r = executeResponse(playerResponse('ash_lanterns', [], [clash]), world);
+    const result = r.checks![0];
+    expect(result.showdown).toBeDefined();
+    expect(result.outcome).not.toBe('partial');
+    const { winner, loser } = result.showdown!;
+    const questOf = (p: string) => (p === 'iron_wolves' ? 'escort_vell' : 'silence_vell');
+    resolveQuests(world);
+    expect(world.quests[questOf(loser)].progress[loser]).toBe(0);
+    expect(world.quests[questOf(winner)].progress[winner]).toBeGreaterThanOrEqual(
+      Math.min((before.quests[questOf(winner)].progress[winner] || 0) + 2, 3)
+    );
+    expect(world.rivalries['ash_lanterns__iron_wolves']).toMatchObject({ clashes: 0, showdowns: 1 });
+    expect(world.chronicle.some((e: any) => e.kind === 'showdown')).toBe(true);
+  });
+
+  it('parties cannot write rivalries', () => {
+    const result = executeResponse(
+      playerResponse('ash_lanterns', [{ target: 'rivalries/ash_lanterns__iron_wolves/clashes', operation: 'set', value: 2 }]),
+      createWorld()
+    );
+    expect(result.success).toBe(false);
+  });
+
   it('sabotage also requires being at the quest site', () => {
     const world = createWorld();
     world.quests.escort_vell.progress = { iron_wolves: 2 };
@@ -390,23 +462,6 @@ describe('world_rules: executeResponse', () => {
     expect(ok.success).toBe(true);
     expect(world.quests.silence_vell.acceptedBy).toEqual(['ash_lanterns']);
     expect(world.quests.silence_vell.status).toBe('accepted');
-  });
-
-  it('private offers can only be accepted by the parties they were offered to', () => {
-    const world = createWorld();
-    world.quests.silence_vell.offeredTo = ['ash_lanterns'];
-    const denied = executeResponse(
-      playerResponse('silver_quill', [{ target: 'quests/silence_vell/acceptedBy', operation: 'add', value: 'silver_quill' }]),
-      world
-    );
-    expect(denied.success).toBe(false);
-    expect(denied.error).toContain('not offered to silver_quill');
-
-    const ok = executeResponse(
-      playerResponse('ash_lanterns', [{ target: 'quests/silence_vell/acceptedBy', operation: 'add', value: 'ash_lanterns' }]),
-      world
-    );
-    expect(ok.success).toBe(true);
   });
 
   it('a party may only enlist itself', () => {
