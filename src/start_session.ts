@@ -1,14 +1,20 @@
 import * as fs from 'fs/promises';
 import * as path from 'path';
+import { ensureSeed, normalizeWorld } from './world_rules.js';
+import { writeDecisionRequests } from './turn_context.js';
 
 interface WorldState {
   parties: Record<string, any>;
   regions: Record<string, any>;
-  market: {
+  market?: {
     currentPrices: Record<string, number>;
     priceHistory: any[];
     completedTrades: any[];
   };
+  quests?: Record<string, any>;
+  clocks?: Record<string, any>;
+  npcs?: Record<string, any>;
+  guild?: Record<string, any>;
   relationships: Record<string, any>;
   turn: number;
   worldAge: number;
@@ -19,6 +25,7 @@ interface SessionConfig {
   sessionName: string;
   maxTurns: number;
   stopConditions: Record<string, any>;
+  seed?: number;
 }
 
 interface SessionResult {
@@ -26,19 +33,6 @@ interface SessionResult {
   status: string;
   firstTurnRequests: string[];
   workspaceDir: string;
-}
-
-interface DecisionRequest {
-  requestId: string;
-  timestamp: string;
-  sessionId: string;
-  worldStateFile: string;
-  framework: {
-    role: 'GM' | 'Player';
-    actorId?: string;
-  };
-  contextData: Record<string, any>;
-  instructions: string;
 }
 
 export async function startSession(worldInitialPath: string, sessionConfigPath: string): Promise<SessionResult> {
@@ -53,6 +47,7 @@ export async function startSession(worldInitialPath: string, sessionConfigPath: 
 
   validateWorldState(worldData);
   validateSessionConfig(configData);
+  prepareWorld(worldData, configData);
 
   // 2. Create session directory
   const sessionId = generateSessionId();
@@ -81,7 +76,12 @@ export async function startSession(worldInitialPath: string, sessionConfigPath: 
   await fs.mkdir(path.join(workspaceDir, 'world_snapshots'), { recursive: true });
 
   // 5. Generate first turn decision requests
-  const firstTurnRequests = await generateFirstTurnRequests(sessionId, worldData, workspaceDir);
+  const firstTurnRequests = await writeDecisionRequests(
+    sessionId,
+    worldData,
+    path.join(workspaceDir, 'decision_requests'),
+    []
+  );
 
   return {
     sessionId,
@@ -119,7 +119,7 @@ async function validateInputFiles(worldPath: string, configPath: string): Promis
 }
 
 function validateWorldState(world: any): void {
-  const requiredFields = ['parties', 'regions', 'market', 'relationships', 'turn', 'worldAge', 'narrativeContext'];
+  const requiredFields = ['parties', 'regions', 'relationships', 'turn', 'worldAge', 'narrativeContext'];
 
   for (const field of requiredFields) {
     if (!(field in world)) {
@@ -127,9 +127,49 @@ function validateWorldState(world: any): void {
     }
   }
 
-  if (!world.market.currentPrices || !world.market.priceHistory || !world.market.completedTrades) {
-    throw new Error('Invalid market structure');
+  // The market is optional; when present it must be well-formed
+  if (world.market !== undefined) {
+    if (!world.market.currentPrices || !world.market.priceHistory || !world.market.completedTrades) {
+      throw new Error('Invalid market structure');
+    }
   }
+
+  validateQuestSetup(world);
+}
+
+function validateQuestSetup(world: any): void {
+  const quests: Record<string, any> = world.quests || {};
+  for (const [questId, quest] of Object.entries<any>(quests)) {
+    if (quest.location && !world.regions?.[quest.location]) {
+      throw new Error(`Quest ${questId} refers to unknown region: ${quest.location}`);
+    }
+    if (quest.client && world.npcs && !world.npcs[quest.client]) {
+      throw new Error(`Quest ${questId} refers to unknown client: ${quest.client}`);
+    }
+    for (const other of quest.conflictsWith || []) {
+      if (!quests[other]) {
+        throw new Error(`Quest ${questId} conflicts with unknown quest: ${other}`);
+      }
+    }
+    for (const partyId of quest.acceptedBy || []) {
+      if (!world.parties?.[partyId]) {
+        throw new Error(`Quest ${questId} accepted by unknown party: ${partyId}`);
+      }
+    }
+    if (quest.advancesClock?.clockId && !world.clocks?.[quest.advancesClock.clockId]) {
+      throw new Error(`Quest ${questId} advances unknown clock: ${quest.advancesClock.clockId}`);
+    }
+  }
+}
+
+function prepareWorld(world: any, config: SessionConfig): void {
+  if (typeof config.seed === 'number') {
+    world.rng = { seed: config.seed };
+  }
+  ensureSeed(world);
+  normalizeWorld(world);
+  // Upkeep for the starting turn is already reflected in the authored world
+  world.upkeepTurn = Number(world.turn) || 0;
 }
 
 function validateSessionConfig(config: any): void {
@@ -147,132 +187,6 @@ function generateSessionId(): string {
   const dateStr = now.toISOString().slice(0, 10).replace(/-/g, '');
   const timeStr = now.toISOString().slice(11, 19).replace(/:/g, '');
   return `session_${dateStr}_${timeStr}`;
-}
-
-async function generateFirstTurnRequests(sessionId: string, worldData: WorldState, workspaceDir: string): Promise<string[]> {
-  const requestsCreated: string[] = [];
-  const timestamp = new Date().toISOString();
-
-  // Generate GM request
-  const gmRequestId = `request_GM_${Date.now()}`;
-  const gmRequest: DecisionRequest = {
-    requestId: gmRequestId,
-    timestamp,
-    sessionId,
-    worldStateFile: `../sessions/${sessionId}/world_current.json`,
-    framework: {
-      role: 'GM'
-    },
-    contextData: {
-      marketData: {
-        currentPrices: worldData.market.currentPrices,
-        totalVolume: Object.values(worldData.market.currentPrices).reduce((sum, price) => sum + price, 0),
-        priceHistory: worldData.market.priceHistory
-      },
-      worldSummary: {
-        turn: worldData.turn,
-        totalParties: Object.keys(worldData.parties).length,
-        activeRegions: Object.keys(worldData.regions).length
-      },
-      availableActions: ['price_update', 'environmental_change', 'market_event'],
-      recentHistory: []
-    },
-    instructions: 'worldStateFileを読み込んで世界状態を分析し、適切なフレームワークを適用してGMとしての最適な行動を決定してください'
-  };
-
-  const gmFileName = `${gmRequestId}.json`;
-  await fs.writeFile(
-    path.join(workspaceDir, 'decision_requests', gmFileName),
-    JSON.stringify(gmRequest, null, 2)
-  );
-  requestsCreated.push(gmFileName);
-
-  // Generate party requests
-  for (const [partyId, party] of Object.entries(worldData.parties)) {
-    const partyRequestId = `request_${partyId}_${Date.now() + Math.floor(Math.random() * 1000)}`;
-
-    const visibleRegions = getVisibleRegions(party, worldData.regions);
-    const availableActions = getAvailableActions(party, worldData.regions);
-
-    const partyRequest: DecisionRequest = {
-      requestId: partyRequestId,
-      timestamp,
-      sessionId,
-      worldStateFile: `../sessions/${sessionId}/world_current.json`,
-      framework: {
-        role: 'Player',
-        actorId: partyId
-      },
-      contextData: {
-        partyState: party,
-        visibleRegions,
-        marketData: {
-          currentPrices: worldData.market.currentPrices,
-          recentTrades: worldData.market.completedTrades.slice(-5)
-        },
-        availableActions,
-        recentHistory: []
-      },
-      instructions: 'worldStateFileを読み込んで世界状態を分析し、適切なフレームワークを適用してパーティーとしての最適な行動を決定してください'
-    };
-
-    const partyFileName = `${partyRequestId}.json`;
-    await fs.writeFile(
-      path.join(workspaceDir, 'decision_requests', partyFileName),
-      JSON.stringify(partyRequest, null, 2)
-    );
-    requestsCreated.push(partyFileName);
-  }
-
-  return requestsCreated;
-}
-
-function getVisibleRegions(party: any, regions: Record<string, any>): any[] {
-  const currentRegion = regions[party.location];
-  if (!currentRegion) return [];
-
-  const visible: any[] = [
-    {
-      id: currentRegion.id,
-      name: currentRegion.name,
-      type: currentRegion.type,
-      isAccessible: true,
-      resources: currentRegion.resources || [],
-      distance: 0
-    }
-  ];
-
-  // Add neighboring regions
-  for (const neighborId of currentRegion.neighbors || []) {
-    const neighbor = regions[neighborId];
-    if (neighbor) {
-      visible.push({
-        id: neighbor.id,
-        name: neighbor.name,
-        type: neighbor.type,
-        isAccessible: true,
-        resources: neighbor.resources || [],
-        distance: 1
-      });
-    }
-  }
-
-  return visible;
-}
-
-function getAvailableActions(party: any, regions: Record<string, any>): string[] {
-  const baseActions = ['explore', 'trade', 'cooperate'];
-  const currentRegion = regions[party.location];
-
-  if (currentRegion?.neighbors?.length > 0) {
-    baseActions.push('move');
-  }
-
-  if (currentRegion?.specialEffects?.includes('market_access')) {
-    baseActions.push('market_trade');
-  }
-
-  return baseActions;
 }
 
 // CLI interface

@@ -122,8 +122,9 @@ export async function appendPlaylog(sessionId, turnPlaylogFilename) {
         throw new Error(`Invalid turn_playlog.json: ${error instanceof Error ? error.message : 'Unknown validation error'}`);
     }
     try {
-        // 2. Find and restore corresponding decision response file
-        const decisionResponse = await findDecisionResponse(workspaceDir, turnPlaylog);
+        // 2. Find this turn's decision responses (all actors)
+        const { responses, files } = await findDecisionResponses(workspaceDir);
+        const decisionResponse = responses.find(r => r.requestId === turnPlaylog.focusRequestId) || responses[0];
         // 3. Load current world state
         const worldStatePath = path.join(sessionDir, 'world_current.json');
         let currentWorldState;
@@ -136,11 +137,17 @@ export async function appendPlaylog(sessionId, turnPlaylogFilename) {
         // 4. Calculate world state diff
         const worldStateDiff = await calculateWorldStateDiff(sessionDir, currentWorldState);
         // 5. Generate complete playlog entry
-        const playlogEntry = await generateCompletePlaylogEntry(turnPlaylog, decisionResponse, worldStateDiff, sessionDir);
+        const playlogEntry = await generateCompletePlaylogEntry(turnPlaylog, decisionResponse, responses, currentWorldState, worldStateDiff, sessionDir);
         // 6. Append to playlog.jsonl
         const playlogPath = path.join(sessionDir, 'playlog.jsonl');
         const entryLine = JSON.stringify(playlogEntry) + '\n';
         await fs.appendFile(playlogPath, entryLine);
+        // Mark responses as logged so a later append in the same turn does not repeat them
+        for (let i = 0; i < responses.length; i++) {
+            const response = responses[i];
+            response.engineResolution = { ...(response.engineResolution || {}), logged: true };
+            await fs.writeFile(files[i], JSON.stringify(response, null, 2));
+        }
         return {
             success: true,
             entriesAdded: 1
@@ -152,7 +159,8 @@ export async function appendPlaylog(sessionId, turnPlaylogFilename) {
             if (error.message.includes('Decision response file not found') ||
                 error.message.includes('world_current.json not found') ||
                 error.message.includes('Corrupted playlog.jsonl') ||
-                error.message.includes('Invalid turn_playlog.json')) {
+                error.message.includes('Invalid turn_playlog.json') ||
+                error.message.startsWith('Cannot append playlog')) {
                 throw error;
             }
         }
@@ -168,7 +176,7 @@ export async function appendPlaylog(sessionId, turnPlaylogFilename) {
         };
     }
 }
-async function findDecisionResponse(workspaceDir, turnPlaylog) {
+async function findDecisionResponses(workspaceDir) {
     const responsesDir = path.join(workspaceDir, 'decision_responses');
     const resultsDir = path.join(workspaceDir, 'results');
     try {
@@ -211,42 +219,67 @@ async function findDecisionResponse(workspaceDir, turnPlaylog) {
         if (successfulRequestIds.length === 0) {
             throw new Error('No successful decision response files found');
         }
-        // Use the first successful response file
-        const responseFile = `${successfulRequestIds[0]}.json`;
-        const responsePath = path.join(responsesDir, responseFile);
-        const content = await fs.readFile(responsePath, 'utf-8');
-        const response = JSON.parse(content);
-        // Ensure meta.llmDecision exists with default structure
-        if (!response.meta) {
-            response.meta = {};
+        const responses = [];
+        const files = [];
+        for (const requestId of [...successfulRequestIds].sort()) {
+            const responsePath = path.join(responsesDir, `${requestId}.json`);
+            let response;
+            try {
+                response = JSON.parse(await fs.readFile(responsePath, 'utf-8'));
+            }
+            catch {
+                continue;
+            }
+            if (!response?.proposal)
+                continue;
+            if (response.engineResolution?.logged)
+                continue;
+            ensureDecisionMeta(response);
+            responses.push(response);
+            files.push(responsePath);
         }
-        if (!response.meta.llmDecision) {
-            response.meta.llmDecision = {
-                frameworkEvaluation: {
-                    economic: { score: 7, reasoning: "Standard economic evaluation" },
-                    strategic: { score: 8, reasoning: "Strategic consideration applied" },
-                    risk: { score: 6, reasoning: "Risk assessment completed" }
-                },
-                optionsConsidered: [
-                    {
-                        action: response.proposal.type,
-                        score: 8,
-                        pros: ["aligned with goals", "feasible execution"],
-                        cons: ["resource cost", "opportunity cost"]
-                    }
-                ],
-                selectedAction: {
-                    type: response.proposal.type,
-                    reasoning: "Best available option based on framework evaluation"
-                },
-                reasoning: "Decision made through systematic framework application and option evaluation"
-            };
+        if (responses.length === 0) {
+            throw new Error('No unlogged decision response files found');
         }
-        return response;
+        return { responses, files };
     }
     catch (error) {
+        if (error instanceof Error && error.message.startsWith('Cannot append playlog')) {
+            throw error;
+        }
         throw new Error('Decision response file not found');
     }
+}
+function ensureDecisionMeta(response) {
+    if (!response.meta) {
+        response.meta = {};
+    }
+    if (!response.meta.llmDecision) {
+        response.meta.llmDecision = {
+            frameworkEvaluation: {},
+            optionsConsidered: [],
+            selectedAction: {
+                type: response.proposal.type,
+                reasoning: 'No decision rationale recorded'
+            }
+        };
+    }
+}
+function toPlaylogAction(response) {
+    const llm = response.meta?.llmDecision || {};
+    const actor = response.proposal.participants[0] || 'unknown';
+    return {
+        requestId: response.requestId,
+        role: response.engineResolution?.role || (actor === 'GM' || response.requestId.startsWith('request_GM_') ? 'GM' : 'Player'),
+        actor,
+        type: response.proposal.type,
+        participants: response.proposal.participants,
+        effects: response.proposal.effects,
+        checks: response.engineResolution?.checks || [],
+        summary: llm.selectedAction?.reasoning,
+        characterVoices: llm.character_voices,
+        optionsConsidered: llm.optionsConsidered
+    };
 }
 async function calculateWorldStateDiff(sessionDir, currentWorldState) {
     try {
@@ -350,13 +383,16 @@ function isEqual(a, b) {
     }
     return false;
 }
-async function generateCompletePlaylogEntry(turnPlaylog, decisionResponse, worldStateDiff, sessionDir) {
-    // Get next step number
-    const nextStep = await getNextStepNumber(sessionDir);
+async function generateCompletePlaylogEntry(turnPlaylog, decisionResponse, responses, currentWorldState, worldStateDiff, sessionDir) {
+    // Get next step number and how many engine events were already logged
+    const { nextStep, loggedEngineEvents } = await readPlaylogState(sessionDir);
+    const actions = responses.map(toPlaylogAction);
+    const chronicle = Array.isArray(currentWorldState.chronicle) ? currentWorldState.chronicle : [];
     // Get actor from decision response
     const actor = decisionResponse.proposal.participants[0] || 'unknown';
     const entry = {
         step: nextStep,
+        turn: currentWorldState.turn,
         type: decisionResponse.proposal.type,
         participants: decisionResponse.proposal.participants,
         actor,
@@ -365,38 +401,41 @@ async function generateCompletePlaylogEntry(turnPlaylog, decisionResponse, world
             frameworkEvaluation: decisionResponse.meta?.llmDecision?.frameworkEvaluation || {}
         },
         narrative: turnPlaylog.narrative,
+        actions,
+        checks: actions.flatMap(a => a.checks),
+        engineEvents: chronicle.slice(loggedEngineEvents),
         worldStateDiff,
         worldStateSnapshot: './world_current.json'
     };
     return entry;
 }
-async function getNextStepNumber(sessionDir) {
+async function readPlaylogState(sessionDir) {
     try {
         const playlogPath = path.join(sessionDir, 'playlog.jsonl');
         const content = await fs.readFile(playlogPath, 'utf-8');
         const lines = content.trim().split('\n').filter(line => line);
-        if (lines.length === 0) {
-            return 1;
-        }
-        // Find the highest step number
         let maxStep = 0;
+        let loggedEngineEvents = 0;
         for (const line of lines) {
+            let entry;
             try {
-                const entry = JSON.parse(line);
-                if (entry.step && typeof entry.step === 'number') {
-                    maxStep = Math.max(maxStep, entry.step);
-                }
+                entry = JSON.parse(line);
             }
             catch {
-                // Skip invalid lines
                 throw new Error('Corrupted playlog.jsonl');
             }
+            if (entry.step && typeof entry.step === 'number') {
+                maxStep = Math.max(maxStep, entry.step);
+            }
+            if (Array.isArray(entry.engineEvents)) {
+                loggedEngineEvents += entry.engineEvents.length;
+            }
         }
-        return maxStep + 1;
+        return { nextStep: maxStep + 1, loggedEngineEvents };
     }
     catch (error) {
         if (error instanceof Error && 'code' in error && error.code === 'ENOENT') {
-            return 1; // File doesn't exist, start with step 1
+            return { nextStep: 1, loggedEngineEvents: 0 }; // File doesn't exist, start with step 1
         }
         throw error; // Re-throw other errors
     }

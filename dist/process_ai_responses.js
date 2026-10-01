@@ -1,6 +1,7 @@
 import * as fs from 'fs/promises';
 import * as path from 'path';
 import { validateDecisionResponse, validateJsonSafety } from './json_schemas.js';
+import { executeResponse, resolveQuests, checkStopConditions } from './world_rules.js';
 export async function processAiResponses(sessionId) {
     const AUTONOMOUS_SESSIONS_DIR = process.env.AUTONOMOUS_SESSIONS_DIR || './autonomous_sessions';
     const sessionDir = path.join(AUTONOMOUS_SESSIONS_DIR, 'sessions', sessionId);
@@ -14,7 +15,10 @@ export async function processAiResponses(sessionId) {
         failedDecisions: [],
         partiallySuccessful: false,
         criticalErrorCount: 0,
-        nextStatus: 'turn_completed'
+        nextStatus: 'turn_completed',
+        checks: [],
+        engineEvents: [],
+        alreadyProcessed: []
     };
     try {
         // 1. Read decision response files
@@ -39,14 +43,29 @@ export async function processAiResponses(sessionId) {
             let partyId;
             try {
                 result.processedDecisions++;
-                const responseData = await readAndValidateResponse(path.join(responsesDir, filename));
+                const responsePath = path.join(responsesDir, filename);
+                const responseData = await readAndValidateResponse(responsePath);
                 partyId = responseData.proposal.participants[0]; // Extract partyId from participants
-                // 4. Execute action with isolation
-                const actionResult = await executeAction(responseData, worldState);
+                // Responses applied in an earlier run (e.g. before a retry of failed ones) are not applied twice
+                if (responseData.engineResolution?.processed) {
+                    result.processedDecisions--;
+                    result.alreadyProcessed.push(responseData.requestId);
+                    continue;
+                }
+                // 4. Execute action with isolation (all-or-nothing, dice rolled by the engine)
+                const actionResult = executeResponse(responseData, worldState);
                 if (actionResult.success) {
                     result.actionsExecuted++;
                     hasSuccessfulActions = true;
-                    // Note: Playlog generation is handled by append_playlog.ts after narrative creation
+                    result.checks.push(...(actionResult.checks || []));
+                    // Record the engine's adjudication so append_playlog.ts can log it
+                    responseData.engineResolution = {
+                        processed: true,
+                        turn: Number(worldState.turn) || 0,
+                        role: actionResult.actor.role,
+                        checks: actionResult.checks || []
+                    };
+                    await fs.writeFile(responsePath, JSON.stringify(responseData, null, 2));
                     processedFiles.push(filename);
                 }
                 else {
@@ -81,8 +100,9 @@ export async function processAiResponses(sessionId) {
                 }
             }
         }
-        // 5. Update world state only if there were successful actions
+        // 5. Resolve quests and clocks once all of this turn's actions are in, then save
         if (hasSuccessfulActions) {
+            result.engineEvents = resolveQuests(worldState);
             await fs.writeFile(worldStatePath, JSON.stringify(worldState, null, 2));
         }
         // 6. Handle failed decision files
@@ -146,14 +166,30 @@ if (import.meta.url === `file://${process.argv[1]}`) {
         console.log('\n✅ AI Response Processing Result:');
         console.log(JSON.stringify(result, null, 2));
         // Write detailed result to file
-        await fs.writeFile('./process_result.json', JSON.stringify(result, null, 2));
-        console.log('\n📁 Result saved to: ./process_result.json');
+        const resultsDir = path.join(process.env.AUTONOMOUS_SESSIONS_DIR || './autonomous_sessions', 'ai_workspace', 'results');
+        await fs.mkdir(resultsDir, { recursive: true });
+        const resultPath = path.join(resultsDir, 'process_result.json');
+        await fs.writeFile(resultPath, JSON.stringify(result, null, 2));
+        console.log(`\n📁 Result saved to: ${resultPath}`);
         // Summary output
         console.log('\n📊 Summary:');
         console.log(`- Processed decisions: ${result.processedDecisions}`);
         console.log(`- Successful actions: ${result.actionsExecuted}`);
         console.log(`- Errors: ${result.errors.length}`);
         console.log(`- Next status: ${result.nextStatus}`);
+        if (result.checks.length > 0) {
+            console.log('\n🎲 Checks:');
+            for (const check of result.checks) {
+                const opposed = check.opposed ? ` vs ${check.opposed.party} ${check.opposed.total}` : '';
+                console.log(`  - ${check.actor} ${check.id}: [${check.rolls.join('+')}]${check.modifier >= 0 ? '+' : ''}${check.modifier} = ${check.total}${opposed} → ${check.outcome}`);
+            }
+        }
+        if (result.engineEvents.length > 0) {
+            console.log('\n📜 Engine events:');
+            for (const event of result.engineEvents) {
+                console.log(`  - [${event.kind}] ${event.summary}`);
+            }
+        }
         if (result.errors.length > 0) {
             console.log('\n❌ Errors encountered:');
             result.errors.forEach((error, index) => {
@@ -203,28 +239,6 @@ async function readAndValidateResponse(filePath) {
     }
     return responseData;
 }
-async function executeAction(response, worldState) {
-    try {
-        // Apply effects to world state
-        for (const effect of response.proposal.effects) {
-            const result = applyEffect(effect, worldState);
-            if (!result.success) {
-                return {
-                    success: false,
-                    error: result.error,
-                    details: result.details
-                };
-            }
-        }
-        return { success: true };
-    }
-    catch (error) {
-        return {
-            success: false,
-            error: error instanceof Error ? error.message : 'Unknown execution error'
-        };
-    }
-}
 /**
  * Classifies error severity for improved error handling
  */
@@ -250,104 +264,6 @@ function classifyErrorSeverity(errorMessage) {
     }
     return 'error';
 }
-function applyEffect(effect, worldState) {
-    const pathParts = effect.target.split('/').filter(p => p);
-    if (pathParts.length < 2) {
-        return {
-            success: false,
-            error: 'Invalid target path',
-            details: {
-                providedPath: effect.target,
-                parsedParts: pathParts,
-                expectedFormat: 'path/to/property (minimum 2 levels)',
-                examples: ['parties/party_id/morale', 'market/currentPrices/wood', 'regions/region_id/occupantParties']
-            }
-        };
-    }
-    try {
-        // Navigate to the target object
-        let current = worldState;
-        for (let i = 0; i < pathParts.length - 1; i++) {
-            if (!(pathParts[i] in current)) {
-                // Special case for party not found
-                if (i === 1 && pathParts[0] === 'parties') {
-                    return {
-                        success: false,
-                        error: `Party not found: ${pathParts[1]}`,
-                        details: {
-                            missingParty: pathParts[1],
-                            availableParties: Object.keys(worldState.parties || {}),
-                            suggestedFix: 'Check party ID spelling or ensure party exists in world state'
-                        }
-                    };
-                }
-                return {
-                    success: false,
-                    error: `Path not found: ${pathParts.slice(0, i + 1).join('/')}`,
-                    details: {
-                        targetPath: effect.target,
-                        failedAt: pathParts.slice(0, i + 1).join('/'),
-                        availableKeys: current && typeof current === 'object' ? Object.keys(current) : 'Not an object'
-                    }
-                };
-            }
-            current = current[pathParts[i]];
-        }
-        const finalKey = pathParts[pathParts.length - 1];
-        // Special validation for currency operations
-        if (finalKey === 'currency' && effect.operation === 'add' && effect.value < 0) {
-            const currentValue = current[finalKey] || 0;
-            if (currentValue + effect.value < 0) {
-                return {
-                    success: false,
-                    error: 'Invalid action: insufficient currency',
-                    details: {
-                        operation: 'currency_payment',
-                        required: Math.abs(effect.value),
-                        available: currentValue,
-                        shortfall: Math.abs(effect.value) - currentValue,
-                        suggestedFix: 'Reduce payment amount or ensure sufficient currency before transaction'
-                    }
-                };
-            }
-        }
-        // Apply the effect
-        if (effect.operation === 'set') {
-            current[finalKey] = effect.value;
-        }
-        else if (effect.operation === 'add') {
-            if (typeof current[finalKey] === 'number') {
-                current[finalKey] += effect.value;
-            }
-            else if (typeof current[finalKey] === 'object' && current[finalKey] !== null) {
-                // For object addition (like materials)
-                if (typeof effect.value === 'object') {
-                    current[finalKey] = { ...current[finalKey], ...effect.value };
-                }
-                else {
-                    current[finalKey] = effect.value;
-                }
-            }
-            else {
-                current[finalKey] = effect.value;
-            }
-        }
-        return { success: true };
-    }
-    catch (error) {
-        return {
-            success: false,
-            error: `Failed to apply effect: ${error instanceof Error ? error.message : 'Unknown error'}`,
-            details: {
-                operation: effect.operation,
-                target: effect.target,
-                value: effect.value,
-                errorType: error instanceof Error ? error.constructor.name : 'Unknown',
-                stack: error instanceof Error ? error.stack : undefined
-            }
-        };
-    }
-}
 async function checkSessionComplete(sessionId) {
     try {
         const AUTONOMOUS_SESSIONS_DIR = process.env.AUTONOMOUS_SESSIONS_DIR || './autonomous_sessions';
@@ -360,21 +276,7 @@ async function checkSessionComplete(sessionId) {
         if (worldState.turn >= metadata.maxTurns) {
             return true;
         }
-        // Check stop conditions
-        if (metadata.stopConditions) {
-            for (const [condition, threshold] of Object.entries(metadata.stopConditions)) {
-                if (condition === 'totalPartyWealth') {
-                    const totalWealth = Object.values(worldState.parties).reduce((sum, party) => {
-                        return sum + (party.resources?.currency || 0);
-                    }, 0);
-                    if (totalWealth >= threshold) {
-                        return true;
-                    }
-                }
-                // Add other stop conditions as needed
-            }
-        }
-        return false;
+        return checkStopConditions(worldState, metadata.stopConditions).completed;
     }
     catch {
         return false;

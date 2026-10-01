@@ -1,3 +1,4 @@
+import { CheckResult, EngineEvent } from './world_rules.js';
 interface ProcessResult {
     processedDecisions: number;
     actionsExecuted: number;
@@ -12,6 +13,9 @@ interface ProcessResult {
     partiallySuccessful: boolean;
     criticalErrorCount: number;
     nextStatus: 'error' | 'error_abort' | 'turn_completed' | 'completed' | 'partial_success';
+    checks: CheckResult[];
+    engineEvents: EngineEvent[];
+    alreadyProcessed: string[];
 }
 export declare function processAiResponses(sessionId: string): Promise<ProcessResult>;
 export {};

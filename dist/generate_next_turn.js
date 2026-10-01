@@ -1,5 +1,7 @@
 import * as fs from 'fs/promises';
 import * as path from 'path';
+import { checkStopConditions, closeSeason, runUpkeep } from './world_rules.js';
+import { readRecentHistory, writeDecisionRequests } from './turn_context.js';
 export async function generateNextTurn(sessionId, targetTurn) {
     const AUTONOMOUS_SESSIONS_DIR = process.env.AUTONOMOUS_SESSIONS_DIR || './autonomous_sessions';
     const sessionDir = path.join(AUTONOMOUS_SESSIONS_DIR, 'sessions', sessionId);
@@ -50,34 +52,41 @@ export async function generateNextTurn(sessionId, targetTurn) {
         const currentTurn = resolvedTargetTurn - 1;
         // Check max turns
         if (resolvedTargetTurn > metadata.maxTurns) {
+            const engineEvents = await closeSeasonIfAny(worldState, worldStatePath);
             return {
                 turnGenerated: currentTurn,
                 requestsCreated: [],
                 status: 'session_complete',
-                completionReason: 'maxTurns'
+                completionReason: 'maxTurns',
+                engineEvents
             };
         }
-        // Check stop conditions
-        const completionCheck = checkStopConditions(worldState, metadata.stopConditions);
+        // Check stop conditions as of the turn about to start
+        const completionCheck = checkStopConditions({ ...worldState, turn: resolvedTargetTurn }, metadata.stopConditions);
         if (completionCheck.completed) {
+            const engineEvents = await closeSeasonIfAny(worldState, worldStatePath);
             return {
                 turnGenerated: currentTurn,
                 requestsCreated: [],
                 status: 'session_complete',
-                completionReason: completionCheck.reason
+                completionReason: completionCheck.reason,
+                engineEvents
             };
         }
-        // 4. Update world state turn
+        // 4. Start-of-turn upkeep: deadlines expire, clocks tick
+        const engineEvents = runUpkeep(worldState, resolvedTargetTurn);
         worldState.turn = resolvedTargetTurn;
         await fs.writeFile(worldStatePath, JSON.stringify(worldState, null, 2));
         // 5. Clean up old request files
         await cleanupOldRequestFiles(workspaceDir);
         // 6. Generate new decision request files
-        const requestsCreated = await generateDecisionRequests(sessionId, resolvedTargetTurn, worldState, workspaceDir);
+        const recentHistory = await readRecentHistory(sessionDir);
+        const requestsCreated = await writeDecisionRequests(sessionId, worldState, path.join(workspaceDir, 'decision_requests'), recentHistory);
         return {
             turnGenerated: resolvedTargetTurn,
             requestsCreated,
-            status: 'ready_for_next_turn'
+            status: 'ready_for_next_turn',
+            engineEvents
         };
     }
     catch (error) {
@@ -90,32 +99,14 @@ export async function generateNextTurn(sessionId, targetTurn) {
         throw new Error(`Failed to generate next turn: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
 }
-function checkStopConditions(worldState, stopConditions) {
-    if (!stopConditions) {
-        return { completed: false };
+async function closeSeasonIfAny(worldState, worldStatePath) {
+    if (!worldState.guild)
+        return [];
+    const events = closeSeason(worldState);
+    if (events.length > 0) {
+        await fs.writeFile(worldStatePath, JSON.stringify(worldState, null, 2));
     }
-    for (const [condition, threshold] of Object.entries(stopConditions)) {
-        switch (condition) {
-            case 'totalPartyWealth':
-                const totalWealth = Object.values(worldState.parties || {}).reduce((sum, party) => {
-                    return sum + (party.resources?.currency || 0);
-                }, 0);
-                if (totalWealth >= threshold) {
-                    return { completed: true, reason: 'totalPartyWealth' };
-                }
-                break;
-            case 'regionDevelopment':
-                const developedRegions = Object.values(worldState.regions || {}).filter((region) => {
-                    return Object.keys(region.influence || {}).length >= threshold;
-                }).length;
-                if (developedRegions >= threshold) {
-                    return { completed: true, reason: 'regionDevelopment' };
-                }
-                break;
-            // Add more stop conditions as needed
-        }
-    }
-    return { completed: false };
+    return events;
 }
 async function cleanupOldRequestFiles(workspaceDir) {
     const requestsDir = path.join(workspaceDir, 'decision_requests');
@@ -142,225 +133,6 @@ async function cleanupOldRequestFiles(workspaceDir) {
     }
     catch (error) {
         console.warn(`⚠️ Warning: Could not clean workspace files: ${error instanceof Error ? error.message : 'Unknown error'}`);
-    }
-}
-async function generateDecisionRequests(sessionId, targetTurn, worldState, workspaceDir) {
-    const requestsCreated = [];
-    const timestamp = new Date().toISOString();
-    const requestsDir = path.join(workspaceDir, 'decision_requests');
-    // Ensure requests directory exists
-    await fs.mkdir(requestsDir, { recursive: true });
-    // Load recent history from playlog
-    const recentHistory = await getRecentHistory(sessionId);
-    // 1. Generate GM request
-    const gmRequestId = `request_GM_${Date.now()}`;
-    const gmRequest = {
-        requestId: gmRequestId,
-        timestamp,
-        sessionId,
-        worldStateFile: `../sessions/${sessionId}/world_current.json`,
-        framework: {
-            role: 'GM'
-        },
-        contextData: generateGMContextData(worldState, recentHistory),
-        instructions: 'worldStateFileを読み込んで世界状態を分析し、適切なフレームワークを適用してGMとしての最適な行動を決定してください'
-    };
-    const gmFileName = `${gmRequestId}.json`;
-    await fs.writeFile(path.join(requestsDir, gmFileName), JSON.stringify(gmRequest, null, 2));
-    requestsCreated.push(gmFileName);
-    // 2. Generate party requests
-    for (const [partyId, party] of Object.entries(worldState.parties || {})) {
-        const partyRequestId = `request_${partyId}_${Date.now() + Math.floor(Math.random() * 1000)}`;
-        const partyRequest = {
-            requestId: partyRequestId,
-            timestamp,
-            sessionId,
-            worldStateFile: `../sessions/${sessionId}/world_current.json`,
-            framework: {
-                role: 'Player',
-                actorId: partyId
-            },
-            contextData: generatePartyContextData(partyId, party, worldState, recentHistory),
-            instructions: 'worldStateFileを読み込んで世界状態を分析し、適切なフレームワークを適用してパーティーとしての最適な行動を決定してください'
-        };
-        const partyFileName = `${partyRequestId}.json`;
-        await fs.writeFile(path.join(requestsDir, partyFileName), JSON.stringify(partyRequest, null, 2));
-        requestsCreated.push(partyFileName);
-    }
-    return requestsCreated;
-}
-function generateGMContextData(worldState, recentHistory) {
-    const market = worldState.market || { currentPrices: {}, priceHistory: [], completedTrades: [] };
-    // Calculate price volatility
-    const priceVolatility = {};
-    for (const resource of Object.keys(market.currentPrices)) {
-        const priceHistory = Array.isArray(market.priceHistory) ? market.priceHistory : [];
-        const recentPrices = priceHistory
-            .slice(-5)
-            .map((entry) => entry[resource])
-            .filter((price) => price !== undefined);
-        if (recentPrices.length > 1) {
-            const avg = recentPrices.reduce((sum, price) => sum + price, 0) / recentPrices.length;
-            const variance = recentPrices.reduce((sum, price) => sum + Math.pow(price - avg, 2), 0) / recentPrices.length;
-            priceVolatility[resource] = Math.sqrt(variance);
-        }
-        else {
-            priceVolatility[resource] = 0;
-        }
-    }
-    // Calculate party distribution across regions
-    const partyDistribution = {};
-    for (const party of Object.values(worldState.parties || {})) {
-        const location = party.location;
-        partyDistribution[location] = (partyDistribution[location] || 0) + 1;
-    }
-    return {
-        marketData: {
-            currentPrices: market.currentPrices,
-            priceHistory: market.priceHistory,
-            totalVolume: Object.values(market.currentPrices).reduce((sum, price) => sum + (price || 0), 0),
-            priceVolatility
-        },
-        worldSummary: {
-            turn: worldState.turn,
-            totalParties: Object.keys(worldState.parties || {}).length,
-            activeRegions: Object.keys(worldState.regions || {}).length,
-            partyDistribution
-        },
-        availableActions: ['price_update', 'environmental_change', 'market_event', 'weather_change', 'discovery_event'],
-        recentHistory: recentHistory.slice(-10) // Last 10 events
-    };
-}
-function generatePartyContextData(partyId, party, worldState, recentHistory) {
-    const currentRegion = worldState.regions?.[party.location];
-    const visibleRegions = getVisibleRegions(party, worldState.regions || {});
-    const availableActions = getAvailableActions(party, worldState.regions || {});
-    // Filter market data to relevant resources
-    const relevantResources = getRelevantResources(party);
-    const filteredPrices = {};
-    for (const resource of relevantResources) {
-        if (worldState.market?.currentPrices?.[resource] !== undefined) {
-            filteredPrices[resource] = worldState.market.currentPrices[resource];
-        }
-    }
-    // Filter recent history for this party
-    const partyRecentHistory = recentHistory.filter(event => event.participants?.includes(partyId) || event.actor === partyId);
-    return {
-        partyState: {
-            id: party.id || partyId,
-            name: party.name || `Party ${partyId}`,
-            location: party.location,
-            resources: party.resources || {},
-            capabilities: party.capabilities || {},
-            morale: party.morale || 5
-        },
-        visibleRegions,
-        marketData: {
-            currentPrices: filteredPrices,
-            recentTrades: Array.isArray(worldState.market?.completedTrades) ? worldState.market.completedTrades.slice(-5) : []
-        },
-        availableActions,
-        recentHistory: partyRecentHistory.slice(-5)
-    };
-}
-function getVisibleRegions(party, regions) {
-    const currentRegion = regions[party.location];
-    if (!currentRegion)
-        return [];
-    const visible = [
-        {
-            id: currentRegion.id,
-            name: currentRegion.name,
-            type: currentRegion.type,
-            isAccessible: true,
-            resources: currentRegion.resources || [],
-            distance: 0,
-            occupants: currentRegion.occupantParties?.length || 0
-        }
-    ];
-    // Add neighboring regions
-    for (const neighborId of currentRegion.neighbors || []) {
-        const neighbor = regions[neighborId];
-        if (neighbor) {
-            visible.push({
-                id: neighbor.id,
-                name: neighbor.name,
-                type: neighbor.type,
-                isAccessible: true,
-                resources: neighbor.resources || [],
-                distance: 1,
-                occupants: neighbor.occupantParties?.length || 0
-            });
-        }
-    }
-    return visible;
-}
-function getAvailableActions(party, regions) {
-    const baseActions = ['explore', 'trade', 'cooperate'];
-    const currentRegion = regions[party.location];
-    if (currentRegion?.neighbors?.length > 0) {
-        baseActions.push('move');
-    }
-    const specialEffects = Array.isArray(currentRegion?.specialEffects) ?
-        currentRegion.specialEffects :
-        (currentRegion?.specialEffects ? Object.values(currentRegion.specialEffects) : []);
-    if (specialEffects.includes('market_access') || specialEffects.includes('enhanced_trade')) {
-        baseActions.push('market_trade');
-    }
-    const resources = Array.isArray(currentRegion?.resources) ?
-        currentRegion.resources :
-        (currentRegion?.resources ? Object.values(currentRegion.resources) : []);
-    if (resources.length > 0) {
-        baseActions.push('extract_resources');
-    }
-    if (currentRegion?.type === 'ruins' || currentRegion?.type === 'dungeon') {
-        baseActions.push('investigate');
-    }
-    return baseActions;
-}
-function getRelevantResources(party) {
-    const baseResources = ['currency'];
-    // Add resources based on party capabilities
-    if (party.capabilities?.crafting > 6) {
-        baseResources.push('ore', 'materials', 'tools');
-    }
-    if (party.capabilities?.exploration > 7) {
-        baseResources.push('gems', 'artifacts', 'maps');
-    }
-    if (party.capabilities?.trade > 6) {
-        baseResources.push('luxury_goods', 'rare_items');
-    }
-    return baseResources;
-}
-async function getRecentHistory(sessionId) {
-    try {
-        const AUTONOMOUS_SESSIONS_DIR = process.env.AUTONOMOUS_SESSIONS_DIR || './autonomous_sessions';
-        const sessionDir = path.join(AUTONOMOUS_SESSIONS_DIR, 'sessions', sessionId);
-        const playlogPath = path.join(sessionDir, 'playlog.jsonl');
-        const content = await fs.readFile(playlogPath, 'utf-8');
-        const lines = content.trim().split('\n').filter(line => line);
-        const recentEvents = [];
-        // Get last 10 events
-        const startIndex = Math.max(0, lines.length - 10);
-        for (let i = startIndex; i < lines.length; i++) {
-            try {
-                const event = JSON.parse(lines[i]);
-                recentEvents.push({
-                    step: event.step,
-                    type: event.type,
-                    participants: event.participants,
-                    actor: event.actor,
-                    description: event.narrative?.basicDescription || `${event.type} action`
-                });
-            }
-            catch {
-                // Skip invalid lines
-            }
-        }
-        return recentEvents;
-    }
-    catch {
-        return []; // No history available
     }
 }
 // CLI interface
@@ -395,8 +167,14 @@ if (import.meta.url === `file://${process.argv[1]}`) {
         console.log('\n✅ Next Turn Generation Result:');
         console.log(JSON.stringify(result, null, 2));
         // Write result to file for inspection
-        await fs.writeFile('./next_turn_result.json', JSON.stringify(result, null, 2));
-        console.log('\n📁 Result saved to: ./next_turn_result.json');
+        const resultsDir = path.join(process.env.AUTONOMOUS_SESSIONS_DIR || './autonomous_sessions', 'ai_workspace', 'results');
+        await fs.mkdir(resultsDir, { recursive: true });
+        const resultPath = path.join(resultsDir, 'next_turn_result.json');
+        await fs.writeFile(resultPath, JSON.stringify(result, null, 2));
+        console.log(`\n📁 Result saved to: ${resultPath}`);
+        for (const event of result.engineEvents || []) {
+            console.log(`📜 [${event.kind}] ${event.summary}`);
+        }
         if (result.status === 'session_complete') {
             console.log(`\n🏁 Session completed: ${result.completionReason}`);
         }

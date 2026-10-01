@@ -29,6 +29,62 @@ export declare const DecisionResponseSchema: {
                     };
                     minItems: number;
                 };
+                checks: {
+                    type: string;
+                    maxItems: number;
+                    description: string;
+                    items: {
+                        type: string;
+                        required: string[];
+                        properties: {
+                            id: {
+                                type: string;
+                                minLength: number;
+                            };
+                            description: {
+                                type: string;
+                            };
+                            actor: {
+                                type: string;
+                            };
+                            capability: {
+                                type: string;
+                            };
+                            situational: {
+                                type: string;
+                                minimum: number;
+                                maximum: number;
+                            };
+                            opposedBy: {
+                                type: string;
+                                required: string[];
+                                properties: {
+                                    party: {
+                                        type: string;
+                                    };
+                                    capability: {
+                                        type: string;
+                                    };
+                                };
+                            };
+                            outcomes: {
+                                type: string;
+                                required: string[];
+                                properties: {
+                                    success: {
+                                        type: string;
+                                    };
+                                    partial: {
+                                        type: string;
+                                    };
+                                    failure: {
+                                        type: string;
+                                    };
+                                };
+                            };
+                        };
+                    };
+                };
                 effects: {
                     type: string;
                     items: {
@@ -127,6 +183,7 @@ export declare function validateDecisionResponse(data: any): {
     valid: boolean;
     errors: string[];
 };
+export declare function validateChecks(checks: any): string[];
 export declare function validateEffect(effect: any): string[];
 export declare function validateJsonSafety(jsonString: string): {
     valid: boolean;

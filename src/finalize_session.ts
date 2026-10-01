@@ -1,5 +1,6 @@
 import * as fs from 'fs/promises';
 import * as path from 'path';
+import { closeSeason } from './world_rules.js';
 
 interface FinalizeResult {
   sessionId: string;
@@ -72,8 +73,20 @@ async function saveFinalWorldState(sessionDir: string): Promise<void> {
     throw new Error('world_current.json not found');
   }
 
+  let worldContent = await fs.readFile(currentWorldPath, 'utf-8');
+
+  // Record season standings and promotions if the world runs a guild season
+  try {
+    const world = JSON.parse(worldContent);
+    if (world.guild && closeSeason(world).length > 0) {
+      worldContent = JSON.stringify(world, null, 2);
+      await fs.writeFile(currentWorldPath, worldContent);
+    }
+  } catch {
+    // Non-JSON or legacy world: copy as-is
+  }
+
   // Copy current world state to final world state
-  const worldContent = await fs.readFile(currentWorldPath, 'utf-8');
   await fs.writeFile(finalWorldPath, worldContent);
 }
 

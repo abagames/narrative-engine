@@ -27,6 +27,39 @@ export const DecisionResponseSchema = {
                     items: { type: "string" },
                     minItems: 1,
                 },
+                checks: {
+                    type: "array",
+                    maxItems: 2,
+                    description: "Uncertain attempts. The engine rolls 2d6 + capability modifier + situational and applies exactly one outcome branch.",
+                    items: {
+                        type: "object",
+                        required: ["id", "actor", "capability", "outcomes"],
+                        properties: {
+                            id: { type: "string", minLength: 1 },
+                            description: { type: "string" },
+                            actor: { type: "string" },
+                            capability: { type: "string" },
+                            situational: { type: "number", minimum: -1, maximum: 1 },
+                            opposedBy: {
+                                type: "object",
+                                required: ["party", "capability"],
+                                properties: {
+                                    party: { type: "string" },
+                                    capability: { type: "string" },
+                                },
+                            },
+                            outcomes: {
+                                type: "object",
+                                required: ["success", "partial", "failure"],
+                                properties: {
+                                    success: { type: "array" },
+                                    partial: { type: "array" },
+                                    failure: { type: "array" },
+                                },
+                            },
+                        },
+                    },
+                },
                 effects: {
                     type: "array",
                     items: {
@@ -156,7 +189,61 @@ export function validateDecisionResponse(data) {
             });
         }
     }
+    if (data.proposal && data.proposal.checks !== undefined) {
+        validateChecks(data.proposal.checks).forEach((error) => errors.push(error));
+    }
     return { valid: errors.length === 0, errors };
+}
+export function validateChecks(checks) {
+    const errors = [];
+    if (!Array.isArray(checks)) {
+        errors.push("proposal.checks must be an array");
+        return errors;
+    }
+    if (checks.length > 2) {
+        errors.push("proposal.checks may contain at most 2 checks");
+    }
+    checks.forEach((check, index) => {
+        const where = `Check ${index}`;
+        if (!check || typeof check !== "object") {
+            errors.push(`${where}: must be an object`);
+            return;
+        }
+        for (const field of ["id", "actor", "capability"]) {
+            if (!check[field] || typeof check[field] !== "string") {
+                errors.push(`${where}: ${field} is required and must be a string`);
+            }
+        }
+        if (check.situational !== undefined) {
+            if (typeof check.situational !== "number" || check.situational < -1 || check.situational > 1) {
+                errors.push(`${where}: situational must be a number between -1 and 1`);
+            }
+        }
+        if (check.opposedBy !== undefined) {
+            if (!check.opposedBy ||
+                typeof check.opposedBy.party !== "string" ||
+                typeof check.opposedBy.capability !== "string") {
+                errors.push(`${where}: opposedBy must have party and capability strings`);
+            }
+        }
+        if (!check.outcomes || typeof check.outcomes !== "object") {
+            errors.push(`${where}: outcomes with success, partial and failure arrays is required`);
+            return;
+        }
+        for (const outcome of ["success", "partial", "failure"]) {
+            const branch = check.outcomes[outcome];
+            if (!Array.isArray(branch)) {
+                errors.push(`${where}: outcomes.${outcome} must be an array (declare every outcome before the roll)`);
+                continue;
+            }
+            branch.forEach((effect, effectIndex) => {
+                validateEffect(effect).forEach((error) => {
+                    errors.push(`${where} ${outcome} effect ${effectIndex}: ${error}`);
+                });
+            });
+        }
+    });
+    return errors;
 }
 export function validateEffect(effect) {
     const errors = [];
