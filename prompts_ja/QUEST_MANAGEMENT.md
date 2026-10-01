@@ -78,7 +78,7 @@
 | `quests/*/contract` | GM | `true`: ドラフトでのみ取れる専属依頼（`DRAFT_SYSTEM.md`） |
 | `quests/*/offeredTo` | GM | 空または未指定なら掲示板に公開。指定すると非公開の依頼になり、そのパーティーだけが見て受注できる |
 | `quests/*/acceptedBy`、`abandonedBy` | パーティー（自分のみ）、GM | 1パーティーの受注中依頼は最大2件。放棄した依頼は再受注できない |
-| `quests/*/progress/*` | checkの結果のみ | 0未満にはならない |
+| `quests/*/progress/*` | 依頼の場所でのcheckの結果のみ | ターン終了時に0未満を0に丸める。応答の処理順は結果に影響しない |
 | `quests/*/status`、`completedBy`、`resolvedTurn` | エンジン | `open` → `accepted` → `completed` / `failed` / `expired` |
 | `quests/*/secret/revealedTo` | checkの結果（パーティーが自分を追加）、GM | パーティーには明かされた後でのみ`secret`が見える |
 | `parties/*/reputation` | エンジン（報酬）、GM | シーズンの順位を決める |

@@ -222,4 +222,21 @@ async function getPreservedFiles(sessionDir) {
     }
     return preservedFiles;
 }
+// CLI interface
+if (import.meta.url === `file://${process.argv[1]}`) {
+    const sessionId = process.argv[2];
+    if (!sessionId) {
+        console.error('Usage: npx tsx src/finalize_session.ts <sessionId>');
+        process.exit(1);
+    }
+    finalizeSession(sessionId)
+        .then(result => {
+        console.log('✅ Session finalized');
+        console.log(JSON.stringify(result, null, 2));
+    })
+        .catch(error => {
+        console.error('❌ Failed to finalize session:', error instanceof Error ? error.message : error);
+        process.exit(1);
+    });
+}
 //# sourceMappingURL=finalize_session.js.map

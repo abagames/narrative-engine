@@ -330,7 +330,8 @@ export function validateEffect(effect: any): string[] {
     }
 
     const pathParts = effect.target.split("/").filter((p) => p);
-    if (pathParts.length < 2) {
+    // The draft setup is the one top-level value written whole
+    if (pathParts.length < 2 && effect.target !== "draft") {
       errors.push(
         'target path must have at least 2 levels (e.g., "parties/party_id")'
       );

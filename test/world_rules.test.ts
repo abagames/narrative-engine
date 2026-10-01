@@ -213,6 +213,16 @@ describe('world_rules: executeResponse', () => {
     expect(a.checks![0].rolls).toEqual(b.checks![0].rolls);
   });
 
+  it('a GM-imposed check does not reuse the party\'s own dice', () => {
+    const differs = [1, 2, 3, 4, 5, 6, 7, 8].some(seed => {
+      const world = createWorld(seed);
+      const own = rollCheck(world, progressCheck('iron_wolves', 'escort_vell'), 'r', 0, 'Player');
+      const imposed = rollCheck(world, progressCheck('iron_wolves', 'escort_vell'), 'r', 0, 'GM');
+      return own.rolls.join() !== imposed.rolls.join();
+    });
+    expect(differs).toBe(true);
+  });
+
   it('rejects quest progress written outside a check', () => {
     const world = createWorld();
     const result = executeResponse(
@@ -314,6 +324,24 @@ describe('world_rules: executeResponse', () => {
     const world = createWorld(seedFor('success', progressCheck('iron_wolves', 'escort_vell'), 'request_iron_wolves_1'));
     world.parties.iron_wolves.location = 'old_road';
     const result = executeResponse(playerResponse('iron_wolves', [], [progressCheck('iron_wolves', 'escort_vell')]), world);
+    expect(result.success).toBe(false);
+    expect(result.error).toContain('must be pursued at harbor');
+  });
+
+  it('sabotage also requires being at the quest site', () => {
+    const world = createWorld();
+    world.quests.escort_vell.progress = { iron_wolves: 2 };
+    world.parties.ash_lanterns.location = 'old_road';
+    const sabotage: CheckDeclaration = {
+      id: 'remote', actor: 'ash_lanterns', capability: 'exploration',
+      opposedBy: { party: 'iron_wolves', capability: 'exploration' },
+      outcomes: {
+        success: [{ target: 'quests/escort_vell/progress/iron_wolves', operation: 'add', value: -1 }],
+        partial: [{ target: 'quests/escort_vell/progress/iron_wolves', operation: 'add', value: -1 }],
+        failure: [{ target: 'quests/escort_vell/progress/iron_wolves', operation: 'add', value: -1 }]
+      }
+    };
+    const result = executeResponse(playerResponse('ash_lanterns', [], [sabotage]), world);
     expect(result.success).toBe(false);
     expect(result.error).toContain('must be pursued at harbor');
   });
@@ -456,6 +484,39 @@ describe('world_rules: quests, clocks and seasons', () => {
     expect(world.clocks.smugglers_rise.filled).toBe(2);
     expect(events.map(e => e.kind)).toEqual(expect.arrayContaining(['quest_completed', 'quest_failed', 'clock_ticked']));
     expect(world.chronicle.length).toBe(events.length);
+  });
+
+  it('sabotage and progress in the same turn give the same result in any order', () => {
+    const sabotage: CheckDeclaration = {
+      id: 'sabotage', actor: 'silver_quill', capability: 'exploration',
+      opposedBy: { party: 'iron_wolves', capability: 'exploration' },
+      outcomes: {
+        success: [{ target: 'quests/seal_the_breach/progress/iron_wolves', operation: 'add', value: -1 }],
+        partial: [{ target: 'quests/seal_the_breach/progress/iron_wolves', operation: 'add', value: -1 }],
+        failure: [{ target: 'quests/seal_the_breach/progress/iron_wolves', operation: 'add', value: -1 }]
+      }
+    };
+    const push: CheckDeclaration = {
+      id: 'push', actor: 'iron_wolves', capability: 'combat',
+      outcomes: {
+        success: [{ target: 'quests/seal_the_breach/progress/iron_wolves', operation: 'add', value: 1 }],
+        partial: [{ target: 'quests/seal_the_breach/progress/iron_wolves', operation: 'add', value: 1 }],
+        failure: [{ target: 'quests/seal_the_breach/progress/iron_wolves', operation: 'add', value: 1 }]
+      }
+    };
+    const run = (order: string[]) => {
+      const world = createWorld(5);
+      for (const who of order) {
+        const result = who === 'quill'
+          ? executeResponse(playerResponse('silver_quill', [], [sabotage]), world)
+          : executeResponse(playerResponse('iron_wolves', [], [push]), world);
+        expect(result.success).toBe(true);
+      }
+      resolveQuests(world);
+      return world.quests.seal_the_breach.progress.iron_wolves;
+    };
+    expect(run(['quill', 'wolves'])).toBe(0);
+    expect(run(['wolves', 'quill'])).toBe(0);
   });
 
   it('settles a simultaneous finish by roll', () => {

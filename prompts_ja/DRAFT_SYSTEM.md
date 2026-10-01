@@ -24,7 +24,7 @@ GMが候補を用意する（draft.status = "pending"）
 
 | 種別 | `pick.kind` | 指名の効果 |
 |---|---|---|
-| 専属依頼 | `contract` | その依頼を受けられる唯一のパーティーになる（`acceptedBy`と`offeredTo`が自分）。受注中依頼2件の枠に数える |
+| 専属依頼 | `contract` | その依頼を受けられる唯一のパーティーになる（`acceptedBy`が自分）。指名は公開されるので、競合相手も誰が持っているかを知る。受注中依頼2件の枠に数える |
 | 冒険者 | `recruit` | `term`ターンの間パーティーに加わる。checkでの能力値を冒険者の`grants.capabilities`まで引き上げ、行動を解禁することもある（`unlocks`）。最大2人 |
 | アイテム | `item` | 唯一品。`bonus.capability`のcheckに+1 |
 | 情報 | `intel` | 事実が自分の`knowledge`に加わる。他のパーティーには「情報を買った」ことしか伝わらない。誤りの場合もある |

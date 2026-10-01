@@ -265,8 +265,9 @@ export function applyDraftResponse(world, partyId, input, meta = {}) {
         const quest = world.quests[invite.questId];
         if (answer.accept) {
             invite.status = 'accepted';
+            // Public like every pick; locked to the pair like a contract
             quest.acceptedBy = [invite.from, invite.to];
-            quest.offeredTo = [invite.from, invite.to];
+            quest.contract = true;
             quest.status = 'accepted';
             usedPick = actor.mode === 'pick';
             draft.picks.push({ index: draft.pickIndex, party: partyId, kind: 'accept_invite', inviteId: invite.id, id: invite.questId, target: invite.from, ...meta });
@@ -283,9 +284,10 @@ export function applyDraftResponse(world, partyId, input, meta = {}) {
         const record = { index: draft.pickIndex, party: partyId, kind, ...(id ? { id } : {}), ...(target ? { target } : {}), ...meta };
         switch (kind) {
             case 'contract': {
+                // Draft picks are public, so the contract stays visible on the board;
+                // being a contract, nobody else can accept it
                 const quest = world.quests[id];
                 quest.acceptedBy = [partyId];
-                quest.offeredTo = [partyId];
                 quest.status = 'accepted';
                 removeFromPool(draft, 'contracts', id);
                 events.push(event(world, 'draft_pick', `${partyId} takes the contract "${quest.title || id}"`, [partyId]));

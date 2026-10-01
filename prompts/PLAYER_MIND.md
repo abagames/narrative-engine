@@ -441,8 +441,8 @@ Switch to GM Perspective:
 | `parties/<self>/reputation`, `capabilities` | ❌ | ❌ |
 | `quests/<id>/acceptedBy`, `abandonedBy` (add yourself) | ✅ | ✅ |
 | `quests/<id>/progress/<self>` | ❌ | ✅ (you must be at the quest location) |
-| `quests/<id>/progress/<other>` positive (assist) | ❌ | ✅ |
-| `quests/<id>/progress/<rival>` negative, `parties/<rival>/morale/resources/inventory` | ❌ | ✅ only with `opposedBy` = that rival |
+| `quests/<id>/progress/<other>` positive (assist) | ❌ | ✅ (at the quest location) |
+| `quests/<id>/progress/<rival>` negative, `parties/<rival>/morale/resources/inventory` | ❌ | ✅ only with `opposedBy` = that rival (progress: at the quest location) |
 | `quests/<id>/secret/revealedTo` (add yourself) | ❌ | ✅ |
 | `relationships/<pair containing you>/...` | ✅ | ✅ |
 | `favors/<id>` (a debt you owe), `favors/<id>/status` (your debt) | ✅ | ✅ |
@@ -503,5 +503,5 @@ Switch to GM Perspective:
 1. **Path notation**: No leading slash; at least two levels
 2. **Permissions**: Check the table above. `Permission denied` names the reason
 3. **Checks**: `actor` is your own party; all three outcomes present; at most 2 checks
-4. **Location**: Quest progress requires being at the quest's `location`; moves go to neighbors only
+4. **Location**: Any change to quest progress (yours, an ally's or a rival's) requires being at the quest's `location`; moves go to neighbors only
 5. **Balances**: No resource may go below zero; the whole response is rejected if one does

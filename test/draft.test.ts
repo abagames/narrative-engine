@@ -110,7 +110,6 @@ describe('draft rules', () => {
     expect(checkModifier(world, 'quill', 'investigation').modifier).toBe(2); // +1 capability, +1 lantern
 
     expect(world.quests.rob_caravan.acceptedBy).toEqual(['lanterns']);
-    expect(world.quests.rob_caravan.offeredTo).toEqual(['lanterns']);
     expect(world.draft.pool.contracts).toEqual(['guard_caravan']);
 
     expect(world.recruits.sister_ilse).toMatchObject({ status: 'hired', hiredBy: 'wolves', hiredUntilTurn: 3 });
@@ -184,6 +183,19 @@ describe('draft rules', () => {
     expect(world.favors.f1.status).toBe('repaid');
     expect(world.draft.status).toBe('picking');
     expect(currentDraftActors(world)[0].party).toBe('wolves');
+  });
+
+  it('the GM can set up the next draft with a single effect', () => {
+    const world = draftWorld();
+    world.draft = { status: 'closed' };
+    const result = executeResponse(
+      { requestId: 'request_GM_1', proposal: { type: 'prepare_draft', participants: ['GM'], effects: [
+        { target: 'draft', operation: 'set', value: { status: 'pending', picksPerParty: 1, pool: { items: ['warded_lantern'] } } }
+      ] } },
+      world
+    );
+    expect(result.success).toBe(true);
+    expect(world.draft.status).toBe('pending');
   });
 
   it('contracts cannot be accepted outside the draft', () => {
@@ -344,8 +356,10 @@ describe('draft through the tools (integration)', () => {
     const quillFile = files.find(f => f.startsWith('request_quill_'))!;
     const quillRequest = JSON.parse(await fs.readFile(path.join(requestsDir, quillFile), 'utf-8'));
     const board = quillRequest.contextData.guildBoard.map((q: any) => q.id);
-    expect(board).toContain('guard_caravan');
-    expect(board).not.toContain('rob_caravan'); // the Lanterns' contract is private
+    expect(board).toEqual(expect.arrayContaining(['guard_caravan', 'rob_caravan'])); // drafted contracts are public knowledge
+    const rob = quillRequest.contextData.guildBoard.find((q: any) => q.id === 'rob_caravan');
+    expect(rob.acceptedBy).toEqual(['lanterns']);
+    expect(rob.conflictsWith).toBeUndefined();
 
     // And the following call moves on to turn 2
     const world1 = JSON.parse(await fs.readFile(path.join(sessionDir, 'world_current.json'), 'utf-8'));

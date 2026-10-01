@@ -209,13 +209,16 @@ export function rollCheck(
   world: any,
   check: CheckDeclaration,
   requestId: string,
-  index: number
+  index: number,
+  role: 'GM' | 'Player' = 'Player'
 ): CheckResult {
   const seed = ensureSeed(world);
   const turn = Number(world.turn) || 0;
   const situational = Math.max(-SITUATIONAL_LIMIT, Math.min(SITUATIONAL_LIMIT, check.situational ?? 0));
 
-  const rolls = rollDice(seed, `t${turn}:${check.actor}:c${index}`);
+  // GM-imposed checks use their own stream so they never mirror the party's own check
+  const stream = role === 'GM' ? 'gm:' : '';
+  const rolls = rollDice(seed, `t${turn}:${stream}${check.actor}:c${index}`);
   const actorMod = checkModifier(world, check.actor, check.capability);
   const modifier = actorMod.modifier + situational;
   const total = sum(rolls) + modifier;
@@ -237,7 +240,7 @@ export function rollCheck(
   }
 
   if (check.opposedBy) {
-    const oppRolls = rollDice(seed, `t${turn}:${check.opposedBy.party}:vs:${check.actor}:c${index}`);
+    const oppRolls = rollDice(seed, `t${turn}:${stream}${check.opposedBy.party}:vs:${check.actor}:c${index}`);
     const oppModifier = checkModifier(world, check.opposedBy.party, check.opposedBy.capability).modifier;
     const oppTotal = sum(oppRolls) + oppModifier;
     result.opposed = {
@@ -546,6 +549,12 @@ function checkPlayerPermission(
 
 export function applyEffect(effect: Effect, world: any): RuleError | null {
   const parts = splitPath(effect.target);
+  if (parts.length === 1 && parts[0] === 'draft') {
+    // The draft setup is written whole: { status: "pending", picksPerParty, pool }
+    if (effect.operation !== 'set') return { error: 'The draft setup can only be set as a whole' };
+    world.draft = effect.value;
+    return null;
+  }
   if (parts.length < 2) {
     return {
       error: 'Invalid target path',
@@ -816,7 +825,9 @@ export function enforceInvariants(before: any, draft: any, actor: Actor): RuleEr
     quest.status = 'accepted';
   }
 
-  // Progress requires presence at the quest site; it never drops below zero
+  // Progress requires presence at the quest site. It may dip below zero while a
+  // turn's responses are applied, and is clamped once at the end of the turn so
+  // that the order in which responses are processed does not matter
   for (const [questId, quest] of Object.entries<any>(draft.quests)) {
     const prevProgress = before.quests?.[questId]?.progress || {};
     for (const [partyId, value] of Object.entries<any>(quest.progress)) {
@@ -824,7 +835,8 @@ export function enforceInvariants(before: any, draft: any, actor: Actor): RuleEr
         return { error: `Invalid progress value for ${partyId} on ${questId}`, details: { value } };
       }
       const delta = value - (prevProgress[partyId] || 0);
-      if (delta > 0 && quest.location && actor.role === 'Player') {
+      // Advancing, assisting and sabotaging all happen at the quest site
+      if (delta !== 0 && quest.location && actor.role === 'Player') {
         const loc = draft.parties?.[actor.partyId!]?.location;
         if (loc !== quest.location) {
           return {
@@ -836,7 +848,6 @@ export function enforceInvariants(before: any, draft: any, actor: Actor): RuleEr
       if (delta !== 0 && !(quest.acceptedBy || []).includes(partyId)) {
         return { error: `${partyId} has not accepted quest ${questId}`, details: { questId } };
       }
-      if (value < 0) quest.progress[partyId] = 0;
     }
   }
 
@@ -951,7 +962,7 @@ export function executeResponse(response: any, world: any): ExecutionResult {
 
   const results: CheckResult[] = [];
   for (let i = 0; i < checks.length; i++) {
-    const result = rollCheck(draft, checks[i], response.requestId, i);
+    const result = rollCheck(draft, checks[i], response.requestId, i, actor.role);
     results.push(result);
     for (const effect of checks[i].outcomes[result.outcome]) {
       const err = applyEffect(effect, draft);
@@ -1077,6 +1088,12 @@ function completeQuest(world: any, quest: any, winners: string[], shares: Record
 export function resolveQuests(world: any): EngineEvent[] {
   normalizeWorld(world);
   const events: EngineEvent[] = [];
+
+  for (const quest of Object.values<any>(world.quests)) {
+    for (const [partyId, value] of Object.entries<any>(quest.progress || {})) {
+      if (value < 0) quest.progress[partyId] = 0;
+    }
+  }
   const seed = ensureSeed(world);
   const turn = Number(world.turn) || 0;
 

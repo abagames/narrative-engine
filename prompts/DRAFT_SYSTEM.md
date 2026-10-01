@@ -24,7 +24,7 @@ GM prepares the pool (draft.status = "pending")
 
 | Kind | `pick.kind` | Effect of picking |
 |---|---|---|
-| Contract | `contract` | You become the only party who can take this quest (`acceptedBy` and `offeredTo` = you). Counts toward the 2 active quests |
+| Contract | `contract` | You become the only party who can take this quest (`acceptedBy` = you). The pick is public, so rivals know you hold it. Counts toward the 2 active quests |
 | Recruit | `recruit` | Joins your party for `term` turns. Raises your capability to the recruit's `grants.capabilities` for checks, and may unlock actions (`unlocks`). Max 2 recruits |
 | Item | `item` | Unique. +1 on checks with its `bonus.capability` |
 | Intel | `intel` | A fact is added to your `knowledge`. Others only learn that you bought intel. It may be false |

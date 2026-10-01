@@ -441,8 +441,8 @@ GM視点への切り替え：
 | `parties/<自分>/reputation`、`capabilities` | ❌ | ❌ |
 | `quests/<id>/acceptedBy`、`abandonedBy`（自分を追加） | ✅ | ✅ |
 | `quests/<id>/progress/<自分>` | ❌ | ✅（依頼の場所にいること） |
-| `quests/<id>/progress/<他者>`への加算（支援） | ❌ | ✅ |
-| `quests/<id>/progress/<競合相手>`の減算、`parties/<競合相手>/morale・resources・inventory` | ❌ | ✅ `opposedBy`がその相手の場合のみ |
+| `quests/<id>/progress/<他者>`への加算（支援） | ❌ | ✅（依頼の場所にいること） |
+| `quests/<id>/progress/<競合相手>`の減算、`parties/<競合相手>/morale・resources・inventory` | ❌ | ✅ `opposedBy`がその相手の場合のみ（進捗は依頼の場所で） |
 | `quests/<id>/secret/revealedTo`（自分を追加） | ❌ | ✅ |
 | `relationships/<自分を含むペア>/...` | ✅ | ✅ |
 | `favors/<id>`（自分が負う借り）、`favors/<id>/status`（自分の借り） | ✅ | ✅ |
@@ -503,5 +503,5 @@ GM視点への切り替え：
 1. **パス記法**: 先頭スラッシュなし。2階層以上
 2. **権限**: 上の表を確認する。`Permission denied`には理由が示される
 3. **check**: `actor`は自パーティー。3つの結果がすべてある。最大2つ
-4. **場所**: 依頼の進捗には依頼の`location`にいる必要がある。移動先は隣接地域のみ
+4. **場所**: 依頼の進捗を変える（自分・味方・競合相手のいずれでも）には依頼の`location`にいる必要がある。移動先は隣接地域のみ
 5. **残高**: 資源は0未満にできない。1つでも下回れば応答全体が拒否される

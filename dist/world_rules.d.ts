@@ -99,7 +99,7 @@ export declare function checkModifier(world: any, partyId: string, capability: s
     recruit?: string;
     item?: string;
 };
-export declare function rollCheck(world: any, check: CheckDeclaration, requestId: string, index: number): CheckResult;
+export declare function rollCheck(world: any, check: CheckDeclaration, requestId: string, index: number, role?: 'GM' | 'Player'): CheckResult;
 export declare function identifyActor(response: any, world: any): Actor | RuleError;
 interface PermissionContext {
     viaCheck?: CheckDeclaration;

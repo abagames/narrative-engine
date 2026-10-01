@@ -78,7 +78,7 @@ This document defines the world's central mechanism: **parties compete and coope
 | `quests/*/contract` | GM | `true`: an exclusive contract taken only in the draft (`DRAFT_SYSTEM.md`) |
 | `quests/*/offeredTo` | GM | Empty or absent: public on the board. Non-empty: a private offer that only those parties see and may accept |
 | `quests/*/acceptedBy`, `abandonedBy` | Party (itself only), GM | Max 2 active quests per party. An abandoned quest cannot be taken up again |
-| `quests/*/progress/*` | Check outcomes only | Clamped at 0 |
+| `quests/*/progress/*` | Check outcomes only, at the quest location | Clamped at 0 at the end of the turn, so the order of responses does not matter |
 | `quests/*/status`, `completedBy`, `resolvedTurn` | Engine | `open` → `accepted` → `completed` / `failed` / `expired` |
 | `quests/*/secret/revealedTo` | Check outcomes (party adds itself), GM | Parties see `secret` only once revealed to them |
 | `parties/*/reputation` | Engine (rewards), GM | Decides the season standings |
