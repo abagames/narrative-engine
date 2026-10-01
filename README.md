@@ -42,14 +42,17 @@ The following directories contain replays of TRPG sessions actually generated an
 
 ## 🏗️ System Architecture
 
-### Region Graph-Based Life Simulation
+### Quest-Driven World Simulation
 
-Narrative Engine implements a region graph-based life simulation engine with economic, social, and exploration mechanics:
+Parties compete and cooperate over guild quests in a region graph. AI agents decide what their characters attempt; the engine decides what happens.
 
-- **Regional System**: Party activities in interconnected regions
-- **Economic System**: Dynamic pricing, trading, resource management
-- **Social System**: Guilds, alliances, competition, achievement systems
-- **Exploration System**: Collaborative exploration, discovery, adventure management
+- **Quest Board**: Exclusive races, joint quests split by effort, colliding quests that cannot both succeed, clients with hidden motives
+- **Engine Adjudication**: Uncertain attempts are declared as checks with success / partial / failure effects written before a seeded 2d6 roll. Resubmitting cannot reroll
+- **Permissions & Invariants**: Parties change only their own state; harming a rival requires an opposed check; quest progress comes only from checks; responses apply all-or-nothing
+- **World Pressure**: Deadlines expire, progress clocks advance and trigger, failed quests escalate; consequences stand
+- **Unequal Information**: Parties see a public quest board, rough rival progress and their own (possibly false) knowledge; the GM sees everything
+- **Season & Standings**: Reputation from quests decides who is promoted at season end
+- **Regional & Social Systems**: Movement along the region graph, relationships, favors owed, NPC clients who remember; the market is optional background
 
 ### AI Agent Thinking Framework
 
@@ -79,7 +82,7 @@ Narrative Engine implements a region graph-based life simulation engine with eco
 
 - **Guild Management** ([prompts/GUILD_MANAGEMENT.md](prompts/GUILD_MANAGEMENT.md)): Guild operations, member management
 - **Alliance Strategy** ([prompts/ALLIANCE_STRATEGY.md](prompts/ALLIANCE_STRATEGY.md)): Diplomacy with other parties
-- **Quest Management** ([prompts/QUEST_MANAGEMENT.md](prompts/QUEST_MANAGEMENT.md)): Goal setting, progress management
+- **Quest Management** ([prompts/QUEST_MANAGEMENT.md](prompts/QUEST_MANAGEMENT.md)): World data model, checks, permissions, quest lifecycle, stop conditions
 - **Competitive Events** ([prompts/COMPETITIVE_EVENTS.md](prompts/COMPETITIVE_EVENTS.md)): Inter-party competition
 
 #### Narrative Generation
@@ -112,10 +115,12 @@ autonomous_sessions/
 | Tool                                                     | Function                                     |
 | -------------------------------------------------------- | -------------------------------------------- |
 | [`start_session.ts`](src/start_session.ts)               | Session initialization, world state creation |
-| [`process_ai_responses.ts`](src/process_ai_responses.ts) | Process AI decisions, update world state     |
+| [`process_ai_responses.ts`](src/process_ai_responses.ts) | Validate permissions, roll checks, update world state, resolve quests |
 | [`generate_next_turn.ts`](src/generate_next_turn.ts)     | Generate next turn, create decision requests |
 | [`append_playlog.ts`](src/append_playlog.ts)             | Record play log, add narrative               |
-| [`finalize_session.ts`](src/finalize_session.ts)         | Session completion processing                |
+| [`finalize_session.ts`](src/finalize_session.ts)         | Session completion processing, season standings |
+| [`world_rules.ts`](src/world_rules.ts)                   | Engine rules used by the tools: dice, permissions, invariants, quests, clocks |
+| [`turn_context.ts`](src/turn_context.ts)                 | Decision request context (public quest board for parties, full board for GM) |
 
 ## 🎯 Execution Workflow
 

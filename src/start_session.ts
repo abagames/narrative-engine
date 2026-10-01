@@ -151,6 +151,11 @@ function validateQuestSetup(world: any): void {
         throw new Error(`Quest ${questId} conflicts with unknown quest: ${other}`);
       }
     }
+    for (const partyId of quest.offeredTo || []) {
+      if (!world.parties?.[partyId]) {
+        throw new Error(`Quest ${questId} offered to unknown party: ${partyId}`);
+      }
+    }
     for (const partyId of quest.acceptedBy || []) {
       if (!world.parties?.[partyId]) {
         throw new Error(`Quest ${questId} accepted by unknown party: ${partyId}`);
@@ -214,7 +219,12 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   console.log(`📂 Sessions directory: ${process.env.AUTONOMOUS_SESSIONS_DIR || './autonomous_sessions'}`);
 
   startSession(worldInitialPath, sessionConfigPath)
-    .then(result => {
+    .then(async result => {
+      const resultsDir = path.join(result.workspaceDir, 'results');
+      await fs.mkdir(resultsDir, { recursive: true });
+      const resultPath = path.join(resultsDir, 'session_result.json');
+      await fs.writeFile(resultPath, JSON.stringify(result, null, 2));
+
       console.log('\n✅ Session successfully started!');
       console.log('\n📊 Session Details:');
       console.log(`  • Session ID: ${result.sessionId}`);
@@ -237,7 +247,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
         console.log(`  ${index + 1}. ${file}`);
       });
 
-      console.log(`\n💾 Result saved to: ${result.workspaceDir}/results/session_result.json`);
+      console.log(`\n💾 Result saved to: ${resultPath}`);
     })
     .catch(error => {
       console.error('\n❌ Failed to start session:');

@@ -82,6 +82,11 @@ interface PermissionContext {
     viaCheck?: CheckDeclaration;
 }
 /**
+ * A quest with a non-empty `offeredTo` list is a private offer: only those
+ * parties see it on the board and may accept it.
+ */
+export declare function isOfferedTo(quest: any, partyId: string): boolean;
+/**
  * Returns null when the effect is allowed, otherwise an error.
  */
 export declare function checkPermission(actor: Actor, effect: Effect, world: any, ctx?: PermissionContext): RuleError | null;

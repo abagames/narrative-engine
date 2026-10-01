@@ -190,19 +190,25 @@
 ### 段階1: データ準備
 ```
 for each entry in playlog.entries:
-  if focusPartyId in entry.participants:
-    extract relevant context from entry.meta.llmDecision
-    extract narrative elements from entry.narrative
-    identify other parties involved
-    calculate resource/relationship changes
+  for each action in entry.actions:
+    if action.actor == focusPartyId or focusPartyId in action.participants:
+      extract reasoning and character voices from action
+      extract check results (dice, outcome) from action.checks
+  extract narrative elements from entry.narrative
+  extract quest resolutions and clock events from entry.engineEvents
+  identify other parties involved
+  calculate quest progress, reputation and relationship changes
 ```
 
 ### 段階2: 物語構築
 ```
+choose the spine: the 1-2 quests or rivalries that most shaped the focus party
 group entries by narrative arc (5-8 turns per chapter)
 for each chapter:
-  identify central theme/conflict
-  select representative key moments
+  identify central theme/conflict (usually a quest and the rival chasing it)
+  select representative key moments (resolved quests, opposed checks, revealed secrets, failures with costs)
+  compress turns that do not serve the spine into a sentence or two
+  pay off setups planted in earlier chapters
   develop character arc progression
 ```
 
@@ -225,6 +231,8 @@ for each turn:
 
 ### 技術的正確性
 - プレイログの数値データと100%整合
+- checkの結果はロールどおりに描く: 失敗は失敗のまま、部分成功は代償を見せる
+- フォーカスパーティーが知らない情報（他パーティーの秘密、依頼の隠された真相）は、パーティーが知るまでその視点で明かさない
 - 行動の因果関係の正確な反映
 - 他パーティーとの相互作用の客観的記述
 

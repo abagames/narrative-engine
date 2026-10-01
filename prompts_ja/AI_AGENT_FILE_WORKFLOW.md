@@ -58,23 +58,33 @@ mkdir -p autonomous_sessions/ai_workspace/results
 
 **AI Agent 世界構築**: 初期世界状態の設計・作成
 
-2. **世界設計**: AI Agent が地理・政治・経済状況を決定
+2. **世界設計**: AI Agent が地理・勢力・ギルドを決定
 
-   - 地域数と配置決定（AI Agent が適切なマップサイズを決定）
-   - 各地域の名前・タイプ・特性を AI Agent が創造（forest, settlement, ruins, mountains, lakes 等）
-   - 地域間の接続関係（neighbors）を AI Agent が設計
+   - 地域の数と配置を決定（AI Agent が適切なマップサイズを判断）
+   - 各地域の名前・タイプ・特徴を AI Agent が創造（森林、集落、遺跡、山岳、湖など）
+   - 地域間の接続（neighbors）を AI Agent が設計。パーティーは隣接地域にしか移動できない
    - 各地域の容量・資源・特殊効果を AI Agent が設定
-   - 初期市場価格を AI Agent が経済バランスを考慮して設定
+   - ギルド（`guild`）とシーズンの長さ（`guild.season.endsAtTurn`、`promotionSlots`）を作成
+   - 市場は任意の背景。取引がこの世界で重要な場合のみ`market`を含める
 
-3. **パーティー設計**: AI Agent が多様なパーティーを作成
+3. **パーティー設計**: AI Agent が多様なパーティーを創造
 
-   - パーティー数と配置決定
-   - 各パーティーの能力値設定（exploration, trade, combat, diplomacy, crafting）
-   - 初期リソース配分（currency, materials）
-   - パーティー個性と目標設定
-   - **各パーティは他のパーティと敵対や同盟関係にあり、パーティ間イベントが頻繁に発生するよう設定すること**
-   - **パーティ間関係値の初期設定**: 各パーティペア間の初期関係を明確に定義
+   - パーティー数（3〜4推奨）と配置を決定
+   - 各パーティーの能力値を設定（0〜10。例: combat、exploration、investigation、diplomacy）。これがcheckの修正値になる
+   - `reputation: 0`、`goals`（シーズンで何を望むか）、`flaws`（最適な行動を覆しうる、引き金つきの弱点）を設定
+   - 初期リソース配分（通貨、少数の素材）
+   - **各パーティーは他のパーティーと敵対関係または同盟関係にあり、パーティー間イベントが頻繁に発生するように構成すること**
+   - **パーティー間関係値の初期設定**: 各パーティーペアの初期関係を明確に定義
    - **Character Profile Configuration**: 各パーティーに具体的なキャラクター設定を適用
+
+3.5 **依頼掲示板の設計**: AI Agent が最初の依頼・依頼主・脅威を作成（ルール: `QUEST_MANAGEMENT.md`）
+
+   - 何かを望む依頼主NPC（`npcs`）を作成
+   - **パーティー数+1**件の依頼を作成: 少なくとも1組の**衝突**（相互の`conflictsWith`、別々のパーティー向け）、少なくとも1件の**競争**（複数パーティーが欲しがるexclusive依頼）、1件の**共同**依頼
+   - 依頼の場所を2〜3地域に集め、パーティーを出会わせる
+   - 少なくとも1人の依頼主に`secret`を持たせる
+   - 1〜2個の進行クロック（`clocks`。時間経過や失敗で進む脅威）を作成
+   - これらのルールに沿った入力の完全な例: `examples/lantern_guild_season/`（`world_initial.json`、`session_config.json`）
 
 **Character Profile Configuration**:
 
@@ -188,6 +198,11 @@ strategicConsiderations = {
       "resources": { "currency": "[AI決定値]", "materials": {...} },
       "capabilities": { "exploration": "[AI決定値]", ... },
       "morale": "[AI決定値]",
+      "reputation": 0,
+      "goals": ["[このシーズンにパーティーが望むこと]"],
+      "flaws": [{ "name": "[欠点]", "trigger": "[発動する状況]", "effect": "[パーティーが取る行動]" }],
+      "knowledge": [],
+      "inventory": [],
       "characterProfile": {
         "leadershipStyle": "[AI決定値]",
         "decisionMaking": "[AI決定値]",
@@ -221,11 +236,37 @@ strategicConsiderations = {
       "influence": {}
     }
   },
-  "market": {
-    "currentPrices": { "[AI Agentが決定した価格設定]" },
-    "priceHistory": [],
-    "completedTrades": []
+  "guild": {
+    "name": "[ギルド名]",
+    "season": { "endsAtTurn": "[シーズン最終ターン]", "promotionSlots": 1 }
   },
+  "npcs": {
+    "[npc_id]": { "name": "[NPC名]", "wants": "[NPCが望むもの]", "disposition": {}, "memory": [] }
+  },
+  "quests": {
+    "[quest_id]": {
+      "title": "[依頼名]",
+      "client": "[npc_id]",
+      "description": "[何を、なぜ頼むのか]",
+      "location": "[region_id]",
+      "type": "exclusive | joint",
+      "requiredProgress": 3,
+      "deadlineTurn": "[ターン]",
+      "reward": { "reputation": 3, "currency": 30, "items": [] },
+      "conflictsWith": ["[同時には成功しえないquest_id]"],
+      "offeredTo": ["[任意: 非公開で依頼するパーティーID]"],
+      "secret": { "truth": "[依頼主が隠していること]", "revealedTo": [] },
+      "onComplete": [],
+      "onFail": [],
+      "advancesClock": { "clockId": "[clock_id]", "amount": 1 }
+    }
+  },
+  "clocks": {
+    "[clock_id]": { "name": "[脅威]", "segments": 4, "filled": 0, "tickPerTurn": 0, "consequence": "[起きること]", "onComplete": [] }
+  },
+  "favors": {},
+  "threads": {},
+  "market": "[任意: { currentPrices: {...}, priceHistory: [], completedTrades: [] }]",
   "relationships": {
     "[party1_id]__[party2_id]": {
       "hostility": "[AI決定値 0-10]",
@@ -256,10 +297,14 @@ strategicConsiderations = {
 {
   "sessionName": "[AI Agentが決定したセッション名]",
   "maxTurns": "[AI決定値]",
+  "seed": "[任意の整数: ダイスを固定し、セッションを再現可能にする]",
   "stopConditions": {
-    "[AI Agentが設定した終了条件]": "[AI決定値]"
+    "seasonEnd": true
   }
 }
+```
+
+依頼に基づく停止条件: `seasonEnd`、`questsResolved`（数値）、`questCompleted`（依頼ID）、`clockTriggered`（クロックID）。旧来の条件: `totalPartyWealth`、`regionDevelopment`。
 ```
 
 6. **ツール実行**: セッション開始
@@ -278,10 +323,12 @@ AUTONOMOUS_SESSIONS_DIR=./custom_sessions npx tsx src/start_session.ts custom_se
 
 **start_session.ts の処理内容**:
 
-- AI Agent が作成した `world_initial.json` を読み込み
-- セッション管理ディレクトリを作成（`autonomous_sessions/sessions/session_YYYYMMDD_HHMMSS/`）
-- 初期世界状態を `world_initial.json` として保存
-- AI Agent 作業用ディレクトリ（`ai_workspace/`）を初期化
+- AI Agent が作成した`world_initial.json`を読み込み、検証する（依頼が参照する地域・依頼主・クロック・他の依頼が存在すること）
+- ダイスのシード（`rng.seed`）を`session_config.json`の`seed`から固定する。なければ生成する
+- 依頼・クロック・貸し借り・NPC・伏線を正規化する
+- セッション管理ディレクトリ作成（`autonomous_sessions/sessions/session_YYYYMMDD_HHMMSS/`）
+- 初期世界状態を`world_initial.json`として保存
+- AI Agent 作業ディレクトリ（`ai_workspace/`）を初期化
 - 最初のターンの決定要求ファイルを生成
 
 **出力ファイル**: `autonomous_sessions/ai_workspace/results/session_result.json`
@@ -309,9 +356,16 @@ AUTONOMOUS_SESSIONS_DIR=./custom_sessions npx tsx src/start_session.ts custom_se
     "role": "GM"
   },
   "contextData": {
-    "marketData": { "currentPrices": {...}, "totalVolume": 0 },
-    "worldSummary": { "turn": 1, "totalParties": 4, "activeRegions": 6 },
-    "availableActions": ["price_update", "environmental_change", "market_event"],
+    "worldSummary": { "turn": 1, "totalParties": 3, "activeRegions": 6, "partyDistribution": {...}, "seasonEndsAtTurn": 12 },
+    "questBoard": {
+      "active": [ "...秘密とconflictsWithを含む依頼オブジェクト全体..." ],
+      "resolved": [],
+      "signals": { "activeQuestCount": 4, "partyCount": 3, "idleParties": [...], "contestedQuests": [...], "conflictPairs": [...], "questsByRegion": {...}, "deadlinesWithin2Turns": [...] }
+    },
+    "clocks": [...], "standings": [...], "favors": [...], "npcs": {...}, "openThreads": [...],
+    "recentChecks": [...], "recentEngineEvents": [...],
+    "pacing": { "recentGMActionTypes": {...}, "recentCheckOutcomes": {...} },
+    "availableActions": ["issue_quest", "npc_action", "complication", "advance_clock", "reveal_secret", "environmental_change", "discovery_event", "weather_change"],
     "recentHistory": []
   },
   "instructions": "[GM決定用指示: worldStateFileを読み込んで完全な世界状態を取得してください]"
@@ -334,17 +388,25 @@ AUTONOMOUS_SESSIONS_DIR=./custom_sessions npx tsx src/start_session.ts custom_se
     "partyState": {
       "id": "party1_explorer",
       "name": "[AI Agentが決定したパーティー名]",
-      "location": "[現在位置]",
-      "resources": { "currency": 120, "materials": {...} },
-      "capabilities": { "exploration": 8, "trade": 4, "combat": 6 },
-      "morale": 7
+      "location": "[現在地]",
+      "resources": { "currency": 120 },
+      "capabilities": { "exploration": 8, "combat": 6, "diplomacy": 4 },
+      "morale": 7, "reputation": 0, "inventory": [], "goals": [...], "flaws": [...]
     },
-    "visibleRegions": [
-      { "id": "current_region", "isAccessible": true, "resources": [...] },
-      { "id": "neighboring_region", "isAccessible": true, "distance": 1 }
+    "checkModifiers": { "exploration": 1, "combat": 0, "diplomacy": 0 },
+    "guildBoard": [
+      { "id": "escort_vell", "title": "...", "client": "merchant_vell", "location": "harbor", "type": "exclusive",
+        "deadlineTurn": 8, "requiredProgress": 3, "reward": {...}, "status": "accepted", "acceptedBy": ["party2"],
+        "yourProgress": 0, "rivalProgress": { "party2": "started" } }
     ],
-    "marketData": { "currentPrices": {...}, "recentTrades": [...] },
-    "availableActions": ["move", "explore", "trade", "cooperate", "market_trade"],
+    "activeQuests": [], "questSlotsFree": 2,
+    "knowledge": [...], "favors": [...], "clientDispositions": {...},
+    "standings": [...], "seasonEndsAtTurn": 12, "visibleClocks": [...],
+    "visibleRegions": [
+      { "id": "current_region", "isAccessible": true, "distance": 0, "occupantParties": [...] },
+      { "id": "neighboring_region", "isAccessible": true, "distance": 1, "occupantParties": [...] }
+    ],
+    "availableActions": ["accept_quest", "pursue_quest", "investigate", "negotiate", "assist", "contest", "rest", "move", ...],
     "recentHistory": []
   },
   "instructions": "[Player決定用指示: worldStateFileを読み込んで完全な世界状態を取得してください]"
@@ -401,9 +463,17 @@ AUTONOMOUS_SESSIONS_DIR=./custom_sessions npx tsx src/start_session.ts custom_se
     "participants": ["[actor_id_or_GM]"],
     "effects": [
       {
-        "target": "/path/to/state",
+        "target": "path/to/state",
         "operation": "set|add",
         "value": "[変更値]"
+      }
+    ],
+    "checks": [
+      {
+        "id": "[checkのID]",
+        "actor": "[パーティーID]",
+        "capability": "[使用する能力]",
+        "outcomes": { "success": [...], "partial": [...], "failure": [...] }
       }
     ]
   },
@@ -417,7 +487,7 @@ AUTONOMOUS_SESSIONS_DIR=./custom_sessions npx tsx src/start_session.ts custom_se
 }
 ```
 
-**Player 用決定応答例**:
+**Player 用決定応答例**（不確かな試みはcheckにする。ロールはエンジンが行う）:
 
 ```json
 {
@@ -425,22 +495,31 @@ AUTONOMOUS_SESSIONS_DIR=./custom_sessions npx tsx src/start_session.ts custom_se
   "timestamp": "2025-09-18T02:30:30.000Z",
   "status": "completed",
   "proposal": {
-    "type": "explore",
+    "type": "pursue_quest",
     "participants": ["emerald_hunters"],
-    "effects": [
+    "effects": [],
+    "checks": [
       {
-        "target": "parties/emerald_hunters/resources/materials",
-        "operation": "add",
-        "value": { "rare_crystals": 4, "gems": 3 }
+        "id": "map_the_sunken_stair",
+        "description": "鍛冶ギルドが来る前に、レックスが水没した階段の地図を作る",
+        "actor": "emerald_hunters",
+        "capability": "exploration",
+        "outcomes": {
+          "success": [{ "target": "quests/sunken_relic/progress/emerald_hunters", "operation": "add", "value": 2 }],
+          "partial": [
+            { "target": "quests/sunken_relic/progress/emerald_hunters", "operation": "add", "value": 1 },
+            { "target": "parties/emerald_hunters/morale", "operation": "add", "value": -1 }
+          ],
+          "failure": [{ "target": "parties/emerald_hunters/morale", "operation": "add", "value": -2 }]
+        }
       }
     ]
   },
   "meta": {
-    "frameworkEvaluation": {
-      "explorationSpecialty": 9,
-      "riskAssessment": 7,
-      "resourceValue": 8,
-      "selectedReasoning": "探索特化パーティーとして高品質結晶発見の好機を活用"
+    "llmDecision": {
+      "frameworkEvaluation": { "questValue": 9, "rivalPressure": 8 },
+      "selectedAction": { "type": "pursue_quest", "reasoning": "鍛冶ギルドが同じ遺物に迫っている。先に動くしかない" },
+      "character_voices": { "Rex": "俺のロープから離れるな。水位が上がってる" }
     }
   }
 }
@@ -501,29 +580,29 @@ AUTONOMOUS_SESSIONS_DIR=./custom_sessions npx tsx src/start_session.ts custom_se
 
 **process_ai_responses.ts の処理内容**:
 
-- AI Agent が作成した決定応答ファイルを読み込み・JSON スキーマ検証実行
-- 各アクションをゲームエンジンで実行・結果記録
-- **完全なプレイログエントリ生成**:
-  - AI Agent の思考プロセス復元（frameworkEvaluation: 評価軸とスコア）
-  - 詳細ナラティブ生成
-  - step 番号自動採番、actor 記録
+- AI Agent が作成した決定応答ファイルを読み込み、JSONスキーマ検証を実行
+- 行動者（GM、または`participants[0]`のパーティー）を特定し、checkの全分岐を含むすべてのeffectを、ロールの**前に**その行動者の権限で検証
+- 宣言されたcheckを決定的に（シード付きで）ロールし、checkごとに結果分岐を1つだけ適用
+- 各応答は全か無かで適用: いずれかのeffectや不変条件（資源の負値、非隣接移動、依頼数上限、依頼の場所以外での進捗）が失敗すれば、その応答からは何も適用しない
+- 全応答の後: 依頼を解決（達成、報酬、衝突する依頼の失敗、同点のロール）し、満了したクロックを処理
+- 成功した各応答ファイルにエンジンの裁定を`engineResolution`（`processed`、`role`、`checks`）として保存。処理済みの応答は再実行時にスキップされるので、失敗した応答を直しても他の応答が二重適用されない
+- 失敗した応答は`decision_responses/failed/`へ移動
 - 世界状態を更新（`world_current.json`に保存）
-- **処理済みファイルの段階的クリーンアップ**:
-  - **成功時**: 成功した決定要求・応答ファイルペアのみ即座削除
-  - **失敗時**: 失敗したファイルペアは保持（`errors`配列に詳細記録）
-  - **リトライ完了時**: リトライ制限超過でスキップされたファイルも削除
-  - **競合状態防止**: ファイル操作時はファイルロック確認後に実行
+- `process_result.json`に`checks`（ダイス、修正値、結果）と`engineEvents`を出力
 
-**AI Agent のエラー対応**:
+**AI Agent エラー処理**:
 
 - `autonomous_sessions/ai_workspace/results/process_result.json`の`errors`配列を確認
 - 失敗した決定要求について:
   1. **エラー内容を分析**:
-     - `currency 不足`: リソース計算ミス → 正確な残量で再計算
-     - `invalid action`: 無効なアクションタイプ → 利用可能アクションから選択
-     - `Schema validation failed`: **target path レベル不足** → "parties/party_id" 形式に修正
-     - `Schema validation failed`: **無効な operation** → "set" または "add" のみ使用
-  2. **修正された決定応答ファイルを再作成** （失敗した requestId のみ）
+     - `insufficient <資源>`: 実際の残量で再計算する
+     - `Permission denied: <target> (<理由>)`: その行動者はそのパスに書けない。checkか別の行動を使う
+     - `quest progress can only change through a check outcome`: 進捗をcheckの結果の中へ移す
+     - `Invalid move`: 現在地の隣接地域にのみ移動する
+     - `must be pursued at <地域>`: 先に依頼の場所へ移動する
+     - `Quest limit exceeded`: 依頼を放棄するか、受注中の依頼を進める
+     - `Schema validation failed`: パス形式、operation、checkの結果の欠落を修正する
+  2. **修正した決定応答ファイルを再作成**（失敗したrequestIdのみ）。同じcheckのダイスは変わらないので、出し直しはエラー修正のためだけに行う
   3. `npx tsx src/process_ai_responses.ts [sessionId]`を再実行
 
 **エラー処理制限**:
@@ -545,11 +624,11 @@ AUTONOMOUS_SESSIONS_DIR=./custom_sessions npx tsx src/start_session.ts custom_se
 
 **AI Agent 継続条件**:
 
-- `nextStatus: "error"`: 失敗した決定要求を修正して再実行（リトライカウンタ確認）
-- `nextStatus: "error_abort"`: エラーログ出力後、セッション強制終了
-- `nextStatus: "partial_success"`: **成功した決定のプレイログ作成・追記** → **失敗した決定の修正・再実行** → 全成功後に次ターン生成
-- `nextStatus: "turn_completed"`: **プレイログ作成・追記** → **次ターン決定要求生成**
-- `nextStatus: "completed"`: **最終プレイログ作成・追記** → Phase 5（ナラティブリプレイ生成）へ進行
+- `nextStatus: "error"`: 失敗した決定要求を修正して再実行（リトライ回数を確認）
+- `nextStatus: "error_abort"`: エラーログを出力してセッションを強制終了
+- `nextStatus: "partial_success"`: **失敗した決定を修正して再実行**（適用済みの応答はスキップされる）→ 修正すべきものがなくなったら**そのターンのプレイログを1件作成・追記** → 次ターンを生成
+- `nextStatus: "turn_completed"`: **プレイログを作成・追記** → **次ターンの決定要求を生成**
+- `nextStatus: "completed"`: **最終プレイログを作成・追記** → Phase 5（ナラティブリプレイ生成）へ
 
 ### Phase 4: プレイログ作成・追記
 
@@ -561,28 +640,30 @@ AUTONOMOUS_SESSIONS_DIR=./custom_sessions npx tsx src/start_session.ts custom_se
 
 a) **処理済み決定応答ファイルからの情報収集**:
 
-- `Read`ツールで`ai_workspace/decision_responses/`内の全`.json`ファイルを読み込み
-- 各ファイルから以下の情報を抽出:
-  - `meta.llmDecision.character_voices`: キャラクター台詞
-  - `meta.llmDecision.selectedAction.reasoning`: 行動理由・動機
-  - `proposal.type`と`proposal.effects`: 実行されたアクション詳細
-  - `meta.llmDecision.optionsConsidered`: 検討された選択肢
-- 時系列順（timestamp または requestId 順）に行動を整理
+- `ai_workspace/decision_responses/`内のすべての`.json`ファイルを`Read`ツールで読む
+- 各ファイルから以下を抽出:
+  - `meta.llmDecision.character_voices`: キャラクターの台詞
+  - `meta.llmDecision.selectedAction.reasoning`: 行動の理由と動機
+  - `proposal.type`、`proposal.effects`、`proposal.checks`: 何を試み、何が懸かっていたか
+  - `engineResolution.checks`: 各checkのダイス・修正値・結果。**物語は結果に合わせて書く**。特に部分成功と失敗
+  - `meta.llmDecision.optionsConsidered`: 検討した選択肢
+- 行動を時系列順に整理（timestampまたはrequestId順）
 
 b) **世界状態変化の分析**:
 
-- `Read`ツールで`sessions/[sessionId]/world_current.json`から最新世界状態を取得
+- `sessions/[sessionId]/world_current.json`から最新の世界状態を`Read`ツールで取得
+- `chronicle`の新しいエントリを読む（依頼の達成・失敗・期限切れ、クロックの進行と満了、同点のロール）
 - 前ターンからの変化を特定:
-  - パーティー状態変化（リソース、士気、位置等）
-  - 市場価格変動
-  - 地域状況変化
-  - 世界イベント発生・更新
+  - 依頼の進捗と順位
+  - パーティー状態の変化（士気、位置、評判、所持品）
+  - 関係値・貸し借り・NPCの感情の変化
+  - 地域状況の変化
 
 c) **フォーカスパーティーの選択**:
 
-- そのターンで最も重要/興味深い行動を行ったパーティーを選択
-- 優先順位: 新規探索 > 初回交流 > 重要な取引 > クラフト > 移動
-- 選択されたパーティー視点で物語を構築
+- そのターンで最も重要・興味深い行動をしたパーティーを選ぶ
+- 優先順位: 依頼の決着（達成・失敗・期限切れ） > パーティー間の対抗check > 秘密の暴露 > クロックの満了 > 代償を伴う失敗 > 依頼の受注 > 移動
+- 選んだパーティーの視点で物語を構成し、`focusRequestId`にそのパーティーのrequestIdを設定する
 
 d) **ナラティブ構造の生成**:
 
@@ -597,6 +678,7 @@ d) **ナラティブ構造の生成**:
 
 ```json
 {
+  "focusRequestId": "[フォーカスパーティーの応答のrequestId（任意）]",
   "narrative": {
     "basicDescription": "火の鍛冶ギルドが市場で鉱石15単位を通貨50で購入",
     "internalPerspective": {
@@ -630,11 +712,7 @@ d) **ナラティブ構造の生成**:
 }
 ```
 
-**重要注意**: 決定応答ファイルのクリーンアップタイミング
-
-- `process_ai_responses.ts`実行後、決定応答ファイルは自動削除される
-- **必須**: `process_ai_responses.ts`実行直後に上記手順 a)を実行してナラティブ情報を保存
-- 削除後は`meta.llmDecision.character_voices`等の詳細情報が失われる
+**重要注意**: 決定応答ファイルは次のターンが生成されるまで`decision_responses/`に残る。`append_playlog.ts`は追記した応答を記録済みとしてマークするので、同じターンに2回追記しても行動は重複しない。
 
 2. **ツール実行**: プレイログ追記
 
@@ -642,21 +720,22 @@ d) **ナラティブ構造の生成**:
 
 **append_playlog.ts の処理内容**:
 
-- AI Agent が作成した`turn_playlog.json`（ナラティブのみ）を読み込み
-- 対応する決定応答ファイルから`meta.frameworkEvaluation`情報を復元
-- 現在の世界状態（`world_current.json`）を読み込み
-- **段階的世界状態差分計算**:
-  - **初回実行時**: `world_initial.json`と`world_current.json`を比較
+- AI Agent が作成した`turn_playlog.json`（ナラティブと任意の`focusRequestId`）を読む
+- そのターンの、成功していてまだ記録されていない**すべての**決定応答を読む
+- 現在の世界状態（`world_current.json`）を読む
+- **段階的な世界状態差分計算**:
+  - **初回実行**: `world_initial.json`と`world_current.json`を比較
   - **2 回目以降**: `world_prev.json`と`world_current.json`を比較
   - **差分計算後**: `world_current.json`を`world_prev.json`として保存（次回比較用）
-- **完全なプレイログエントリ自動生成**:
-  - `step`番号自動計算（既存 playlog.jsonl の最終 step + 1）
-  - `type`, `participants`, `actor`を決定応答から復元
-  - `effects`情報を決定応答から取得
-  - `meta.frameworkEvaluation`を決定応答から復元（簡潔な評価情報記録）
-  - `narrative`を AI Agent 作成データから取得
-  - `worldStateDiff`自動生成（段階的比較による正確な変更差分）
-  - `worldStateSnapshot`参照追加（`world_current.json`への相対パス）
+- **完全なプレイログエントリの自動生成**（1ターンにつき1エントリ）:
+  - `step`番号（既存playlog.jsonlの最終step + 1）と`turn`を自動設定
+  - `type`、`participants`、`actor`、`effects`、`meta.frameworkEvaluation`はフォーカス応答から（`focusRequestId`、なければ最初の応答）
+  - `actions`: 全行動者の行動（役割、種別、effects、check結果、理由、台詞、検討した選択肢）
+  - `checks`: そのターンの全check結果
+  - `engineEvents`: まだ記録されていないエンジンイベント（依頼の決着、クロック、同点のロール、シーズン終了）
+  - `narrative`は AI Agent 作成データから取得
+  - `worldStateDiff`を自動生成（段階的比較による正確な差分）
+  - `worldStateSnapshot`参照（`world_current.json`への相対パス）を追加
 - 完全なプレイログエントリを`playlog.jsonl`に追記
 
 3. **ツール実行**: 次ターン決定要求生成
@@ -667,12 +746,13 @@ d) **ナラティブ構造の生成**:
 
 **generate_next_turn.ts の処理内容**:
 
-- 現在の世界状態（`world_current.json`）を読み込み
-- 次ターン用の決定要求ファイルを生成：
-  - GM 用: `ai_workspace/decision_requests/request_GM_[timestamp].json`
-  - 各パーティー用: `ai_workspace/decision_requests/request_[partyId]_[timestamp].json`
-- 各決定要求ファイルに最新の世界状態情報を反映
-- contextData を現在の状況に合わせて更新
+- 現在の世界状態（`world_current.json`）を読む
+- `maxTurns`と停止条件を確認する。セッションが終わり、世界にギルドがある場合はシーズンの順位と昇格を記録する（`guild/standings`、`guild/promoted`）
+- **ターン開始時のアップキープ**（1ターンに1回）: `deadlineTurn`を過ぎた依頼は期限切れになる（その`onFail`と`advancesClock`が適用される）。`tickPerTurn`を持つクロックが進み、満了したクロックが発動する
+- 次ターンの決定要求ファイルを生成:
+  - GM 用: `ai_workspace/decision_requests/request_GM_[timestamp].json`（秘密を含む依頼掲示板全体、signals、クロック、順位、ペース）
+  - 各パーティー用: `ai_workspace/decision_requests/request_[partyId]_[timestamp].json`（公開された依頼掲示板、自分の知識と貸し借り、競合相手の大まかな進捗、check修正値）
+- アップキープの`engineEvents`は`next_turn_result.json`に含まれる
 
 **出力ファイル**: `autonomous_sessions/ai_workspace/results/next_turn_result.json`
 
@@ -697,24 +777,6 @@ d) **ナラティブ構造の生成**:
 
 - `npx tsx src/append_playlog.ts [sessionId] final_turn_playlog.json`
 - append_playlog.ts は上記と同様の差分計算・追記処理を実行
-
-## 🔧 実装変更推奨事項
-
-**結果ファイルの配置場所変更**:
-
-現在のツール実装では、結果ファイル（`session_result.json`, `process_result.json`, `next_turn_result.json`）がプロジェクトルートに出力されています。これを `autonomous_sessions/ai_workspace/results/` 配下に変更することを推奨します。
-
-**変更対象ファイル**:
-
-- `src/start_session.ts`: `./session_result.json` → `${AUTONOMOUS_SESSIONS_DIR}/ai_workspace/results/session_result.json`
-- `src/process_ai_responses.ts`: `./process_result.json` → `${AUTONOMOUS_SESSIONS_DIR}/ai_workspace/results/process_result.json`
-- `src/generate_next_turn.ts`: `./next_turn_result.json` → `${AUTONOMOUS_SESSIONS_DIR}/ai_workspace/results/next_turn_result.json`
-
-**利点**:
-
-- 作業ファイルの統一的管理
-- プロジェクトルートの汚染防止
-- セッション完了時の一括クリーンアップ対象化
 
 ### Phase 5: ナラティブリプレイ生成
 
@@ -758,6 +820,8 @@ d) **ナラティブ構造の生成**:
      - 環境・雰囲気の詳細描写
      - 重要な決断・転機・戦闘の詳細再現
      - パーティー間の相互作用と協力関係の描写
+     - **🎲 ダイスに従う**: 各checkは結果どおりに描く（`engineResolution.checks`、playlogの`checks`）。部分成功は代償を見せ、失敗を成功へ和らげない
+     - **📜 依頼の筋**: 各依頼を発行から決着まで追う（`engineEvents`）。競合相手に奪われた依頼、衝突、期限切れも含める
    - **エピローグ部: 目標達成過程の総括**:
      - **📈 目標の進化**: 段階的な目標変化を時系列で整理
      - **🌟 勢力の役割変化**: 各パーティーの役割変化を追跡
@@ -906,6 +970,12 @@ d) **ナラティブ構造の生成**:
 #### 🎒 リソース変化
 - [party_icon] **[Party]**: [resource] [from]→[to] ([change]) - [reason]
 
+#### 📜 依頼掲示板
+- **[依頼]**: [受注者 / 進捗 / 達成者 / 失敗 / 期限切れ]（[原因]）
+
+#### 🎲 判定
+- [party_icon] **[Party]** [check id]: [ダイス]+[修正値] = [合計]（対 [相手] [合計]） → **[success/partial/failure]**
+
 #### 💰 経済活動（該当ターンのみ）
 - [party_icon] **[Party]**: [transaction details]
 
@@ -913,10 +983,14 @@ d) **ナラティブ構造の生成**:
 
 ## 📊 最終統計
 
-### 🏆 勢力ランキング（士気順）
-1. [Party with highest morale]
-2. [Party with medium morale]
-3. [Party with lowest morale]
+### 🏆 ギルド順位（評判順）
+1. [評判最上位のパーティー]（[評判]、[達成依頼数]） 🎖️ 昇格
+2. [2位のパーティー]
+3. [3位のパーティー]
+
+### 🎲 ダイス集計
+| パーティー | 判定数 | 成功 | 部分成功 | 失敗 |
+| ---------- | ------ | ---- | -------- | ---- |
 
 ### 📈 士気変動グラフ
 ```

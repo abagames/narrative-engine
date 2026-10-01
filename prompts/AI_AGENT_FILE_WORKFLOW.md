@@ -58,23 +58,33 @@ mkdir -p autonomous_sessions/ai_workspace/results
 
 **AI Agent World Building**: Design and creation of initial world state
 
-2. **World Design**: AI Agent determines geographical, political, and economic conditions
+2. **World Design**: AI Agent determines geography, factions and the guild
 
    - Decide number and placement of regions (AI Agent determines appropriate map size)
    - AI Agent creates names, types, and characteristics for each region (forest, settlement, ruins, mountains, lakes, etc.)
-   - AI Agent designs connections between regions (neighbors)
+   - AI Agent designs connections between regions (neighbors). Parties can only move to adjacent regions
    - AI Agent sets capacity, resources, and special effects for each region
-   - AI Agent sets initial market prices considering economic balance
+   - Create the guild (`guild`) and the season length (`guild.season.endsAtTurn`, `promotionSlots`)
+   - The market is optional background. Include `market` only if trade matters to this world
 
 3. **Party Design**: AI Agent creates diverse parties
 
-   - Decide party number and placement
-   - Set ability values for each party (exploration, trade, combat, diplomacy, crafting)
-   - Initial resource allocation (currency, materials)
-   - Set party personality and goals
+   - Decide party number (3-4 recommended) and placement
+   - Set ability values for each party (0-10; e.g. combat, exploration, investigation, diplomacy). These become check modifiers
+   - Set `reputation: 0`, `goals` (what the party wants from the season) and `flaws` (a weakness with a trigger that can override optimal play)
+   - Initial resource allocation (currency, a few materials)
    - **Each party should be in hostile or alliance relationships with other parties, configured so that inter-party events occur frequently**
    - **Initial setup of inter-party relationship values**: Clearly define initial relationships between each party pair
    - **Character Profile Configuration**: Apply specific character settings to each party
+
+3.5 **Quest Board Design**: AI Agent creates the first quests, clients and threats (rules: `QUEST_MANAGEMENT.md`)
+
+   - Create NPC clients (`npcs`) with what they want
+   - Create **party count + 1** quests: at least one **collision** pair (mutual `conflictsWith`, intended for different parties), at least one **race** (exclusive quest several parties will want) and one **joint** quest
+   - Place quest locations in 2-3 regions so that parties meet
+   - Give at least one client a `secret`
+   - Create 1-2 progress `clocks` (threats that advance over time or on failure)
+   - A complete sample input that follows these rules: `examples/lantern_guild_season/` (`world_initial.json`, `session_config.json`)
 
 **Character Profile Configuration**:
 
@@ -188,6 +198,11 @@ strategicConsiderations = {
       "resources": { "currency": "[AI determined value]", "materials": {...} },
       "capabilities": { "exploration": "[AI determined value]", ... },
       "morale": "[AI determined value]",
+      "reputation": 0,
+      "goals": ["[What the party wants this season]"],
+      "flaws": [{ "name": "[Flaw]", "trigger": "[When it applies]", "effect": "[What the party does]" }],
+      "knowledge": [],
+      "inventory": [],
       "characterProfile": {
         "leadershipStyle": "[AI determined value]",
         "decisionMaking": "[AI determined value]",
@@ -221,11 +236,37 @@ strategicConsiderations = {
       "influence": {}
     }
   },
-  "market": {
-    "currentPrices": { "[Price settings determined by AI Agent]" },
-    "priceHistory": [],
-    "completedTrades": []
+  "guild": {
+    "name": "[Guild name]",
+    "season": { "endsAtTurn": "[Last turn of the season]", "promotionSlots": 1 }
   },
+  "npcs": {
+    "[npc_id]": { "name": "[NPC name]", "wants": "[What the NPC wants]", "disposition": {}, "memory": [] }
+  },
+  "quests": {
+    "[quest_id]": {
+      "title": "[Quest title]",
+      "client": "[npc_id]",
+      "description": "[What is asked and why]",
+      "location": "[region_id]",
+      "type": "exclusive | joint",
+      "requiredProgress": 3,
+      "deadlineTurn": "[Turn]",
+      "reward": { "reputation": 3, "currency": 30, "items": [] },
+      "conflictsWith": ["[quest_id that cannot also succeed]"],
+      "offeredTo": ["[Optional: party ids for a private offer]"],
+      "secret": { "truth": "[What the client hides]", "revealedTo": [] },
+      "onComplete": [],
+      "onFail": [],
+      "advancesClock": { "clockId": "[clock_id]", "amount": 1 }
+    }
+  },
+  "clocks": {
+    "[clock_id]": { "name": "[Threat]", "segments": 4, "filled": 0, "tickPerTurn": 0, "consequence": "[What happens]", "onComplete": [] }
+  },
+  "favors": {},
+  "threads": {},
+  "market": "[Optional: { currentPrices: {...}, priceHistory: [], completedTrades: [] }]",
   "relationships": {
     "[party1_id]__[party2_id]": {
       "hostility": "[AI determined value 0-10]",
@@ -256,10 +297,14 @@ strategicConsiderations = {
 {
   "sessionName": "[Session name determined by AI Agent]",
   "maxTurns": "[AI determined value]",
+  "seed": "[Optional integer: fixes the dice for reproducible sessions]",
   "stopConditions": {
-    "[End condition set by AI Agent]": "[AI determined value]"
+    "seasonEnd": true
   }
 }
+```
+
+Quest-driven stop conditions: `seasonEnd`, `questsResolved` (number), `questCompleted` (quest id), `clockTriggered` (clock id). Legacy: `totalPartyWealth`, `regionDevelopment`.
 ```
 
 6. **Tool Execution**: Session start
@@ -278,7 +323,9 @@ AUTONOMOUS_SESSIONS_DIR=./custom_sessions npx tsx src/start_session.ts custom_se
 
 **start_session.ts Processing Content**:
 
-- Load `world_initial.json` created by AI Agent
+- Load `world_initial.json` created by AI Agent and validate it (quest references to regions, clients, clocks and other quests must exist)
+- Fix the dice seed (`rng.seed`) from `session_config.json` `seed`, or generate one
+- Normalize quests, clocks, favors, NPCs and threads
 - Create session management directory (`autonomous_sessions/sessions/session_YYYYMMDD_HHMMSS/`)
 - Save initial world state as `world_initial.json`
 - Initialize AI Agent work directory (`ai_workspace/`)
@@ -309,9 +356,16 @@ AUTONOMOUS_SESSIONS_DIR=./custom_sessions npx tsx src/start_session.ts custom_se
     "role": "GM"
   },
   "contextData": {
-    "marketData": { "currentPrices": {...}, "totalVolume": 0 },
-    "worldSummary": { "turn": 1, "totalParties": 4, "activeRegions": 6 },
-    "availableActions": ["price_update", "environmental_change", "market_event"],
+    "worldSummary": { "turn": 1, "totalParties": 3, "activeRegions": 6, "partyDistribution": {...}, "seasonEndsAtTurn": 12 },
+    "questBoard": {
+      "active": [ "...full quest objects including secrets and conflictsWith..." ],
+      "resolved": [],
+      "signals": { "activeQuestCount": 4, "partyCount": 3, "idleParties": [...], "contestedQuests": [...], "conflictPairs": [...], "questsByRegion": {...}, "deadlinesWithin2Turns": [...] }
+    },
+    "clocks": [...], "standings": [...], "favors": [...], "npcs": {...}, "openThreads": [...],
+    "recentChecks": [...], "recentEngineEvents": [...],
+    "pacing": { "recentGMActionTypes": {...}, "recentCheckOutcomes": {...} },
+    "availableActions": ["issue_quest", "npc_action", "complication", "advance_clock", "reveal_secret", "environmental_change", "discovery_event", "weather_change"],
     "recentHistory": []
   },
   "instructions": "[GM decision instructions: Please read worldStateFile to obtain complete world state]"
@@ -335,16 +389,24 @@ AUTONOMOUS_SESSIONS_DIR=./custom_sessions npx tsx src/start_session.ts custom_se
       "id": "party1_explorer",
       "name": "[Party name determined by AI Agent]",
       "location": "[Current location]",
-      "resources": { "currency": 120, "materials": {...} },
-      "capabilities": { "exploration": 8, "trade": 4, "combat": 6 },
-      "morale": 7
+      "resources": { "currency": 120 },
+      "capabilities": { "exploration": 8, "combat": 6, "diplomacy": 4 },
+      "morale": 7, "reputation": 0, "inventory": [], "goals": [...], "flaws": [...]
     },
-    "visibleRegions": [
-      { "id": "current_region", "isAccessible": true, "resources": [...] },
-      { "id": "neighboring_region", "isAccessible": true, "distance": 1 }
+    "checkModifiers": { "exploration": 1, "combat": 0, "diplomacy": 0 },
+    "guildBoard": [
+      { "id": "escort_vell", "title": "...", "client": "merchant_vell", "location": "harbor", "type": "exclusive",
+        "deadlineTurn": 8, "requiredProgress": 3, "reward": {...}, "status": "accepted", "acceptedBy": ["party2"],
+        "yourProgress": 0, "rivalProgress": { "party2": "started" } }
     ],
-    "marketData": { "currentPrices": {...}, "recentTrades": [...] },
-    "availableActions": ["move", "explore", "trade", "cooperate", "market_trade"],
+    "activeQuests": [], "questSlotsFree": 2,
+    "knowledge": [...], "favors": [...], "clientDispositions": {...},
+    "standings": [...], "seasonEndsAtTurn": 12, "visibleClocks": [...],
+    "visibleRegions": [
+      { "id": "current_region", "isAccessible": true, "distance": 0, "occupantParties": [...] },
+      { "id": "neighboring_region", "isAccessible": true, "distance": 1, "occupantParties": [...] }
+    ],
+    "availableActions": ["accept_quest", "pursue_quest", "investigate", "negotiate", "assist", "contest", "rest", "move", ...],
     "recentHistory": []
   },
   "instructions": "[Player decision instructions: Please read worldStateFile to obtain complete world state]"
@@ -401,9 +463,17 @@ AUTONOMOUS_SESSIONS_DIR=./custom_sessions npx tsx src/start_session.ts custom_se
     "participants": ["[actor_id_or_GM]"],
     "effects": [
       {
-        "target": "/path/to/state",
+        "target": "path/to/state",
         "operation": "set|add",
         "value": "[Change value]"
+      }
+    ],
+    "checks": [
+      {
+        "id": "[check id]",
+        "actor": "[party id]",
+        "capability": "[capability used]",
+        "outcomes": { "success": [...], "partial": [...], "failure": [...] }
       }
     ]
   },
@@ -417,7 +487,7 @@ AUTONOMOUS_SESSIONS_DIR=./custom_sessions npx tsx src/start_session.ts custom_se
 }
 ```
 
-**Player Decision Response Example**:
+**Player Decision Response Example** (uncertain attempts are checks; the engine rolls):
 
 ```json
 {
@@ -425,22 +495,31 @@ AUTONOMOUS_SESSIONS_DIR=./custom_sessions npx tsx src/start_session.ts custom_se
   "timestamp": "2025-09-18T02:30:30.000Z",
   "status": "completed",
   "proposal": {
-    "type": "explore",
+    "type": "pursue_quest",
     "participants": ["emerald_hunters"],
-    "effects": [
+    "effects": [],
+    "checks": [
       {
-        "target": "parties/emerald_hunters/resources/materials",
-        "operation": "add",
-        "value": { "rare_crystals": 4, "gems": 3 }
+        "id": "map_the_sunken_stair",
+        "description": "Rex maps the flooded stair before the Forge Guild arrives",
+        "actor": "emerald_hunters",
+        "capability": "exploration",
+        "outcomes": {
+          "success": [{ "target": "quests/sunken_relic/progress/emerald_hunters", "operation": "add", "value": 2 }],
+          "partial": [
+            { "target": "quests/sunken_relic/progress/emerald_hunters", "operation": "add", "value": 1 },
+            { "target": "parties/emerald_hunters/morale", "operation": "add", "value": -1 }
+          ],
+          "failure": [{ "target": "parties/emerald_hunters/morale", "operation": "add", "value": -2 }]
+        }
       }
     ]
   },
   "meta": {
-    "frameworkEvaluation": {
-      "explorationSpecialty": 9,
-      "riskAssessment": 7,
-      "resourceValue": 8,
-      "selectedReasoning": "Leverage opportunity to discover high-quality crystals as exploration-specialized party"
+    "llmDecision": {
+      "frameworkEvaluation": { "questValue": 9, "rivalPressure": 8 },
+      "selectedAction": { "type": "pursue_quest", "reasoning": "The Forge Guild is close on the same relic; we must move first" },
+      "character_voices": { "Rex": "Stay on my rope line. The water is rising." }
     }
   }
 }
@@ -502,28 +581,28 @@ AUTONOMOUS_SESSIONS_DIR=./custom_sessions npx tsx src/start_session.ts custom_se
 **process_ai_responses.ts Processing Content**:
 
 - Read decision response files created by AI Agent and perform JSON schema validation
-- Execute each action in the game engine and record results
-- **Complete playlog entry generation**:
-  - Restore AI Agent thought process (frameworkEvaluation: evaluation axes and scores)
-  - Generate detailed narrative
-  - Automatic step numbering, actor recording
+- Identify the actor (GM, or the party in `participants[0]`) and check every effect, including every check branch, against that actor's permissions **before** rolling
+- Roll declared checks deterministically (seeded) and apply exactly one outcome branch per check
+- Apply each response all-or-nothing: if any effect or invariant fails (negative resources, non-adjacent move, quest limit, progress away from the quest site), nothing from that response is applied
+- After all responses: resolve quests (completions, rewards, conflicting quests failing, ties by roll) and full clocks
+- Store the engine's ruling in each successful response file as `engineResolution` (`processed`, `role`, `checks`). Responses already processed are skipped on a rerun, so fixing a failed response never re-applies the others
+- Move failed responses to `decision_responses/failed/`
 - Update world state (save to `world_current.json`)
-- **Gradual cleanup of processed files**:
-  - **On success**: Immediately delete only successful decision request/response file pairs
-  - **On failure**: Keep failed file pairs (detailed recording in `errors` array)
-  - **On retry completion**: Delete files that were skipped due to exceeded retry limits
-  - **Race condition prevention**: Execute file operations after confirming file locks
+- Output `checks` (dice, modifiers, outcomes) and `engineEvents` in `process_result.json`
 
 **AI Agent Error Handling**:
 
 - Check `errors` array in `autonomous_sessions/ai_workspace/results/process_result.json`
 - For failed decision requests:
   1. **Analyze error content**:
-     - `currency insufficient`: Resource calculation error → Recalculate with accurate remaining amount
-     - `invalid action`: Invalid action type → Select from available actions
-     - `Schema validation failed`: **Insufficient target path level** → Fix to "parties/party_id" format
-     - `Schema validation failed`: **Invalid operation** → Use only "set" or "add"
-  2. **Recreate corrected decision response file** (only for failed requestId)
+     - `insufficient <resource>`: Recalculate with the actual remaining amount
+     - `Permission denied: <target> (<reason>)`: The actor may not write that path. Use a check or another action
+     - `quest progress can only change through a check outcome`: Move the progress into a check's outcomes
+     - `Invalid move`: Move only to a neighbor of the current region
+     - `must be pursued at <region>`: Move to the quest location first
+     - `Quest limit exceeded`: Abandon a quest or pursue an accepted one
+     - `Schema validation failed`: Fix path format, operation, or missing check outcomes
+  2. **Recreate corrected decision response file** (only for failed requestId). Dice for the same check are the same, so resubmission is for fixing errors only
   3. Re-execute `npx tsx src/process_ai_responses.ts [sessionId]`
 
 **Error Processing Limits**:
@@ -547,7 +626,7 @@ AUTONOMOUS_SESSIONS_DIR=./custom_sessions npx tsx src/start_session.ts custom_se
 
 - `nextStatus: "error"`: Fix failed decision requests and re-execute (check retry counter)
 - `nextStatus: "error_abort"`: Output error log and force terminate session
-- `nextStatus: "partial_success"`: **Create and append playlog for successful decisions** → **Fix and re-execute failed decisions** → Generate next turn after all success
+- `nextStatus: "partial_success"`: **Fix and re-execute failed decisions** (already applied responses are skipped) → when nothing is left to fix, **create and append one playlog entry for the turn** → generate next turn
 - `nextStatus: "turn_completed"`: **Create and append playlog** → **Generate next turn decision requests**
 - `nextStatus: "completed"`: **Create and append final playlog** → Proceed to Phase 5 (Narrative Replay Generation)
 
@@ -565,24 +644,26 @@ a) **Information collection from processed decision response files**:
 - Extract following information from each file:
   - `meta.llmDecision.character_voices`: Character dialogue
   - `meta.llmDecision.selectedAction.reasoning`: Action reasons and motivations
-  - `proposal.type` and `proposal.effects`: Executed action details
+  - `proposal.type`, `proposal.effects` and `proposal.checks`: What was attempted and what was at stake
+  - `engineResolution.checks`: The dice, modifiers and outcome of each check. **Write the narrative to match the outcome**, especially partial successes and failures
   - `meta.llmDecision.optionsConsidered`: Considered options
 - Organize actions in chronological order (timestamp or requestId order)
 
 b) **Analysis of world state changes**:
 
 - Get latest world state from `sessions/[sessionId]/world_current.json` with `Read` tool
+- Read the new entries of `chronicle` (quest completions/failures/expirations, clock ticks and triggers, tie-breaks)
 - Identify changes from previous turn:
-  - Party state changes (resources, morale, position, etc.)
-  - Market price fluctuations
+  - Quest progress and standings
+  - Party state changes (morale, position, reputation, inventory)
+  - Relationship, favor and NPC disposition changes
   - Regional situation changes
-  - World event occurrence/updates
 
 c) **Focus party selection**:
 
 - Select the party that performed the most important/interesting action in that turn
-- Priority order: New exploration > First interaction > Important trade > Craft > Movement
-- Construct story from selected party's perspective
+- Priority order: Quest resolved (completed/failed/expired) > Opposed check between parties > Secret revealed > Clock triggered > Failure with a cost > Quest accepted > Movement
+- Construct story from selected party's perspective and set `focusRequestId` to that party's requestId
 
 d) **Narrative structure generation**:
 
@@ -597,6 +678,7 @@ d) **Narrative structure generation**:
 
 ```json
 {
+  "focusRequestId": "[requestId of the focus party's response (optional)]",
   "narrative": {
     "basicDescription": "Fire Forge Guild purchases 15 units of ore for 50 currency at market",
     "internalPerspective": {
@@ -630,11 +712,7 @@ d) **Narrative structure generation**:
 }
 ```
 
-**Important Note**: Decision response file cleanup timing
-
-- After `process_ai_responses.ts` execution, decision response files are automatically deleted
-- **Required**: Execute above procedure a) immediately after `process_ai_responses.ts` execution to save narrative information
-- After deletion, detailed information like `meta.llmDecision.character_voices` is lost
+**Important Note**: Decision response files stay in `decision_responses/` until the next turn is generated. `append_playlog.ts` marks them as logged, so appending twice in one turn does not duplicate actions.
 
 2. **Tool Execution**: Playlog appending
 
@@ -642,18 +720,19 @@ d) **Narrative structure generation**:
 
 **append_playlog.ts Processing Content**:
 
-- Read `turn_playlog.json` (narrative only) created by AI Agent
-- Restore `meta.frameworkEvaluation` information from corresponding decision response files
+- Read `turn_playlog.json` (narrative and optional `focusRequestId`) created by AI Agent
+- Read **all** successful, not yet logged decision responses of the turn
 - Read current world state (`world_current.json`)
 - **Gradual world state diff calculation**:
   - **First execution**: Compare `world_initial.json` and `world_current.json`
   - **Second and later**: Compare `world_prev.json` and `world_current.json`
   - **After diff calculation**: Save `world_current.json` as `world_prev.json` (for next comparison)
-- **Complete playlog entry automatic generation**:
-  - Automatic `step` number calculation (last step of existing playlog.jsonl + 1)
-  - Restore `type`, `participants`, `actor` from decision responses
-  - Get `effects` information from decision responses
-  - Restore `meta.frameworkEvaluation` from decision responses (record concise evaluation information)
+- **Complete playlog entry automatic generation** (one entry per turn):
+  - Automatic `step` number calculation (last step of existing playlog.jsonl + 1) and `turn`
+  - `type`, `participants`, `actor`, `effects`, `meta.frameworkEvaluation` from the focus response (`focusRequestId`, else the first response)
+  - `actions`: every actor's action (role, type, effects, check results, reasoning, character voices, options considered)
+  - `checks`: all check results of the turn
+  - `engineEvents`: engine events not yet logged (quest resolutions, clocks, tie-breaks, season end)
   - Get `narrative` from AI Agent created data
   - Automatic `worldStateDiff` generation (accurate change diff through gradual comparison)
   - Add `worldStateSnapshot` reference (relative path to `world_current.json`)
@@ -668,11 +747,12 @@ d) **Narrative structure generation**:
 **generate_next_turn.ts Processing Content**:
 
 - Read current world state (`world_current.json`)
+- Check `maxTurns` and stop conditions. When the session ends and the world has a guild, record season standings and promotions (`guild/standings`, `guild/promoted`)
+- **Start-of-turn upkeep** (once per turn): quests past `deadlineTurn` expire (their `onFail` and `advancesClock` apply), clocks with `tickPerTurn` advance, full clocks trigger
 - Generate decision request files for next turn:
-  - For GM: `ai_workspace/decision_requests/request_GM_[timestamp].json`
-  - For each party: `ai_workspace/decision_requests/request_[partyId]_[timestamp].json`
-- Reflect latest world state information in each decision request file
-- Update contextData to match current situation
+  - For GM: `ai_workspace/decision_requests/request_GM_[timestamp].json` (full quest board including secrets, signals, clocks, standings, pacing)
+  - For each party: `ai_workspace/decision_requests/request_[partyId]_[timestamp].json` (public quest board, own knowledge and favors, coarse rival progress, check modifiers)
+- `engineEvents` from upkeep are included in `next_turn_result.json`
 
 **Output File**: `autonomous_sessions/ai_workspace/results/next_turn_result.json`
 
@@ -697,24 +777,6 @@ d) **Narrative structure generation**:
 
 - `npx tsx src/append_playlog.ts [sessionId] final_turn_playlog.json`
 - append_playlog.ts executes same diff calculation and appending process as above
-
-## 🔧 Implementation Change Recommendations
-
-**Result File Placement Location Change**:
-
-In the current tool implementation, result files (`session_result.json`, `process_result.json`, `next_turn_result.json`) are output to the project root. We recommend changing this to under `autonomous_sessions/ai_workspace/results/`.
-
-**Target Files for Change**:
-
-- `src/start_session.ts`: `./session_result.json` → `${AUTONOMOUS_SESSIONS_DIR}/ai_workspace/results/session_result.json`
-- `src/process_ai_responses.ts`: `./process_result.json` → `${AUTONOMOUS_SESSIONS_DIR}/ai_workspace/results/process_result.json`
-- `src/generate_next_turn.ts`: `./next_turn_result.json` → `${AUTONOMOUS_SESSIONS_DIR}/ai_workspace/results/next_turn_result.json`
-
-**Benefits**:
-
-- Unified management of work files
-- Prevention of project root pollution
-- Target for batch cleanup when session completes
 
 ### Phase 5: Narrative Replay Generation
 
@@ -758,6 +820,8 @@ In the current tool implementation, result files (`session_result.json`, `proces
      - Detailed environmental and atmospheric descriptions
      - Detailed recreation of important decisions, turning points, and combat
      - Description of inter-party interactions and cooperative relationships
+     - **🎲 Honor the dice**: Narrate each check as its outcome says (`engineResolution.checks`, `checks` in playlog). Partial successes show their cost; failures are not softened into successes
+     - **📜 Quest arcs**: Follow each quest from issue to resolution (`engineEvents`), including quests lost to rivals, collisions and expirations
    - **Epilogue Section: Summary of Goal Achievement Process**:
      - **📈 Goal Evolution**: Organize phased goal changes chronologically
      - **🌟 Faction Role Changes**: Track role changes of each party
@@ -906,6 +970,12 @@ In the current tool implementation, result files (`session_result.json`, `proces
 #### 🎒 Resource Changes
 - [party_icon] **[Party]**: [resource] [from]→[to] ([change]) - [reason]
 
+#### 📜 Quest Board
+- **[Quest]**: [accepted by / progress / completed by / failed / expired] ([cause])
+
+#### 🎲 Checks
+- [party_icon] **[Party]** [check id]: [dice]+[modifier] = [total] (vs [rival] [total]) → **[success/partial/failure]**
+
 #### 💰 Economic Activities (applicable turns only)
 - [party_icon] **[Party]**: [transaction details]
 
@@ -913,10 +983,14 @@ In the current tool implementation, result files (`session_result.json`, `proces
 
 ## 📊 Final Statistics
 
-### 🏆 Faction Rankings (by morale)
-1. [Party with highest morale]
-2. [Party with medium morale]
-3. [Party with lowest morale]
+### 🏆 Guild Standings (by reputation)
+1. [Party with highest reputation] ([reputation], [quests completed]) 🎖️ Promoted
+2. [Second party]
+3. [Third party]
+
+### 🎲 Dice Summary
+| Party | Checks | Success | Partial | Failure |
+| ----- | ------ | ------- | ------- | ------- |
 
 ### 📈 Morale Fluctuation Graph
 ```

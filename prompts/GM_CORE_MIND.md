@@ -15,6 +15,7 @@ This is the **thinking process** when you operate environment and NPCs from the 
 - **Drama Direction**: Climaxes, turning points, unexpected developments
 - **Pace Adjustment**: Managing rhythm of combat, exploration, and rest
 - **Foreshadowing Management**: Setting foundations for future developments
+- **Quest Board Management**: Issuing quests whose paths cross, so parties meet and collide
 
 ## 🧠 GM Decision Framework
 
@@ -80,7 +81,7 @@ Evaluate each option along the following axes:
 - **Surprise Factor**: Is it not too predictable?
 
 #### Balance Axis (Weight: 25%)
-- **Fairness**: Avoids one-sided developments
+- **Fairness**: Outcomes come from checks, not from GM preference
 - **Progression**: Does it contribute to story advancement?
 - **Variety**: Avoids monotonous attack patterns
 
@@ -90,7 +91,7 @@ GM Total Score = (Challenge Axis × 0.35) + (Drama Axis × 0.40) + (Balance Axis
 
 GM Decision Adjustments:
 - When Players Dominate: Challenge +2 (increase difficulty)
-- When Players Struggle: Challenge -1 (relief element)
+- When Players Struggle: No relief by fiat; offer a new opportunity (quest, ally, favor) instead
 - Story Climax: Drama Axis +3 (drama priority)
 
 🆕 Personality Modifiers (refer to NPC_PERSONALITIES.md):
@@ -170,10 +171,10 @@ When Party Dominates (Win Rate > 75%):
 - 🆕 Increase utilization of Cunning/Chaotic personality NPCs
 
 When Party Struggles (Win Rate < 25%):
-- Direct NPC tactical mistakes
-- Provide environmental aid (discovering advantageous terrain, etc.)
-- Direct fortunate coincidences
-- 🆕 Make Aggressive personality NPCs more cautious
+- Do not reverse results or stage lucky coincidences
+- Offer new opportunities: a quest that fits the party's strengths, an NPC ally, a creditor who owes them
+- Let the party choose a lower-risk approach (the check's situational bonus reflects good positioning)
+- 🆕 Make Aggressive personality NPCs more cautious only if the fiction gives a reason
 ```
 
 ### NPC Action Diversification
@@ -217,6 +218,43 @@ NPC Action Pattern Recording:
 ❌ When wanting to express character personality
 → For these, refer to PLAYER_MIND.md
 ```
+
+## 📜 Quest Board & World Pressure
+
+The engine of the story is the **guild quest board**, not the economy. Parties gain standing by completing quests, and they meet, clash and bargain because their quests cross. Your main lever as GM is **which quests exist**. Full data model and engine rules: `QUEST_MANAGEMENT.md`.
+
+### Reading the Board Every Turn
+Use `contextData.questBoard.signals` (facts only; you decide):
+- `idleParties`: parties without an active quest. Give them something to want.
+- `contestedQuests`: quests held by two or more parties. Races are already running here.
+- `conflictPairs`: quests that cannot both succeed. Collisions are coming.
+- `questsByRegion`: where parties will converge. Encounters happen at these places.
+- `deadlinesWithin2Turns`: upcoming expirations. Prepare their consequences.
+- `pacing.recentGMActionTypes`: avoid issuing the same kind of action three turns in a row.
+
+### Quest Design Patterns (prefer patterns that make parties interact)
+| Pattern | How to build it | What it produces |
+|---|---|---|
+| **Collision** | Two clients issue incompatible quests (`conflictsWith` on both), offered privately (`offeredTo`) to different parties | Opposition without any GM-forced conflict |
+| **Race** | One `exclusive` quest that several parties accept | Sabotage, shortcuts, temporary truces |
+| **Joint** | `type: "joint"`, `minParties: 2`, reward split by effort | Negotiation, free-riding, betrayal temptation |
+| **Hidden truth** | `secret.truth` known only to the GM | Exposure, blackmail, defection from the client |
+| **Escalation** | `onFail` effects and `advancesClock` | Unhandled problems change the world |
+
+Rules of thumb:
+- Keep `activeQuestCount` around **party count + 1**. More scatters parties; fewer leaves some idle.
+- Put quest locations in **few regions** so parties meet.
+- Every quest carries **one dilemma** (a cost, a doubt about the client, or a rival).
+- Offer a conflicting quest privately (`offeredTo`) to a party that does **not** hold the other side. Parties never see `conflictsWith`, and they do not see private offers made to others.
+
+### Progress Clocks
+Clocks are threats that advance whether or not anyone acts (`tickPerTurn`) or when quests fail (`advancesClock`). When full, the engine applies `onComplete` effects. Create 1-2 clocks at the start; add one when a new threat appears. Advancing a clock is a GM action (`clocks/<id>/filled` add).
+
+### Threads (Setups and Payoffs)
+Register every setup you plant (`threads/<id>`: `{setup, turn, status: "open"}`) and resolve it later (`threads/<id>/status`: `"resolved"`). `contextData.openThreads` shows each thread's age; pay off old threads before planting new ones.
+
+### Adjudication: Do Not Decide Outcomes Yourself
+When an outcome is uncertain, including NPC attacks on parties, declare a **check**: `actor` = the party that must act, with `success / partial / failure` effects written before the roll. The engine rolls. You may change the world freely (weather, NPCs, new quests, clocks), but you never declare who wins a contest.
 
 ## 🎭 Inter-Party Event Management
 
@@ -265,191 +303,44 @@ relationshipImpact = {
 newValue = Math.max(0, Math.min(10, currentValue + impact));
 ```
 
-### Event Trigger Determination Framework
+### Where Inter-Party Events Come From
 
-#### Step 1: Party Pair Relationship Analysis
-```typescript
-partyPairAnalysis = evaluateAllPairs({
-  parties: activeParties,
-  relationships: currentRelationships,
-  proximity: geographicalDistance,
-  resourceOverlap: competingInterests,
-  powerBalance: capabilityComparison
-});
+Inter-party events are not rolled from probability tables. They arise when quests bring parties to the same place with incompatible goals. Your job is to **stage** the encounter; the parties choose what to do, and checks decide how it goes.
 
-// Tension level calculation for each pair
-tensionLevel =
-  (hostility * 0.4) +
-  (competition * 0.3) +
-  (resourceOverlap * 0.2) +
-  ((10 - trust) * 0.1);
+| Situation on the board | Staging that fits |
+|---|---|
+| Two parties in a race at the same region | The target is in one place: a locked vault, a single witness, one boat |
+| Parties on colliding quests | The client of one quest asks the party to remove the other party's charge |
+| A joint quest with a lagging partner | An NPC offers the leading party a bigger share if it finishes alone |
+| A party that owes another a favor | The creditor's quest needs exactly what the debtor can give |
+| A party falls behind in the standings | A risky quest with a high reward appears, with a dilemma attached |
 
-// Cooperation potential calculation
-cooperationPotential =
-  (cooperation * 0.4) +
-  (trust * 0.3) +
-  (complementaryCapabilities * 0.2) +
-  (sharedThreats * 0.1);
-```
+### Imposing a Confrontation (GM check)
+When an NPC or the environment threatens a party, or when parties collide at the same place, write a GM check with `actor` = the threatened party and, for party-versus-party scenes, `opposedBy` = the other party. Write each branch so it changes the story, not just numbers:
 
-#### Step 2: Event Type Occurrence Probability
-
-**Attack Event Occurrence Probability**:
-```typescript
-attackProbability = calculateEventChance({
-  baseProbability: 0.1, // 10%
-  hostilityModifier: hostility * 0.05, // Significant increase with hostility level
-  proximityModifier: proximity < 2 ? 0.03 : 0,
-  resourceModifier: resourceOverlap > 7 ? 0.04 : 0,
-  powerImbalanceModifier: Math.abs(powerDifference) > 3 ? 0.02 : 0,
-  narrativeTensionModifier: storyTension > 7 ? 0.03 : 0
-});
-
-// Maximum probability: 27% (high hostility + proximity + resource conflict + power difference + tension)
-```
-
-**Cooperation Event Occurrence Probability**:
-```typescript
-cooperationProbability = calculateEventChance({
-  baseProbability: 0.08, // 8%
-  cooperationModifier: cooperation * 0.04,
-  trustModifier: trust * 0.03,
-  complementaryModifier: capabilityComplement > 6 ? 0.05 : 0,
-  sharedThreatModifier: externalThreat > 5 ? 0.06 : 0,
-  weaknessModifier: partyInCrisis ? 0.04 : 0
-});
-
-// Maximum probability: 31% (high cooperation + high trust + capability complement + external threat + crisis)
-```
-
-**Negotiation Event Occurrence Probability**:
-```typescript
-negotiationProbability = calculateEventChance({
-  baseProbability: 0.12, // 12%
-  diplomacyModifier: Math.max(party1.diplomacy, party2.diplomacy) * 0.02,
-  tensionModifier: tensionLevel > 6 && tensionLevel < 9 ? 0.04 : 0,
-  opportunityModifier: mutualOpportunity > 5 ? 0.03 : 0,
-  timeModifier: sinceLastInteraction > 3 ? 0.02 : 0
-});
-
-// Maximum probability: 25% (high diplomacy + moderate tension + mutual opportunity + time passage)
-```
-
-**Competition Event Occurrence Probability**:
-```typescript
-competitionProbability = calculateEventChance({
-  baseProbability: 0.15, // 15%
-  competitionModifier: competition * 0.03,
-  similarCapabilityModifier: capabilitySimilarity > 7 ? 0.04 : 0,
-  resourceScarcityModifier: scarceResources > 6 ? 0.05 : 0,
-  achievementModifier: recentSuccess ? 0.03 : 0
-});
-
-// Maximum probability: 30% (high competition + similar capabilities + resource scarcity + recent success)
-```
-
-#### Step 3: GM Perspective Event Execution Decision
-
-```typescript
-gmEventDecision = evaluateEventTrigger({
-  eventType: selectedEventType,
-  involvedParties: [party1, party2],
-  currentRelations: partyRelationships,
-  narrativeImpact: storyValue,
-  balanceImpact: gameBalance,
-  playerEngagement: satisfactionLevel
-});
-
-// Final decision on GM evaluation axes
-finalEventScore =
-  eventProbability * 0.3 +          // Numerical probability
-  narrativeValue * 0.35 +           // Story value
-  balanceContribution * 0.25 +      // Game balance contribution
-  playerExcitement * 0.1;           // Player excitement level
-
-// Execution threshold: Event triggers at 6.5 or above
-if (finalEventScore >= 6.5) {
-  triggerInterPartyEvent(eventType, involvedParties);
+```json
+{
+  "id": "ambush_at_ford",
+  "description": "Ora's smugglers spring an ambush on the Iron Wolves at the ford",
+  "actor": "iron_wolves",
+  "capability": "combat",
+  "outcomes": {
+    "success": [{ "target": "parties/iron_wolves/inventory", "operation": "add", "value": ["smuggler_ledger"] }],
+    "partial": [{ "target": "parties/iron_wolves/morale", "operation": "add", "value": -1 }],
+    "failure": [
+      { "target": "parties/iron_wolves/morale", "operation": "add", "value": -2 },
+      { "target": "clocks/smugglers_rise/filled", "operation": "add", "value": 1 }
+    ]
+  }
 }
 ```
 
-### Inter-Party Event Execution Framework
+Relationship changes follow the event that happened (see the change rules above); apply them inside the branch that produced the event.
 
-#### Attack Event Execution
-```typescript
-conflictEvent = {
-  type: 'inter_party_conflict',
-  participants: [aggressorParty, targetParty],
-  effects: [
-    // Relationship value changes
-    { target: `relationships/${pair_id}/hostility`, operation: 'add', value: 3 },
-    { target: `relationships/${pair_id}/trust`, operation: 'add', value: -2 },
-
-    // Resource and morale changes based on combat results
-    { target: `parties/${winnerId}/morale`, operation: 'add', value: 2 },
-    { target: `parties/${loserId}/morale`, operation: 'add', value: -3 },
-    { target: `parties/${loserId}/resources/currency`, operation: 'add', value: -lootAmount }
-  ]
-};
-```
-
-#### Cooperation Event Execution
-```typescript
-cooperationEvent = {
-  type: 'inter_party_cooperation',
-  participants: [party1, party2],
-  effects: [
-    // Relationship value improvement
-    { target: `relationships/${pair_id}/cooperation`, operation: 'add', value: 2 },
-    { target: `relationships/${pair_id}/trust`, operation: 'add', value: 1 },
-
-    // Mutual benefits
-    { target: `parties/${party1}/morale`, operation: 'add', value: 1 },
-    { target: `parties/${party2}/morale`, operation: 'add', value: 1 },
-
-    // Joint project outcomes
-    { target: `parties/${party1}/resources/materials`, operation: 'add', value: sharedReward },
-    { target: `parties/${party2}/resources/materials`, operation: 'add', value: sharedReward }
-  ]
-};
-```
-
-#### Negotiation Event Execution
-```typescript
-negotiationEvent = {
-  type: 'inter_party_negotiation',
-  participants: [party1, party2],
-  effects: [
-    // Relationship adjustment
-    { target: `relationships/${pair_id}/hostility`, operation: 'add', value: -1 },
-    { target: `relationships/${pair_id}/cooperation`, operation: 'add', value: 1 },
-
-    // Resource trading based on agreement terms
-    { target: `parties/${party1}/resources/currency`, operation: 'add', value: -tradeAmount },
-    { target: `parties/${party2}/resources/currency`, operation: 'add', value: tradeAmount },
-    { target: `parties/${party1}/resources/materials/gems`, operation: 'add', value: gemAmount },
-    { target: `parties/${party2}/resources/materials/gems`, operation: 'add', value: -gemAmount }
-  ]
-};
-```
-
-#### Competition Event Execution
-```typescript
-competitionEvent = {
-  type: 'inter_party_competition',
-  participants: [party1, party2],
-  effects: [
-    // Strengthen competitive relationship
-    { target: `relationships/${pair_id}/competition`, operation: 'add', value: 2 },
-    { target: `relationships/${pair_id}/cooperation`, operation: 'add', value: -1 },
-
-    // Winner rewards and loser penalties
-    { target: `parties/${winnerId}/morale`, operation: 'add', value: 3 },
-    { target: `parties/${winnerId}/resources/materials`, operation: 'add', value: prize },
-    { target: `parties/${loserId}/morale`, operation: 'add', value: -1 }
-  ]
-};
-```
+### Consequences Stand
+- Do not undo a failure in the next turn. Setbacks become the next situation.
+- Lost quests, dead NPCs, exposed secrets and triggered clocks are permanent.
+- A struggling party gets **new opportunities** (a quest, an ally, a favor to call in), never a reversed result.
 
 ## Exploration Coordination Management
 
@@ -476,70 +367,59 @@ competitionEvent = {
   "timestamp": "[Current time in ISO format]",
   "status": "completed",
   "proposal": {
-    "type": "[Action type]",
+    "type": "issue_quest | npc_action | complication | advance_clock | reveal_secret | environmental_change | discovery_event | weather_change",
     "participants": ["GM"],
-    "effects": [...]
+    "effects": [...],
+    "checks": [...]
   }
 }
 ```
+`checks` is optional (at most 2). Common formats, permissions and errors: `JSON_GENERATION_GUIDELINES.md`.
 
-### Effect Path Notation ⚠️ Important
+### Issuing a Quest
 ```json
-// ✅ Correct notation
-{"target": "parties/emerald_hunters/morale", "operation": "add", "value": 1}
-{"target": "market/currentPrices/gems", "operation": "set", "value": 20}
-{"target": "regions/crystal_caves/occupantParties", "operation": "set", "value": ["emerald_hunters"]}
+{"target": "quests/silence_vell", "operation": "set", "value": {
+  "title": "Silence Vell",
+  "client": "captain_ora",
+  "description": "Make sure the merchant Vell never testifies.",
+  "location": "harbor",
+  "type": "exclusive",
+  "requiredProgress": 3,
+  "deadlineTurn": 8,
+  "reward": {"reputation": 3, "currency": 30},
+  "conflictsWith": ["escort_vell"],
+  "offeredTo": ["ash_lanterns"],
+  "secret": {"truth": "Ora is the smugglers' patron", "revealedTo": []},
+  "onComplete": [{"target": "npcs/merchant_vell/status", "operation": "set", "value": "dead"}],
+  "onFail": [{"target": "narrativeContext/rumors", "operation": "add", "value": "Ora's men were seen fleeing the harbor"}],
+  "advancesClock": {"clockId": "smugglers_rise", "amount": 1}
+}}
+// Also add the reverse link on the other quest:
+{"target": "quests/escort_vell/conflictsWith", "operation": "add", "value": "silence_vell"}
+```
+The engine sets `status`, `progress`, `acceptedBy` and `issuedTurn` itself. A quest that already exists cannot be replaced; change its fields instead.
 
-// ❌ Incorrect notation
-{"target": "/parties/emerald_hunters/morale"}  // Leading slash NG
-{"target": "parties", "operation": "set", "value": {...all parties...}}  // Bulk setting NG
+### Other GM Operations
+```json
+// Advance a clock
+{"target": "clocks/smugglers_rise/filled", "operation": "add", "value": 1}
+// Create an NPC client
+{"target": "npcs/captain_ora", "operation": "set", "value": {"name": "Captain Ora", "wants": "control of the harbor", "disposition": {}, "memory": []}}
+// Give a party a belief (it may be false; "truth" is never shown to parties)
+{"target": "parties/silver_quill/knowledge", "operation": "add", "value": {"text": "Vell keeps a second ledger", "source": "dockhand", "turn": 4, "truth": false}}
+// Plant and resolve a thread
+{"target": "threads/second_ledger", "operation": "set", "value": {"setup": "Vell's second ledger", "turn": 4, "status": "open"}}
+{"target": "threads/second_ledger/status", "operation": "set", "value": "resolved"}
+// Adjust reputation for a scandal (only the GM and quest rewards can change reputation)
+{"target": "parties/iron_wolves/reputation", "operation": "add", "value": -1}
+// Relationship values
+{"target": "relationships/iron_wolves__silver_quill/hostility", "operation": "add", "value": 2}
 ```
 
-### Currency and Resource Operations
-```json
-// ✅ Currency decrease (payment)
-{"target": "parties/party_id/resources/currency", "operation": "add", "value": -50}
-
-// ✅ Material consumption
-{"target": "parties/party_id/resources/materials/metal", "operation": "add", "value": -3}
-
-// ✅ Add new materials
-{"target": "parties/party_id/resources/materials", "operation": "add", "value": {"new_item": 5}}
-```
-
-### Inter-Party Relationship Value Operations
-```json
-// ✅ Increase hostility (after attack event)
-{"target": "relationships/party1_id__party2_id/hostility", "operation": "add", "value": 3}
-
-// ✅ Improve cooperation (after joint project)
-{"target": "relationships/emerald_hunters__fire_forge_guild/cooperation", "operation": "add", "value": 2}
-
-// ✅ Decrease trust (after betrayal)
-{"target": "relationships/party1_id__party2_id/trust", "operation": "add", "value": -4}
-
-// ✅ Set competition level (establish rival relationship)
-{"target": "relationships/party1_id__party2_id/competition", "operation": "set", "value": 8}
-
-// ✅ Update last interaction
-{"target": "relationships/party1_id__party2_id/lastInteraction", "operation": "set", "value": "turn_5"}
-
-// ✅ Add interaction history (add as array)
-{"target": "relationships/party1_id__party2_id/history", "operation": "add", "value": [{"turn": 5, "event": "conflict", "impact": "+3_hostility", "description": "Armed conflict over resource dispute"}]}
-```
-
-### Array Operations
-```json
-// ✅ Update region occupants
-{"target": "regions/region_id/occupantParties", "operation": "set", "value": ["party1", "party2"]}
-
-// ✅ Add to trading history (as array)
-{"target": "market/completedTrades", "operation": "add", "value": [{"buyer": "party_id", "item": "wood", "quantity": 10, "price": 3, "total": 30, "turn": 2}]}
-```
+### Engine-Managed Values (writes are rejected)
+`quests/*/status`, `quests/*/progress`, `quests/*/completedBy`, `quests/*/resolvedTurn`, `clocks/*/triggered`, `rng`, `checkLog`, `chronicle`, `guild/standings`, `guild/promoted`. Quest progress changes only through check outcomes.
 
 ### Pre-Check Required Items
-1. **Balance Verification**: Check current values when consuming currency/materials
-2. **Region Capacity**: Check capacity limits when moving
-3. **Logical Consistency**: Verify that actions are appropriate for the situation
-
-Follow this GM thinking framework and JSON generation guidelines to provide appropriate challenges and story experiences to players. When player perspective judgment is needed, switch to `PLAYER_MIND.md`.
+1. **Board health**: Does every party have something to want? Do at least two quests cross?
+2. **Uncertain outcome?** Write a check with all three branches instead of a direct effect
+3. **Logical consistency**: References (`client`, `location`, `conflictsWith`, `clockId`) point to existing entries

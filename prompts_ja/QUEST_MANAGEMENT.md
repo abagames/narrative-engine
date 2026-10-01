@@ -1,306 +1,185 @@
-# Quest Management Framework - 動的クエスト対応・優先順位判断
+# Quest Management - 依頼と判定のルール
 
-## 📜 Quest Strategic Framework
+この文書は世界の中心となる仕組みを定める。**パーティーはギルドの依頼をめぐって競い、協力する**。**結果を決めるのはAIではなくエンジンである**。`GM_CORE_MIND.md`（依頼の発行）、`PLAYER_MIND.md`（依頼の遂行）と合わせて読む。
 
-### 1. Quest Evaluation & Prioritization
+## 🎯 設計原則
 
-#### Quest Type Classification
-```markdown
-**Exploration Quests (探索クエスト)**
-- 必要スキル: 探索力 6+, 地理知識
-- リスク: 中-高 (未知領域)
-- 報酬: 地域アクセス, 宝物発見, 知識獲得
-- 期間: 5-15ターン
-- 適合パーティ: 探索特化, 冒険志向
+1. **依頼が物語を動かす**: パーティーは依頼を達成して地位を上げる。資源と市場は任意の背景にすぎない
+2. **進路が交差する**: 依頼は場所・目標・依頼主を共有するので、パーティーは出会う。相互作用はGMが仕組むイベントではなく構造から生まれる
+3. **宣言してから振る**: AIエージェントは何を試み、各結果が何を意味するかを宣言する。エンジンがロールし、結果を1つ適用する
+4. **帰結は残る**: 失敗・期限切れ・死・暴かれた秘密は残り、次の状況になる
+5. **情報は不平等**: パーティーは真実の一部しか見えない。GMはすべてを見る
 
-**Trading Quests (交易クエスト)**
-- 必要スキル: 交易力 5+, 物流管理
-- リスク: 低-中 (市場変動)
-- 報酬: 通貨, 交易ルート, 商業コネクション
-- 期間: 3-10ターン
-- 適合パーティ: 交易特化, 効率重視
+## 📦 ワールドのデータモデル
 
-**Combat Quests (戦闘クエスト)**
-- 必要スキル: 戦闘力 7+, 戦術知識
-- リスク: 高 (生命危険)
-- 報酬: 通貨, 装備, 戦闘評判
-- 期間: 1-5ターン
-- 適合パーティ: 戦闘特化, 高リスク許容
-
-**Social Quests (社会クエスト)**
-- 必要スキル: 外交力 6+, 交渉能力
-- リスク: 低 (評判リスク)
-- 報酬: 評判向上, 政治的影響力, 情報
-- 期間: 3-8ターン
-- 適合パーティ: 外交特化, 関係構築
-
-**Crafting Quests (製作クエスト)**
-- 必要スキル: 製作力 6+, 専門技術
-- リスク: 低 (材料コスト)
-- 報酬: 技術向上, 特殊レシピ, 製作評判
-- 期間: 2-7ターン
-- 適合パーティ: 製作特化, 技術革新
+```json
+{
+  "guild": {
+    "name": "灯火ギルド",
+    "season": { "endsAtTurn": 12, "promotionSlots": 1 }
+  },
+  "quests": {
+    "escort_vell": {
+      "title": "ヴェルを判事のもとへ護送せよ",
+      "client": "merchant_vell",
+      "description": "生きて法廷に着けば、ヴェルは密輸団に不利な証言をする。",
+      "location": "harbor",
+      "type": "exclusive",
+      "requiredProgress": 3,
+      "deadlineTurn": 8,
+      "reward": { "reputation": 3, "currency": 40, "items": ["vell_seal"] },
+      "conflictsWith": ["silence_vell"],
+      "offeredTo": [],
+      "secret": { "truth": "ヴェルは法廷の証拠を持ち逃げするつもりである", "revealedTo": [] },
+      "onComplete": [],
+      "onFail": [{ "target": "narrativeContext/rumors", "operation": "add", "value": "ヴェルの遺体が浜に打ち上げられた" }],
+      "advancesClock": { "clockId": "smugglers_rise", "amount": 1 },
+      "acceptedBy": [],
+      "progress": {},
+      "status": "open"
+    }
+  },
+  "npcs": {
+    "merchant_vell": { "name": "ヴェル", "wants": "安全な通行", "disposition": {}, "memory": [] }
+  },
+  "clocks": {
+    "smugglers_rise": {
+      "name": "密輸団が港を掌握する",
+      "segments": 4,
+      "filled": 0,
+      "tickPerTurn": 0,
+      "visible": true,
+      "consequence": "港が密輸団の支配下に落ちる",
+      "onComplete": [{ "target": "regions/harbor/specialEffects", "operation": "add", "value": "smuggler_controlled" }]
+    }
+  },
+  "favors": {
+    "quill_owes_wolves_1": { "owedBy": "silver_quill", "owedTo": "iron_wolves", "reason": "地下墓所での救出", "turn": 6, "status": "owed" }
+  },
+  "threads": {
+    "second_ledger": { "setup": "ヴェルの裏帳簿", "turn": 4, "status": "open" }
+  },
+  "parties": {
+    "iron_wolves": {
+      "reputation": 0,
+      "inventory": [],
+      "goals": ["銀羽根団より先に昇格する"],
+      "flaws": [{ "name": "誇り", "trigger": "銀羽根団に助けを求められる", "effect": "代償を問わず断る" }],
+      "knowledge": [{ "text": "オラは密輸団に金を払っている", "source": "港湾労働者", "turn": 2, "truth": true }]
+    }
+  },
+  "rng": { "seed": 1234 }
+}
 ```
 
-#### Quest Value Assessment
-```typescript
-questValue =
-  rewardValue * 0.3 +
-  skillDevelopment * 0.25 +
-  reputationGain * 0.2 +
-  strategicValue * 0.15 +
-  networkingOpportunity * 0.1;
+| フィールド | 書き込む者 | 備考 |
+|---|---|---|
+| `quests/*`の定義 | GM | `quests/<id>`への`set`で作成する。既存の依頼は置き換えられない |
+| `quests/*/offeredTo` | GM | 空または未指定なら掲示板に公開。指定すると非公開の依頼になり、そのパーティーだけが見て受注できる |
+| `quests/*/acceptedBy`、`abandonedBy` | パーティー（自分のみ）、GM | 1パーティーの受注中依頼は最大2件。放棄した依頼は再受注できない |
+| `quests/*/progress/*` | checkの結果のみ | 0未満にはならない |
+| `quests/*/status`、`completedBy`、`resolvedTurn` | エンジン | `open` → `accepted` → `completed` / `failed` / `expired` |
+| `quests/*/secret/revealedTo` | checkの結果（パーティーが自分を追加）、GM | パーティーには明かされた後でのみ`secret`が見える |
+| `parties/*/reputation` | エンジン（報酬）、GM | シーズンの順位を決める |
+| `parties/*/capabilities` | GM | check修正値の基礎 |
+| `clocks/*/filled` | GM、エンジン | `triggered`はエンジン管理 |
+| `rng`、`checkLog`、`chronicle`、`guild/standings`、`guild/promoted` | エンジン | AIエージェントは読み取りのみ |
 
-questCost =
-  timeCost * 0.4 +
-  resourceCost * 0.3 +
-  opportunityCost * 0.2 +
-  riskLevel * 0.1;
+## 🎲 check（判定）
 
-questROI = (questValue - questCost) / questCost;
+### 宣言
+```json
+{
+  "id": "breach_vault",
+  "description": "リオが階段を見張る間に、ブラスクが宝物庫の扉を打ち破る",
+  "actor": "iron_wolves",
+  "capability": "combat",
+  "situational": 0,
+  "opposedBy": { "party": "silver_quill", "capability": "exploration" },
+  "outcomes": {
+    "success": [ ... ],
+    "partial": [ ... ],
+    "failure": [ ... ]
+  }
+}
+```
+- 1応答あたり**最大2つ**。`proposal.checks`に書く
+- `actor`: パーティー。パーティーの応答は自分のためにしか振れない。GMは任意のパーティーにcheckを課せる
+- 3つの結果リストはすべて**必須**。中の効果はロールの**前に**権限を検証される
 
-// ROI > 1.0 = 高優先度, 0.5-1.0 = 中優先度, 0.2-0.5 = 低優先度, 0.2未満 = 却下
+### 解決
+```
+修正値 = 能力修正 + situational      （situationalは-1〜+1に制限）
+能力修正 = round((能力値 - 5) / 2.5)、-2〜+2に制限   （能力が未定義なら-1）
+
+非対抗:  2d6 + 修正値 ≥ 10 → success | 7-9 → partial | ≤ 6 → failure
+対抗:    差 = (2d6 + 修正値) - (2d6 + 相手の修正値)
+         差 ≥ 3 → success | 0-2 → partial | < 0 → failure
+```
+確率（非対抗）: 修正値0 → success 17%、partial 42%、failure 42%。修正値+2 → success 42%、partial 42%、failure 17%。
+
+ダイスは`hash(シード, ターン, actor, checkの順番)`から決まる。応答を出し直しても**同じダイス**になるので、出し直しによる振り直しはできない。
+
+### 結果の書き方
+| 結果 | 含めるもの |
+|---|---|
+| `success` | 目的が素直に進む（典型的には進捗+2、アイテム、秘密の解明） |
+| `partial` | 代償つきで目的が進む（進捗+1と士気の低下、目撃者、借り、競合相手に気づかれる） |
+| `failure` | 実際の後退: 士気や資源の喪失、関係の悪化、クロックの進行、位置の喪失 |
+
+## 🔄 依頼のライフサイクル
+
+```
+GMが依頼を発行 (status: open)
+   ↓ パーティーがacceptedByに自分を追加      (status: accepted)
+   ↓ 依頼の場所でのcheckが進捗を加算
+   ↓ 処理の最後にエンジンが依頼を解決
+      exclusive: progress ≥ requiredProgressに達したパーティーが勝つ
+                 （最大進捗。同点はロールで決着）
+      joint:     進捗合計 ≥ requiredProgress かつ貢献者 ≥ minParties
+                 評判・通貨は進捗に比例して分配。アイテムは最大貢献者へ
+   ↓ completed: 報酬支払い、依頼主の感情+2、onComplete適用、
+                conflictsWithの依頼は失敗（そのonFailとadvancesClockが適用される）
+各ターン開始時（アップキープ）:
+   deadlineTurn超過 → expired（onFail、advancesClock、受注者ごとに依頼主の感情-1）
+   tickPerTurnを持つクロックが進む。満了したクロックはonCompleteを発動
+シーズン終了（seasonEnd停止条件またはセッション終了）:
+   評判、次に達成依頼数で順位付け。上位promotionSlotsのパーティーが昇格（同点はロール）
 ```
 
-### 2. Quest Portfolio Management
+エンジンのイベントはすべて`chronicle`に追記され、playlogエントリの`engineEvents`にも記録される。
 
-#### Portfolio Balance Strategy
-```markdown
-**High-Risk High-Reward (20-30%)**
-- 探索系・戦闘系クエスト
-- 期待リターン: 200-500%
-- 失敗リスク: 30-50%
-- 目的: 大幅成長・突破口
+## 🧩 依頼設計パターン
 
-**Medium-Risk Medium-Reward (40-50%)**
-- 交易系・社会系クエスト
-- 期待リターン: 100-200%
-- 失敗リスク: 10-25%
-- 目的: 安定成長・基盤強化
+| パターン | 構成 | 生まれる相互作用 |
+|---|---|---|
+| **衝突** | 2人の依頼主、相互に`conflictsWith`を持つ2つの依頼を、別々のパーティーへ非公開で（`offeredTo`） | どちらも選んでいない対立 |
+| **競争** | 誰でも受けられる`exclusive`依頼1つ | 妨害（対抗check）、首位に対する同盟 |
+| **共同** | `type: "joint"`、`minParties: 2` | 労力と取り分の交渉、ただ乗り、裏切り |
+| **隠された真相** | `secret.truth`が依頼主の説明と食い違う | 調査、暴露、寝返り |
+| **悪化** | `onFail`と`advancesClock` | 放置された問題が地図を変える |
+| **借り** | 他パーティーの助けがないと終わらない依頼 | 貸し借り、駆け引き、返済 |
 
-**Low-Risk Low-Reward (20-30%)**
-- 製作系・情報収集クエスト
-- 期待リターン: 50-100%
-- 失敗リスク: 5-15%
-- 目的: スキル蓄積・ネットワーク
-```
+### 掲示板の健全性
+- 受注可能・受注中の依頼数 ≈ パーティー数 + 1
+- 常に少なくとも1組のパーティーが依頼の場所を共有している
+- 各依頼にジレンマが1つある: 代償、依頼主への疑念、競合相手のいずれか
+- 1〜2ターンごとに1件の依頼が決着するよう期限を散らす
 
-#### Dynamic Portfolio Adjustment
-```typescript
-portfolioBalance = assessCurrentNeeds({
-  resourceStatus: currentFinancialState,
-  skillGaps: identifiedWeaknesses,
-  strategicGoals: longTermObjectives,
-  marketOpportunities: availableNiches,
-  competitivePosition: relativeStrength
-});
+## 🏁 停止条件（session_config.json）
 
-if (resourceStatus === 'critical') → 低リスク確実収入重視
-else if (skillGaps.length > 3) → スキル開発クエスト優先
-else if (marketOpportunities.score > 8) → 戦略的機会活用
-else → バランス型ポートフォリオ維持
-```
+| 条件 | 値 | 終了するとき |
+|---|---|---|
+| `seasonEnd` | `true` | ターンが`guild.season.endsAtTurn`を超えた |
+| `questsResolved` | 数値 | その数の依頼が達成・失敗・期限切れになった |
+| `questCompleted` | 依頼IDまたはリスト | 列挙した依頼のいずれかが決着した |
+| `clockTriggered` | クロックIDまたはリスト | 列挙したクロックのいずれかが満了した |
+| `totalPartyWealth`、`regionDevelopment` | 数値 | 旧来の経済的条件 |
 
-### 3. Quest Execution Strategy
+## 📋 プレイヤーの依頼戦略
 
-#### Pre-Execution Planning
-```markdown
-**Resource Allocation Planning**
-- 必要人員・スキル配置
-- 装備・道具準備
-- 資金・材料確保
-- 時間スケジュール策定
-
-**Risk Assessment & Mitigation**
-- 失敗シナリオ分析
-- 代替計画策定
-- 保険・バックアップ確保
-- 撤退条件設定
-
-**Success Criteria Definition**
-- 最低限達成目標
-- 理想的成果目標
-- ボーナス達成可能性
-- 評価指標設定
-
-**Stakeholder Management**
-- クエスト依頼者関係
-- 協力者・パートナー
-- 競合者対策
-- 影響受ける第三者
-```
-
-#### Execution Monitoring Framework
-```typescript
-questProgress = trackExecution({
-  objectiveCompletion: completedTasks / totalTasks,
-  timeProgress: elapsedTime / allocatedTime,
-  resourceConsumption: usedResources / budgetedResources,
-  qualityLevel: currentOutputQuality,
-  stakeholderSatisfaction: clientFeedback
-});
-
-if (objectiveCompletion < timeProgress * 0.8) → 効率改善要
-else if (resourceConsumption > timeProgress * 1.2) → コスト管理要
-else if (qualityLevel < expectation * 0.9) → 品質向上要
-else → 順調進行
-```
-
-### 4. Quest Completion Optimization
-
-#### Quality vs Speed Trade-offs
-```markdown
-**Speed Priority Scenarios**
-- 時間制限クエスト
-- 競合者存在時
-- 市場機会限定時
-- 緊急性高い依頼
-
-**Quality Priority Scenarios**
-- 評判重要クライアント
-- 技術習得目的
-- 長期関係構築時
-- 複雑・高難度クエスト
-
-**Balance Approach**
-- 標準的クエスト
-- 複数要素考慮必要
-- リスク中程度
-- 継続関係維持
-```
-
-#### Completion Decision Framework
-```typescript
-completionStrategy = determineApproach({
-  timeRemaining: deadlineProximity,
-  currentQuality: achievedStandard,
-  clientExpectations: satisfactionThreshold,
-  additionalBenefits: bonusOpportunities,
-  resourceAvailability: remainingCapacity
-});
-
-if (timeRemaining < 20% && currentQuality >= 80%) → 速やか完了
-else if (timeRemaining > 50% && bonusOpportunities.value > baseReward * 0.3) → 追加価値追求
-else if (clientExpectations > currentQuality) → 品質向上優先
-else → 効率的完了
-```
-
-### 5. Quest Outcome Analysis
-
-#### Performance Evaluation
-```markdown
-**Success Metrics**
-- 目標達成度 (完了率)
-- 品質レベル (満足度)
-- 効率性 (時間・コスト)
-- 付加価値 (ボーナス獲得)
-
-**Learning Outcomes**
-- 新スキル習得
-- 経験値蓄積
-- 知識・情報獲得
-- ノウハウ蓄積
-
-**Relationship Building**
-- クライアント満足度
-- 信頼関係構築
-- ネットワーク拡大
-- 評判向上
-
-**Strategic Impact**
-- 長期目標への貢献
-- 競争優位構築
-- 市場地位向上
-- 将来機会創出
-```
-
-#### Lessons Learned Integration
-```typescript
-questReview = conductPostMortem({
-  successFactors: identifyWhatWorked(),
-  failurePoints: identifyWhatFailed(),
-  unexpectedEvents: documentSurprises(),
-  skillDevelopment: measureGrowth(),
-  processImprovements: identifyOptimizations()
-});
-
-knowledgeBase.update({
-  questType: currentQuest.type,
-  context: currentQuest.context,
-  lessons: questReview.insights,
-  bestPractices: questReview.successFactors,
-  pitfalls: questReview.failurePoints
-});
-```
-
-### 6. Advanced Quest Strategies
-
-#### Chain Quest Management
-```markdown
-**Sequential Quests (連続クエスト)**
-- 前提条件チェック
-- 継続的関係活用
-- 累積効果狙い
-- 長期価値最大化
-
-**Parallel Quest Execution (並行実行)**
-- リソース最適配分
-- シナジー効果活用
-- リスク分散
-- 効率性向上
-
-**Conditional Quest Planning (条件付き計画)**
-- 成果連動型選択
-- 市況対応型調整
-- 機会創出型拡張
-- 撤退条件設定
-```
-
-#### Innovation in Quest Approach
-```typescript
-innovativeApproach = developNewMethods({
-  traditionalMethod: standardProcedure,
-  constraints: currentLimitations,
-  resources: availableAssets,
-  creativity: teamInnovation,
-  riskTolerance: acceptableUncertainty
-});
-
-if (innovativeApproach.expectedValue > traditionalMethod.value * 1.3) → 革新的手法採用
-else if (innovativeApproach.riskLevel < traditionalMethod.risk * 0.8) → 安全革新手法
-else if (traditionalMethod.certainty > 0.9) → 従来手法維持
-else → 部分的革新適用
-```
-
-## 🎯 Practical Implementation
-
-### Quest Decision Matrix
-```markdown
-| 要素 | 重要度 | 評価基準 | 配点 |
-|------|--------|----------|------|
-| 報酬価値 | 30% | 通貨・物品・特権価値 | 1-10 |
-| スキル適合 | 25% | 必要スキルとの一致度 | 1-10 |
-| 時間効率 | 20% | 期間対効果比 | 1-10 |
-| リスクレベル | 15% | 失敗可能性・損失規模 | 1-10 |
-| 戦略価値 | 10% | 長期目標への貢献度 | 1-10 |
-```
-
-### Quest Management Workflow
-```
-1. クエスト発見・情報収集
-2. 評価・優先順位付け
-3. ポートフォリオ調整
-4. 実行計画策定
-5. 実行・監視
-6. 完了・評価
-7. 学習・改善
-```
-
-### Success Indicators
-- **完了率**: 85%以上
-- **品質スコア**: 平均8.0以上
-- **ROI**: 平均100%以上
-- **クライアント満足度**: 90%以上
-- **継続依頼率**: 70%以上
-
-このフレームワークにより、クエストの戦略的選択から効率的実行、価値最大化まで体系的に管理できます。
+1. **順位で依頼を選ぶ**: 首位はリードを守り、追う側はリスクを取る
+2. **競合相手を見る**: 自分の依頼で`rivalProgress: "close"`なら、今動くか、妨害するか、交渉する
+3. **達成前に調べる**: 秘密を持つ依頼主のもとでは、報酬が無価値になったり、依頼自体が誤りだったりする
+4. **支援を貸しと交換する**: 貸しを記録した`assist`は、後で回収できる
+5. **放棄は意図して行う**: 放棄すると枠が空くが、進捗と依頼主の好意を失う

@@ -15,6 +15,7 @@
 - **ドラマ演出**: クライマックス、転換点、意外な展開
 - **ペース調整**: 戦闘・探索・休息のリズム管理
 - **伏線管理**: 将来の展開への布石
+- **依頼掲示板の管理**: 進路が交差する依頼を出し、パーティー同士を出会わせ、衝突させる
 
 ## 🧠 GM判断フレームワーク
 
@@ -80,7 +81,7 @@
 - **意外性**: 予測可能すぎないか
 
 #### バランス軸 (重み: 25%)
-- **公平性**: 一方的展開の回避
+- **公平性**: 結果はGMの好みではなくcheckで決まる
 - **進行性**: 物語の進展に貢献するか
 - **多様性**: 単調な攻撃パターンの回避
 
@@ -90,7 +91,7 @@ GM総合スコア = (挑戦度軸 × 0.35) + (演出軸 × 0.40) + (バランス
 
 GM判断修正:
 - プレイヤー優勢時: 挑戦度+2 (難易度上昇)
-- プレイヤー劣勢時: 挑戦度-1 (救済要素)
+- プレイヤー劣勢時: 恣意的な救済はしない。代わりに新しい機会（依頼・味方・貸し）を与える
 - 物語のクライマックス: 演出軸+3 (ドラマ優先)
 
 🆕 個性修正 (NPC_PERSONALITIES.md参照):
@@ -170,10 +171,10 @@ NPC行動描写: 短文、意図明示、威圧感
 - 🆕 狡猾・混沌個性NPCの活用増加
 
 パーティ劣勢時 (勝率 < 25%):
-- NPCの戦術ミス演出
-- 環境的援助の提供 (有利な地形発見など)
-- 偶然の幸運演出
-- 🆕 攻撃的個性NPCの慎重化
+- 結果を覆したり、偶然の幸運を演出したりしない
+- 新しい機会を与える: パーティーの強みに合う依頼、NPCの味方、借りのある相手
+- 危険の少ない手段を選ばせる（有利な位置取りはcheckのsituationalボーナスで表す）
+- 🆕 攻撃的個性NPCの慎重化は、物語上の理由がある場合のみ
 ```
 
 ### NPC行動多様化
@@ -217,6 +218,43 @@ NPC行動パターン記録:
 ❌ キャラクター個性を表現したいとき
 → これらは PLAYER_MIND.md を参照
 ```
+
+## 📜 依頼掲示板と世界の圧力
+
+物語を動かすのは経済ではなく**ギルドの依頼掲示板**である。パーティーは依頼を達成して評判を得る。依頼同士が交差するから、出会い、衝突し、取引する。GMの主な手段は**どんな依頼を存在させるか**である。データモデルとエンジン規則の全体は`QUEST_MANAGEMENT.md`を参照。
+
+### 毎ターンの掲示板確認
+`contextData.questBoard.signals`を使う（事実のみ。判断はGMが行う）:
+- `idleParties`: 依頼を持たないパーティー。望むものを与える
+- `contestedQuests`: 2パーティー以上が受けた依頼。既に競争が起きている
+- `conflictPairs`: 両立しない依頼の組。衝突が近い
+- `questsByRegion`: パーティーが集まる場所。遭遇はここで起きる
+- `deadlinesWithin2Turns`: 期限切れが近い依頼。その帰結を準備する
+- `pacing.recentGMActionTypes`: 同じ種類の行動を3ターン連続で出さない
+
+### 依頼設計パターン（パーティー同士が関わるものを優先する）
+| パターン | 作り方 | 生まれるもの |
+|---|---|---|
+| **衝突** | 2人の依頼主が両立しない依頼を、別々のパーティーに非公開で（`offeredTo`）出す（双方に`conflictsWith`） | GMが仕組まなくても生じる対立 |
+| **競争** | 複数パーティーが受ける`exclusive`依頼 | 妨害・近道・一時休戦 |
+| **共同** | `type: "joint"`、`minParties: 2`、報酬は貢献度で分配 | 交渉・ただ乗り・裏切りの誘惑 |
+| **隠された真相** | GMだけが知る`secret.truth` | 暴露・脅迫・依頼主からの離反 |
+| **悪化** | `onFail`効果と`advancesClock` | 放置された問題が世界を変える |
+
+目安:
+- `activeQuestCount`を**パーティー数+1**程度に保つ。多いと散らばり、少ないと暇なパーティーが出る
+- 依頼の目的地を**少数の地域**に集め、パーティーを出会わせる
+- 各依頼に**ジレンマを1つ**入れる（代償、依頼主への疑念、競合相手のいずれか）
+- 衝突する依頼は、反対側を持って**いない**パーティーに非公開で（`offeredTo`）出す。パーティーには`conflictsWith`も、他者への非公開の依頼も見えない
+
+### 進行クロック
+クロックは、誰が行動してもしなくても進む（`tickPerTurn`）、または依頼の失敗で進む（`advancesClock`）脅威である。満了するとエンジンが`onComplete`効果を適用する。開始時に1〜2個作り、新たな脅威が現れたら追加する。クロックを進めるのはGMの行動である（`clocks/<id>/filled`にadd）。
+
+### 伏線台帳（スレッド）
+仕込んだ伏線は登録し（`threads/<id>`: `{setup, turn, status: "open"}`）、後で回収する（`threads/<id>/status`を`"resolved"`に）。`contextData.openThreads`に各伏線の経過ターンが出る。新しい伏線より先に古い伏線を回収する。
+
+### 判定: 結果を自分で決めない
+結果が不確かな出来事は、NPCによるパーティーへの攻撃も含め、**check**として宣言する。`actor`は行動を迫られるパーティーとし、`success / partial / failure`の効果をロール前に書く。ロールはエンジンが行う。天候・NPC・新しい依頼・クロックは自由に変えてよいが、勝敗を宣言してはならない。
 
 ## 🎭 パーティ間イベント管理
 
@@ -265,191 +303,44 @@ relationshipImpact = {
 newValue = Math.max(0, Math.min(10, currentValue + impact));
 ```
 
-### イベント誘発判定フレームワーク
+### パーティー間イベントの発生源
 
-#### Step 1: パーティペア関係分析
-```typescript
-partyPairAnalysis = evaluateAllPairs({
-  parties: activeParties,
-  relationships: currentRelationships,
-  proximity: geographicalDistance,
-  resourceOverlap: competingInterests,
-  powerBalance: capabilityComparison
-});
+パーティー間イベントは確率表から振って起こすものではない。依頼が、両立しない目的を持つパーティーを同じ場所に連れてきたときに起きる。GMの役目は遭遇の**舞台を整える**ことである。何をするかはパーティーが選び、どう転ぶかは判定が決める。
 
-// 各ペアの緊張度計算
-tensionLevel =
-  (hostility * 0.4) +
-  (competition * 0.3) +
-  (resourceOverlap * 0.2) +
-  ((10 - trust) * 0.1);
+| 掲示板の状況 | 合う演出 |
+|---|---|
+| 2パーティーが同じ地域で競争中 | 目標が1か所にある: 鍵のかかった宝物庫、1人きりの証人、1艘の船 |
+| 衝突する依頼を持つパーティー同士 | 一方の依頼主が、もう一方の護衛対象を排除するよう求める |
+| 共同依頼で貢献の遅れた相方がいる | NPCが先行するパーティーに「単独で仕上げれば取り分を増やす」と持ちかける |
+| 他パーティーに借りがあるパーティー | 債権者の依頼に、債務者だけが出せるものが必要になる |
+| 順位で遅れたパーティー | 高報酬で危険な依頼が、ジレンマ付きで現れる |
 
-// 協力可能性計算
-cooperationPotential =
-  (cooperation * 0.4) +
-  (trust * 0.3) +
-  (complementaryCapabilities * 0.2) +
-  (sharedThreats * 0.1);
-```
+### 対決を課す（GMのcheck）
+NPCや環境がパーティーを脅かすとき、またはパーティー同士が同じ場所で衝突するときは、`actor`を脅かされる側とするGMのcheckを書く。パーティー対パーティーの場面では`opposedBy`に相手を指定する。各分岐は数値だけでなく物語を変えるように書く:
 
-#### Step 2: イベントタイプ別発生確率
-
-**攻撃イベント発生確率**:
-```typescript
-attackProbability = calculateEventChance({
-  baseProbability: 0.1, // 10%
-  hostilityModifier: hostility * 0.05, // 敵対度で大幅増加
-  proximityModifier: proximity < 2 ? 0.03 : 0,
-  resourceModifier: resourceOverlap > 7 ? 0.04 : 0,
-  powerImbalanceModifier: Math.abs(powerDifference) > 3 ? 0.02 : 0,
-  narrativeTensionModifier: storyTension > 7 ? 0.03 : 0
-});
-
-// 最大確率: 27% (高敵対 + 近接 + 資源競合 + 戦力差 + 緊張)
-```
-
-**協力イベント発生確率**:
-```typescript
-cooperationProbability = calculateEventChance({
-  baseProbability: 0.08, // 8%
-  cooperationModifier: cooperation * 0.04,
-  trustModifier: trust * 0.03,
-  complementaryModifier: capabilityComplement > 6 ? 0.05 : 0,
-  sharedThreatModifier: externalThreat > 5 ? 0.06 : 0,
-  weaknessModifier: partyInCrisis ? 0.04 : 0
-});
-
-// 最大確率: 31% (高協力 + 高信頼 + 能力補完 + 外的脅威 + 危機)
-```
-
-**交渉イベント発生確率**:
-```typescript
-negotiationProbability = calculateEventChance({
-  baseProbability: 0.12, // 12%
-  diplomacyModifier: Math.max(party1.diplomacy, party2.diplomacy) * 0.02,
-  tensionModifier: tensionLevel > 6 && tensionLevel < 9 ? 0.04 : 0,
-  opportunityModifier: mutualOpportunity > 5 ? 0.03 : 0,
-  timeModifier: sinceLastInteraction > 3 ? 0.02 : 0
-});
-
-// 最大確率: 25% (高外交 + 適度緊張 + 相互機会 + 時間経過)
-```
-
-**競争イベント発生確率**:
-```typescript
-competitionProbability = calculateEventChance({
-  baseProbability: 0.15, // 15%
-  competitionModifier: competition * 0.03,
-  similarCapabilityModifier: capabilitySimilarity > 7 ? 0.04 : 0,
-  resourceScarcityModifier: scarceResources > 6 ? 0.05 : 0,
-  achievementModifier: recentSuccess ? 0.03 : 0
-});
-
-// 最大確率: 30% (高競争 + 類似能力 + 資源不足 + 最近の成功)
-```
-
-#### Step 3: GM視点でのイベント実行判定
-
-```typescript
-gmEventDecision = evaluateEventTrigger({
-  eventType: selectedEventType,
-  involvedParties: [party1, party2],
-  currentRelations: partyRelationships,
-  narrativeImpact: storyValue,
-  balanceImpact: gameBalance,
-  playerEngagement: satisfactionLevel
-});
-
-// GM評価軸での最終判定
-finalEventScore =
-  eventProbability * 0.3 +          // 数値的確率
-  narrativeValue * 0.35 +           // 物語価値
-  balanceContribution * 0.25 +      // ゲームバランス貢献
-  playerExcitement * 0.1;           // プレイヤー興奮度
-
-// 実行閾値: 6.5以上でイベント発動
-if (finalEventScore >= 6.5) {
-  triggerInterPartyEvent(eventType, involvedParties);
+```json
+{
+  "id": "ambush_at_ford",
+  "description": "浅瀬でオラの密輸団が鉄狼団を待ち伏せする",
+  "actor": "iron_wolves",
+  "capability": "combat",
+  "outcomes": {
+    "success": [{ "target": "parties/iron_wolves/inventory", "operation": "add", "value": ["smuggler_ledger"] }],
+    "partial": [{ "target": "parties/iron_wolves/morale", "operation": "add", "value": -1 }],
+    "failure": [
+      { "target": "parties/iron_wolves/morale", "operation": "add", "value": -2 },
+      { "target": "clocks/smugglers_rise/filled", "operation": "add", "value": 1 }
+    ]
+  }
 }
 ```
 
-### パーティ間イベント実行フレームワーク
+関係値の変化は、実際に起きた出来事に従う（上記の変化ルール）。その出来事を生んだ分岐の中で適用する。
 
-#### 攻撃イベント実行
-```typescript
-conflictEvent = {
-  type: 'inter_party_conflict',
-  participants: [aggressorParty, targetParty],
-  effects: [
-    // 関係値変更
-    { target: `relationships/${pair_id}/hostility`, operation: 'add', value: 3 },
-    { target: `relationships/${pair_id}/trust`, operation: 'add', value: -2 },
-
-    // 戦闘結果による資源・士気変化
-    { target: `parties/${winnerId}/morale`, operation: 'add', value: 2 },
-    { target: `parties/${loserId}/morale`, operation: 'add', value: -3 },
-    { target: `parties/${loserId}/resources/currency`, operation: 'add', value: -lootAmount }
-  ]
-};
-```
-
-#### 協力イベント実行
-```typescript
-cooperationEvent = {
-  type: 'inter_party_cooperation',
-  participants: [party1, party2],
-  effects: [
-    // 関係値向上
-    { target: `relationships/${pair_id}/cooperation`, operation: 'add', value: 2 },
-    { target: `relationships/${pair_id}/trust`, operation: 'add', value: 1 },
-
-    // 相互利益
-    { target: `parties/${party1}/morale`, operation: 'add', value: 1 },
-    { target: `parties/${party2}/morale`, operation: 'add', value: 1 },
-
-    // 共同プロジェクト成果
-    { target: `parties/${party1}/resources/materials`, operation: 'add', value: sharedReward },
-    { target: `parties/${party2}/resources/materials`, operation: 'add', value: sharedReward }
-  ]
-};
-```
-
-#### 交渉イベント実行
-```typescript
-negotiationEvent = {
-  type: 'inter_party_negotiation',
-  participants: [party1, party2],
-  effects: [
-    // 関係調整
-    { target: `relationships/${pair_id}/hostility`, operation: 'add', value: -1 },
-    { target: `relationships/${pair_id}/cooperation`, operation: 'add', value: 1 },
-
-    // 合意内容に応じた資源取引
-    { target: `parties/${party1}/resources/currency`, operation: 'add', value: -tradeAmount },
-    { target: `parties/${party2}/resources/currency`, operation: 'add', value: tradeAmount },
-    { target: `parties/${party1}/resources/materials/gems`, operation: 'add', value: gemAmount },
-    { target: `parties/${party2}/resources/materials/gems`, operation: 'add', value: -gemAmount }
-  ]
-};
-```
-
-#### 競争イベント実行
-```typescript
-competitionEvent = {
-  type: 'inter_party_competition',
-  participants: [party1, party2],
-  effects: [
-    // 競争関係強化
-    { target: `relationships/${pair_id}/competition`, operation: 'add', value: 2 },
-    { target: `relationships/${pair_id}/cooperation`, operation: 'add', value: -1 },
-
-    // 勝者報酬・敗者ペナルティ
-    { target: `parties/${winnerId}/morale`, operation: 'add', value: 3 },
-    { target: `parties/${winnerId}/resources/materials`, operation: 'add', value: prize },
-    { target: `parties/${loserId}/morale`, operation: 'add', value: -1 }
-  ]
-};
-```
+### 帰結は覆さない
+- 失敗を次のターンで取り消さない。挫折は次の状況になる
+- 失われた依頼、死んだNPC、暴かれた秘密、満了したクロックは元に戻らない
+- 苦戦しているパーティーには**新しい機会**（依頼、味方、回収できる貸し）を与える。結果を覆してはならない
 
 ## 探索協調管理
 
@@ -472,74 +363,63 @@ competitionEvent = {
 ### 必須形式
 ```json
 {
-  "requestId": "[要求ファイルのrequestIdをそのまま使用]",
-  "timestamp": "[ISO形式の現在時刻]",
+  "requestId": "[リクエストファイルのrequestIdをそのまま使用]",
+  "timestamp": "[現在時刻のISO形式]",
   "status": "completed",
   "proposal": {
-    "type": "[行動タイプ]",
+    "type": "issue_quest | npc_action | complication | advance_clock | reveal_secret | environmental_change | discovery_event | weather_change",
     "participants": ["GM"],
-    "effects": [...]
+    "effects": [...],
+    "checks": [...]
   }
 }
 ```
+`checks`は任意（最大2つ）。共通形式・権限・エラーは`JSON_GENERATION_GUIDELINES.md`を参照。
 
-### エフェクトパス記法 ⚠️ 重要
+### 依頼の発行
 ```json
-// ✅ 正しい記法
-{"target": "parties/emerald_hunters/morale", "operation": "add", "value": 1}
-{"target": "market/currentPrices/gems", "operation": "set", "value": 20}
-{"target": "regions/crystal_caves/occupantParties", "operation": "set", "value": ["emerald_hunters"]}
+{"target": "quests/silence_vell", "operation": "set", "value": {
+  "title": "ヴェルを黙らせろ",
+  "client": "captain_ora",
+  "description": "商人ヴェルが証言台に立たないようにせよ。",
+  "location": "harbor",
+  "type": "exclusive",
+  "requiredProgress": 3,
+  "deadlineTurn": 8,
+  "reward": {"reputation": 3, "currency": 30},
+  "conflictsWith": ["escort_vell"],
+  "offeredTo": ["ash_lanterns"],
+  "secret": {"truth": "オラは密輸団の後ろ盾である", "revealedTo": []},
+  "onComplete": [{"target": "npcs/merchant_vell/status", "operation": "set", "value": "dead"}],
+  "onFail": [{"target": "narrativeContext/rumors", "operation": "add", "value": "オラの手下が港から逃げるのが目撃された"}],
+  "advancesClock": {"clockId": "smugglers_rise", "amount": 1}
+}}
+// 相手側の依頼にも逆向きのリンクを追加する:
+{"target": "quests/escort_vell/conflictsWith", "operation": "add", "value": "silence_vell"}
+```
+`status`・`progress`・`acceptedBy`・`issuedTurn`はエンジンが設定する。既存の依頼は丸ごと置き換えられない。個別のフィールドを変更する。
 
-// ❌ 間違った記法
-{"target": "/parties/emerald_hunters/morale"}  // 先頭スラッシュNG
-{"target": "parties", "operation": "set", "value": {...全パーティー...}}  // 一括設定NG
+### その他のGM操作
+```json
+// クロックを進める
+{"target": "clocks/smugglers_rise/filled", "operation": "add", "value": 1}
+// 依頼主NPCを作る
+{"target": "npcs/captain_ora", "operation": "set", "value": {"name": "オラ船長", "wants": "港の支配", "disposition": {}, "memory": []}}
+// パーティーに信念を与える（誤りでもよい。"truth"はパーティーに見えない）
+{"target": "parties/silver_quill/knowledge", "operation": "add", "value": {"text": "ヴェルは裏帳簿を持っている", "source": "港湾労働者", "turn": 4, "truth": false}}
+// 伏線を仕込み、回収する
+{"target": "threads/second_ledger", "operation": "set", "value": {"setup": "ヴェルの裏帳簿", "turn": 4, "status": "open"}}
+{"target": "threads/second_ledger/status", "operation": "set", "value": "resolved"}
+// 醜聞による評判の調整（評判を変えられるのはGMと依頼報酬のみ）
+{"target": "parties/iron_wolves/reputation", "operation": "add", "value": -1}
+// 関係値
+{"target": "relationships/iron_wolves__silver_quill/hostility", "operation": "add", "value": 2}
 ```
 
-### 通貨・リソース操作
-```json
-// ✅ 通貨減少（支払い）
-{"target": "parties/party_id/resources/currency", "operation": "add", "value": -50}
-
-// ✅ 素材消費
-{"target": "parties/party_id/resources/materials/metal", "operation": "add", "value": -3}
-
-// ✅ 新しい素材追加
-{"target": "parties/party_id/resources/materials", "operation": "add", "value": {"new_item": 5}}
-```
-
-### パーティ間関係値操作
-```json
-// ✅ 敵対度増加（攻撃イベント後）
-{"target": "relationships/party1_id__party2_id/hostility", "operation": "add", "value": 3}
-
-// ✅ 協力度向上（共同プロジェクト後）
-{"target": "relationships/emerald_hunters__fire_forge_guild/cooperation", "operation": "add", "value": 2}
-
-// ✅ 信頼度低下（裏切り行為後）
-{"target": "relationships/party1_id__party2_id/trust", "operation": "add", "value": -4}
-
-// ✅ 競争度設定（ライバル関係確立）
-{"target": "relationships/party1_id__party2_id/competition", "operation": "set", "value": 8}
-
-// ✅ 最後の相互作用更新
-{"target": "relationships/party1_id__party2_id/lastInteraction", "operation": "set", "value": "turn_5"}
-
-// ✅ 相互作用履歴追加（配列として追加）
-{"target": "relationships/party1_id__party2_id/history", "operation": "add", "value": [{"turn": 5, "event": "conflict", "impact": "+3_hostility", "description": "資源争奪戦で武力衝突"}]}
-```
-
-### 配列操作
-```json
-// ✅ 地域占有者の更新
-{"target": "regions/region_id/occupantParties", "operation": "set", "value": ["party1", "party2"]}
-
-// ✅ 取引履歴への追加（配列として）
-{"target": "market/completedTrades", "operation": "add", "value": [{"buyer": "party_id", "item": "wood", "quantity": 10, "price": 3, "total": 30, "turn": 2}]}
-```
+### エンジン管理値（書き込みは拒否される）
+`quests/*/status`、`quests/*/progress`、`quests/*/completedBy`、`quests/*/resolvedTurn`、`clocks/*/triggered`、`rng`、`checkLog`、`chronicle`、`guild/standings`、`guild/promoted`。依頼の進捗はcheckの結果でのみ変わる。
 
 ### 事前チェック必須項目
-1. **残高確認**: 通貨・素材消費時は現在値を確認
-2. **地域容量**: 移動時は容量制限をチェック
-3. **論理整合性**: アクションが状況に適しているか確認
-
-このGM思考フレームワークとJSON生成ガイドラインに従って、プレイヤーに適切な挑戦と物語体験を提供してください。プレイヤー視点での判断が必要な場合は`PLAYER_MIND.md`に切り替えてください。
+1. **掲示板の状態**: 全パーティーに望むものがあるか。交差する依頼が2つ以上あるか
+2. **結果は不確かか**: 不確かなら直接の効果ではなく、3つの分岐を持つcheckを書く
+3. **論理的一貫性**: 参照（`client`・`location`・`conflictsWith`・`clockId`）が既存の項目を指している

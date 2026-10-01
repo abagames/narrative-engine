@@ -215,7 +215,19 @@ export function identifyActor(response: any, world: any): Actor | RuleError {
   const requestId: string = response.requestId || '';
   const participant: string = response.proposal?.participants?.[0];
 
-  if (requestId.startsWith('request_GM_') || participant === 'GM') {
+  // The request a response answers decides who is acting (longest id wins: `iron` vs `iron_wolves`)
+  const requestOwner = Object.keys(world.parties || {})
+    .filter(partyId => requestId.startsWith(`request_${partyId}_`))
+    .sort((a, b) => b.length - a.length)[0];
+
+  if (requestOwner && requestOwner !== participant) {
+    return {
+      error: `Permission denied: request for ${requestOwner} cannot act as ${participant}`,
+      details: { requestId, participant }
+    };
+  }
+
+  if (!requestOwner && (requestId.startsWith('request_GM_') || participant === 'GM')) {
     return { role: 'GM' };
   }
 
@@ -227,16 +239,6 @@ export function identifyActor(response: any, world: any): Actor | RuleError {
         availableParties: Object.keys(world.parties || {})
       }
     };
-  }
-
-  // A response for one party's request must not act as another party
-  for (const partyId of Object.keys(world.parties)) {
-    if (partyId !== participant && requestId.startsWith(`request_${partyId}_`)) {
-      return {
-        error: `Permission denied: request for ${partyId} cannot act as ${participant}`,
-        details: { requestId, participant }
-      };
-    }
   }
 
   return { role: 'Player', partyId: participant };
@@ -260,6 +262,16 @@ function isEngineOnly(parts: string[]): boolean {
 
 interface PermissionContext {
   viaCheck?: CheckDeclaration;
+}
+
+/**
+ * A quest with a non-empty `offeredTo` list is a private offer: only those
+ * parties see it on the board and may accept it.
+ */
+export function isOfferedTo(quest: any, partyId: string): boolean {
+  const offeredTo = quest?.offeredTo;
+  if (!Array.isArray(offeredTo) || offeredTo.length === 0) return true;
+  return offeredTo.includes(partyId) || (quest.acceptedBy || []).includes(partyId);
 }
 
 function relationshipIncludes(key: string, partyId: string): boolean {
@@ -345,6 +357,9 @@ function checkPlayerPermission(
 
   if (root === 'parties') {
     if (id === partyId) {
+      if (parts.length < 3) {
+        return denied(effect, 'write individual fields of the party, not the whole party');
+      }
       if (field === 'reputation') {
         return denied(effect, 'reputation is granted by quests and the GM');
       }
@@ -369,10 +384,17 @@ function checkPlayerPermission(
       if (effect.operation !== 'add' || value.length !== 1 || value[0] !== partyId) {
         return denied(effect, 'a party may only add itself to acceptedBy');
       }
+      if (!isOfferedTo(quest, partyId)) {
+        return denied(effect, `quest ${id} was not offered to ${partyId}`);
+      }
       return null;
     }
 
     if (field === 'abandonedBy' && parts.length === 3) {
+      const status = quest.status ?? 'open';
+      if (status !== 'open' && status !== 'accepted') {
+        return denied(effect, `quest ${id} is already ${status}`);
+      }
       const value = Array.isArray(effect.value) ? effect.value : [effect.value];
       if (effect.operation !== 'add' || value.length !== 1 || value[0] !== partyId) {
         return denied(effect, 'a party may only abandon a quest for itself');
@@ -403,6 +425,9 @@ function checkPlayerPermission(
   if (root === 'favors') {
     // A party may acknowledge a debt it owes, or mark its own debt as repaid
     if (parts.length === 2 && effect.operation === 'set') {
+      if (world.favors?.[id]) {
+        return denied(effect, `favor ${id} already exists`);
+      }
       if (effect.value?.owedBy === partyId && effect.value?.owedTo && effect.value.owedTo !== partyId) {
         return null;
       }

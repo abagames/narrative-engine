@@ -2,7 +2,7 @@
 
 ## 🎯 Overview
 
-This document provides common guidelines for AI Agents when generating decision response JSON. Referenced by both GM_CORE_MIND.md and PLAYER_MIND.md, it supports error-free and accurate JSON generation.
+This document provides common guidelines for AI Agents when generating decision response JSON. Referenced by both GM_CORE_MIND.md and PLAYER_MIND.md, it supports error-free and accurate JSON generation. The quest and check rules themselves are defined in QUEST_MANAGEMENT.md.
 
 ## ⚠️ Common Error Patterns and Solutions
 
@@ -30,26 +30,35 @@ This document provides common guidelines for AI Agents when generating decision 
 ]
 ```
 
-### 3. Array Operation Errors
+### 3. Deciding an Uncertain Outcome Yourself
 ```json
-// ❌ Inappropriate structure for array addition
-{"target": "market/completedTrades", "operation": "add", "value": {
-  "buyer": "swift_merchants",
-  "item": "herbs"
-}}
+// ❌ Writing quest progress directly (rejected: "only change through a check outcome")
+{"target": "quests/escort_vell/progress/iron_wolves", "operation": "add", "value": 3}
 
-// ✅ Properly structured as array
-{"target": "market/completedTrades", "operation": "add", "value": [{
-  "buyer": "swift_merchants",
-  "item": "herbs",
-  "quantity": 3,
-  "price": 12,
-  "total": 36,
-  "turn": 2
-}]}
+// ✅ Declare a check; the engine rolls and applies one branch
+"checks": [{
+  "id": "guard_the_wagon", "actor": "iron_wolves", "capability": "combat",
+  "outcomes": {
+    "success": [{"target": "quests/escort_vell/progress/iron_wolves", "operation": "add", "value": 2}],
+    "partial": [{"target": "quests/escort_vell/progress/iron_wolves", "operation": "add", "value": 1},
+                {"target": "parties/iron_wolves/morale", "operation": "add", "value": -1}],
+    "failure": [{"target": "parties/iron_wolves/morale", "operation": "add", "value": -2}]
+  }
+}]
 ```
 
-### 4. Missing Balance Checks
+### 4. Writing Outside Your Permissions
+```json
+// ❌ A party raising its own capabilities or reputation
+{"target": "parties/iron_wolves/capabilities/combat", "operation": "add", "value": 2}
+// ❌ A party harming a rival without an opposed check
+{"target": "parties/silver_quill/morale", "operation": "add", "value": -2}
+// ❌ Anyone setting engine-managed values
+{"target": "quests/escort_vell/status", "operation": "set", "value": "completed"}
+```
+The error message `Permission denied: <target> (<reason>)` names the rule. See the permission tables in PLAYER_MIND.md and GM_CORE_MIND.md.
+
+### 5. Missing Balance Checks
 ```json
 // ❌ Payment without balance confirmation
 {"target": "parties/party_id/resources/currency", "operation": "add", "value": -100}
@@ -57,6 +66,15 @@ This document provides common guidelines for AI Agents when generating decision 
 // ✅ Execute after confirming balance in advance
 // Current currency: 80, Payment: 100 → Execution impossible
 // Current currency: 150, Payment: 100 → Execution possible
+```
+No resource may go below zero. If any effect would do so, the **whole response** is rejected and nothing is applied.
+
+### 6. Incomplete Checks
+```json
+// ❌ Missing failure branch (rejected before the roll)
+{"id": "c1", "actor": "iron_wolves", "capability": "combat", "outcomes": {"success": [...], "partial": [...]}}
+
+// ❌ situational outside -1..+1, more than 2 checks, or actor other than your own party
 ```
 
 ## 🔧 Basic JSON Structure
@@ -68,13 +86,13 @@ This document provides common guidelines for AI Agents when generating decision 
   "timestamp": "2025-09-17T22:00:00.000Z",
   "status": "completed",
   "proposal": {
-    "type": "environmental_change",
+    "type": "issue_quest",
     "participants": ["GM"],
     "effects": [
       {
-        "target": "market/currentPrices/wood",
-        "operation": "add",
-        "value": 1
+        "target": "quests/find_the_heir",
+        "operation": "set",
+        "value": {"title": "Find the Heir", "client": "duchess_ilse", "location": "old_road", "requiredProgress": 3, "deadlineTurn": 9, "reward": {"reputation": 3}}
       }
     ]
   }
@@ -88,13 +106,21 @@ This document provides common guidelines for AI Agents when generating decision 
   "timestamp": "2025-09-17T22:00:00.000Z",
   "status": "completed",
   "proposal": {
-    "type": "explore",
+    "type": "pursue_quest",
     "participants": ["emerald_hunters"],
-    "effects": [
+    "effects": [],
+    "checks": [
       {
-        "target": "parties/emerald_hunters/resources/materials",
-        "operation": "add",
-        "value": {"gems": 5}
+        "id": "track_the_heir",
+        "description": "Rex follows cart tracks into the fog",
+        "actor": "emerald_hunters",
+        "capability": "exploration",
+        "outcomes": {
+          "success": [{"target": "quests/find_the_heir/progress/emerald_hunters", "operation": "add", "value": 2}],
+          "partial": [{"target": "quests/find_the_heir/progress/emerald_hunters", "operation": "add", "value": 1},
+                      {"target": "parties/emerald_hunters/morale", "operation": "add", "value": -1}],
+          "failure": [{"target": "parties/emerald_hunters/morale", "operation": "add", "value": -2}]
+        }
       }
     ]
   },
@@ -109,7 +135,7 @@ This document provides common guidelines for AI Agents when generating decision 
         "Ruby": "'Character's statement'"
       },
       "selectedAction": {
-        "type": "explore",
+        "type": "pursue_quest",
         "reasoning": "Detailed selection reasoning"
       }
     }
@@ -122,7 +148,7 @@ This document provides common guidelines for AI Agents when generating decision 
 ### "set" - Complete Value Replacement
 ```json
 {"target": "parties/party_id/location", "operation": "set", "value": "new_region"}
-{"target": "regions/region_id/occupantParties", "operation": "set", "value": ["party1"]}
+{"target": "threads/thread_id/status", "operation": "set", "value": "resolved"}
 ```
 
 ### "add" - Value Addition/Appending
@@ -134,48 +160,23 @@ This document provides common guidelines for AI Agents when generating decision 
 // Object merging
 {"target": "parties/party_id/resources/materials", "operation": "add", "value": {"gems": 3}}
 
-// Array addition
-{"target": "market/completedTrades", "operation": "add", "value": [new_trade_object]}
+// Array appending (a single item or an array of items)
+{"target": "quests/quest_id/acceptedBy", "operation": "add", "value": "party_id"}
+{"target": "narrativeContext/rumors", "operation": "add", "value": ["rumor one", "rumor two"]}
 ```
 
-## 🎯 Party-Specific Path Examples
-
-### Emerald Hunters
-```json
-{"target": "parties/emerald_hunters/morale", "operation": "add", "value": 1}
-{"target": "parties/emerald_hunters/resources/materials", "operation": "add", "value": {"gems": 8, "rare_crystals": 3}}
-```
-
-### Fire Forge Guild
-```json
-{"target": "parties/fire_forge_guild/resources/materials/metal", "operation": "add", "value": -6}
-{"target": "parties/fire_forge_guild/resources/materials", "operation": "add", "value": {"crafted_weapons": 4}}
-```
-
-### Swift Merchants
-```json
-{"target": "parties/swift_merchants/resources/currency", "operation": "add", "value": -36}
-{"target": "parties/swift_merchants/resources/materials", "operation": "add", "value": {"magical_herbs": 3}}
-```
-
-### Wisdom Seekers
-```json
-{"target": "parties/wisdom_seekers/capabilities/diplomacy", "operation": "add", "value": 1}
-{"target": "parties/wisdom_seekers/resources/materials", "operation": "add", "value": {"ancient_knowledge": 5}}
-```
-
-### Shadow Scouts
-```json
-{"target": "parties/shadow_scouts/location", "operation": "set", "value": "mystic_plains"}
-{"target": "parties/shadow_scouts/resources/materials", "operation": "add", "value": {"intelligence_data": 2}}
-```
+### Values the Engine Maintains
+- Moving a party (`parties/<id>/location`) updates `regions/*/occupantParties` automatically; do not edit occupancy by hand
+- Morale is clamped to 0-10; quest progress to ≥ 0
+- `quests/*/status`, `quests/*/progress` (outside checks), `clocks/*/triggered`, `rng`, `checkLog`, `chronicle`, `guild/standings`, `guild/promoted` cannot be written
 
 ## 🔍 Pre-Check Procedures
 
 1. **Load worldStateFile**: Obtain current state from decision request's `worldStateFile`
-2. **Balance & Inventory Check**: Check feasibility of consumption-type effects
-3. **Logical Consistency Check**: Verify if executable based on party's position and capabilities
-4. **ID Consistency Check**: Verify requestId matches party ID
-5. **Path Notation Check**: No leading slash, appropriate hierarchical structure
+2. **Permission Check**: Every target is inside your role's permissions (GM / Player tables)
+3. **Uncertainty Check**: Uncertain outcomes are checks with all three branches
+4. **Balance & Location Check**: No resource below zero; quest progress only at the quest's location; moves only to neighbors
+5. **ID Consistency Check**: requestId and `participants[0]` refer to the same party
+6. **Path Notation Check**: No leading slash, appropriate hierarchical structure
 
 Following these guidelines enables error-free and stable JSON generation.

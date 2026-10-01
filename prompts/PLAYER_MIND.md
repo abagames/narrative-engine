@@ -117,6 +117,51 @@ Modifications:
 🌟 - When dynamic elements present: Control+1.5 (environmental manipulation utilization)
 ```
 
+## 📜 Quest-Driven Decisions
+
+A party's purpose is to **rise in the guild by completing quests**. Combat, travel and trade are means. Before scoring tactics, decide what the party wants this turn.
+
+### Step 0: What Does the Party Want?
+Read from `contextData`:
+- `guildBoard`: open and accepted quests. You see `yourProgress` exactly and `rivalProgress` only roughly (`none` / `started` / `close`)
+- `activeQuests`, `questSlotsFree`: at most 2 active quests per party
+- `standings`, `seasonEndsAtTurn`: who leads and how much time is left. Only the top party is promoted
+- `favors`: debts you owe and are owed
+- `knowledge`: what the party believes. It may be wrong
+- `clientDispositions`: how each client feels about you. Clients remember failures
+- `partyState.goals`, `partyState.flaws`: the party's own ambitions and weaknesses
+
+### Party Action Types
+| Action | What it does |
+|---|---|
+| `accept_quest` | Add yourself to `quests/<id>/acceptedBy` |
+| `pursue_quest` | A check that adds to your own progress (you must be at the quest's location) |
+| `contest` | An opposed check that reduces a rival's progress or morale |
+| `assist` | A check that adds to another party's progress. Usually paid for with a favor |
+| `investigate` | A check that can reveal a quest's secret to you (`secret/revealedTo`) |
+| `negotiate` | Agree terms with a rival: split a joint quest, record a favor, call a truce |
+| `abandon_quest` | Withdraw. Progress is lost and the client remembers |
+| `move` | Move to an adjacent region |
+| `rest` | Recover morale |
+
+### Additional Evaluation Axes (add to class axes, 0-10 each)
+```
+Quest Value: reward weighed against the gap to the standings leader and the turns left
+Rival Pressure: how close rivals are on the same quest (close → act now or interfere)
+Obligation: favors owed and promises made to clients
+Doubt: signs that the client is hiding something (investigate before finishing)
+```
+
+### Flaws Override Scores
+Optimal play is predictable. If `partyState.flaws` lists a flaw whose trigger is present this turn (e.g. "Pride: never yields to the Silver Quill"), choose the action the flaw demands even when another option scores higher. Write this in `selectedAction.reasoning`. Apply this at most once every few turns. A flaw is a weakness, not a habit.
+
+### Declaring Checks Honestly
+- Any uncertain attempt is a **check**. You cannot write quest progress, reveal secrets, gain items or harm rivals directly
+- `capability`: the one your approach actually uses (forcing a door = combat, reading old records = investigation, persuading a guard = diplomacy). The engine converts it to a modifier (`checkModifiers`)
+- `situational` (-1 to +1): only for a concrete advantage or handicap in the fiction. State it in `description`
+- Write all three outcomes before the roll. `partial` is success with a cost. `failure` must cost something real: morale, a resource, position, time or a relationship
+- The dice depend only on the world seed, the turn, your party and the check's position. Resubmitting does not change them
+
 ## ⚔️ Combat Role Specialization
 
 ### Fighter Combat Thinking
@@ -367,89 +412,94 @@ Switch to GM Perspective:
   "timestamp": "[Current time in ISO format]",
   "status": "completed",
   "proposal": {
-    "type": "[Action type: explore/trade/craft/move/cooperate etc.]",
-    "participants": ["[Party ID]"],
-    "effects": [...]
+    "type": "[accept_quest / pursue_quest / contest / assist / investigate / negotiate / abandon_quest / move / rest ...]",
+    "participants": ["[Your party ID]"],
+    "effects": [...],
+    "checks": [...]
   },
   "meta": {
     "llmDecision": {
-      "frameworkEvaluation": {
-        "[Character trait]": "[Application reason]"
-      },
+      "frameworkEvaluation": {"[Axis]": "[Score and reason]"},
       "optionsConsidered": [
         {"action": "Action 1", "score": 8.5, "reasoning": "Reason"},
         {"action": "Action 2", "score": 6.0, "reasoning": "Reason"}
       ],
-      "selectedAction": {
-        "type": "Selected action",
-        "reasoning": "Detailed selection reason"
-      }
+      "selectedAction": {"type": "Selected action", "reasoning": "Detailed selection reason (mention any flaw that overrode the score)"},
+      "character_voices": {"[Member name]": "Line in that member's speech style"}
     }
   }
 }
 ```
 
-### Effect Path Notation ⚠️ Important
+### What a Party May Write
+| Target | Direct effect | Inside a check outcome |
+|---|---|---|
+| `parties/<self>/...` (morale, resources, location, knowledge) | ✅ | ✅ |
+| `parties/<self>/inventory` | ❌ | ✅ |
+| `parties/<self>/reputation`, `capabilities` | ❌ | ❌ |
+| `quests/<id>/acceptedBy`, `abandonedBy` (add yourself) | ✅ | ✅ |
+| `quests/<id>/progress/<self>` | ❌ | ✅ (you must be at the quest location) |
+| `quests/<id>/progress/<other>` positive (assist) | ❌ | ✅ |
+| `quests/<id>/progress/<rival>` negative, `parties/<rival>/morale/resources/inventory` | ❌ | ✅ only with `opposedBy` = that rival |
+| `quests/<id>/secret/revealedTo` (add yourself) | ❌ | ✅ |
+| `relationships/<pair containing you>/...` | ✅ | ✅ |
+| `favors/<id>` (a debt you owe), `favors/<id>/status` (your debt) | ✅ | ✅ |
+| `regions/<current>/influence/<self>` | ❌ | ✅ |
+| Anything else (`market`, `narrativeContext`, other parties, quest definitions) | ❌ | ❌ |
+
+### Examples
 ```json
-// ✅ Correct notation
-{"target": "parties/[Party ID]/resources/currency", "operation": "add", "value": -30}
-{"target": "parties/[Party ID]/morale", "operation": "add", "value": 1}
-{"target": "parties/[Party ID]/location", "operation": "set", "value": "new_region"}
+// Accept a quest
+{"target": "quests/escort_vell/acceptedBy", "operation": "add", "value": "iron_wolves"}
 
-// ❌ Incorrect notation
-{"target": "/parties/[Party ID]/morale"}  // Leading slash NG
-{"target": "parties", "operation": "set"}  // Too broad scope
-```
+// Move (adjacent regions only; the engine updates occupantParties)
+{"target": "parties/iron_wolves/location", "operation": "set", "value": "old_road"}
 
-### Pre-execution Check Required Items
-```json
-// ✅ Example of balance check before currency payment
-// Current currency: 150, payment: 50 → OK
-{"target": "parties/emerald_hunters/resources/currency", "operation": "add", "value": -50}
-
-// ✅ Example of stock check before material consumption
-// Current metal: 12, consumption: 6 → OK
-{"target": "parties/fire_forge_guild/resources/materials/metal", "operation": "add", "value": -6}
-
-// ✅ Example of region capacity check before movement
-{"target": "parties/shadow_scouts/location", "operation": "set", "value": "mystic_plains"}
-{"target": "regions/dark_forest/occupantParties", "operation": "set", "value": []}
-{"target": "regions/mystic_plains/occupantParties", "operation": "set", "value": ["shadow_scouts"]}
-```
-
-### Trading and Market Operations
-```json
-// ✅ Market transaction (correctly add to array)
-{"target": "market/completedTrades", "operation": "add", "value": [{
-  "buyer": "[Party ID]",
-  "item": "[Item name]",
-  "quantity": quantity,
-  "price": unit_price,
-  "total": total_amount,
-  "turn": turn_number
-}]}
-
-// ✅ Price impact
-{"target": "market/currentPrices/[Item name]", "operation": "add", "value": 1}
-```
-
-### Character Dialogue Recording
-```json
-"meta": {
-  "llmDecision": {
-    "character_voices": {
-      "[Character name]": "『Specific dialogue content』",
-      "[Character name]": "『Dialogue in that character's typical speech style』"
-    }
+// Pursue a quest with a check
+"checks": [{
+  "id": "guard_the_wagon",
+  "description": "Brask's line holds the bridge while the wagon crosses",
+  "actor": "iron_wolves",
+  "capability": "combat",
+  "situational": 1,
+  "outcomes": {
+    "success": [{"target": "quests/escort_vell/progress/iron_wolves", "operation": "add", "value": 2}],
+    "partial": [
+      {"target": "quests/escort_vell/progress/iron_wolves", "operation": "add", "value": 1},
+      {"target": "parties/iron_wolves/morale", "operation": "add", "value": -1}
+    ],
+    "failure": [
+      {"target": "parties/iron_wolves/morale", "operation": "add", "value": -2},
+      {"target": "parties/iron_wolves/resources/currency", "operation": "add", "value": -10}
+    ]
   }
-}
+}]
+
+// Sabotage a rival (opposed check)
+"checks": [{
+  "id": "cut_the_ropes",
+  "actor": "silver_quill",
+  "capability": "exploration",
+  "opposedBy": {"party": "iron_wolves", "capability": "exploration"},
+  "outcomes": {
+    "success": [{"target": "quests/escort_vell/progress/iron_wolves", "operation": "add", "value": -2}],
+    "partial": [{"target": "quests/escort_vell/progress/iron_wolves", "operation": "add", "value": -1},
+                {"target": "relationships/iron_wolves__silver_quill/hostility", "operation": "add", "value": 2}],
+    "failure": [{"target": "relationships/iron_wolves__silver_quill/hostility", "operation": "add", "value": 3},
+                {"target": "parties/silver_quill/morale", "operation": "add", "value": -1}]
+  }
+}]
+
+// Accept help and record the debt
+{"target": "favors/quill_owes_wolves_1", "operation": "set", "value": {"owedBy": "silver_quill", "owedTo": "iron_wolves", "reason": "pulled us out of the flooded crypt", "turn": 6, "status": "owed"}}
+
+// Uncover a client's secret
+"outcomes": {"success": [{"target": "quests/silence_vell/secret/revealedTo", "operation": "add", "value": "silver_quill"}], ...}
 ```
 
 ### Error Avoidance Checklist
-1. **Path notation**: No leading slash, appropriate hierarchy specification
-2. **Numerical calculation**: Pre-check for insufficient balance or stock
-3. **Array operations**: Use appropriate structure when adding to arrays
-4. **ID matching**: Check if requestId and participant ID match
-5. **Logical consistency**: Check if executable with that party's abilities and position
-
-Follow this player thinking framework and JSON generation guidelines to create experiences where each character makes **decisions true to their personality** and players feel like they are "making their own decisions."
+1. **Path notation**: No leading slash; at least two levels
+2. **Permissions**: Check the table above. `Permission denied` names the reason
+3. **Checks**: `actor` is your own party; all three outcomes present; at most 2 checks
+4. **Location**: Quest progress requires being at the quest's `location`; moves go to neighbors only
+5. **Balances**: No resource may go below zero; the whole response is rejected if one does

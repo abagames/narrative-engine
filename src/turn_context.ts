@@ -1,6 +1,6 @@
 import * as fs from 'fs/promises';
 import * as path from 'path';
-import { capabilityModifier, computeStandings, MAX_ACTIVE_QUESTS } from './world_rules.js';
+import { capabilityModifier, computeStandings, isOfferedTo, MAX_ACTIVE_QUESTS } from './world_rules.js';
 
 export interface DecisionRequest {
   requestId: string;
@@ -249,7 +249,8 @@ export function generatePartyContextData(
   recentHistory: any[]
 ): Record<string, any> {
   const quests = Object.values<any>(worldState.quests || {});
-  const board = quests.filter(q => ACTIVE_STATUSES.includes(q.status));
+  // Private offers stay hidden from parties they were not offered to
+  const board = quests.filter(q => ACTIVE_STATUSES.includes(q.status) && isOfferedTo(q, partyId));
   const mine = board.filter(q => (q.acceptedBy || []).includes(partyId));
 
   const partyRecentHistory = recentHistory.filter(

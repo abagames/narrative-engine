@@ -275,6 +275,41 @@ describe('world_rules: executeResponse', () => {
     expect(result.success).toBe(false);
   });
 
+  it('a party response cannot pose as the GM', () => {
+    const response = playerResponse('iron_wolves', [{ target: 'quests/escort_vell/status', operation: 'set', value: 'completed' }]);
+    response.proposal.participants = ['GM'];
+    const result = executeResponse(response, createWorld());
+    expect(result.success).toBe(false);
+    expect(result.error).toContain('cannot act as GM');
+  });
+
+  it('matches the longest party id in the request id', () => {
+    const world = createWorld();
+    world.parties.iron = { ...world.parties.ash_lanterns, id: 'iron' };
+    const result = executeResponse(
+      playerResponse('iron_wolves', [{ target: 'parties/iron_wolves/morale', operation: 'add', value: 1 }]),
+      world
+    );
+    expect(result.success).toBe(true);
+  });
+
+  it('rejects whole-party writes and overwriting favors', () => {
+    const whole = executeResponse(
+      playerResponse('iron_wolves', [{ target: 'parties/iron_wolves', operation: 'add', value: { reputation: 99 } }]),
+      createWorld()
+    );
+    expect(whole.success).toBe(false);
+
+    const world = createWorld();
+    world.favors = { f1: { owedBy: 'iron_wolves', owedTo: 'silver_quill', status: 'owed' } };
+    const overwrite = executeResponse(
+      playerResponse('iron_wolves', [{ target: 'favors/f1', operation: 'set', value: { owedBy: 'iron_wolves', owedTo: 'ash_lanterns' } }]),
+      world
+    );
+    expect(overwrite.success).toBe(false);
+    expect(overwrite.error).toContain('already exists');
+  });
+
   it('progress requires presence at the quest site', () => {
     const world = createWorld(seedFor('success', progressCheck('iron_wolves', 'escort_vell'), 'request_iron_wolves_1'));
     world.parties.iron_wolves.location = 'old_road';
@@ -327,6 +362,23 @@ describe('world_rules: executeResponse', () => {
     expect(ok.success).toBe(true);
     expect(world.quests.silence_vell.acceptedBy).toEqual(['ash_lanterns']);
     expect(world.quests.silence_vell.status).toBe('accepted');
+  });
+
+  it('private offers can only be accepted by the parties they were offered to', () => {
+    const world = createWorld();
+    world.quests.silence_vell.offeredTo = ['ash_lanterns'];
+    const denied = executeResponse(
+      playerResponse('silver_quill', [{ target: 'quests/silence_vell/acceptedBy', operation: 'add', value: 'silver_quill' }]),
+      world
+    );
+    expect(denied.success).toBe(false);
+    expect(denied.error).toContain('not offered to silver_quill');
+
+    const ok = executeResponse(
+      playerResponse('ash_lanterns', [{ target: 'quests/silence_vell/acceptedBy', operation: 'add', value: 'ash_lanterns' }]),
+      world
+    );
+    expect(ok.success).toBe(true);
   });
 
   it('a party may only enlist itself', () => {

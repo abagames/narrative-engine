@@ -117,6 +117,51 @@ Wizard最適化：
 🌟 - 動的要素存在時: 制御度+1.5 (環境操作活用)
 ```
 
+## 📜 依頼を軸にした判断
+
+パーティーの目的は**依頼を達成してギルド内で地位を上げること**である。戦闘・移動・取引は手段にすぎない。戦術を採点する前に、このターンにパーティーが何を望むかを決める。
+
+### ステップ0: パーティーは何を望むか
+`contextData`から読む:
+- `guildBoard`: 受注可能・受注中の依頼。`yourProgress`は正確に見えるが、`rivalProgress`は大まかにしか見えない（`none` / `started` / `close`）
+- `activeQuests`、`questSlotsFree`: 1パーティーが同時に持てる依頼は最大2件
+- `standings`、`seasonEndsAtTurn`: 誰が首位か、残り時間はどれだけか。昇格するのは首位のパーティーだけである
+- `favors`: 自分が負っている借りと、相手に貸しているもの
+- `knowledge`: パーティーが信じていること。誤りの場合もある
+- `clientDispositions`: 各依頼主の自分への感情。依頼主は失敗を覚えている
+- `partyState.goals`、`partyState.flaws`: パーティー自身の野心と弱点
+
+### パーティーの行動種別
+| 行動 | 内容 |
+|---|---|
+| `accept_quest` | `quests/<id>/acceptedBy`に自分を追加する |
+| `pursue_quest` | 自分の進捗を加算するcheck（依頼の場所にいる必要がある） |
+| `contest` | 競合相手の進捗や士気を減らす対抗check |
+| `assist` | 他パーティーの進捗を加算するcheck。通常は貸しと引き換えにする |
+| `investigate` | 依頼の秘密を自分に明かしうるcheck（`secret/revealedTo`） |
+| `negotiate` | 競合相手と条件を決める: 共同依頼の分担、貸しの記録、休戦 |
+| `abandon_quest` | 依頼から降りる。進捗は失われ、依頼主は覚えている |
+| `move` | 隣接地域へ移動する |
+| `rest` | 士気を回復する |
+
+### 追加評価軸（クラス別評価軸に加える。各0-10）
+```
+依頼価値: 首位との差と残りターンに照らした報酬の大きさ
+競合圧力: 同じ依頼での競合相手の近さ（close → 今動くか、妨害する）
+義理: 負っている借りと、依頼主への約束
+疑念: 依頼主が何かを隠している兆候（達成前に調べる）
+```
+
+### 欠点はスコアに優先する
+最適な行動ばかりでは展開が読める。`partyState.flaws`に、このターン引き金が引かれている欠点（例: 「誇り: 銀羽根団には決して譲らない」）があれば、他の選択肢のスコアが高くても欠点が求める行動を選ぶ。その旨を`selectedAction.reasoning`に書く。適用は数ターンに1回までとする。欠点は弱点であって、癖ではない。
+
+### checkを正直に宣言する
+- 不確かな試みはすべて**check**にする。依頼の進捗、秘密の解明、アイテムの獲得、競合相手への損害は直接書けない
+- `capability`: そのやり方で実際に使う能力（扉をこじ開ける=combat、古記録を読む=investigation、衛兵を説得する=diplomacy）。エンジンが修正値に変換する（`checkModifiers`）
+- `situational`（-1〜+1）: 物語上の具体的な有利・不利がある場合のみ。理由を`description`に書く
+- 3つの結果をロール前にすべて書く。`partial`は代償つきの成功である。`failure`には実際の損失を伴わせる: 士気、資源、位置、時間、関係のいずれか
+- ダイスはワールドのシード、ターン、パーティー、checkの順番だけで決まる。出し直しても変わらない
+
 ## ⚔️ 戦闘における役割特化
 
 ### Fighter戦闘思考
@@ -363,93 +408,98 @@ GM視点への切り替え：
 ### 必須形式
 ```json
 {
-  "requestId": "[要求ファイルのrequestIdをそのまま使用]",
-  "timestamp": "[ISO形式の現在時刻]",
+  "requestId": "[リクエストファイルのrequestIdをそのまま使用]",
+  "timestamp": "[現在時刻のISO形式]",
   "status": "completed",
   "proposal": {
-    "type": "[行動タイプ: explore/trade/craft/move/cooperate等]",
-    "participants": ["[パーティーID]"],
-    "effects": [...]
+    "type": "[accept_quest / pursue_quest / contest / assist / investigate / negotiate / abandon_quest / move / rest ...]",
+    "participants": ["[自パーティーID]"],
+    "effects": [...],
+    "checks": [...]
   },
   "meta": {
     "llmDecision": {
-      "frameworkEvaluation": {
-        "[キャラクター特性]": "[適用理由]"
-      },
+      "frameworkEvaluation": {"[評価軸]": "[スコアと理由]"},
       "optionsConsidered": [
         {"action": "行動1", "score": 8.5, "reasoning": "理由"},
         {"action": "行動2", "score": 6.0, "reasoning": "理由"}
       ],
-      "selectedAction": {
-        "type": "選択した行動",
-        "reasoning": "詳細な選択理由"
-      }
+      "selectedAction": {"type": "選択した行動", "reasoning": "詳細な選択理由（スコアより欠点を優先した場合はその旨）"},
+      "character_voices": {"[メンバー名]": "そのメンバーらしい口調の台詞"}
     }
   }
 }
 ```
 
-### エフェクトパス記法 ⚠️ 重要
+### パーティーが書き込める対象
+| 対象 | 直接のeffect | checkの結果内 |
+|---|---|---|
+| `parties/<自分>/...`（morale、resources、location、knowledge） | ✅ | ✅ |
+| `parties/<自分>/inventory` | ❌ | ✅ |
+| `parties/<自分>/reputation`、`capabilities` | ❌ | ❌ |
+| `quests/<id>/acceptedBy`、`abandonedBy`（自分を追加） | ✅ | ✅ |
+| `quests/<id>/progress/<自分>` | ❌ | ✅（依頼の場所にいること） |
+| `quests/<id>/progress/<他者>`への加算（支援） | ❌ | ✅ |
+| `quests/<id>/progress/<競合相手>`の減算、`parties/<競合相手>/morale・resources・inventory` | ❌ | ✅ `opposedBy`がその相手の場合のみ |
+| `quests/<id>/secret/revealedTo`（自分を追加） | ❌ | ✅ |
+| `relationships/<自分を含むペア>/...` | ✅ | ✅ |
+| `favors/<id>`（自分が負う借り）、`favors/<id>/status`（自分の借り） | ✅ | ✅ |
+| `regions/<現在地>/influence/<自分>` | ❌ | ✅ |
+| それ以外（`market`、`narrativeContext`、他パーティー、依頼の定義） | ❌ | ❌ |
+
+### 例
 ```json
-// ✅ 正しい記法
-{"target": "parties/[パーティーID]/resources/currency", "operation": "add", "value": -30}
-{"target": "parties/[パーティーID]/morale", "operation": "add", "value": 1}
-{"target": "parties/[パーティーID]/location", "operation": "set", "value": "new_region"}
+// 依頼を受ける
+{"target": "quests/escort_vell/acceptedBy", "operation": "add", "value": "iron_wolves"}
 
-// ❌ 間違った記法
-{"target": "/parties/[パーティーID]/morale"}  // 先頭スラッシュNG
-{"target": "parties", "operation": "set"}  // 範囲が広すぎ
-```
+// 移動する（隣接地域のみ。occupantPartiesはエンジンが更新する）
+{"target": "parties/iron_wolves/location", "operation": "set", "value": "old_road"}
 
-### 実行前チェック必須項目
-```json
-// ✅ 通貨支払い前の残高確認例
-// 現在通貨: 150, 支払い: 50 → OK
-{"target": "parties/emerald_hunters/resources/currency", "operation": "add", "value": -50}
-
-// ✅ 素材消費前の在庫確認例
-// 現在金属: 12, 消費: 6 → OK
-{"target": "parties/fire_forge_guild/resources/materials/metal", "operation": "add", "value": -6}
-
-// ✅ 移動前の地域容量確認例
-{"target": "parties/shadow_scouts/location", "operation": "set", "value": "mystic_plains"}
-{"target": "regions/dark_forest/occupantParties", "operation": "set", "value": []}
-{"target": "regions/mystic_plains/occupantParties", "operation": "set", "value": ["shadow_scouts"]}
-```
-
-### 取引・市場操作
-```json
-// ✅ 市場取引（配列に正しく追加）
-{"target": "market/completedTrades", "operation": "add", "value": [{
-  "buyer": "[パーティーID]",
-  "item": "[アイテム名]",
-  "quantity": 数量,
-  "price": 単価,
-  "total": 総額,
-  "turn": ターン数
-}]}
-
-// ✅ 価格影響
-{"target": "market/currentPrices/[アイテム名]", "operation": "add", "value": 1}
-```
-
-### キャラクター対話の記録
-```json
-"meta": {
-  "llmDecision": {
-    "character_voices": {
-      "[キャラクター名]": "『具体的な発言内容』",
-      "[キャラクター名]": "『そのキャラクターらしい言葉遣いでの発言』"
-    }
+// checkで依頼を進める
+"checks": [{
+  "id": "guard_the_wagon",
+  "description": "荷馬車が渡りきるまで、ブラスクの隊列が橋を守る",
+  "actor": "iron_wolves",
+  "capability": "combat",
+  "situational": 1,
+  "outcomes": {
+    "success": [{"target": "quests/escort_vell/progress/iron_wolves", "operation": "add", "value": 2}],
+    "partial": [
+      {"target": "quests/escort_vell/progress/iron_wolves", "operation": "add", "value": 1},
+      {"target": "parties/iron_wolves/morale", "operation": "add", "value": -1}
+    ],
+    "failure": [
+      {"target": "parties/iron_wolves/morale", "operation": "add", "value": -2},
+      {"target": "parties/iron_wolves/resources/currency", "operation": "add", "value": -10}
+    ]
   }
-}
+}]
+
+// 競合相手を妨害する（対抗check）
+"checks": [{
+  "id": "cut_the_ropes",
+  "actor": "silver_quill",
+  "capability": "exploration",
+  "opposedBy": {"party": "iron_wolves", "capability": "exploration"},
+  "outcomes": {
+    "success": [{"target": "quests/escort_vell/progress/iron_wolves", "operation": "add", "value": -2}],
+    "partial": [{"target": "quests/escort_vell/progress/iron_wolves", "operation": "add", "value": -1},
+                {"target": "relationships/iron_wolves__silver_quill/hostility", "operation": "add", "value": 2}],
+    "failure": [{"target": "relationships/iron_wolves__silver_quill/hostility", "operation": "add", "value": 3},
+                {"target": "parties/silver_quill/morale", "operation": "add", "value": -1}]
+  }
+}]
+
+// 助けを受け、借りを記録する
+{"target": "favors/quill_owes_wolves_1", "operation": "set", "value": {"owedBy": "silver_quill", "owedTo": "iron_wolves", "reason": "水没した地下墓所から引き上げてもらった", "turn": 6, "status": "owed"}}
+
+// 依頼主の秘密を暴く
+"outcomes": {"success": [{"target": "quests/silence_vell/secret/revealedTo", "operation": "add", "value": "silver_quill"}], ...}
 ```
 
 ### エラー回避チェックリスト
-1. **パス記法**: 先頭スラッシュなし、適切な階層指定
-2. **数値計算**: 残高・在庫不足がないか事前確認
-3. **配列操作**: 配列に追加する場合は適切な構造で
-4. **ID一致**: requestIdと参加者IDが一致しているか
-5. **論理整合**: そのパーティーの能力・位置で実行可能か
-
-このプレイヤー思考フレームワークとJSON生成ガイドラインに従って、各キャラクターが**その人らしい判断**を行い、プレイヤーが「自分で決めている」と感じられるような体験を創造してください。
+1. **パス記法**: 先頭スラッシュなし。2階層以上
+2. **権限**: 上の表を確認する。`Permission denied`には理由が示される
+3. **check**: `actor`は自パーティー。3つの結果がすべてある。最大2つ
+4. **場所**: 依頼の進捗には依頼の`location`にいる必要がある。移動先は隣接地域のみ
+5. **残高**: 資源は0未満にできない。1つでも下回れば応答全体が拒否される

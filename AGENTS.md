@@ -1,6 +1,6 @@
 # Repository Guidelines
 
-This repo hosts the Narrative Engine. It implements a region graph-based life simulation engine with complex economic, social, and exploration mechanics. AI coding agents (e.g. Claude Code) act as autonomous TRPG GM/Player to generate narrative logs through automated gameplay.
+This repo hosts the Narrative Engine. It implements a region graph-based world where parties compete and cooperate over guild quests, with engine-side adjudication (seeded dice checks, permissions, quest resolution, progress clocks). AI coding agents (e.g. Claude Code) act as autonomous TRPG GM/Player to generate narrative logs through automated gameplay.
 
 ## Project Structure & Module Organization
 
@@ -18,7 +18,7 @@ This repo hosts the Narrative Engine. It implements a region graph-based life si
   - **Multi-Party & Social Systems:**
     - `GUILD_MANAGEMENT.md` - Guild management system
     - `ALLIANCE_STRATEGY.md` - Alliance strategy
-    - `QUEST_MANAGEMENT.md` - Quest management system
+    - `QUEST_MANAGEMENT.md` - Quests and adjudication rules (world data model, checks, permissions, quest lifecycle, stop conditions)
     - `ACHIEVEMENT_PURSUIT.md` - Achievement pursuit system
     - `COMPETITIVE_EVENTS.md` - Competitive events
   - **Novel Generation System:**
@@ -49,6 +49,7 @@ AI coding agents must **actively consult and apply** the appropriate decision fr
 - **When individual combat occurs**: Read `prompts/INDIVIDUAL_COMBAT_SYSTEM.md` and process detailed sword and magic combat at the individual party member level
 - **For tactical decisions in combat**: Use `prompts/TACTICAL_PATTERNS.md` to select tactical patterns and determine optimal actions based on the situation
 - **For dialogue generation in combat**: Use `prompts/DIALOGUE_SYSTEM.md` to generate combat dialogue appropriate to character personalities
+- **For quests and checks**: Read `prompts/QUEST_MANAGEMENT.md`. Quests are the core of the world; declare uncertain attempts as checks and let the engine roll
 - **For social systems**: Manage guild, alliance, quest, achievement, and competitive systems using `prompts/GUILD_MANAGEMENT.md`, `prompts/ALLIANCE_STRATEGY.md`, `prompts/QUEST_MANAGEMENT.md`, `prompts/ACHIEVEMENT_PURSUIT.md`, `prompts/COMPETITIVE_EVENTS.md`
 - **For multi-party strategy**: Reference multi-party strategy, negotiation patterns, and trust management integrated in `prompts/CHARACTER_PERSONALITY_TEMPLATES.md`
 - **For exploration coordination**: Reference exploration coordination management integrated in `prompts/GM_CORE_MIND.md`
@@ -70,7 +71,8 @@ AI coding agents must **actively consult and apply** the appropriate decision fr
 
 #### Life Simulation & Social Systems
 
-- **LIFE SIMULATION**: In region-based systems, utilize social system documents like `prompts/GUILD_MANAGEMENT.md` to execute economic, diplomatic, and exploration activities
+- **QUEST-DRIVEN SIMULATION**: Parties rise in the guild by completing quests whose paths cross. The GM shapes the quest board; resources and the market are optional background
+- **ENGINE ADJUDICATION**: AI agents declare intentions and the effects of success / partial success / failure in advance; `process_ai_responses.ts` rolls the dice, enforces permissions and resolves quests. Never write outcomes you did not roll for
 - **PERSISTENT STATE MANAGEMENT**: Persist all states and decisions to files and manage them using the `autonomous_sessions/` directory structure
 
 ### Tool Usage Policy
@@ -78,6 +80,7 @@ AI coding agents must **actively consult and apply** the appropriate decision fr
 #### Allowed Tools
 
 - **File-based persistence tools**: `start_session.ts`, `process_ai_responses.ts`, `append_playlog.ts`, `generate_next_turn.ts`, `finalize_session.ts` are permitted for world state and play log recording
+- **Engine adjudication modules**: `world_rules.ts` (dice, permissions, invariants, quest and clock resolution) and `turn_context.ts` (decision request context) are used by the tools above. They resolve outcomes and never make GM or party decisions
 
 #### Forbidden Tools & Practices
 

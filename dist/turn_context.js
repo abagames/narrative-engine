@@ -1,6 +1,6 @@
 import * as fs from 'fs/promises';
 import * as path from 'path';
-import { capabilityModifier, computeStandings, MAX_ACTIVE_QUESTS } from './world_rules.js';
+import { capabilityModifier, computeStandings, isOfferedTo, MAX_ACTIVE_QUESTS } from './world_rules.js';
 const GM_INSTRUCTIONS = 'worldStateFileを読み込んで世界状態を分析し、適切なフレームワークを適用してGMとしての最適な行動を決定してください。' +
     '依頼掲示板が手薄なら、パーティー同士が交差する依頼（競合・衝突・共同・隠された真相）を発行してください。' +
     '結果が不確かな出来事はchecksで宣言し、判定はエンジンに任せてください';
@@ -201,7 +201,8 @@ function publicQuestView(quest, partyId) {
 }
 export function generatePartyContextData(partyId, party, worldState, recentHistory) {
     const quests = Object.values(worldState.quests || {});
-    const board = quests.filter(q => ACTIVE_STATUSES.includes(q.status));
+    // Private offers stay hidden from parties they were not offered to
+    const board = quests.filter(q => ACTIVE_STATUSES.includes(q.status) && isOfferedTo(q, partyId));
     const mine = board.filter(q => (q.acceptedBy || []).includes(partyId));
     const partyRecentHistory = recentHistory.filter(event => event.participants?.includes(partyId) || event.actor === partyId);
     const context = {

@@ -190,19 +190,25 @@ Mira: "Fascinating! There are similar records in ancient literature"
 ### Phase 1: Data Preparation
 ```
 for each entry in playlog.entries:
-  if focusPartyId in entry.participants:
-    extract relevant context from entry.meta.llmDecision
-    extract narrative elements from entry.narrative
-    identify other parties involved
-    calculate resource/relationship changes
+  for each action in entry.actions:
+    if action.actor == focusPartyId or focusPartyId in action.participants:
+      extract reasoning and character voices from action
+      extract check results (dice, outcome) from action.checks
+  extract narrative elements from entry.narrative
+  extract quest resolutions and clock events from entry.engineEvents
+  identify other parties involved
+  calculate quest progress, reputation and relationship changes
 ```
 
 ### Phase 2: Story Construction
 ```
+choose the spine: the 1-2 quests or rivalries that most shaped the focus party
 group entries by narrative arc (5-8 turns per chapter)
 for each chapter:
-  identify central theme/conflict
-  select representative key moments
+  identify central theme/conflict (usually a quest and the rival chasing it)
+  select representative key moments (resolved quests, opposed checks, revealed secrets, failures with costs)
+  compress turns that do not serve the spine into a sentence or two
+  pay off setups planted in earlier chapters
   develop character arc progression
 ```
 
@@ -225,6 +231,8 @@ for each turn:
 
 ### Technical Accuracy
 - 100% consistency with playlog numerical data
+- Check outcomes are narrated as rolled: a failure stays a failure, a partial success shows its cost
+- Information the focus party did not have (other parties' secrets, hidden quest truths) is not revealed in its point of view before the party learns it
 - Accurate reflection of action cause-and-effect relationships
 - Objective description of interactions with other parties
 

@@ -55,6 +55,15 @@ function questWorld(): any {
         reward: { reputation: 3 },
         secret: { truth: 'The abbess staged the theft herself.' },
         conflictsWith: []
+      },
+      // A private offer the Owls must not see
+      bury_the_truth: {
+        title: 'Bury the Truth',
+        client: 'abbess_mira',
+        location: 'guildhall',
+        requiredProgress: 2,
+        reward: { reputation: 2 },
+        offeredTo: ['red_hounds']
       }
     },
     clocks: { plague: { name: 'Plague in the catacombs', segments: 4, filled: 0, tickPerTurn: 1 } },
@@ -133,7 +142,7 @@ describe('quest-driven turn flow (integration)', () => {
     // Party request shows the quest board without its secret
     const owlsRequestId = await requestIdFor('white_owls');
     const owlsRequest = JSON.parse(await fs.readFile(path.join(requestsDir, `${owlsRequestId}.json`), 'utf-8'));
-    expect(owlsRequest.contextData.guildBoard[0].id).toBe('recover_reliquary');
+    expect(owlsRequest.contextData.guildBoard.map((q: any) => q.id)).toEqual(['recover_reliquary']);
     expect(owlsRequest.contextData.guildBoard[0].secret).toBeUndefined();
     expect(JSON.stringify(owlsRequest.contextData)).not.toContain('staged the theft');
     expect(owlsRequest.contextData.availableActions).toContain('accept_quest');
@@ -146,6 +155,8 @@ describe('quest-driven turn flow (integration)', () => {
     expect(gmRequest.contextData.questBoard.signals.idleParties).toEqual(['red_hounds', 'white_owls']);
 
     const houndsRequestId = await requestIdFor('red_hounds');
+    const houndsRequest = JSON.parse(await fs.readFile(path.join(requestsDir, `${houndsRequestId}.json`), 'utf-8'));
+    expect(houndsRequest.contextData.guildBoard.map((q: any) => q.id)).toContain('bury_the_truth');
 
     await writeResponse({
       requestId: gmRequestId,
@@ -290,6 +301,15 @@ describe('quest-driven turn flow (integration)', () => {
     await finalizeSession(sessionId);
     const saved = JSON.parse(await fs.readFile(path.join(sessionDir, 'world_final.json'), 'utf-8'));
     expect(saved.guild.promoted).toEqual(['white_owls']);
+  });
+
+  it('accepts the bundled example world', async () => {
+    const result = await startSession(
+      'examples/lantern_guild_season/world_initial.json',
+      'examples/lantern_guild_season/session_config.json'
+    );
+    expect(result.status).toBe('ready');
+    expect(result.firstTurnRequests).toHaveLength(4);
   });
 
   it('rejects worlds whose quests reference unknown regions', async () => {
