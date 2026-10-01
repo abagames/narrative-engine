@@ -12,7 +12,7 @@ interface ProcessResult {
     failedDecisions: string[];
     partiallySuccessful: boolean;
     criticalErrorCount: number;
-    nextStatus: 'error' | 'error_abort' | 'turn_completed' | 'completed' | 'partial_success';
+    nextStatus: 'error' | 'error_abort' | 'turn_completed' | 'completed' | 'partial_success' | 'draft_in_progress' | 'draft_completed';
     checks: CheckResult[];
     engineEvents: EngineEvent[];
     alreadyProcessed: string[];

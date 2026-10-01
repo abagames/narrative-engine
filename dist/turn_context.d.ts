@@ -10,6 +10,10 @@ export interface DecisionRequest {
     contextData: Record<string, any>;
     instructions: string;
 }
+/**
+ * Writes requests for the parties that must act in the draft right now.
+ */
+export declare function writeDraftRequests(sessionId: string, worldState: any, requestsDir: string, recentHistory: any[]): Promise<string[]>;
 export declare function writeDecisionRequests(sessionId: string, worldState: any, requestsDir: string, recentHistory: any[]): Promise<string[]>;
 export declare function generateGMContextData(worldState: any, recentHistory: any[]): Record<string, any>;
 export declare function generatePartyContextData(partyId: string, party: any, worldState: any, recentHistory: any[]): Record<string, any>;

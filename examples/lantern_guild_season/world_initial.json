@@ -3,155 +3,606 @@
   "worldAge": 1,
   "narrativeContext": {
     "setting": "The harbor city of Velmora, where the Lantern Guild hands out contracts from a single oak board",
-    "rumors": ["The magistrate's court opens in eight days", "Something sickens the dead in the old catacombs"]
+    "rumors": [
+      "The magistrate's court opens in eight days",
+      "Something sickens the dead in the old catacombs"
+    ]
   },
   "guild": {
     "name": "Lantern Guild",
-    "season": { "endsAtTurn": 12, "promotionSlots": 1 }
+    "season": {
+      "endsAtTurn": 10,
+      "promotionSlots": 1,
+      "midDraftTurn": 5
+    }
   },
   "regions": {
     "guildhall": {
-      "id": "guildhall", "name": "Lantern Guildhall", "type": "settlement", "capacity": 10,
-      "neighbors": ["harbor", "old_quarter"], "occupantParties": ["iron_wolves", "silver_quill", "ash_lanterns"],
-      "resources": [], "specialEffects": ["quest_board"], "influence": {}
+      "id": "guildhall",
+      "name": "Lantern Guildhall",
+      "type": "settlement",
+      "capacity": 10,
+      "neighbors": [
+        "harbor",
+        "old_quarter"
+      ],
+      "occupantParties": [
+        "iron_wolves",
+        "silver_quill",
+        "ash_lanterns"
+      ],
+      "resources": [],
+      "specialEffects": [
+        "quest_board"
+      ],
+      "influence": {}
     },
     "harbor": {
-      "id": "harbor", "name": "Saltgate Harbor", "type": "settlement", "capacity": 8,
-      "neighbors": ["guildhall", "smugglers_cove"], "occupantParties": [],
-      "resources": ["fish", "rope"], "specialEffects": ["market_access"], "influence": {}
+      "id": "harbor",
+      "name": "Saltgate Harbor",
+      "type": "settlement",
+      "capacity": 8,
+      "neighbors": [
+        "guildhall",
+        "smugglers_cove"
+      ],
+      "occupantParties": [],
+      "resources": [
+        "fish",
+        "rope"
+      ],
+      "specialEffects": [
+        "market_access"
+      ],
+      "influence": {}
     },
     "old_quarter": {
-      "id": "old_quarter", "name": "Old Quarter", "type": "settlement", "capacity": 6,
-      "neighbors": ["guildhall", "catacombs"], "occupantParties": [],
-      "resources": [], "specialEffects": ["narrow_alleys"], "influence": {}
+      "id": "old_quarter",
+      "name": "Old Quarter",
+      "type": "settlement",
+      "capacity": 6,
+      "neighbors": [
+        "guildhall",
+        "catacombs"
+      ],
+      "occupantParties": [],
+      "resources": [],
+      "specialEffects": [
+        "narrow_alleys"
+      ],
+      "influence": {}
     },
     "catacombs": {
-      "id": "catacombs", "name": "Velmora Catacombs", "type": "ruins", "capacity": 4,
-      "neighbors": ["old_quarter", "smugglers_cove"], "occupantParties": [],
-      "resources": ["grave_salt"], "specialEffects": ["darkness", "plague_air"], "influence": {}
+      "id": "catacombs",
+      "name": "Velmora Catacombs",
+      "type": "ruins",
+      "capacity": 4,
+      "neighbors": [
+        "old_quarter",
+        "smugglers_cove"
+      ],
+      "occupantParties": [],
+      "resources": [
+        "grave_salt"
+      ],
+      "specialEffects": [
+        "darkness",
+        "plague_air"
+      ],
+      "influence": {}
     },
     "smugglers_cove": {
-      "id": "smugglers_cove", "name": "Smugglers' Cove", "type": "coast", "capacity": 5,
-      "neighbors": ["harbor", "catacombs"], "occupantParties": [],
-      "resources": ["contraband"], "specialEffects": ["ambush_terrain"], "influence": {}
+      "id": "smugglers_cove",
+      "name": "Smugglers' Cove",
+      "type": "coast",
+      "capacity": 5,
+      "neighbors": [
+        "harbor",
+        "catacombs"
+      ],
+      "occupantParties": [],
+      "resources": [
+        "contraband"
+      ],
+      "specialEffects": [
+        "ambush_terrain"
+      ],
+      "influence": {}
     }
   },
   "parties": {
     "iron_wolves": {
-      "id": "iron_wolves", "name": "Iron Wolves", "location": "guildhall",
-      "resources": { "currency": 40 }, "morale": 7, "reputation": 0, "inventory": [],
-      "capabilities": { "combat": 9, "exploration": 5, "investigation": 3, "diplomacy": 2 },
-      "goals": ["Be promoted before the Silver Quill", "Prove that sellswords can be trusted"],
-      "flaws": [{ "name": "Pride", "trigger": "the Silver Quill asks for help or offers terms", "effect": "refuses, whatever the cost" }],
-      "knowledge": [{ "text": "Captain Ora pays the dock gangs", "source": "a drunk dockhand", "turn": 0, "truth": true }],
+      "id": "iron_wolves",
+      "name": "Iron Wolves",
+      "location": "guildhall",
+      "resources": {
+        "currency": 40
+      },
+      "morale": 7,
+      "reputation": 0,
+      "inventory": [],
+      "capabilities": {
+        "combat": 9,
+        "exploration": 5,
+        "investigation": 3,
+        "diplomacy": 2
+      },
+      "goals": [
+        "Be promoted before the Silver Quill",
+        "Prove that sellswords can be trusted"
+      ],
+      "flaws": [
+        {
+          "name": "Pride",
+          "trigger": "the Silver Quill asks for help or offers terms",
+          "effect": "refuses, whatever the cost"
+        }
+      ],
+      "knowledge": [
+        {
+          "text": "Captain Ora pays the dock gangs",
+          "source": "a drunk dockhand",
+          "turn": 0,
+          "truth": true
+        }
+      ],
       "characterProfile": {
-        "leadershipStyle": "commanding", "decisionMaking": "decisive", "communicationStyle": "blunt",
+        "leadershipStyle": "commanding",
+        "decisionMaking": "decisive",
+        "communicationStyle": "blunt",
         "partyMembers": [
-          { "name": "Brask", "role": "Leader", "personality": "Stubborn", "speechStyle": "Short, gruff orders", "specialization": "Shield wall" },
-          { "name": "Lio", "role": "Scout", "personality": "Restless", "speechStyle": "Quick jokes under pressure", "specialization": "Ambush detection" },
-          { "name": "Hedda", "role": "Medic", "personality": "Dry", "speechStyle": "Flat, practical remarks", "specialization": "Field surgery" }
+          {
+            "name": "Brask",
+            "role": "Leader",
+            "personality": "Stubborn",
+            "speechStyle": "Short, gruff orders",
+            "specialization": "Shield wall"
+          },
+          {
+            "name": "Lio",
+            "role": "Scout",
+            "personality": "Restless",
+            "speechStyle": "Quick jokes under pressure",
+            "specialization": "Ambush detection"
+          },
+          {
+            "name": "Hedda",
+            "role": "Medic",
+            "personality": "Dry",
+            "speechStyle": "Flat, practical remarks",
+            "specialization": "Field surgery"
+          }
         ],
-        "speechPatterns": { "internal": "Terse and loyal", "external": "Curt, intimidating" }
+        "speechPatterns": {
+          "internal": "Terse and loyal",
+          "external": "Curt, intimidating"
+        }
       }
     },
     "silver_quill": {
-      "id": "silver_quill", "name": "Silver Quill", "location": "guildhall",
-      "resources": { "currency": 30 }, "morale": 6, "reputation": 0, "inventory": [],
-      "capabilities": { "combat": 3, "exploration": 6, "investigation": 9, "diplomacy": 8 },
-      "goals": ["Expose the corruption behind the harbor contracts", "Win promotion without bloodshed"],
-      "flaws": [{ "name": "Curiosity", "trigger": "a client's story does not add up", "effect": "investigates even if it costs the quest" }],
-      "knowledge": [{ "text": "Merchant Vell is an honest man", "source": "guild gossip", "turn": 0, "truth": false }],
+      "id": "silver_quill",
+      "name": "Silver Quill",
+      "location": "guildhall",
+      "resources": {
+        "currency": 30
+      },
+      "morale": 6,
+      "reputation": 0,
+      "inventory": [],
+      "capabilities": {
+        "combat": 3,
+        "exploration": 6,
+        "investigation": 9,
+        "diplomacy": 8
+      },
+      "goals": [
+        "Expose the corruption behind the harbor contracts",
+        "Win promotion without bloodshed"
+      ],
+      "flaws": [
+        {
+          "name": "Curiosity",
+          "trigger": "a client's story does not add up",
+          "effect": "investigates even if it costs the quest"
+        }
+      ],
+      "knowledge": [
+        {
+          "text": "Merchant Vell is an honest man",
+          "source": "guild gossip",
+          "turn": 0,
+          "truth": false
+        }
+      ],
       "characterProfile": {
-        "leadershipStyle": "collaborative_democracy", "decisionMaking": "cautious_analytical", "communicationStyle": "diplomatic_direct",
+        "leadershipStyle": "collaborative_democracy",
+        "decisionMaking": "cautious_analytical",
+        "communicationStyle": "diplomatic_direct",
         "partyMembers": [
-          { "name": "Aria", "role": "Leader", "personality": "Analytical", "speechStyle": "Calm, precise", "specialization": "Records and law" },
-          { "name": "Pell", "role": "Negotiator", "personality": "Warm", "speechStyle": "Friendly, persuasive", "specialization": "Reading people" },
-          { "name": "Nim", "role": "Scholar", "personality": "Curious", "speechStyle": "Rambling, excited", "specialization": "Old scripts" }
+          {
+            "name": "Aria",
+            "role": "Leader",
+            "personality": "Analytical",
+            "speechStyle": "Calm, precise",
+            "specialization": "Records and law"
+          },
+          {
+            "name": "Pell",
+            "role": "Negotiator",
+            "personality": "Warm",
+            "speechStyle": "Friendly, persuasive",
+            "specialization": "Reading people"
+          },
+          {
+            "name": "Nim",
+            "role": "Scholar",
+            "personality": "Curious",
+            "speechStyle": "Rambling, excited",
+            "specialization": "Old scripts"
+          }
         ],
-        "speechPatterns": { "internal": "Polite debate", "external": "Courteous, probing" }
+        "speechPatterns": {
+          "internal": "Polite debate",
+          "external": "Courteous, probing"
+        }
       }
     },
     "ash_lanterns": {
-      "id": "ash_lanterns", "name": "Ash Lanterns", "location": "guildhall",
-      "resources": { "currency": 15 }, "morale": 5, "reputation": 0, "inventory": [],
-      "capabilities": { "combat": 5, "exploration": 8, "investigation": 6, "diplomacy": 4 },
-      "goals": ["Get rich or get promoted, whichever comes first"],
-      "flaws": [{ "name": "Greed", "trigger": "a better-paying offer appears mid-quest", "effect": "takes it, even if it betrays an ally" }],
+      "id": "ash_lanterns",
+      "name": "Ash Lanterns",
+      "location": "guildhall",
+      "resources": {
+        "currency": 15
+      },
+      "morale": 5,
+      "reputation": 0,
+      "inventory": [],
+      "capabilities": {
+        "combat": 5,
+        "exploration": 8,
+        "investigation": 6,
+        "diplomacy": 4
+      },
+      "goals": [
+        "Get rich or get promoted, whichever comes first"
+      ],
+      "flaws": [
+        {
+          "name": "Greed",
+          "trigger": "a better-paying offer appears mid-quest",
+          "effect": "takes it, even if it betrays an ally"
+        }
+      ],
       "knowledge": [],
       "characterProfile": {
-        "leadershipStyle": "opportunistic", "decisionMaking": "risk_taking", "communicationStyle": "charming",
+        "leadershipStyle": "opportunistic",
+        "decisionMaking": "risk_taking",
+        "communicationStyle": "charming",
         "partyMembers": [
-          { "name": "Corvin", "role": "Leader", "personality": "Charming liar", "speechStyle": "Smooth, flattering", "specialization": "Deals" },
-          { "name": "Tessa", "role": "Pathfinder", "personality": "Cautious", "speechStyle": "Quiet warnings", "specialization": "Tunnels" }
+          {
+            "name": "Corvin",
+            "role": "Leader",
+            "personality": "Charming liar",
+            "speechStyle": "Smooth, flattering",
+            "specialization": "Deals"
+          },
+          {
+            "name": "Tessa",
+            "role": "Pathfinder",
+            "personality": "Cautious",
+            "speechStyle": "Quiet warnings",
+            "specialization": "Tunnels"
+          }
         ],
-        "speechPatterns": { "internal": "Sardonic", "external": "Flattering" }
+        "speechPatterns": {
+          "internal": "Sardonic",
+          "external": "Flattering"
+        }
       }
     }
   },
   "npcs": {
-    "merchant_vell": { "name": "Merchant Vell", "wants": "to reach the court alive and walk away rich", "disposition": {}, "memory": [] },
-    "captain_ora": { "name": "Captain Ora", "wants": "control of Saltgate Harbor", "disposition": {}, "memory": [] },
-    "abbess_mira": { "name": "Abbess Mira", "wants": "the catacombs sealed before the sickness spreads", "disposition": {}, "memory": [] }
+    "merchant_vell": {
+      "name": "Merchant Vell",
+      "wants": "to reach the court alive and walk away rich",
+      "disposition": {},
+      "memory": []
+    },
+    "captain_ora": {
+      "name": "Captain Ora",
+      "wants": "control of Saltgate Harbor",
+      "disposition": {},
+      "memory": []
+    },
+    "abbess_mira": {
+      "name": "Abbess Mira",
+      "wants": "the catacombs sealed before the sickness spreads",
+      "disposition": {},
+      "memory": []
+    }
   },
   "quests": {
     "escort_vell": {
       "title": "Escort Vell to the Magistrate",
       "client": "merchant_vell",
       "description": "Vell will testify against the smugglers if he survives the walk from the harbor to the court.",
-      "location": "harbor", "type": "exclusive", "requiredProgress": 3, "deadlineTurn": 8,
-      "reward": { "reputation": 3, "currency": 30, "items": ["vell_seal"] },
-      "conflictsWith": ["silence_vell"],
-      "secret": { "truth": "Vell will steal the court's evidence ledger once inside", "revealedTo": [] },
-      "onFail": [{ "target": "narrativeContext/rumors", "operation": "add", "value": "Vell's body washed up under the pier" }],
-      "advancesClock": { "clockId": "smugglers_rise", "amount": 1 }
+      "location": "harbor",
+      "type": "exclusive",
+      "requiredProgress": 3,
+      "deadlineTurn": 6,
+      "reward": {
+        "reputation": 3,
+        "currency": 30,
+        "items": [
+          "vell_seal"
+        ]
+      },
+      "conflictsWith": [
+        "silence_vell"
+      ],
+      "secret": {
+        "truth": "Vell will steal the court's evidence ledger once inside",
+        "revealedTo": []
+      },
+      "onFail": [
+        {
+          "target": "narrativeContext/rumors",
+          "operation": "add",
+          "value": "Vell's body washed up under the pier"
+        }
+      ],
+      "advancesClock": {
+        "clockId": "smugglers_rise",
+        "amount": 1
+      },
+      "contract": true
     },
     "silence_vell": {
       "title": "Keep Vell from Testifying",
       "client": "captain_ora",
       "description": "Ora pays well to make sure Vell never reaches the court. 'Persuade him, scare him, or worse.'",
-      "location": "harbor", "type": "exclusive", "requiredProgress": 3, "deadlineTurn": 8,
-      "reward": { "reputation": 2, "currency": 60 },
-      "conflictsWith": ["escort_vell"],
-      "offeredTo": ["ash_lanterns"],
-      "secret": { "truth": "Ora is the smugglers' patron and wants Vell's ledger for herself", "revealedTo": [] },
-      "onComplete": [{ "target": "clocks/smugglers_rise/filled", "operation": "add", "value": 1 }]
+      "location": "harbor",
+      "type": "exclusive",
+      "requiredProgress": 3,
+      "deadlineTurn": 6,
+      "reward": {
+        "reputation": 2,
+        "currency": 60
+      },
+      "conflictsWith": [
+        "escort_vell"
+      ],
+      "secret": {
+        "truth": "Ora is the smugglers' patron and wants Vell's ledger for herself",
+        "revealedTo": []
+      },
+      "onComplete": [
+        {
+          "target": "clocks/smugglers_rise/filled",
+          "operation": "add",
+          "value": 1
+        }
+      ],
+      "contract": true
     },
     "seal_catacombs": {
       "title": "Seal the Catacombs",
       "client": "abbess_mira",
       "description": "The sickness rises from the lower crypts. It needs a fighter to hold the dead back and a scholar to read the old wards.",
-      "location": "catacombs", "type": "joint", "minParties": 2, "requiredProgress": 5, "deadlineTurn": 10,
-      "reward": { "reputation": 4 },
-      "onFail": [{ "target": "regions/old_quarter/specialEffects", "operation": "add", "value": "plague_quarantine" }],
-      "advancesClock": { "clockId": "catacomb_plague", "amount": 2 }
+      "location": "catacombs",
+      "type": "joint",
+      "minParties": 2,
+      "requiredProgress": 5,
+      "deadlineTurn": 8,
+      "reward": {
+        "reputation": 4
+      },
+      "onFail": [
+        {
+          "target": "regions/old_quarter/specialEffects",
+          "operation": "add",
+          "value": "plague_quarantine"
+        }
+      ],
+      "advancesClock": {
+        "clockId": "catacomb_plague",
+        "amount": 2
+      }
     },
     "cove_map": {
       "title": "Chart the Smugglers' Tunnels",
       "client": "abbess_mira",
       "description": "Someone moves goods between the cove and the crypts. Find the route.",
-      "location": "smugglers_cove", "type": "exclusive", "requiredProgress": 2, "deadlineTurn": 6,
-      "reward": { "reputation": 2, "items": ["tunnel_map"] }
+      "location": "smugglers_cove",
+      "type": "exclusive",
+      "requiredProgress": 2,
+      "deadlineTurn": 5,
+      "reward": {
+        "reputation": 2,
+        "items": [
+          "tunnel_map"
+        ]
+      }
     }
   },
   "clocks": {
     "smugglers_rise": {
-      "name": "Smugglers seize the harbor", "segments": 4, "filled": 1, "tickPerTurn": 0, "visible": true,
+      "name": "Smugglers seize the harbor",
+      "segments": 4,
+      "filled": 1,
+      "tickPerTurn": 0,
+      "visible": true,
       "consequence": "Ora's gangs own the docks; honest work at the harbor dries up",
-      "onComplete": [{ "target": "regions/harbor/specialEffects", "operation": "add", "value": "smuggler_controlled" }]
+      "onComplete": [
+        {
+          "target": "regions/harbor/specialEffects",
+          "operation": "add",
+          "value": "smuggler_controlled"
+        }
+      ]
     },
     "catacomb_plague": {
-      "name": "Catacomb plague spreads", "segments": 6, "filled": 0, "tickPerTurn": 1, "visible": true,
+      "name": "Catacomb plague spreads",
+      "segments": 6,
+      "filled": 0,
+      "tickPerTurn": 1,
+      "visible": true,
       "consequence": "The Old Quarter is quarantined",
-      "onComplete": [{ "target": "regions/old_quarter/specialEffects", "operation": "add", "value": "plague_quarantine" }]
+      "onComplete": [
+        {
+          "target": "regions/old_quarter/specialEffects",
+          "operation": "add",
+          "value": "plague_quarantine"
+        }
+      ]
     }
   },
   "favors": {},
   "threads": {
-    "vell_ledger": { "setup": "Vell carries a ledger he never lets out of his sight", "turn": 1, "status": "open" }
+    "vell_ledger": {
+      "setup": "Vell carries a ledger he never lets out of his sight",
+      "turn": 1,
+      "status": "open"
+    }
   },
   "relationships": {
-    "iron_wolves__silver_quill": { "hostility": 6, "cooperation": 2, "competition": 8, "trust": 2, "lastInteraction": "turn_0", "history": [] },
-    "ash_lanterns__iron_wolves": { "hostility": 3, "cooperation": 5, "competition": 5, "trust": 4, "lastInteraction": "turn_0", "history": [] },
-    "ash_lanterns__silver_quill": { "hostility": 4, "cooperation": 4, "competition": 6, "trust": 3, "lastInteraction": "turn_0", "history": [] }
+    "iron_wolves__silver_quill": {
+      "hostility": 6,
+      "cooperation": 2,
+      "competition": 8,
+      "trust": 2,
+      "lastInteraction": "turn_0",
+      "history": []
+    },
+    "ash_lanterns__iron_wolves": {
+      "hostility": 3,
+      "cooperation": 5,
+      "competition": 5,
+      "trust": 4,
+      "lastInteraction": "turn_0",
+      "history": []
+    },
+    "ash_lanterns__silver_quill": {
+      "hostility": 4,
+      "cooperation": 4,
+      "competition": 6,
+      "trust": 3,
+      "lastInteraction": "turn_0",
+      "history": []
+    }
+  },
+  "recruits": {
+    "sister_ilse": {
+      "name": "Sister Ilse",
+      "role": "Field healer",
+      "personality": "Gentle but unbending",
+      "grants": {
+        "capabilities": {
+          "healing": 8,
+          "diplomacy": 6
+        }
+      },
+      "unlocks": [
+        "treat_plague_victims"
+      ],
+      "term": 4,
+      "wants": "to save lives; refuses to serve anyone who kills the helpless",
+      "leavesIf": "her party kills or abandons a helpless person",
+      "rivalEmployer": "Abbess Mira's hospice",
+      "ifUnhired": [
+        {
+          "target": "clocks/catacomb_plague/filled",
+          "operation": "add",
+          "value": -1
+        }
+      ]
+    },
+    "grim": {
+      "name": "Grim of the Tunnels",
+      "role": "Tracker",
+      "personality": "Silent, mercenary",
+      "grants": {
+        "capabilities": {
+          "exploration": 8,
+          "investigation": 6
+        }
+      },
+      "unlocks": [
+        "use_smuggler_tunnels"
+      ],
+      "term": 4,
+      "wants": "coin, paid up front",
+      "leavesIf": "someone offers him double",
+      "rivalEmployer": "Captain Ora",
+      "ifUnhired": [
+        {
+          "target": "clocks/smugglers_rise/filled",
+          "operation": "add",
+          "value": 1
+        }
+      ]
+    }
+  },
+  "items": {
+    "warded_lantern": {
+      "name": "Warded Lantern",
+      "description": "Its light shows wards and lies alike",
+      "bonus": {
+        "capability": "investigation",
+        "amount": 1
+      }
+    },
+    "harbor_writ": {
+      "name": "Magistrate's Harbor Writ",
+      "description": "A sealed writ that opens doors at the docks",
+      "bonus": {
+        "capability": "diplomacy",
+        "amount": 1
+      }
+    }
+  },
+  "intel": {
+    "ora_ledger": {
+      "title": "What Captain Ora really wants",
+      "fact": {
+        "text": "Ora does not care whether Vell lives; she wants the ledger he carries",
+        "truth": true
+      },
+      "source": "a clerk in Ora's pay"
+    },
+    "vell_route": {
+      "title": "The route Vell will take to court",
+      "fact": {
+        "text": "Vell will be smuggled to court through the catacombs, not the streets",
+        "truth": false
+      },
+      "source": "a harbor rumor-monger"
+    }
+  },
+  "draft": {
+    "status": "pending",
+    "label": "Season opening draft",
+    "picksPerParty": 2,
+    "pool": {
+      "contracts": [
+        "escort_vell",
+        "silence_vell"
+      ],
+      "recruits": [
+        "sister_ilse",
+        "grim"
+      ],
+      "items": [
+        "warded_lantern",
+        "harbor_writ"
+      ],
+      "intel": [
+        "ora_ledger",
+        "vell_route"
+      ],
+      "invites": [
+        "seal_catacombs"
+      ]
+    }
   }
 }

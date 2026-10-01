@@ -247,6 +247,9 @@ Rules of thumb:
 - Every quest carries **one dilemma** (a cost, a doubt about the client, or a rival).
 - Offer a conflicting quest privately (`offeredTo`) to a party that does **not** hold the other side. Parties never see `conflictsWith`, and they do not see private offers made to others.
 
+### Drafts
+Before the season and at `guild.season.midDraftTurn`, parties pick contracts, recruits, items, intel and invitations in turn. When `worldSummary.draftDueNextTurn` is true, prepare the pool this turn. The draft is where collisions get their sides. Rules and pool design: `DRAFT_SYSTEM.md`.
+
 ### Progress Clocks
 Clocks are threats that advance whether or not anyone acts (`tickPerTurn`) or when quests fail (`advancesClock`). When full, the engine applies `onComplete` effects. Create 1-2 clocks at the start; add one when a new threat appears. Advancing a clock is a GM action (`clocks/<id>/filled` add).
 

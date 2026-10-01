@@ -1,7 +1,8 @@
 import * as fs from 'fs/promises';
 import * as path from 'path';
 import { ensureSeed, normalizeWorld } from './world_rules.js';
-import { writeDecisionRequests } from './turn_context.js';
+import { writeDecisionRequests, writeDraftRequests } from './turn_context.js';
+import { isDraftActive, startDraft } from './draft.js';
 export async function startSession(worldInitialPath, sessionConfigPath) {
     // Read environment variable at runtime
     const AUTONOMOUS_SESSIONS_DIR = process.env.AUTONOMOUS_SESSIONS_DIR || './autonomous_sessions';
@@ -34,7 +35,10 @@ export async function startSession(worldInitialPath, sessionConfigPath) {
     await fs.mkdir(path.join(workspaceDir, 'decision_responses'), { recursive: true });
     await fs.mkdir(path.join(workspaceDir, 'world_snapshots'), { recursive: true });
     // 5. Generate first turn decision requests
-    const firstTurnRequests = await writeDecisionRequests(sessionId, worldData, path.join(workspaceDir, 'decision_requests'), []);
+    const requestsDir = path.join(workspaceDir, 'decision_requests');
+    const firstTurnRequests = isDraftActive(worldData)
+        ? await writeDraftRequests(sessionId, worldData, requestsDir, [])
+        : await writeDecisionRequests(sessionId, worldData, requestsDir, []);
     return {
         sessionId,
         status: 'ready',
@@ -121,6 +125,14 @@ function prepareWorld(world, config) {
     normalizeWorld(world);
     // Upkeep for the starting turn is already reflected in the authored world
     world.upkeepTurn = Number(world.turn) || 0;
+    // A season-start draft opens before the first action phase
+    world.phase = 'action';
+    if (world.draft?.status === 'pending') {
+        const started = startDraft(world);
+        if (!Array.isArray(started)) {
+            throw new Error(`Cannot start draft: ${started.error}`);
+        }
+    }
 }
 function validateSessionConfig(config) {
     const requiredFields = ['sessionName', 'maxTurns', 'stopConditions'];

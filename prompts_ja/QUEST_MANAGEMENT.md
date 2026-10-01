@@ -16,7 +16,7 @@
 {
   "guild": {
     "name": "灯火ギルド",
-    "season": { "endsAtTurn": 12, "promotionSlots": 1 }
+    "season": { "endsAtTurn": 12, "promotionSlots": 1, "midDraftTurn": 6 }
   },
   "quests": {
     "escort_vell": {
@@ -75,6 +75,7 @@
 | フィールド | 書き込む者 | 備考 |
 |---|---|---|
 | `quests/*`の定義 | GM | `quests/<id>`への`set`で作成する。既存の依頼は置き換えられない |
+| `quests/*/contract` | GM | `true`: ドラフトでのみ取れる専属依頼（`DRAFT_SYSTEM.md`） |
 | `quests/*/offeredTo` | GM | 空または未指定なら掲示板に公開。指定すると非公開の依頼になり、そのパーティーだけが見て受注できる |
 | `quests/*/acceptedBy`、`abandonedBy` | パーティー（自分のみ）、GM | 1パーティーの受注中依頼は最大2件。放棄した依頼は再受注できない |
 | `quests/*/progress/*` | checkの結果のみ | 0未満にはならない |
@@ -83,6 +84,7 @@
 | `parties/*/reputation` | エンジン（報酬）、GM | シーズンの順位を決める |
 | `parties/*/capabilities` | GM | check修正値の基礎 |
 | `clocks/*/filled` | GM、エンジン | `triggered`はエンジン管理 |
+| `recruits/*`、`items/*`、`intel/*`、`draft` | GM（指名の適用はエンジン） | `DRAFT_SYSTEM.md`参照。冒険者はcheckの能力値を引き上げ、アイテムは+1を与える |
 | `rng`、`checkLog`、`chronicle`、`guild/standings`、`guild/promoted` | エンジン | AIエージェントは読み取りのみ |
 
 ## 🎲 check（判定）

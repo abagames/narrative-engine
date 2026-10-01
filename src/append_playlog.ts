@@ -79,6 +79,7 @@ interface PlaylogEntry {
   actions: PlaylogAction[];
   checks: any[];
   engineEvents: any[];
+  draft?: Record<string, any>;
   worldStateDiff: Record<string, any>;
   worldStateSnapshot: string;
 }
@@ -546,7 +547,7 @@ async function generateCompletePlaylogEntry(
   sessionDir: string
 ): Promise<PlaylogEntry> {
   // Get next step number and how many engine events were already logged
-  const { nextStep, loggedEngineEvents } = await readPlaylogState(sessionDir);
+  const { nextStep, loggedEngineEvents, loggedDraftIds } = await readPlaylogState(sessionDir);
   const actions = responses.map(toPlaylogAction);
   const chronicle: any[] = Array.isArray(currentWorldState.chronicle) ? currentWorldState.chronicle : [];
 
@@ -571,10 +572,25 @@ async function generateCompletePlaylogEntry(
     worldStateSnapshot: './world_current.json'
   };
 
+  // A finished draft is logged once, in the entry that follows it
+  const draft = currentWorldState.draft;
+  if (draft?.status === 'closed' && draft.id && !loggedDraftIds.has(draft.id)) {
+    entry.draft = {
+      id: draft.id,
+      label: draft.label,
+      baseOrder: draft.baseOrder,
+      sequence: draft.sequence,
+      swaps: draft.swaps,
+      picks: draft.picks,
+      invites: draft.invites,
+      leftovers: draft.leftovers
+    };
+  }
+
   return entry;
 }
 
-async function readPlaylogState(sessionDir: string): Promise<{ nextStep: number; loggedEngineEvents: number }> {
+async function readPlaylogState(sessionDir: string): Promise<{ nextStep: number; loggedEngineEvents: number; loggedDraftIds: Set<string> }> {
   try {
     const playlogPath = path.join(sessionDir, 'playlog.jsonl');
     const content = await fs.readFile(playlogPath, 'utf-8');
@@ -582,6 +598,7 @@ async function readPlaylogState(sessionDir: string): Promise<{ nextStep: number;
 
     let maxStep = 0;
     let loggedEngineEvents = 0;
+    const loggedDraftIds = new Set<string>();
     for (const line of lines) {
       let entry: any;
       try {
@@ -595,12 +612,15 @@ async function readPlaylogState(sessionDir: string): Promise<{ nextStep: number;
       if (Array.isArray(entry.engineEvents)) {
         loggedEngineEvents += entry.engineEvents.length;
       }
+      if (entry.draft?.id) {
+        loggedDraftIds.add(entry.draft.id);
+      }
     }
 
-    return { nextStep: maxStep + 1, loggedEngineEvents };
+    return { nextStep: maxStep + 1, loggedEngineEvents, loggedDraftIds };
   } catch (error) {
     if (error instanceof Error && 'code' in error && error.code === 'ENOENT') {
-      return { nextStep: 1, loggedEngineEvents: 0 }; // File doesn't exist, start with step 1
+      return { nextStep: 1, loggedEngineEvents: 0, loggedDraftIds: new Set<string>() }; // File doesn't exist, start with step 1
     }
     throw error; // Re-throw other errors
   }

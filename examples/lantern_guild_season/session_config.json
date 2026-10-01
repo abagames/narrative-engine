@@ -1,6 +1,6 @@
 {
   "sessionName": "Lantern Guild Season",
-  "maxTurns": 14,
+  "maxTurns": 12,
   "seed": 20261001,
   "stopConditions": {
     "seasonEnd": true

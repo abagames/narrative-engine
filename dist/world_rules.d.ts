@@ -39,6 +39,10 @@ export interface CheckResult {
     rolls: number[];
     modifier: number;
     total: number;
+    bonuses?: {
+        recruit?: string;
+        item?: string;
+    };
     opposed?: {
         party: string;
         capability: string;
@@ -50,7 +54,7 @@ export interface CheckResult {
 }
 export interface EngineEvent {
     turn: number;
-    kind: 'quest_completed' | 'quest_failed' | 'quest_expired' | 'clock_triggered' | 'clock_ticked' | 'tie_break' | 'season_end' | 'quest_abandoned' | 'engine_warning';
+    kind: 'quest_completed' | 'quest_failed' | 'quest_expired' | 'clock_triggered' | 'clock_ticked' | 'tie_break' | 'season_end' | 'quest_abandoned' | 'recruit_departed' | 'recruit_lured' | 'draft_started' | 'draft_order' | 'draft_pick' | 'draft_invite' | 'draft_closed' | 'engine_warning';
     summary: string;
     questId?: string;
     clockId?: string;
@@ -67,6 +71,7 @@ export interface RuleError {
 }
 export declare const MAX_ACTIVE_QUESTS = 2;
 export declare const MAX_CHECKS_PER_RESPONSE = 2;
+export declare const MAX_RECRUITS = 2;
 export declare const SITUATIONAL_LIMIT = 1;
 export declare const MISSING_CAPABILITY_MODIFIER = -1;
 /**
@@ -76,6 +81,24 @@ export declare const MISSING_CAPABILITY_MODIFIER = -1;
 export declare function rollDice(seed: number, key: string, count?: number): number[];
 export declare function ensureSeed(world: any): number;
 export declare function capabilityModifier(party: any, capability: string): number;
+/**
+ * A party's capability for a check: its own value, raised by a hired recruit
+ * who has that capability.
+ */
+export declare function effectiveCapability(world: any, partyId: string, capability: string): {
+    value: number | undefined;
+    recruit?: string;
+};
+/** +1 when the party holds an item that aids this capability */
+export declare function itemBonus(world: any, partyId: string, capability: string): {
+    bonus: number;
+    item?: string;
+};
+export declare function checkModifier(world: any, partyId: string, capability: string): {
+    modifier: number;
+    recruit?: string;
+    item?: string;
+};
 export declare function rollCheck(world: any, check: CheckDeclaration, requestId: string, index: number): CheckResult;
 export declare function identifyActor(response: any, world: any): Actor | RuleError;
 interface PermissionContext {

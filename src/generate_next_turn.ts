@@ -1,12 +1,13 @@
 import * as fs from 'fs/promises';
 import * as path from 'path';
 import { checkStopConditions, closeSeason, runUpkeep, EngineEvent } from './world_rules.js';
-import { readRecentHistory, writeDecisionRequests } from './turn_context.js';
+import { readRecentHistory, writeDecisionRequests, writeDraftRequests } from './turn_context.js';
+import { isDraftActive, startDraft } from './draft.js';
 
 interface NextTurnResult {
   turnGenerated: number;
   requestsCreated: string[];
-  status: 'ready_for_next_turn' | 'session_complete';
+  status: 'ready_for_next_turn' | 'session_complete' | 'draft_in_progress';
   completionReason?: string;
   engineEvents?: EngineEvent[];
 }
@@ -64,6 +65,28 @@ export async function generateNextTurn(sessionId: string, targetTurn?: number): 
       throw new Error('metadata.json not found');
     }
 
+    // A draft runs inside the current turn: keep the turn, hand out the next picks,
+    // then open the action phase of the same turn once the draft has closed
+    if (worldState.phase === 'draft') {
+      const recentHistory = await readRecentHistory(sessionDir);
+      const requestsDir = path.join(workspaceDir, 'decision_requests');
+      await cleanupOldRequestFiles(workspaceDir);
+      if (isDraftActive(worldState)) {
+        return {
+          turnGenerated: worldTurnNumeric,
+          requestsCreated: await writeDraftRequests(sessionId, worldState, requestsDir, recentHistory),
+          status: 'draft_in_progress'
+        };
+      }
+      worldState.phase = 'action';
+      await fs.writeFile(worldStatePath, JSON.stringify(worldState, null, 2));
+      return {
+        turnGenerated: worldTurnNumeric,
+        requestsCreated: await writeDecisionRequests(sessionId, worldState, requestsDir, recentHistory),
+        status: 'ready_for_next_turn'
+      };
+    }
+
     // 3. Check session completion conditions
     const currentTurn = resolvedTargetTurn - 1;
 
@@ -92,9 +115,18 @@ export async function generateNextTurn(sessionId: string, targetTurn?: number): 
       };
     }
 
-    // 4. Start-of-turn upkeep: deadlines expire, clocks tick
+    // 4. Start-of-turn upkeep: deadlines expire, clocks tick, contracts of recruits end
     const engineEvents = runUpkeep(worldState, resolvedTargetTurn);
     worldState.turn = resolvedTargetTurn;
+
+    // A draft the GM prepared opens at the start of this turn
+    if (worldState.draft?.status === 'pending') {
+      const started = startDraft(worldState);
+      if (!Array.isArray(started)) {
+        throw new Error(`Cannot start draft: ${started.error}`);
+      }
+      engineEvents.push(...started);
+    }
     await fs.writeFile(worldStatePath, JSON.stringify(worldState, null, 2));
 
     // 5. Clean up old request files
@@ -102,6 +134,21 @@ export async function generateNextTurn(sessionId: string, targetTurn?: number): 
 
     // 6. Generate new decision request files
     const recentHistory = await readRecentHistory(sessionDir);
+    if (isDraftActive(worldState)) {
+      return {
+        turnGenerated: resolvedTargetTurn,
+        requestsCreated: await writeDraftRequests(
+          sessionId,
+          worldState,
+          path.join(workspaceDir, 'decision_requests'),
+          recentHistory
+        ),
+        status: 'draft_in_progress',
+        engineEvents
+      };
+    }
+    worldState.phase = 'action';
+    await fs.writeFile(worldStatePath, JSON.stringify(worldState, null, 2));
     const requestsCreated = await writeDecisionRequests(
       sessionId,
       worldState,

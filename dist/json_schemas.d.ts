@@ -183,6 +183,7 @@ export declare function validateDecisionResponse(data: any): {
     valid: boolean;
     errors: string[];
 };
+export declare function validateDraftInput(draft: any): string[];
 export declare function validateChecks(checks: any): string[];
 export declare function validateEffect(effect: any): string[];
 export declare function validateJsonSafety(jsonString: string): {

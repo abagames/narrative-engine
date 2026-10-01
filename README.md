@@ -52,6 +52,7 @@ Parties compete and cooperate over guild quests in a region graph. AI agents dec
 - **World Pressure**: Deadlines expire, progress clocks advance and trigger, failed quests escalate; consequences stand
 - **Unequal Information**: Parties see a public quest board, rough rival progress and their own (possibly false) knowledge; the GM sees everything
 - **Season & Standings**: Reputation from quests decides who is promoted at season end
+- **Draft**: Before the season and at mid-season, heroes pick contracts, recruits, unique items, intel and invitations in snake order; picks are public reactions to each other, and order can be bought with favors
 - **Regional & Social Systems**: Movement along the region graph, relationships, favors owed, NPC clients who remember; the market is optional background
 
 ### AI Agent Thinking Framework
@@ -120,6 +121,7 @@ autonomous_sessions/
 | [`append_playlog.ts`](src/append_playlog.ts)             | Record play log, add narrative               |
 | [`finalize_session.ts`](src/finalize_session.ts)         | Session completion processing, season standings |
 | [`world_rules.ts`](src/world_rules.ts)                   | Engine rules used by the tools: dice, permissions, invariants, quests, clocks |
+| [`draft.ts`](src/draft.ts)                               | Draft rules: order, favor swaps, picks, invitations, leftovers |
 | [`turn_context.ts`](src/turn_context.ts)                 | Decision request context (public quest board for parties, full board for GM) |
 
 ## 🎯 Execution Workflow

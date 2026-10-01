@@ -19,6 +19,7 @@ This repo hosts the Narrative Engine. It implements a region graph-based world w
     - `GUILD_MANAGEMENT.md` - Guild management system
     - `ALLIANCE_STRATEGY.md` - Alliance strategy
     - `QUEST_MANAGEMENT.md` - Quests and adjudication rules (world data model, checks, permissions, quest lifecycle, stop conditions)
+    - `DRAFT_SYSTEM.md` - Sequential draft before the season and at mid-season (contracts, recruits, items, intel, invitations)
     - `ACHIEVEMENT_PURSUIT.md` - Achievement pursuit system
     - `COMPETITIVE_EVENTS.md` - Competitive events
   - **Novel Generation System:**
@@ -49,6 +50,7 @@ AI coding agents must **actively consult and apply** the appropriate decision fr
 - **When individual combat occurs**: Read `prompts/INDIVIDUAL_COMBAT_SYSTEM.md` and process detailed sword and magic combat at the individual party member level
 - **For tactical decisions in combat**: Use `prompts/TACTICAL_PATTERNS.md` to select tactical patterns and determine optimal actions based on the situation
 - **For dialogue generation in combat**: Use `prompts/DIALOGUE_SYSTEM.md` to generate combat dialogue appropriate to character personalities
+- **During a draft** (`contextData.phase: "draft"`) or when preparing one as GM: Read `prompts/DRAFT_SYSTEM.md`
 - **For quests and checks**: Read `prompts/QUEST_MANAGEMENT.md`. Quests are the core of the world; declare uncertain attempts as checks and let the engine roll
 - **For social systems**: Manage guild, alliance, quest, achievement, and competitive systems using `prompts/GUILD_MANAGEMENT.md`, `prompts/ALLIANCE_STRATEGY.md`, `prompts/QUEST_MANAGEMENT.md`, `prompts/ACHIEVEMENT_PURSUIT.md`, `prompts/COMPETITIVE_EVENTS.md`
 - **For multi-party strategy**: Reference multi-party strategy, negotiation patterns, and trust management integrated in `prompts/CHARACTER_PERSONALITY_TEMPLATES.md`
@@ -80,7 +82,7 @@ AI coding agents must **actively consult and apply** the appropriate decision fr
 #### Allowed Tools
 
 - **File-based persistence tools**: `start_session.ts`, `process_ai_responses.ts`, `append_playlog.ts`, `generate_next_turn.ts`, `finalize_session.ts` are permitted for world state and play log recording
-- **Engine adjudication modules**: `world_rules.ts` (dice, permissions, invariants, quest and clock resolution) and `turn_context.ts` (decision request context) are used by the tools above. They resolve outcomes and never make GM or party decisions
+- **Engine adjudication modules**: `world_rules.ts` (dice, permissions, invariants, quest and clock resolution), `draft.ts` (draft order, picks, invitations) and `turn_context.ts` (decision request context) are used by the tools above. They resolve outcomes and never make GM or party decisions
 
 #### Forbidden Tools & Practices
 

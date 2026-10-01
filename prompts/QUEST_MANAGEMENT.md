@@ -16,7 +16,7 @@ This document defines the world's central mechanism: **parties compete and coope
 {
   "guild": {
     "name": "Lantern Guild",
-    "season": { "endsAtTurn": 12, "promotionSlots": 1 }
+    "season": { "endsAtTurn": 12, "promotionSlots": 1, "midDraftTurn": 6 }
   },
   "quests": {
     "escort_vell": {
@@ -75,6 +75,7 @@ This document defines the world's central mechanism: **parties compete and coope
 | Field | Written by | Notes |
 |---|---|---|
 | `quests/*` definition | GM | Created with `set` on `quests/<id>`. An existing quest cannot be replaced |
+| `quests/*/contract` | GM | `true`: an exclusive contract taken only in the draft (`DRAFT_SYSTEM.md`) |
 | `quests/*/offeredTo` | GM | Empty or absent: public on the board. Non-empty: a private offer that only those parties see and may accept |
 | `quests/*/acceptedBy`, `abandonedBy` | Party (itself only), GM | Max 2 active quests per party. An abandoned quest cannot be taken up again |
 | `quests/*/progress/*` | Check outcomes only | Clamped at 0 |
@@ -83,6 +84,7 @@ This document defines the world's central mechanism: **parties compete and coope
 | `parties/*/reputation` | Engine (rewards), GM | Decides the season standings |
 | `parties/*/capabilities` | GM | Basis of check modifiers |
 | `clocks/*/filled` | GM, engine | `triggered` is engine-managed |
+| `recruits/*`, `items/*`, `intel/*`, `draft` | GM (draft picks: engine) | See `DRAFT_SYSTEM.md`. Recruits raise check capabilities; items give +1 |
 | `rng`, `checkLog`, `chronicle`, `guild/standings`, `guild/promoted` | Engine | Read-only for AI agents |
 
 ## 🎲 Checks

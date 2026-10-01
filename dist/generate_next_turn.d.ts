@@ -2,7 +2,7 @@ import { EngineEvent } from './world_rules.js';
 interface NextTurnResult {
     turnGenerated: number;
     requestsCreated: string[];
-    status: 'ready_for_next_turn' | 'session_complete';
+    status: 'ready_for_next_turn' | 'session_complete' | 'draft_in_progress';
     completionReason?: string;
     engineEvents?: EngineEvent[];
 }

@@ -1,6 +1,7 @@
 import * as fs from 'fs/promises';
 import * as path from 'path';
-import { capabilityModifier, computeStandings, isOfferedTo, MAX_ACTIVE_QUESTS } from './world_rules.js';
+import { checkModifier, computeStandings, isOfferedTo, MAX_ACTIVE_QUESTS } from './world_rules.js';
+import { currentDraftActors, publicDraftView, DraftMode } from './draft.js';
 
 export interface DecisionRequest {
   requestId: string;
@@ -25,7 +26,92 @@ const PLAYER_INSTRUCTIONS =
   '行動の目的は依頼（quests）の達成です。依頼の進捗・妨害・秘密の調査はchecksで成功/部分成功/失敗の結果を事前に宣言し、' +
   'ダイス判定はエンジンに任せてください。guildBoardに見えない情報（他依頼との衝突・依頼主の真意）は知らない前提で判断してください';
 
+const DRAFT_INSTRUCTIONS: Record<DraftMode, string> = {
+  order:
+    'ドラフトの指名順を決める段階です。自分が貸しを持つ相手（favors）より後に指名する場合、proposal.draft.swap.favorIdでその貸しを使い、順番を入れ替えられます。' +
+    '使わない場合はproposal.draftを空オブジェクトにしてください。DRAFT_SYSTEM.mdを参照してください',
+  pick:
+    'ドラフトであなたの指名番です。draft.poolから1つ選び、proposal.draft.pickに書いてください（contract/recruit/item/intel/invite/pass）。' +
+    'これまでの指名（draft.picksSoFar）と競合相手の状況（rivals）を読み、自分にとっての価値と相手に渡した場合の損失を比べてください。' +
+    '自分宛ての誘い（draft.invitesForYou）があれば、proposal.draft.respondで先に答えてください。受けるとこの指名を使います。DRAFT_SYSTEM.mdを参照してください',
+  answer:
+    'ドラフトの指名は終わりました。自分宛ての誘い（draft.invitesForYou）に、proposal.draft.respondで受諾か辞退を答えてください。DRAFT_SYSTEM.mdを参照してください'
+};
+
 const ACTIVE_STATUSES = ['open', 'accepted'];
+
+/**
+ * Writes requests for the parties that must act in the draft right now.
+ */
+export async function writeDraftRequests(
+  sessionId: string,
+  worldState: any,
+  requestsDir: string,
+  recentHistory: any[]
+): Promise<string[]> {
+  const requestsCreated: string[] = [];
+  const timestamp = new Date().toISOString();
+  await fs.mkdir(requestsDir, { recursive: true });
+
+  for (const { party: partyId, mode } of currentDraftActors(worldState)) {
+    const party = worldState.parties[partyId];
+    const requestId = `request_${partyId}_${Date.now() + Math.floor(Math.random() * 1000)}`;
+    const base = generatePartyContextData(partyId, party, worldState, recentHistory);
+    const request: DecisionRequest = {
+      requestId,
+      timestamp,
+      sessionId,
+      worldStateFile: `../sessions/${sessionId}/world_current.json`,
+      framework: { role: 'Player', actorId: partyId },
+      contextData: {
+        phase: 'draft',
+        draftMode: mode,
+        draft: publicDraftView(worldState, partyId),
+        partyState: base.partyState,
+        checkModifiers: base.checkModifiers,
+        guildBoard: base.guildBoard,
+        activeQuests: base.activeQuests,
+        questSlotsFree: base.questSlotsFree,
+        recruits: base.recruits,
+        heldItems: base.heldItems,
+        favors: base.favors,
+        standings: base.standings,
+        seasonEndsAtTurn: base.seasonEndsAtTurn,
+        rivals: describeRivals(partyId, worldState),
+        availableActions: ['draft']
+      },
+      instructions: DRAFT_INSTRUCTIONS[mode]
+    };
+    const fileName = `${requestId}.json`;
+    await fs.writeFile(path.join(requestsDir, fileName), JSON.stringify(request, null, 2));
+    requestsCreated.push(fileName);
+  }
+
+  return requestsCreated;
+}
+
+/** What a party can see about its rivals during the draft */
+function describeRivals(partyId: string, worldState: any): any[] {
+  return Object.entries<any>(worldState.parties || {})
+    .filter(([id]) => id !== partyId)
+    .map(([id, rival]) => ({
+      id,
+      name: rival.name,
+      location: rival.location,
+      reputation: rival.reputation || 0,
+      goals: rival.goals,
+      capabilities: rival.capabilities,
+      activeQuests: Object.values<any>(worldState.quests || {})
+        .filter(q => ACTIVE_STATUSES.includes(q.status) && (q.acceptedBy || []).includes(id) && isOfferedTo(q, partyId))
+        .map(q => q.id),
+      recruits: Object.values<any>(worldState.recruits || {})
+        .filter(r => r.status === 'hired' && r.hiredBy === id)
+        .map(r => ({ id: r.id, name: r.name, role: r.role })),
+      heldItems: Object.values<any>(worldState.items || {})
+        .filter(i => i.heldBy === id)
+        .map(i => ({ id: i.id, name: i.name }))
+    }));
+}
 
 export async function writeDecisionRequests(
   sessionId: string,
@@ -86,13 +172,21 @@ export function generateGMContextData(worldState: any, recentHistory: any[]): Re
       totalParties: Object.keys(worldState.parties || {}).length,
       activeRegions: Object.keys(worldState.regions || {}).length,
       partyDistribution,
-      seasonEndsAtTurn: worldState.guild?.season?.endsAtTurn
+      seasonEndsAtTurn: worldState.guild?.season?.endsAtTurn,
+      // Facts for the GM: a mid-season draft is scheduled for next turn and has no pool yet
+      draftDueNextTurn:
+        worldState.guild?.season?.midDraftTurn === (Number(worldState.turn) || 0) + 1 &&
+        worldState.draft?.status !== 'pending'
     },
     questBoard: summarizeQuestBoardForGM(worldState),
     clocks: Object.values<any>(worldState.clocks || {}),
     standings: computeStandings(worldState),
     favors: Object.entries<any>(worldState.favors || {}).map(([id, f]) => ({ id, ...f })),
     npcs: worldState.npcs || {},
+    recruits: worldState.recruits || {},
+    items: worldState.items || {},
+    intel: worldState.intel || {},
+    draft: worldState.draft ? { ...worldState.draft, midSeasonDraftTurn: worldState.guild?.season?.midDraftTurn } : { midSeasonDraftTurn: worldState.guild?.season?.midDraftTurn },
     openThreads: summarizeThreads(worldState),
     recentChecks: (worldState.checkLog || []).slice(-8),
     recentEngineEvents: (worldState.chronicle || []).slice(-8),
@@ -105,7 +199,8 @@ export function generateGMContextData(worldState: any, recentHistory: any[]): Re
       'reveal_secret',
       'environmental_change',
       'discovery_event',
-      'weather_change'
+      'weather_change',
+      'prepare_draft'
     ],
     recentHistory: recentHistory.slice(-10)
   };
@@ -236,6 +331,7 @@ function publicQuestView(quest: any, partyId: string): Record<string, any> {
     )
   };
   if (quest.type === 'joint') view.minParties = quest.minParties ?? 2;
+  if (quest.contract) view.contract = true;
   if (quest.secret && (quest.secret.revealedTo || []).includes(partyId)) {
     view.secret = quest.secret.truth;
   }
@@ -271,8 +367,20 @@ export function generatePartyContextData(
       flaws: party.flaws
     },
     checkModifiers: Object.fromEntries(
-      Object.keys(party.capabilities || {}).map(c => [c, capabilityModifier(party, c)])
+      [...new Set([
+        ...Object.keys(party.capabilities || {}),
+        ...Object.values<any>(worldState.recruits || {})
+          .filter(r => r.status === 'hired' && r.hiredBy === partyId)
+          .flatMap(r => Object.keys(r.grants?.capabilities || {}))
+      ])].map(c => [c, checkModifier(worldState, partyId, c).modifier])
     ),
+    recruits: Object.values<any>(worldState.recruits || {})
+      .filter(r => r.status === 'hired' && r.hiredBy === partyId)
+      .map(r => {
+        const { leavesIf, ifUnhired, rivalEmployer, ...visible } = r;
+        return visible;
+      }),
+    heldItems: Object.values<any>(worldState.items || {}).filter(i => i.heldBy === partyId),
     guildBoard: board.map(q => publicQuestView(q, partyId)),
     activeQuests: mine.map(q => q.id),
     questSlotsFree: Math.max(0, MAX_ACTIVE_QUESTS - mine.length),

@@ -1,7 +1,8 @@
 import * as fs from 'fs/promises';
 import * as path from 'path';
 import { validateDecisionResponse, validateJsonSafety } from './json_schemas.js';
-import { executeResponse, resolveQuests, checkStopConditions } from './world_rules.js';
+import { executeResponse, identifyActor, resolveQuests, checkStopConditions } from './world_rules.js';
+import { isDraftActive, validateDraftResponse, applyDraftResponse } from './draft.js';
 export async function processAiResponses(sessionId) {
     const AUTONOMOUS_SESSIONS_DIR = process.env.AUTONOMOUS_SESSIONS_DIR || './autonomous_sessions';
     const sessionDir = path.join(AUTONOMOUS_SESSIONS_DIR, 'sessions', sessionId);
@@ -38,6 +39,7 @@ export async function processAiResponses(sessionId) {
         }
         const processedFiles = [];
         let hasSuccessfulActions = false;
+        const draftAtStart = isDraftActive(worldState);
         // 2. Process each response file independently
         for (const filename of jsonFiles) {
             let partyId;
@@ -53,7 +55,17 @@ export async function processAiResponses(sessionId) {
                     continue;
                 }
                 // 4. Execute action with isolation (all-or-nothing, dice rolled by the engine)
-                const actionResult = executeResponse(responseData, worldState);
+                const draftError = checkDraftPreconditions(responseData, worldState);
+                const actionResult = draftError
+                    ? { success: false, error: draftError.error, details: draftError.details, checks: [], actor: undefined }
+                    : executeResponse(responseData, worldState);
+                if (actionResult.success && isDraftActive(worldState)) {
+                    const llm = responseData.meta?.llmDecision || {};
+                    result.engineEvents.push(...applyDraftResponse(worldState, actionResult.actor.partyId, responseData.proposal.draft, {
+                        reasoning: llm.selectedAction?.reasoning,
+                        voices: llm.character_voices
+                    }));
+                }
                 if (actionResult.success) {
                     result.actionsExecuted++;
                     hasSuccessfulActions = true;
@@ -102,7 +114,9 @@ export async function processAiResponses(sessionId) {
         }
         // 5. Resolve quests and clocks once all of this turn's actions are in, then save
         if (hasSuccessfulActions) {
-            result.engineEvents = resolveQuests(worldState);
+            if (!draftAtStart) {
+                result.engineEvents.push(...resolveQuests(worldState));
+            }
             await fs.writeFile(worldStatePath, JSON.stringify(worldState, null, 2));
         }
         // 6. Handle failed decision files
@@ -127,6 +141,9 @@ export async function processAiResponses(sessionId) {
         result.partiallySuccessful = hasSuccessfulActions && result.errors.length > 0;
         if (result.criticalErrorCount > 0) {
             result.nextStatus = 'error_abort';
+        }
+        else if (draftAtStart && result.errors.length === 0) {
+            result.nextStatus = isDraftActive(worldState) ? 'draft_in_progress' : 'draft_completed';
         }
         else if (result.errors.length > 0 && !hasSuccessfulActions) {
             result.nextStatus = 'error';
@@ -211,6 +228,24 @@ if (import.meta.url === `file://${process.argv[1]}`) {
         console.error('Stack trace:', error.stack);
         process.exit(1);
     });
+}
+/**
+ * During a draft only draft responses from the parties whose turn it is are
+ * accepted, and no checks are rolled. Outside a draft, draft responses are refused.
+ */
+function checkDraftPreconditions(response, worldState) {
+    const draftInput = response.proposal.draft;
+    if (!isDraftActive(worldState)) {
+        return draftInput ? { error: 'No draft is in progress; remove proposal.draft' } : null;
+    }
+    const actor = identifyActor(response, worldState);
+    if ('error' in actor)
+        return actor;
+    if (actor.role !== 'Player')
+        return { error: 'The GM does not act during the draft' };
+    if ((response.proposal.checks || []).length > 0)
+        return { error: 'No checks are rolled during the draft' };
+    return validateDraftResponse(worldState, actor.partyId, draftInput);
 }
 async function readAndValidateResponse(filePath) {
     let content;

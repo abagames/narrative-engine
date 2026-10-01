@@ -144,6 +144,8 @@ Read from `contextData`:
 | `move` | Move to an adjacent region |
 | `rest` | Recover morale |
 
+During a draft (`contextData.phase: "draft"`), follow `DRAFT_SYSTEM.md` instead of the action types above.
+
 ### Additional Evaluation Axes (add to class axes, 0-10 each)
 ```
 Quest Value: reward weighed against the gap to the standings leader and the turns left

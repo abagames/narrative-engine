@@ -189,10 +189,47 @@ export function validateDecisionResponse(data) {
             });
         }
     }
+    if (data.proposal && data.proposal.draft !== undefined) {
+        validateDraftInput(data.proposal.draft).forEach((error) => errors.push(error));
+    }
     if (data.proposal && data.proposal.checks !== undefined) {
         validateChecks(data.proposal.checks).forEach((error) => errors.push(error));
     }
     return { valid: errors.length === 0, errors };
+}
+export function validateDraftInput(draft) {
+    const errors = [];
+    if (!draft || typeof draft !== "object" || Array.isArray(draft)) {
+        return ["proposal.draft must be an object"];
+    }
+    if (draft.pick !== undefined) {
+        const kinds = ["contract", "recruit", "item", "intel", "invite", "pass"];
+        if (!draft.pick || !kinds.includes(draft.pick.kind)) {
+            errors.push(`proposal.draft.pick.kind must be one of ${kinds.join(", ")}`);
+        }
+        else if (draft.pick.kind !== "pass" && typeof draft.pick.id !== "string") {
+            errors.push("proposal.draft.pick.id is required");
+        }
+        if (draft.pick?.kind === "invite" && typeof draft.pick.target !== "string") {
+            errors.push("proposal.draft.pick.target (the invited party) is required for invitations");
+        }
+    }
+    if (draft.respond !== undefined) {
+        if (!Array.isArray(draft.respond)) {
+            errors.push("proposal.draft.respond must be an array");
+        }
+        else {
+            draft.respond.forEach((answer, index) => {
+                if (!answer || typeof answer.inviteId !== "string" || typeof answer.accept !== "boolean") {
+                    errors.push(`proposal.draft.respond[${index}] needs inviteId (string) and accept (boolean)`);
+                }
+            });
+        }
+    }
+    if (draft.swap !== undefined && (!draft.swap || typeof draft.swap.favorId !== "string")) {
+        errors.push("proposal.draft.swap.favorId must be a string");
+    }
+    return errors;
 }
 export function validateChecks(checks) {
     const errors = [];

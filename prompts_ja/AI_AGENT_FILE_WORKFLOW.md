@@ -238,7 +238,7 @@ strategicConsiderations = {
   },
   "guild": {
     "name": "[ギルド名]",
-    "season": { "endsAtTurn": "[シーズン最終ターン]", "promotionSlots": 1 }
+    "season": { "endsAtTurn": "[シーズン最終ターン]", "promotionSlots": 1, "midDraftTurn": "[任意: 中盤ドラフトのターン]" }
   },
   "npcs": {
     "[npc_id]": { "name": "[NPC名]", "wants": "[NPCが望むもの]", "disposition": {}, "memory": [] }
@@ -266,6 +266,10 @@ strategicConsiderations = {
   },
   "favors": {},
   "threads": {},
+  "recruits": { "[recruit_id]": { "name": "[名前]", "role": "[役割]", "grants": { "capabilities": { "[能力]": 8 } }, "term": 4, "wants": "[望むもの]" } },
+  "items": { "[item_id]": { "name": "[名前]", "bonus": { "capability": "[能力]", "amount": 1 } } },
+  "intel": { "[intel_id]": { "title": "[公開される題名]", "fact": { "text": "[買った者が知ること]", "truth": true } } },
+  "draft": "[任意のシーズン開始ドラフト: { status: 'pending', picksPerParty: 2, pool: { contracts, recruits, items, intel, invites } } — DRAFT_SYSTEM.md参照]",
   "market": "[任意: { currentPrices: {...}, priceHistory: [], completedTrades: [] }]",
   "relationships": {
     "[party1_id]__[party2_id]": {
@@ -629,6 +633,10 @@ AUTONOMOUS_SESSIONS_DIR=./custom_sessions npx tsx src/start_session.ts custom_se
 - `nextStatus: "partial_success"`: **失敗した決定を修正して再実行**（適用済みの応答はスキップされる）→ 修正すべきものがなくなったら**そのターンのプレイログを1件作成・追記** → 次ターンを生成
 - `nextStatus: "turn_completed"`: **プレイログを作成・追記** → **次ターンの決定要求を生成**
 - `nextStatus: "completed"`: **最終プレイログを作成・追記** → Phase 5（ナラティブリプレイ生成）へ
+- `nextStatus: "draft_in_progress"`: ドラフトが続いている。**プレイログは追記しない**。`generate_next_turn.ts`を実行し、次の指名者のリクエストを生成する（ターンは進まない）
+- `nextStatus: "draft_completed"`: **ドラフト全体のプレイログを1件作成・追記する**（エントリには全指名と理由・台詞を含む`draft`セクションが付く）→ `generate_next_turn.ts`を実行し、同じターンの行動フェイズを開く
+
+**ドラフトフェイズ**（`DRAFT_SYSTEM.md`）: リクエストの`contextData.phase`が`"draft"`のときは、番が来たパーティー（通常1つ）だけにリクエストが届き、応答には`proposal.draft`を使う。ドラフト中、GMにはリクエストが来ない。
 
 ### Phase 4: プレイログ作成・追記
 

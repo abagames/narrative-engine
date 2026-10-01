@@ -385,7 +385,7 @@ function isEqual(a, b) {
 }
 async function generateCompletePlaylogEntry(turnPlaylog, decisionResponse, responses, currentWorldState, worldStateDiff, sessionDir) {
     // Get next step number and how many engine events were already logged
-    const { nextStep, loggedEngineEvents } = await readPlaylogState(sessionDir);
+    const { nextStep, loggedEngineEvents, loggedDraftIds } = await readPlaylogState(sessionDir);
     const actions = responses.map(toPlaylogAction);
     const chronicle = Array.isArray(currentWorldState.chronicle) ? currentWorldState.chronicle : [];
     // Get actor from decision response
@@ -407,6 +407,20 @@ async function generateCompletePlaylogEntry(turnPlaylog, decisionResponse, respo
         worldStateDiff,
         worldStateSnapshot: './world_current.json'
     };
+    // A finished draft is logged once, in the entry that follows it
+    const draft = currentWorldState.draft;
+    if (draft?.status === 'closed' && draft.id && !loggedDraftIds.has(draft.id)) {
+        entry.draft = {
+            id: draft.id,
+            label: draft.label,
+            baseOrder: draft.baseOrder,
+            sequence: draft.sequence,
+            swaps: draft.swaps,
+            picks: draft.picks,
+            invites: draft.invites,
+            leftovers: draft.leftovers
+        };
+    }
     return entry;
 }
 async function readPlaylogState(sessionDir) {
@@ -416,6 +430,7 @@ async function readPlaylogState(sessionDir) {
         const lines = content.trim().split('\n').filter(line => line);
         let maxStep = 0;
         let loggedEngineEvents = 0;
+        const loggedDraftIds = new Set();
         for (const line of lines) {
             let entry;
             try {
@@ -430,12 +445,15 @@ async function readPlaylogState(sessionDir) {
             if (Array.isArray(entry.engineEvents)) {
                 loggedEngineEvents += entry.engineEvents.length;
             }
+            if (entry.draft?.id) {
+                loggedDraftIds.add(entry.draft.id);
+            }
         }
-        return { nextStep: maxStep + 1, loggedEngineEvents };
+        return { nextStep: maxStep + 1, loggedEngineEvents, loggedDraftIds };
     }
     catch (error) {
         if (error instanceof Error && 'code' in error && error.code === 'ENOENT') {
-            return { nextStep: 1, loggedEngineEvents: 0 }; // File doesn't exist, start with step 1
+            return { nextStep: 1, loggedEngineEvents: 0, loggedDraftIds: new Set() }; // File doesn't exist, start with step 1
         }
         throw error; // Re-throw other errors
     }

@@ -9,6 +9,7 @@
  */
 export const MAX_ACTIVE_QUESTS = 2;
 export const MAX_CHECKS_PER_RESPONSE = 2;
+export const MAX_RECRUITS = 2;
 export const SITUATIONAL_LIMIT = 1;
 export const MISSING_CAPABILITY_MODIFIER = -1;
 // Paths only the engine may write. `*` matches exactly one path segment.
@@ -25,7 +26,11 @@ const ENGINE_ONLY_PATHS = [
     'quests/*/progress/*',
     'clocks/*/triggered',
     'guild/standings',
-    'guild/promoted'
+    'guild/promoted',
+    'phase',
+    'draft/*',
+    'draft/*/*',
+    'recruits/*/hiredUntilTurn'
 ];
 // ---------------------------------------------------------------------------
 // Deterministic dice
@@ -74,6 +79,38 @@ export function capabilityModifier(party, capability) {
     }
     return Math.max(-2, Math.min(2, Math.round((value - 5) / 2.5)));
 }
+/**
+ * A party's capability for a check: its own value, raised by a hired recruit
+ * who has that capability.
+ */
+export function effectiveCapability(world, partyId, capability) {
+    const own = world.parties?.[partyId]?.capabilities?.[capability];
+    let best = { value: typeof own === 'number' ? own : undefined };
+    for (const [id, recruit] of Object.entries(world.recruits || {})) {
+        if (recruit.status !== 'hired' || recruit.hiredBy !== partyId)
+            continue;
+        const granted = recruit.grants?.capabilities?.[capability];
+        if (typeof granted === 'number' && (best.value === undefined || granted > best.value)) {
+            best = { value: granted, recruit: id };
+        }
+    }
+    return best;
+}
+/** +1 when the party holds an item that aids this capability */
+export function itemBonus(world, partyId, capability) {
+    for (const [id, item] of Object.entries(world.items || {})) {
+        if (item.heldBy === partyId && item.bonus?.capability === capability) {
+            return { bonus: Math.max(0, Math.min(1, Number(item.bonus.amount ?? 1))), item: id };
+        }
+    }
+    return { bonus: 0 };
+}
+export function checkModifier(world, partyId, capability) {
+    const cap = effectiveCapability(world, partyId, capability);
+    const base = capabilityModifier({ capabilities: { [capability]: cap.value } }, capability);
+    const item = itemBonus(world, partyId, capability);
+    return { modifier: base + item.bonus, recruit: cap.recruit, item: item.item };
+}
 function sum(values) {
     return values.reduce((a, b) => a + b, 0);
 }
@@ -81,9 +118,9 @@ export function rollCheck(world, check, requestId, index) {
     const seed = ensureSeed(world);
     const turn = Number(world.turn) || 0;
     const situational = Math.max(-SITUATIONAL_LIMIT, Math.min(SITUATIONAL_LIMIT, check.situational ?? 0));
-    const actorParty = world.parties?.[check.actor];
     const rolls = rollDice(seed, `t${turn}:${check.actor}:c${index}`);
-    const modifier = capabilityModifier(actorParty, check.capability) + situational;
+    const actorMod = checkModifier(world, check.actor, check.capability);
+    const modifier = actorMod.modifier + situational;
     const total = sum(rolls) + modifier;
     const result = {
         id: check.id,
@@ -97,10 +134,12 @@ export function rollCheck(world, check, requestId, index) {
         total,
         outcome: 'failure'
     };
+    if (actorMod.recruit || actorMod.item) {
+        result.bonuses = { recruit: actorMod.recruit, item: actorMod.item };
+    }
     if (check.opposedBy) {
-        const opponent = world.parties?.[check.opposedBy.party];
         const oppRolls = rollDice(seed, `t${turn}:${check.opposedBy.party}:vs:${check.actor}:c${index}`);
-        const oppModifier = capabilityModifier(opponent, check.opposedBy.capability);
+        const oppModifier = checkModifier(world, check.opposedBy.party, check.opposedBy.capability).modifier;
         const oppTotal = sum(oppRolls) + oppModifier;
         result.opposed = {
             party: check.opposedBy.party,
@@ -191,6 +230,19 @@ function denied(effect, reason) {
     };
 }
 function checkGmPermission(parts, effect, world, ctx) {
+    if (parts[0] === 'draft') {
+        const status = world.draft?.status;
+        if (status && status !== 'pending' && status !== 'closed') {
+            return denied(effect, 'the draft is in progress');
+        }
+        if (parts.length === 1 || (parts.length === 2 && effect.operation === 'set')) {
+            return null;
+        }
+        if (parts[1] === 'pool' || ['picksPerParty', 'id', 'status', 'label'].includes(parts[1])) {
+            return null;
+        }
+        return denied(effect, 'only the draft setup (id, label, picksPerParty, pool, status) can be written');
+    }
     if (isEngineOnly(parts)) {
         // Quest progress is earned through checks only, even for checks the GM imposes on a party
         if (ctx.viaCheck && parts[0] === 'quests' && parts[2] === 'progress' && parts.length === 4) {
@@ -266,6 +318,9 @@ function checkPlayerPermission(partyId, parts, effect, world, ctx) {
             if (!isOfferedTo(quest, partyId)) {
                 return denied(effect, `quest ${id} was not offered to ${partyId}`);
             }
+            if (quest.contract) {
+                return denied(effect, `quest ${id} is a contract; contracts are taken in the draft`);
+            }
             return null;
         }
         if (field === 'abandonedBy' && parts.length === 3) {
@@ -317,6 +372,31 @@ function checkPlayerPermission(partyId, parts, effect, world, ctx) {
         }
         return denied(effect, 'unsupported favor operation');
     }
+    if (root === 'recruits' && field === 'hiredBy' && parts.length === 3) {
+        const recruit = world.recruits?.[id];
+        if (!recruit || recruit.status !== 'hired')
+            return denied(effect, `recruit ${id} is not employed`);
+        if (effect.operation !== 'set' || effect.value !== partyId) {
+            return denied(effect, 'a party may only lure a recruit to itself');
+        }
+        if (!ctx.viaCheck || opposed !== recruit.hiredBy) {
+            return denied(effect, 'luring a recruit away requires a check opposed by the current employer');
+        }
+        return null;
+    }
+    if (root === 'items' && field === 'heldBy' && parts.length === 3) {
+        const item = world.items?.[id];
+        if (!item)
+            return denied(effect, `item ${id} does not exist`);
+        if (effect.operation !== 'set' || typeof effect.value !== 'string' || !world.parties?.[effect.value]) {
+            return denied(effect, 'heldBy must be set to a party id');
+        }
+        if (item.heldBy === partyId)
+            return null; // giving away one's own item
+        if (effect.value === partyId && ctx.viaCheck && opposed === item.heldBy)
+            return null; // taking it
+        return denied(effect, 'an item changes hands only when its holder gives it, or through a check opposed by the holder');
+    }
     if (root === 'regions' && field === 'influence' && sub === partyId && parts.length === 4) {
         if (!ctx.viaCheck)
             return denied(effect, 'influence is earned through a check outcome');
@@ -358,7 +438,7 @@ export function applyEffect(effect, world) {
                 };
             }
             // Top-level collections introduced by the quest system are created on demand
-            if (i === 0 && ['quests', 'clocks', 'favors', 'npcs', 'threads', 'guild'].includes(key)) {
+            if (i === 0 && ['quests', 'clocks', 'favors', 'npcs', 'threads', 'guild', 'recruits', 'items', 'intel', 'draft'].includes(key)) {
                 current[key] = {};
             }
             else {
@@ -470,6 +550,15 @@ export function normalizeWorld(world) {
     }
     world.favors = world.favors || {};
     world.npcs = world.npcs || {};
+    world.recruits = world.recruits || {};
+    for (const [id, recruit] of Object.entries(world.recruits)) {
+        world.recruits[id] = { id, status: 'available', term: 4, ...recruit };
+    }
+    world.items = world.items || {};
+    for (const [id, item] of Object.entries(world.items)) {
+        world.items[id] = { id, status: item.heldBy ? 'held' : 'available', ...item };
+    }
+    world.intel = world.intel || {};
     world.threads = world.threads || {};
     world.checkLog = Array.isArray(world.checkLog) ? world.checkLog : [];
     world.chronicle = Array.isArray(world.chronicle) ? world.chronicle : [];
@@ -539,6 +628,25 @@ export function enforceInvariants(before, draft, actor) {
             }
         }
         syncOccupancy(draft, partyId, prev.location, party.location);
+    }
+    // Recruits: track who lured whom, and cap how many a party can employ
+    for (const [recruitId, recruit] of Object.entries(draft.recruits)) {
+        const prevEmployer = before.recruits?.[recruitId]?.hiredBy;
+        if (recruit.status === 'hired' && prevEmployer && recruit.hiredBy !== prevEmployer) {
+            draft.chronicle.push({
+                turn,
+                kind: 'recruit_lured',
+                parties: [recruit.hiredBy, prevEmployer],
+                summary: `${recruit.name || recruitId} leaves ${prevEmployer} for ${recruit.hiredBy}`
+            });
+        }
+    }
+    for (const partyId of Object.keys(draft.parties || {})) {
+        const employed = Object.values(draft.recruits).filter(r => r.status === 'hired' && r.hiredBy === partyId).length;
+        const before_ = Object.values(before.recruits || {}).filter(r => r.status === 'hired' && r.hiredBy === partyId).length;
+        if (employed > MAX_RECRUITS && employed > before_) {
+            return { error: `Recruit limit exceeded: ${partyId} may employ at most ${MAX_RECRUITS} recruits`, details: { partyId } };
+        }
     }
     // Quest acceptance rules
     for (const [questId, quest] of Object.entries(draft.quests)) {
@@ -897,6 +1005,19 @@ export function runUpkeep(world, turn) {
     for (const quest of Object.values(world.quests)) {
         if ((quest.status === 'open' || quest.status === 'accepted') && typeof quest.deadlineTurn === 'number' && quest.deadlineTurn < turn) {
             failQuest(world, quest, 'quest_expired', `deadline (turn ${quest.deadlineTurn}) passed`, events);
+        }
+    }
+    for (const [recruitId, recruit] of Object.entries(world.recruits)) {
+        if (recruit.status === 'hired' && typeof recruit.hiredUntilTurn === 'number' && recruit.hiredUntilTurn < turn) {
+            events.push({
+                turn,
+                kind: 'recruit_departed',
+                parties: [recruit.hiredBy],
+                summary: `${recruit.name || recruitId} leaves ${recruit.hiredBy} as the contract ends`
+            });
+            recruit.status = 'departed';
+            recruit.formerEmployer = recruit.hiredBy;
+            delete recruit.hiredBy;
         }
     }
     for (const [clockId, clock] of Object.entries(world.clocks)) {

@@ -238,7 +238,7 @@ strategicConsiderations = {
   },
   "guild": {
     "name": "[Guild name]",
-    "season": { "endsAtTurn": "[Last turn of the season]", "promotionSlots": 1 }
+    "season": { "endsAtTurn": "[Last turn of the season]", "promotionSlots": 1, "midDraftTurn": "[Optional: turn of the mid-season draft]" }
   },
   "npcs": {
     "[npc_id]": { "name": "[NPC name]", "wants": "[What the NPC wants]", "disposition": {}, "memory": [] }
@@ -266,6 +266,10 @@ strategicConsiderations = {
   },
   "favors": {},
   "threads": {},
+  "recruits": { "[recruit_id]": { "name": "[Name]", "role": "[Role]", "grants": { "capabilities": { "[capability]": 8 } }, "term": 4, "wants": "[What they want]" } },
+  "items": { "[item_id]": { "name": "[Name]", "bonus": { "capability": "[capability]", "amount": 1 } } },
+  "intel": { "[intel_id]": { "title": "[Public title]", "fact": { "text": "[What the buyer learns]", "truth": true } } },
+  "draft": "[Optional season-start draft: { status: 'pending', picksPerParty: 2, pool: { contracts, recruits, items, intel, invites } } — see DRAFT_SYSTEM.md]",
   "market": "[Optional: { currentPrices: {...}, priceHistory: [], completedTrades: [] }]",
   "relationships": {
     "[party1_id]__[party2_id]": {
@@ -629,6 +633,10 @@ AUTONOMOUS_SESSIONS_DIR=./custom_sessions npx tsx src/start_session.ts custom_se
 - `nextStatus: "partial_success"`: **Fix and re-execute failed decisions** (already applied responses are skipped) → when nothing is left to fix, **create and append one playlog entry for the turn** → generate next turn
 - `nextStatus: "turn_completed"`: **Create and append playlog** → **Generate next turn decision requests**
 - `nextStatus: "completed"`: **Create and append final playlog** → Proceed to Phase 5 (Narrative Replay Generation)
+- `nextStatus: "draft_in_progress"`: The draft continues. **Do not append a playlog**; run `generate_next_turn.ts` for the next picker's request (the turn does not advance)
+- `nextStatus: "draft_completed"`: **Create and append one playlog entry for the whole draft** (the entry gets a `draft` section with every pick, its reasoning and voices) → run `generate_next_turn.ts` to open the action phase of the same turn
+
+**Draft phase** (`DRAFT_SYSTEM.md`): when a request has `contextData.phase: "draft"`, only the parties whose turn it is receive requests (usually one), and their responses use `proposal.draft`. The GM receives no request during a draft.
 
 ### Phase 4: Playlog Creation and Appending
 

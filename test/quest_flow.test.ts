@@ -309,7 +309,8 @@ describe('quest-driven turn flow (integration)', () => {
       'examples/lantern_guild_season/session_config.json'
     );
     expect(result.status).toBe('ready');
-    expect(result.firstTurnRequests).toHaveLength(4);
+    // The example opens with a draft: one request, for the first picker
+    expect(result.firstTurnRequests).toHaveLength(1);
   });
 
   it('rejects worlds whose quests reference unknown regions', async () => {
