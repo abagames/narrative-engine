@@ -1,5 +1,7 @@
 # DIALOGUE_SYSTEM.md - Character Dialogue System
 
+> Lines are chosen by the writer to match the situation; the code-like examples below illustrate style, not a random generator. "HP crisis" means a party carrying conditions or a member named in one. Dialogue follows the check result; it never changes it.
+
 ## 🗣 Character-Specific Speaking Styles and Vocabulary
 
 ### Speaking Patterns Based on Basic Personality

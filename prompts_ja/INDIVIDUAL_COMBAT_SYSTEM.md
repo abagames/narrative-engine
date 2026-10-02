@@ -1,265 +1,82 @@
-# Individual Combat System - 個人戦闘システムフレームワーク
+# Individual Combat System - 戦闘は判定で決め、一撃ずつ描く
 
-**目的**: パーティメンバー個人レベルでの詳細な戦闘処理を行い、剣と魔法のやり取りを完全に記録する。
+**目的**: 戦闘の結果はエンジンの判定で決まる。描写はパーティーメンバー個人の単位で行う。剣の一振り、呪文、傷のすべてを書き、そのすべてをダイスの結果と一致させる。
 
-## 🗡️ パーティメンバー戦闘定義
+この文書にHP、ダメージロール、ランダム要素はない。戦闘の勝敗を自分で計算すれば、振っていない結果を決めたことになる。
 
-### 基本戦闘プロファイル
-```typescript
-interface CombatMember {
-  id: string;                    // "iron_wolves.kael", "silk_merchants.zara"
-  name: string;                  // "Kael the Bold", "Zara Shadowblade"
-  class: 'Fighter' | 'Wizard' | 'Rogue' | 'Cleric';
-  level: number;                 // 1-10
+## ⚔️ ロールの前: 戦闘を宣言する
 
-  // 戦闘ステータス
-  hp: { current: number; max: number };
-  stats: {
-    attack: number;              // 物理攻撃力 (1-20)
-    defense: number;             // 物理防御力 (1-20)
-    magic: number;               // 魔法攻撃力 (1-20)
-    resistance: number;          // 魔法抵抗力 (1-20)
-    speed: number;               // 行動順序 (1-20)
-    accuracy: number;            // 命中率 (1-20)
-  };
+戦闘は**check**である（`QUEST_MANAGEMENT.md`）。他のcheckと同じように宣言する:
 
-  // 装備
-  equipment: {
-    weapon: CombatWeapon;
-    armor: CombatArmor;
-    accessories?: CombatAccessory[];
-  };
+| 状況 | check |
+|---|---|
+| パーティー対NPC・獣・蘇った死者 | パーティーの非対抗check（`capability: "combat"`、またはやり方に応じた能力）。GMが課すこともある |
+| パーティー対パーティー | 対抗check。`opposedBy`は相手のパーティー |
+| 同じ2パーティーの、依頼をめぐる3度目の衝突 | 決着戦（エンジンの規則）: 部分成功なし。勝者は自分の依頼の進捗+2、敗者は進捗0 |
 
-  // 戦闘スキル
-  skills: CombatSkill[];
+やり方の決め方:
+1. **戦術を選ぶ**: メンバー・地形・敵に合うものを`TACTICAL_PATTERNS.md`から選ぶ
+2. **戦術が能力を決める**: 盾の壁は`combat`、地下道からの奇襲は`exploration`、戦闘中に結界を破るのは`investigation`、傭兵に剣を捨てさせる説得は`diplomacy`
+3. **戦術は`situational` ±1の根拠になる**: 高所、奇襲、既に破った結界（+1）。暗闇での戦闘、負傷した指揮官（-1）。理由は`description`に書く
+4. **3つの結果を書く**: どれも物語を変えるようにする
 
-  // 戦闘状態
-  conditions: StatusCondition[];  // 毒、魅了、強化等
-  actionPoints: number;          // そのターンの行動ポイント
-}
-```
+| 結果 | 典型的な効果 |
+|---|---|
+| `success` | 依頼の進捗、敵の撃退、アイテムの奪取、競合相手の進捗を削る（-1） |
+| `partial` | 同じ利得に代償が付く: メンバー1人の**状態**（`{"name": "ブラスク負傷", "capability": "combat"}`）、資源の消費、目撃者 |
+| `failure` | 実際の後退: 状態、競合相手の前進、位置の喪失、クロックの進行 |
 
-### 武器・防具システム
-```typescript
-interface CombatWeapon {
-  id: string;
-  name: string;
-  type: 'sword' | 'bow' | 'staff' | 'dagger';
-  damage: { min: number; max: number };
-  accuracy_bonus: number;
-  special_effects?: WeaponEffect[];
-  narrative_prefix: string;      // "enchanted blade", "crackling staff"
-}
+状態には、メンバーと傷がわかる名前を付ける。小説にそのまま出て、後のcheckも妨げる。
 
-interface CombatArmor {
-  id: string;
-  name: string;
-  type: 'heavy' | 'medium' | 'light' | 'robes';
-  defense_bonus: number;
-  resistance_bonus: number;
-  special_effects?: ArmorEffect[];
-}
+## 📖 ロールの後: 戦闘を語る
 
-interface CombatSkill {
-  id: string;
-  name: string;
-  type: 'attack' | 'spell' | 'support' | 'defensive';
-  cost: { actionPoints?: number; mana?: number };
-  effects: SkillEffect[];
-  cooldown?: number;
-  narrative_template: string;    // "casts {spell_name}, conjuring {effect}"
-}
-```
+`engineResolution.checks`の結果（ダイス、修正値、結果、`bonuses.recruit`、`bonuses.item`、`bonuses.conditions`、`showdown`）を読み、一撃ずつ書く。
 
-## ⚔️ 戦闘ターンシステム
+### 結果ごとの展開
+| 結果 | 場面の形 |
+|---|---|
+| `success` | 3〜4拍: 初手、相手の反撃、パーティー優勢への転換、名前のあるメンバーの決定打 |
+| `partial` | 3〜4拍: やり取りには勝つが、誰かが代償を払う。負った状態を必ず描く |
+| `failure` | 3〜4拍: 手応えのある出だし、敵の応手、崩れる瞬間、撤退または喪失。勝利に和らげない |
+| 決着戦 | 5〜6拍。因縁の山場: 両リーダー、決定的な応酬、敗者の依頼の崩壊 |
 
-### ターン構造
-```
-Phase 1: イニシアティブ決定
-- 各メンバーのspeed値でソート
-- 同速度の場合はランダム
+### 各拍に入れるもの
+- **誰が**: 名前のあるメンバー。「パーティー」とは書かない
+- **何をする**: 武器、呪文、足さばき、利用する地形
+- **何を失い、何を得る**: 実際に適用された効果と結びつける
+- **台詞1行**: 合う場面で（`DIALOGUE_SYSTEM.md`）。メンバーの口調で
 
-Phase 2: 個人アクション実行
-- 各メンバーが順番に行動選択
-- TACTICAL_PATTERNS.mdの戦術パターン適用
-- GM_CORE_MIND.md / PLAYER_MIND.mdで意思決定
+### 修正値を物語に使う
+- `bonuses.recruit`: その場面を冒険者の腕が支えた。冒険者の行動を描く
+- `bonuses.item`: アイテムを使う場面を描く
+- `bonuses.conditions`: 古傷が誰かの動きを鈍らせる場面を描く
+- 低い修正値で高い出目なら幸運、高い修正値で低い出目なら敵の腕前か足場の悪さである。どちらかを語りに反映する
 
-Phase 3: 同時効果解決
-- ダメージ適用
-- 状態異常処理
-- 戦闘終了判定
-```
+### プレイログへの戦闘記録
+一撃ずつの記述は、そのターンのナラティブに書く（拍は`externalInteraction.communicationSummary`、余波は`outcomeReaction`）。数値を創作しない: HPもダメージ値も書かない。書いてよい数値は、エンジンが振ったダイスだけである。
 
-### アクション選択プロセス
-```
-1. 利用可能アクション抽出
-   - 通常攻撃 (常時利用可能)
-   - スキル使用 (コスト・クールダウンチェック)
-   - 移動 (戦術的位置取り)
-   - 防御・待機
-
-2. TACTICAL_PATTERNS.md適用
-   - 現在状況での最適パターン選択
-   - 個性・クラス特性による修正
-   - リスク・リターン評価
-
-3. 最終アクション決定
-   - パターン評価値計算
-   - キャラクター個性による重み付け
-   - 5%のランダム要素追加
-```
-
-## 🎯 戦闘アクション詳細処理
-
-### 物理攻撃処理
-```typescript
-interface PhysicalAttack {
-  attacker: CombatMember;
-  target: CombatMember;
-  weapon: CombatWeapon;
-
-  // 計算結果
-  hit_chance: number;            // (attacker.accuracy + weapon.accuracy_bonus) vs target.defense
-  damage_roll: number;           // weapon.damage + attacker.attack
-  final_damage: number;          // damage_roll - target.defense
-  critical_hit: boolean;         // 5%確率で2倍ダメージ
-
-  // ナラティブ生成
-  narrative: string;             // "Kael swings his enchanted blade..."
-  dialogue?: string;             // DIALOGUE_SYSTEM.mdから生成
-}
-```
-
-### 魔法攻撃処理
-```typescript
-interface MagicAttack {
-  caster: CombatMember;
-  targets: CombatMember[];       // 単体/範囲攻撃
-  spell: CombatSkill;
-
-  // 計算結果
-  cast_success: number;          // 詠唱成功率
-  spell_power: number;           // caster.magic + spell.power
-  damage_per_target: number[];   // 各ターゲットへのダメージ
-  additional_effects: SkillEffect[]; // 状態異常等
-
-  // ナラティブ生成
-  incantation?: string;          // "Ancient flames, heed my call!"
-  visual_effect: string;         // "crackling fireball streaks"
-  impact_description: string;    // "explodes in brilliant flames"
-}
-```
-
-## 📖 戦闘ナラティブ生成
-
-### 詳細戦闘ログ構造
 ```json
-{
-  "type": "detailed_combat",
-  "participants": ["iron_wolves", "silk_merchants"],
-  "combat_rounds": [
-    {
-      "round": 1,
-      "initiative_order": ["iron_wolves.kael", "silk_merchants.finn", "silk_merchants.zara"],
-      "actions": [
-        {
-          "actor": "iron_wolves.kael",
-          "action_type": "sword_attack",
-          "target": "silk_merchants.zara",
-          "tactical_pattern": "charge_direct",
-          "dialogue": "行くぞ！敵を叩く！",
-          "mechanics": {
-            "hit_roll": 15,
-            "damage_roll": 12,
-            "final_damage": 8,
-            "target_hp_change": [32, 24]
-          },
-          "narrative": "Kael roars his battle cry and charges forward with determination. His enchanted blade gleams as he brings it down in a powerful overhead strike against Zara, the steel biting deep into her shoulder guard.",
-          "result": "hit_success"
-        }
-      ]
-    }
-  ],
-  "combat_result": {
-    "winner": "iron_wolves",
-    "duration_rounds": 3,
-    "casualties": ["silk_merchants.zara"],
-    "survivors": {
-      "iron_wolves.kael": { "hp": [40, 28], "conditions": ["exhausted"] },
-      "silk_merchants.finn": { "hp": [25, 0], "conditions": ["unconscious"] }
-    },
-    "final_narrative": "After three grueling rounds of combat, Iron Wolves emerges victorious. Kael stands over his fallen foes, breathing heavily, his blade still dripping with the evidence of battle."
-  }
-}
+"communicationSummary": [
+  "リオが階段に密輸団のランプを見つけ、口笛を一度吹く",
+  "ブラスクがヘッダと狭い通路で盾を組み、最初の突進を受け止める",
+  "鉤刃がブラスクの守りの下に滑り込み、腕を裂く（ブラスク負傷）",
+  "シスター・イルセが腕を縛る間に、ブラスクは片手で最後の密輸人を海へ叩き落とす"
+]
 ```
 
-### キャラクター個性による戦闘スタイル
+## 🎭 個性による戦い方
 
-#### Fighter系戦闘パターン (PLAYER_MIND.mdベース)
-```
-勇敢型Fighter:
-- 優先アクション: charge_direct, berserker_rush
-- 戦闘台詞: "恐れることはない！", "俺が盾になる！"
-- 戦術的選択: 前線維持、味方庇護優先
+個性は、ロール前にどの戦術を選ぶか、語りの中でメンバーがどう動くかを形作る。結果は変えない。
 
-慎重型Fighter:
-- 優先アクション: defensive_formation, tactical_retreat
-- 戦闘台詞: "様子を見よう", "慎重に行こう"
-- 戦術的選択: 安全確保、確実な勝利狙い
-```
+| 型 | ロール前の選択 | 語りの中で |
+|---|---|---|
+| 勇敢な戦士 | 正面からの戦術、`combat`、代償としての状態を受け入れる | 仲間の前に出て、誰かの代わりに傷を受ける |
+| 冷静な戦士 | 防御的な戦術、位置取りによるsituational +1 | 隙を待つ。言葉は少ない |
+| 分析的な術者 | 結界・地形、`investigation`や`exploration`のやり方 | 計画を一文で説明してから実行する |
+| 無謀な術者 | 高リスクの戦術、重い代償の失敗分岐 | 手を広げすぎ、失敗すると呪文が跳ね返る |
+| 狡猾な盗賊 | 奇襲、対抗`exploration`、-1の上限内での妨害 | 誰も見ていない所を突き、反撃の前に消える |
 
-#### Wizard系戦闘パターン
-```
-攻撃特化型Wizard:
-- 優先アクション: focus_fire, 高威力呪文
-- 戦闘台詞: "分析完了、弱点を突く", "この術式で決める"
-- 戦術的選択: 最適なタイミングで最大効果
+## 🧠 戦闘におけるGMとプレイヤーの役割
 
-支援特化型Wizard:
-- 優先アクション: healing_priority, tactical_coordination
-- 戦闘台詞: "みんなが心配です", "回復を優先します"
-- 戦術的選択: 味方支援、長期戦略重視
-```
-
-## 🧠 GM/プレイヤー戦闘判断統合
-
-### GM視点戦闘制御 (GM_CORE_MIND.mdベース)
-```
-NPC戦闘行動決定:
-1. 戦況評価 (0-10スケール)
-   - プレイヤーパーティ脅威度
-   - 自軍戦力残存度
-   - 戦術的優位性
-
-2. 物語的演出判断
-   - 緊張感創出の必要性
-   - ドラマティックなタイミング
-   - キャラクター成長機会
-
-3. NPC個性適用
-   - NPC_PERSONALITIES.mdパターン
-   - 一貫した行動原則
-   - 感情的反応パターン
-```
-
-### プレイヤー視点戦闘判断 (PLAYER_MIND.mdベース)
-```
-キャラクター戦闘選択:
-1. クラス適性評価
-   - Fighter: 物理的解決法優先
-   - Wizard: 戦略的・効率的解決
-
-2. 個性特性適用
-   - 勇敢度による前線意識
-   - 慎重度による安全優先
-   - 協調性による連携重視
-
-3. 戦術パターン適用
-   - TACTICAL_PATTERNS.mdから最適選択
-   - 状況適合度 × 個性適性
-   - 最終評価値による決定
-```
-
----
-
-このフレームワークにより、抽象的な`conflict`アクションを**真の剣と魔法の戦闘**に変換し、各キャラクターの個性と戦術的判断を完全に記録できます。
+- **GM**: 敵と地形を用意し、脅威にはcheckを課す（`actor`は脅かされるパーティー）。勝者は決して宣言しない
+- **プレイヤー**: ロールの前に戦術・能力・懸かるものを選び、ロールの後は結果どおりに戦闘を語る

@@ -2,6 +2,8 @@
 
 A tactical pattern definition collection for achieving more strategic and diverse actions in combat.
 
+> **How to use these patterns**: A pattern chooses the *approach* of a fight, which decides the check's `capability` and may justify `situational` ±1 (see `INDIVIDUAL_COMBAT_SYSTEM.md`). The percentages, HP thresholds and evaluation formulas below are flavor for choosing and telling the tactic; they are never computed into an outcome. Read "HP low" as "carrying conditions". The engine's dice decide every result.
+
 ## ⚔️ Basic Tactical Categories
 
 ### 1. Attack Patterns

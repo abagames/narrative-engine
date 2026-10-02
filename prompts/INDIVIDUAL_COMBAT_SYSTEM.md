@@ -1,265 +1,82 @@
-# Individual Combat System - Individual Combat System Framework
+# Individual Combat System - Fighting Through Checks, Told Blow by Blow
 
-**Purpose**: Perform detailed combat processing at the individual party member level and completely record sword and magic interactions.
+**Purpose**: Fights are decided by the engine's checks, and told at the level of individual party members: every sword stroke, spell and wound is written out, and every one of them agrees with the result the dice gave.
 
-## 🗡️ Party Member Combat Definition
+There are no hit points, damage rolls or random elements in this document. If you compute who wins a fight yourself, you are deciding an outcome you did not roll for.
 
-### Basic Combat Profile
-```typescript
-interface CombatMember {
-  id: string;                    // "iron_wolves.kael", "silk_merchants.zara"
-  name: string;                  // "Kael the Bold", "Zara Shadowblade"
-  class: 'Fighter' | 'Wizard' | 'Rogue' | 'Cleric';
-  level: number;                 // 1-10
+## ⚔️ Before the Roll: Declaring a Fight
 
-  // Combat Status
-  hp: { current: number; max: number };
-  stats: {
-    attack: number;              // Physical attack power (1-20)
-    defense: number;             // Physical defense power (1-20)
-    magic: number;               // Magic attack power (1-20)
-    resistance: number;          // Magic resistance (1-20)
-    speed: number;               // Action order (1-20)
-    accuracy: number;            // Hit rate (1-20)
-  };
+A fight is a **check** (`QUEST_MANAGEMENT.md`). Declare it like any other:
 
-  // Equipment
-  equipment: {
-    weapon: CombatWeapon;
-    armor: CombatArmor;
-    accessories?: CombatAccessory[];
-  };
+| Situation | Check |
+|---|---|
+| Party against NPCs, beasts, the risen dead | Unopposed check by the party (`capability: "combat"` or what the approach uses). The GM may impose it |
+| Party against party | Opposed check, `opposedBy` = the other party |
+| Third clash between the same two parties over quests | Showdown (engine rule): no partial result; winner +2 on its quest, loser's progress to 0 |
 
-  // Combat Skills
-  skills: CombatSkill[];
+Choosing the approach:
+1. **Pick the tactic** from `TACTICAL_PATTERNS.md` that fits the members, the terrain and the enemy
+2. **The tactic decides the capability**: a shield wall is `combat`, an ambush from the tunnels may be `exploration`, breaking a ward mid-fight is `investigation`, talking a mercenary into dropping his blade is `diplomacy`
+3. **The tactic may justify `situational` ±1**: high ground, surprise, a ward already broken (+1); fighting in the dark, a wounded leader (-1). Say why in `description`
+4. **Write the three outcomes** so each changes the story:
 
-  // Combat Conditions
-  conditions: StatusCondition[];  // Poison, charm, enhancement, etc.
-  actionPoints: number;          // Action points for that turn
-}
-```
+| Outcome | Typical effects |
+|---|---|
+| `success` | Quest progress, the enemy driven off, an item taken, a rival's progress chipped (-1) |
+| `partial` | The same gain with a cost: a **condition** on one member (`{"name": "Brask wounded", "capability": "combat"}`), a resource spent, a witness |
+| `failure` | A real setback: a condition, a rival's gain, a lost position, a clock advance |
 
-### Weapon and Armor System
-```typescript
-interface CombatWeapon {
-  id: string;
-  name: string;
-  type: 'sword' | 'bow' | 'staff' | 'dagger';
-  damage: { min: number; max: number };
-  accuracy_bonus: number;
-  special_effects?: WeaponEffect[];
-  narrative_prefix: string;      // "enchanted blade", "crackling staff"
-}
+Name conditions after the member and the wound: they appear in the novel and hamper later checks.
 
-interface CombatArmor {
-  id: string;
-  name: string;
-  type: 'heavy' | 'medium' | 'light' | 'robes';
-  defense_bonus: number;
-  resistance_bonus: number;
-  special_effects?: ArmorEffect[];
-}
+## 📖 After the Roll: Telling the Fight
 
-interface CombatSkill {
-  id: string;
-  name: string;
-  type: 'attack' | 'spell' | 'support' | 'defensive';
-  cost: { actionPoints?: number; mana?: number };
-  effects: SkillEffect[];
-  cooldown?: number;
-  narrative_template: string;    // "casts {spell_name}, conjuring {effect}"
-}
-```
+Read the result in `engineResolution.checks` (dice, modifier, outcome, `bonuses.recruit`, `bonuses.item`, `bonuses.conditions`, `showdown`). Then write the fight blow by blow.
 
-## ⚔️ Combat Turn System
+### Beats by Outcome
+| Outcome | Shape of the scene |
+|---|---|
+| `success` | 3-4 beats: an opening move, a counter, a turn in the party's favor, a decisive blow by a named member |
+| `partial` | 3-4 beats: the party wins the exchange but someone pays. The condition taken must appear on the page |
+| `failure` | 3-4 beats: a promising start, the enemy's answer, the moment it goes wrong, the retreat or loss. Do not soften it into a win |
+| Showdown | 5-6 beats, the climax of the rivalry: both leaders, the decisive exchange, the loser's quest collapsing |
 
-### Turn Structure
-```
-Phase 1: Initiative Determination
-- Sort by each member's speed value
-- Random order for equal speeds
+### What Each Beat Contains
+- **Who acts**: a named member, never "the party"
+- **What they do**: the weapon, the spell, the footwork, the terrain they use
+- **What it costs or gains**: tied to the effects that actually applied
+- **One line of dialogue** where it fits (`DIALOGUE_SYSTEM.md`), in the member's speech style
 
-Phase 2: Individual Action Execution
-- Each member selects actions in turn
-- Apply tactical patterns from TACTICAL_PATTERNS.md
-- Decision making with GM_CORE_MIND.md / PLAYER_MIND.md
+### Using the Modifiers in the Story
+- `bonuses.recruit`: the recruit's skill carried the moment. Show the recruit acting
+- `bonuses.item`: show the item in use
+- `bonuses.conditions`: show the old wound slowing someone down
+- A high roll with a low modifier is luck; a low roll with a high modifier is the enemy's skill or bad footing. Let the narration reflect which
 
-Phase 3: Simultaneous Effect Resolution
-- Apply damage
-- Process status conditions
-- Combat end determination
-```
+### Combat Log in the Playlog
+Put the blow-by-blow account in the turn's narrative (`externalInteraction.communicationSummary` for the beats, `outcomeReaction` for the aftermath). Do not invent numbers: no HP, no damage figures. The only numbers are the dice the engine rolled.
 
-### Action Selection Process
-```
-1. Extract Available Actions
-   - Normal attack (always available)
-   - Skill usage (cost and cooldown check)
-   - Movement (tactical positioning)
-   - Defense and waiting
-
-2. Apply TACTICAL_PATTERNS.md
-   - Select optimal pattern for current situation
-   - Modify based on personality and class traits
-   - Risk-return evaluation
-
-3. Final Action Decision
-   - Calculate pattern evaluation values
-   - Weight by character personality
-   - Add 5% random element
-```
-
-## 🎯 Combat Action Detailed Processing
-
-### Physical Attack Processing
-```typescript
-interface PhysicalAttack {
-  attacker: CombatMember;
-  target: CombatMember;
-  weapon: CombatWeapon;
-
-  // Calculation Results
-  hit_chance: number;            // (attacker.accuracy + weapon.accuracy_bonus) vs target.defense
-  damage_roll: number;           // weapon.damage + attacker.attack
-  final_damage: number;          // damage_roll - target.defense
-  critical_hit: boolean;         // 5% chance for 2x damage
-
-  // Narrative Generation
-  narrative: string;             // "Kael swings his enchanted blade..."
-  dialogue?: string;             // Generated from DIALOGUE_SYSTEM.md
-}
-```
-
-### Magic Attack Processing
-```typescript
-interface MagicAttack {
-  caster: CombatMember;
-  targets: CombatMember[];       // Single/area attack
-  spell: CombatSkill;
-
-  // Calculation Results
-  cast_success: number;          // Casting success rate
-  spell_power: number;           // caster.magic + spell.power
-  damage_per_target: number[];   // Damage to each target
-  additional_effects: SkillEffect[]; // Status conditions, etc.
-
-  // Narrative Generation
-  incantation?: string;          // "Ancient flames, heed my call!"
-  visual_effect: string;         // "crackling fireball streaks"
-  impact_description: string;    // "explodes in brilliant flames"
-}
-```
-
-## 📖 Combat Narrative Generation
-
-### Detailed Combat Log Structure
 ```json
-{
-  "type": "detailed_combat",
-  "participants": ["iron_wolves", "silk_merchants"],
-  "combat_rounds": [
-    {
-      "round": 1,
-      "initiative_order": ["iron_wolves.kael", "silk_merchants.finn", "silk_merchants.zara"],
-      "actions": [
-        {
-          "actor": "iron_wolves.kael",
-          "action_type": "sword_attack",
-          "target": "silk_merchants.zara",
-          "tactical_pattern": "charge_direct",
-          "dialogue": "Let's go! Strike down the enemy!",
-          "mechanics": {
-            "hit_roll": 15,
-            "damage_roll": 12,
-            "final_damage": 8,
-            "target_hp_change": [32, 24]
-          },
-          "narrative": "Kael roars his battle cry and charges forward with determination. His enchanted blade gleams as he brings it down in a powerful overhead strike against Zara, the steel biting deep into her shoulder guard.",
-          "result": "hit_success"
-        }
-      ]
-    }
-  ],
-  "combat_result": {
-    "winner": "iron_wolves",
-    "duration_rounds": 3,
-    "casualties": ["silk_merchants.zara"],
-    "survivors": {
-      "iron_wolves.kael": { "hp": [40, 28], "conditions": ["exhausted"] },
-      "silk_merchants.finn": { "hp": [25, 0], "conditions": ["unconscious"] }
-    },
-    "final_narrative": "After three grueling rounds of combat, Iron Wolves emerges victorious. Kael stands over his fallen foes, breathing heavily, his blade still dripping with the evidence of battle."
-  }
-}
+"communicationSummary": [
+  "Lio spots the smugglers' lamps on the stair and whistles once",
+  "Brask locks shields with Hedda in the narrow passage; the first rush breaks on them",
+  "A hooked blade slips under Brask's guard and opens his arm (Brask wounded)",
+  "Sister Ilse binds the arm while Brask, one-handed, drives the last smuggler into the sea"
+]
 ```
 
-### Combat Style by Character Personality
+## 🎭 Combat Style by Personality
 
-#### Fighter-type Combat Patterns (Based on PLAYER_MIND.md)
-```
-Brave Fighter:
-- Priority Actions: charge_direct, berserker_rush
-- Combat Dialogue: "Fear nothing!", "I'll be the shield!"
-- Tactical Choice: Maintain frontline, prioritize ally protection
+The style shapes which tactic a party chooses before the roll and how members act in the telling. It never changes the result.
 
-Cautious Fighter:
-- Priority Actions: defensive_formation, tactical_retreat
-- Combat Dialogue: "Let's watch the situation", "Let's be careful"
-- Tactical Choice: Secure safety, aim for certain victory
-```
+| Type | Choices before the roll | In the telling |
+|---|---|---|
+| Brave fighter | Direct tactics, `combat`, accepts conditions as the cost | Steps in front of allies, takes the wound for someone else |
+| Calm fighter | Defensive tactics, situational +1 from positioning | Waits for the opening, few words |
+| Analytical caster | Wards, terrain, `investigation` or `exploration` approaches | Explains the plan in a sentence, then executes it |
+| Reckless caster | High-risk tactics, failure branches with heavy costs | Overreaches, the spell backfires on failure |
+| Cunning rogue | Ambush, opposed `exploration`, sabotage within the -1 limit | Strikes where no one looks, gone before the answer |
 
-#### Wizard-type Combat Patterns
-```
-Attack-specialized Wizard:
-- Priority Actions: focus_fire, high-power spells
-- Combat Dialogue: "Analysis complete, exploit the weakness", "This technique will decide it"
-- Tactical Choice: Maximum effect at optimal timing
+## 🧠 GM and Player Roles in a Fight
 
-Support-specialized Wizard:
-- Priority Actions: healing_priority, tactical_coordination
-- Combat Dialogue: "I'm worried about everyone", "I'll prioritize healing"
-- Tactical Choice: Ally support, emphasize long-term strategy
-```
-
-## 🧠 GM/Player Combat Decision Integration
-
-### GM Perspective Combat Control (Based on GM_CORE_MIND.md)
-```
-NPC Combat Action Decision:
-1. Battle Situation Assessment (0-10 scale)
-   - Player party threat level
-   - Own force remaining strength
-   - Tactical advantage
-
-2. Narrative Direction Judgment
-   - Need for tension creation
-   - Dramatic timing
-   - Character growth opportunities
-
-3. NPC Personality Application
-   - NPC_PERSONALITIES.md patterns
-   - Consistent behavioral principles
-   - Emotional reaction patterns
-```
-
-### Player Perspective Combat Judgment (Based on PLAYER_MIND.md)
-```
-Character Combat Selection:
-1. Class Aptitude Assessment
-   - Fighter: Prioritize physical solutions
-   - Wizard: Strategic and efficient solutions
-
-2. Personality Trait Application
-   - Frontline awareness based on bravery
-   - Safety priority based on caution
-   - Coordination emphasis based on cooperation
-
-3. Tactical Pattern Application
-   - Optimal selection from TACTICAL_PATTERNS.md
-   - Situation compatibility × personality aptitude
-   - Decision based on final evaluation value
-```
-
----
-
-This framework allows converting abstract `conflict` actions into **true sword and magic combat** and completely recording each character's personality and tactical judgment.
+- **GM**: stages the enemy and the ground, imposes checks for threats (`actor` = the threatened party), and never declares who wins
+- **Player**: chooses the tactic, the capability and the stakes before the roll, then tells the fight as it fell

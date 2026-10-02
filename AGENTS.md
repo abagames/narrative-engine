@@ -47,7 +47,7 @@ AI coding agents must **actively consult and apply** the appropriate decision fr
 
 - **When NPCs act**: Read `prompts/GM_CORE_MIND.md` and apply the GM thinking framework
 - **When player characters act**: Read `prompts/PLAYER_MIND.md` and apply character-specific judgment criteria
-- **When individual combat occurs**: Read `prompts/INDIVIDUAL_COMBAT_SYSTEM.md` and process detailed sword and magic combat at the individual party member level
+- **When individual combat occurs**: Read `prompts/INDIVIDUAL_COMBAT_SYSTEM.md`: declare the fight as a check, then narrate it at the individual party member level
 - **For tactical decisions in combat**: Use `prompts/TACTICAL_PATTERNS.md` to select tactical patterns and determine optimal actions based on the situation
 - **For dialogue generation in combat**: Use `prompts/DIALOGUE_SYSTEM.md` to generate combat dialogue appropriate to character personalities
 - **During a draft** (`contextData.phase: "draft"`) or when preparing one as GM: Read `prompts/DRAFT_SYSTEM.md`
@@ -67,9 +67,9 @@ AI coding agents must **actively consult and apply** the appropriate decision fr
 
 #### Combat & Interaction Systems
 
-- **INDIVIDUAL COMBAT**: During `conflict` actions, read `prompts/INDIVIDUAL_COMBAT_SYSTEM.md` and fully execute sword and magic combat at the individual party member level
+- **INDIVIDUAL COMBAT**: Fights are checks (opposed between parties). Read `prompts/INDIVIDUAL_COMBAT_SYSTEM.md` to choose the approach before the roll and to tell the fight blow by blow, member by member, after it
 - **TACTICAL COMBAT**: During combat, evaluate and select tactical patterns using `prompts/TACTICAL_PATTERNS.md` and generate dialogue appropriate to personalities using `prompts/DIALOGUE_SYSTEM.md`
-- **COMBAT DETAIL REQUIREMENT**: During combat, fully record individual sword strikes, magic incantations, and damage rather than abstract results
+- **COMBAT DETAIL REQUIREMENT**: Record individual sword strikes, spells and wounds rather than abstract results, always consistent with the engine's check result. Never invent HP or damage numbers
 
 #### Life Simulation & Social Systems
 
