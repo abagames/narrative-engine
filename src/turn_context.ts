@@ -365,7 +365,8 @@ export function generatePartyContextData(
       reputation: party.reputation || 0,
       inventory: party.inventory || [],
       goals: party.goals,
-      flaws: party.flaws
+      flaws: party.flaws,
+      characterProfile: party.characterProfile
     },
     checkModifiers: Object.fromEntries(
       [...new Set([

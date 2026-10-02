@@ -299,7 +299,8 @@ export function generatePartyContextData(partyId, party, worldState, recentHisto
             reputation: party.reputation || 0,
             inventory: party.inventory || [],
             goals: party.goals,
-            flaws: party.flaws
+            flaws: party.flaws,
+            characterProfile: party.characterProfile
         },
         checkModifiers: Object.fromEntries([...new Set([
                 ...Object.keys(party.capabilities || {}),
