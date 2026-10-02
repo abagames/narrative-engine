@@ -238,6 +238,9 @@ describe('quest-driven turn flow (integration)', () => {
     expect(afterRetry.quests.recover_reliquary.progress).toEqual(afterFirst.quests.recover_reliquary.progress);
     expect(afterRetry.parties.white_owls.knowledge).toHaveLength(1);
 
+    // The next turn cannot start (and delete the responses) before the turn is logged
+    await expect(generateNextTurn(sessionId)).rejects.toThrow('not yet in the playlog');
+
     // One playlog entry for the turn, carrying every action and the dice
     await fs.writeFile(path.join(workspaceDir, 'turn_playlog.json'), JSON.stringify(turnPlaylog(houndsRequestId)));
     const appended = await appendPlaylog(sessionId, 'turn_playlog.json');

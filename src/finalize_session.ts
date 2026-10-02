@@ -167,12 +167,13 @@ async function updateSessionMetadata(sessionDir: string, completedAt: string): P
     const lines = playlogContent.trim().split('\n').filter(line => line);
 
     if (lines.length > 0) {
-      // Find the highest step number in the playlog
+      // Find the highest turn in the playlog (older entries without a turn fall back to their step)
       for (const line of lines) {
         try {
           const entry = JSON.parse(line);
-          if (entry.step && typeof entry.step === 'number') {
-            finalTurn = Math.max(finalTurn, entry.step);
+          const turn = typeof entry.turn === 'number' ? entry.turn : entry.step;
+          if (turn && typeof turn === 'number') {
+            finalTurn = Math.max(finalTurn, turn);
             playlogHasSteps = true;
           }
         } catch {

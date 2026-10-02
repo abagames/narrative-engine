@@ -87,6 +87,12 @@ export async function generateNextTurn(sessionId: string, targetTurn?: number): 
       };
     }
 
+    // Responses are deleted below; refuse while a processed turn has not reached the playlog
+    const unlogged = await findUnloggedResponses(workspaceDir);
+    if (unlogged.length > 0) {
+      throw new Error(`Processed responses not yet in the playlog (run append_playlog.ts first): ${unlogged.join(', ')}`);
+    }
+
     // 3. Check session completion conditions
     const currentTurn = resolvedTargetTurn - 1;
 
@@ -181,6 +187,23 @@ async function closeSeasonIfAny(worldState: any, worldStatePath: string): Promis
     await fs.writeFile(worldStatePath, JSON.stringify(worldState, null, 2));
   }
   return events;
+}
+
+async function findUnloggedResponses(workspaceDir: string): Promise<string[]> {
+  const responsesDir = path.join(workspaceDir, 'decision_responses');
+  const files = (await fs.readdir(responsesDir).catch(() => [] as string[])).filter(f => f.endsWith('.json'));
+  const unlogged: string[] = [];
+  for (const file of files) {
+    try {
+      const response = JSON.parse(await fs.readFile(path.join(responsesDir, file), 'utf-8'));
+      if (response.engineResolution?.processed && !response.engineResolution?.logged) {
+        unlogged.push(file);
+      }
+    } catch {
+      // Unreadable files are left for cleanup
+    }
+  }
+  return unlogged;
 }
 
 async function cleanupOldRequestFiles(workspaceDir: string): Promise<void> {
