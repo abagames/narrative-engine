@@ -1139,7 +1139,14 @@ export function resolveQuests(world) {
     }
     const seed = ensureSeed(world);
     const turn = Number(world.turn) || 0;
-    for (const quest of Object.values(world.quests)) {
+    // Quests that are ready to complete are settled best margin first (ties by
+    // roll), so when two conflicting quests finish in the same turn the order of
+    // the world file does not decide which one wins
+    const margin = (q) => Math.max(0, ...Object.values(q.progress || {}).map(Number)) - (Number(q.requiredProgress) || 1);
+    const ordered = Object.values(world.quests).sort((a, b) => margin(b) - margin(a) ||
+        sum(rollDice(seed, `t${turn}:order:${b.id}`)) - sum(rollDice(seed, `t${turn}:order:${a.id}`)) ||
+        String(a.id).localeCompare(String(b.id)));
+    for (const quest of ordered) {
         if (quest.status !== 'open' && quest.status !== 'accepted')
             continue;
         const required = Number(quest.requiredProgress) || 1;

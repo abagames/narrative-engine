@@ -590,6 +590,22 @@ describe('world_rules: quests, clocks and seasons', () => {
     expect(run(['wolves', 'quill'])).toBe(0);
   });
 
+  it('when conflicting quests finish together, the larger margin wins whatever the file order', () => {
+    for (const order of [['escort_vell', 'silence_vell'], ['silence_vell', 'escort_vell']]) {
+      const world = createWorld();
+      const quests: any = {};
+      for (const id of order) quests[id] = world.quests[id];
+      quests.seal_the_breach = world.quests.seal_the_breach;
+      world.quests = quests;
+      world.quests.escort_vell.progress = { iron_wolves: 3 };
+      world.quests.silence_vell.acceptedBy = ['ash_lanterns'];
+      world.quests.silence_vell.progress = { ash_lanterns: 4 };
+      resolveQuests(world);
+      expect(world.quests.silence_vell.status).toBe('completed');
+      expect(world.quests.escort_vell.status).toBe('failed');
+    }
+  });
+
   it('settles a simultaneous finish by roll', () => {
     const world = createWorld();
     world.quests.escort_vell.acceptedBy = ['iron_wolves', 'silver_quill'];
