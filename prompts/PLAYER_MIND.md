@@ -142,7 +142,7 @@ Read from `contextData`:
 | `investigate` | A check that can reveal a quest's secret to you (`secret/revealedTo`) |
 | `negotiate` | Agree terms with a rival: split a joint quest, record a favor, call a truce |
 | `abandon_quest` | Withdraw. Progress is lost and the client remembers |
-| `move` | Move to an adjacent region |
+| `move` | Move to an adjacent region (`regionMap` shows the whole map). Effects apply before checks, so you may move and then pursue a quest at the new location in the same response |
 | `rest` | No checks, no moving; the engine clears your oldest condition |
 | `treat` | A `healing` check whose outcomes clear conditions (yours or another party's in the same region) |
 

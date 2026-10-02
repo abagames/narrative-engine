@@ -142,7 +142,7 @@ Wizard最適化：
 | `investigate` | 依頼の秘密を自分に明かしうるcheck（`secret/revealedTo`） |
 | `negotiate` | 競合相手と条件を決める: 共同依頼の分担、貸しの記録、休戦 |
 | `abandon_quest` | 依頼から降りる。進捗は失われ、依頼主は覚えている |
-| `move` | 隣接地域へ移動する |
+| `move` | 隣接地域へ移動する（`regionMap`に地図全体がある）。effectsはchecksより先に適用されるので、同じ応答で移動し、移動先で依頼を進めてよい |
 | `rest` | checkも移動もしない。エンジンが最も古い状態を1つ解除する |
 | `treat` | 結果で状態を解除する`healing`のcheck（自分、または同じ地域にいる他パーティーの状態） |
 

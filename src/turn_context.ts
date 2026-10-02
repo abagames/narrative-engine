@@ -415,6 +415,8 @@ export function generatePartyContextData(
       .filter(c => c.visible !== false)
       .map(c => ({ id: c.id, name: c.name, filled: c.filled, segments: c.segments, triggered: c.triggered })),
     visibleRegions: getVisibleRegions(party, worldState.regions || {}),
+    // Geography is public knowledge; who stands where is only seen nearby
+    regionMap: Object.values<any>(worldState.regions || {}).map(r => ({ id: r.id, name: r.name, type: r.type, neighbors: r.neighbors || [] })),
     availableActions: getAvailableActions(party, worldState.regions || {}, mine.length),
     recentHistory: partyRecentHistory.slice(-5)
   };
