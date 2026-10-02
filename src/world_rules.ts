@@ -732,6 +732,9 @@ export function normalizeQuest(id: string, quest: any, turn: number): any {
   if (!Array.isArray(normalized.acceptedBy)) normalized.acceptedBy = [];
   if (!Array.isArray(normalized.abandonedBy)) normalized.abandonedBy = [];
   if (!normalized.progress || typeof normalized.progress !== 'object') normalized.progress = {};
+  // Every quest can be investigated; one without a hidden truth reveals that there is none
+  if (!normalized.secret || typeof normalized.secret !== 'object') normalized.secret = { truth: null, revealedTo: [] };
+  if (!Array.isArray(normalized.secret.revealedTo)) normalized.secret.revealedTo = [];
   if (normalized.status === 'open' && normalized.acceptedBy.length > 0) normalized.status = 'accepted';
   return normalized;
 }

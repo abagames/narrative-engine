@@ -278,7 +278,7 @@ function publicQuestView(quest, partyId) {
     if (quest.type === 'joint')
         view.minParties = quest.minParties ?? 2;
     if (quest.secret && (quest.secret.revealedTo || []).includes(partyId)) {
-        view.secret = quest.secret.truth;
+        view.secret = quest.secret.truth ?? 'No hidden truth: the client told it straight';
     }
     return view;
 }

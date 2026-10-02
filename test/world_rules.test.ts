@@ -321,6 +321,21 @@ describe('world_rules: executeResponse', () => {
     expect(overwrite.error).toContain('already exists');
   });
 
+  it('investigating a quest without a secret reveals that there is none', () => {
+    const world = createWorld();
+    const check: CheckDeclaration = {
+      id: 'dig', actor: 'iron_wolves', capability: 'combat',
+      outcomes: {
+        success: [{ target: 'quests/seal_the_breach/secret/revealedTo', operation: 'add', value: 'iron_wolves' }],
+        partial: [{ target: 'quests/seal_the_breach/secret/revealedTo', operation: 'add', value: 'iron_wolves' }],
+        failure: [{ target: 'quests/seal_the_breach/secret/revealedTo', operation: 'add', value: 'iron_wolves' }]
+      }
+    };
+    const result = executeResponse(playerResponse('iron_wolves', [], [check]), world);
+    expect(result.success).toBe(true);
+    expect(world.quests.seal_the_breach.secret).toEqual({ truth: null, revealedTo: ['iron_wolves'] });
+  });
+
   it('progress requires presence at the quest site', () => {
     const world = createWorld(seedFor('success', progressCheck('iron_wolves', 'escort_vell'), 'request_iron_wolves_1'));
     world.parties.iron_wolves.location = 'old_road';
