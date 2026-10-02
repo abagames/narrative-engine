@@ -337,9 +337,9 @@ function createValidDecisionResponse(requestId: string) {
       participants: ['emerald_hunters'],
       effects: [
         {
-          target: 'parties/emerald_hunters/morale',
+          target: 'parties/emerald_hunters/knowledge',
           operation: 'add',
-          value: 1
+          value: 'Found fresh tracks'
         }
       ]
     }

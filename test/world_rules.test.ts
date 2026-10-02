@@ -8,6 +8,7 @@ import {
   runUpkeep,
   closeSeason,
   checkStopConditions,
+  checkModifier,
   CheckDeclaration,
   CheckOutcome
 } from '../src/world_rules.js';
@@ -129,9 +130,9 @@ function progressCheck(partyId: string, questId: string, overrides: Partial<Chec
       success: [{ target: `quests/${questId}/progress/${partyId}`, operation: 'add', value: 2 }],
       partial: [
         { target: `quests/${questId}/progress/${partyId}`, operation: 'add', value: 1 },
-        { target: `parties/${partyId}/morale`, operation: 'add', value: -1 }
+        { target: `parties/${partyId}/conditions/strained`, operation: 'set', value: { name: 'Strained', capability: 'combat' } }
       ],
-      failure: [{ target: `parties/${partyId}/morale`, operation: 'add', value: -2 }]
+      failure: [{ target: `parties/${partyId}/conditions/wounded`, operation: 'set', value: { name: 'Wounded', capability: 'combat' } }]
     },
     ...overrides
   };
@@ -243,7 +244,7 @@ describe('world_rules: executeResponse', () => {
 
   it('rejects changing another party outside an opposed check', () => {
     const result = executeResponse(
-      playerResponse('iron_wolves', [{ target: 'parties/silver_quill/morale', operation: 'add', value: -3 }]),
+      playerResponse('iron_wolves', [{ target: 'parties/silver_quill/resources/currency', operation: 'add', value: -3 }]),
       createWorld()
     );
     expect(result.success).toBe(false);
@@ -256,9 +257,9 @@ describe('world_rules: executeResponse', () => {
       capability: 'combat',
       opposedBy: { party: 'silver_quill', capability: 'exploration' },
       outcomes: {
-        success: [{ target: 'parties/silver_quill/morale', operation: 'add', value: -2 }],
-        partial: [{ target: 'parties/silver_quill/morale', operation: 'add', value: -1 }],
-        failure: [{ target: 'parties/iron_wolves/morale', operation: 'add', value: -1 }]
+        success: [{ target: 'parties/silver_quill/conditions/bruised', operation: 'set', value: { name: 'Bruised', capability: 'combat' } }],
+        partial: [{ target: 'parties/silver_quill/resources/currency', operation: 'add', value: -1 }],
+        failure: [{ target: 'parties/iron_wolves/conditions/shaken', operation: 'set', value: { name: 'Shaken', capability: 'combat' } }]
       }
     };
     const ok = executeResponse(playerResponse('iron_wolves', [], [sabotage]), createWorld());
@@ -279,7 +280,7 @@ describe('world_rules: executeResponse', () => {
   });
 
   it('a request for one party cannot act as another', () => {
-    const response = playerResponse('silver_quill', [{ target: 'parties/silver_quill/morale', operation: 'add', value: 1 }]);
+    const response = playerResponse('silver_quill', [{ target: 'parties/silver_quill/knowledge', operation: 'add', value: 'a note' }]);
     response.requestId = 'request_iron_wolves_9';
     const result = executeResponse(response, createWorld());
     expect(result.success).toBe(false);
@@ -297,7 +298,7 @@ describe('world_rules: executeResponse', () => {
     const world = createWorld();
     world.parties.iron = { ...world.parties.ash_lanterns, id: 'iron' };
     const result = executeResponse(
-      playerResponse('iron_wolves', [{ target: 'parties/iron_wolves/morale', operation: 'add', value: 1 }]),
+      playerResponse('iron_wolves', [{ target: 'parties/iron_wolves/knowledge', operation: 'add', value: 'a note' }]),
       world
     );
     expect(result.success).toBe(true);
@@ -364,7 +365,7 @@ describe('world_rules: executeResponse', () => {
       outcomes: {
         success: [{ target: 'quests/escort_vell/progress/iron_wolves', operation: 'add', value: -1 }],
         partial: [{ target: 'quests/silence_vell/progress/ash_lanterns', operation: 'add', value: 1 }],
-        failure: [{ target: 'parties/ash_lanterns/morale', operation: 'add', value: -1 }]
+        failure: [{ target: 'parties/ash_lanterns/conditions/shaken', operation: 'set', value: { name: 'Shaken', capability: 'combat' } }]
       }
     };
     for (let t = 1; t <= 2; t++) {
@@ -423,7 +424,7 @@ describe('world_rules: executeResponse', () => {
     const before = JSON.stringify(world);
     const result = executeResponse(
       playerResponse('silver_quill', [
-        { target: 'parties/silver_quill/morale', operation: 'add', value: 1 },
+        { target: 'parties/silver_quill/knowledge', operation: 'add', value: 'a note' },
         { target: 'parties/silver_quill/resources/currency', operation: 'add', value: -999 }
       ]),
       world
@@ -675,5 +676,94 @@ describe('json_schemas: checks', () => {
     expect(valid).toBe(false);
     expect(errors.join('\n')).toContain('situational');
     expect(errors.join('\n')).toContain('success effect 0');
+  });
+});
+
+describe('world_rules: conditions', () => {
+  const cond = (name: string, capability = 'combat') => ({ name, capability });
+  const alwaysCheck = (actor: string, capability: string, effects: any[], opposedBy?: any): CheckDeclaration => ({
+    id: 'c', actor, capability, ...(opposedBy ? { opposedBy } : {}),
+    outcomes: { success: effects, partial: effects, failure: effects }
+  });
+
+  it('morale can no longer be written', () => {
+    const player = executeResponse(playerResponse('iron_wolves', [{ target: 'parties/iron_wolves/morale', operation: 'add', value: 1 }]), createWorld());
+    expect(player.error).toContain('morale was replaced by conditions');
+    const gm = executeResponse(gmResponse([{ target: 'parties/iron_wolves/morale', operation: 'set', value: 3 }]), createWorld());
+    expect(gm.error).toContain('morale was replaced by conditions');
+  });
+
+  it('a condition taken in a check outcome hampers checks with that capability', () => {
+    const world = createWorld();
+    const before = checkModifier(world, 'iron_wolves', 'combat').modifier;
+    const result = executeResponse(
+      playerResponse('iron_wolves', [], [alwaysCheck('iron_wolves', 'exploration', [{ target: 'parties/iron_wolves/conditions/wounded', operation: 'set', value: cond('Wounded') }])]),
+      world
+    );
+    expect(result.success).toBe(true);
+    expect(world.parties.iron_wolves.conditions.wounded).toMatchObject({ name: 'Wounded', capability: 'combat', turn: 3 });
+    expect(checkModifier(world, 'iron_wolves', 'combat').modifier).toBe(before - 1);
+    expect(checkModifier(world, 'iron_wolves', 'exploration').conditions).toBeUndefined();
+  });
+
+  it('conditions need a check, and only an opposed check can inflict one on another party', () => {
+    const direct = executeResponse(playerResponse('iron_wolves', [{ target: 'parties/iron_wolves/conditions/x', operation: 'set', value: cond('X') }]), createWorld());
+    expect(direct.error).toContain('only through a check outcome');
+    const unopposed = executeResponse(
+      playerResponse('iron_wolves', [], [alwaysCheck('iron_wolves', 'combat', [{ target: 'parties/silver_quill/conditions/x', operation: 'set', value: cond('X') }])]),
+      createWorld()
+    );
+    expect(unopposed.success).toBe(false);
+    const opposed = executeResponse(
+      playerResponse('iron_wolves', [], [alwaysCheck('iron_wolves', 'combat', [{ target: 'parties/silver_quill/conditions/x', operation: 'set', value: cond('Bruised') }], { party: 'silver_quill', capability: 'combat' })]),
+      createWorld()
+    );
+    expect(opposed.success).toBe(true);
+    const badShape = executeResponse(
+      playerResponse('iron_wolves', [], [alwaysCheck('iron_wolves', 'combat', [{ target: 'parties/iron_wolves/conditions/x', operation: 'set', value: { name: 'No capability' } }])]),
+      createWorld()
+    );
+    expect(badShape.error).toContain('needs a name and the capability');
+  });
+
+  it('clearing a condition takes a healing check, which may treat another party in the same region', () => {
+    const world = createWorld();
+    world.parties.silver_quill.conditions = { wounded: { ...cond('Wounded'), turn: 1 } };
+    const clear = [{ target: 'parties/silver_quill/conditions/wounded', operation: 'set', value: null }];
+    expect(executeResponse(playerResponse('silver_quill', [], [alwaysCheck('silver_quill', 'combat', clear)]), structuredClone(world)).error).toContain('healing check');
+    const healed = structuredClone(world);
+    expect(executeResponse(playerResponse('iron_wolves', [], [alwaysCheck('iron_wolves', 'healing', clear)]), healed).success).toBe(true);
+    expect(healed.parties.silver_quill.conditions.wounded).toBeUndefined();
+    const far = structuredClone(world);
+    far.parties.iron_wolves.location = 'old_road';
+    expect(executeResponse(playerResponse('iron_wolves', [], [alwaysCheck('iron_wolves', 'healing', clear)]), far).error).toContain('same region');
+  });
+
+  it('resting clears the oldest condition, without checks or moving', () => {
+    const world = createWorld();
+    world.parties.iron_wolves.conditions = { old: { ...cond('Old wound'), turn: 1 }, fresh: { ...cond('Fresh cut'), turn: 2 } };
+    const rest = (effects: any[] = [], checks?: any[]) => ({
+      requestId: 'request_iron_wolves_1', proposal: { type: 'rest', participants: ['iron_wolves'], effects, ...(checks ? { checks } : {}) }
+    });
+    expect(executeResponse(rest([], [progressCheck('iron_wolves', 'escort_vell')]), structuredClone(world)).error).toContain('no checks');
+    expect(executeResponse(rest([{ target: 'parties/iron_wolves/location', operation: 'set', value: 'old_road' }]), structuredClone(world)).error).toContain('staying in place');
+    expect(executeResponse(rest(), world).success).toBe(true);
+    expect(Object.keys(world.parties.iron_wolves.conditions)).toEqual(['fresh']);
+    expect(world.chronicle.some((e: any) => e.kind === 'condition_recovered')).toBe(true);
+  });
+
+  it('a party with three conditions is spent: no checks until it rests; extra conditions are lost', () => {
+    const world = createWorld();
+    world.parties.silver_quill.conditions = { a: { ...cond('A'), turn: 1 }, b: { ...cond('B'), turn: 1 } };
+    const inflict = alwaysCheck('iron_wolves', 'combat', [
+      { target: 'parties/silver_quill/conditions/c', operation: 'set', value: cond('C') },
+      { target: 'parties/silver_quill/conditions/d', operation: 'set', value: cond('D') }
+    ], { party: 'silver_quill', capability: 'combat' });
+    expect(executeResponse(playerResponse('iron_wolves', [], [inflict]), world).success).toBe(true);
+    expect(Object.keys(world.parties.silver_quill.conditions)).toEqual(['a', 'b', 'c']);
+    expect(world.chronicle.some((e: any) => e.kind === 'party_spent')).toBe(true);
+
+    const spentCheck = executeResponse(playerResponse('silver_quill', [], [alwaysCheck('silver_quill', 'investigation', [])]), structuredClone(world));
+    expect(spentCheck.error).toContain('is spent');
   });
 });

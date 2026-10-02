@@ -42,6 +42,7 @@ export interface CheckResult {
     bonuses?: {
         recruit?: string;
         item?: string;
+        conditions?: string[];
     };
     showdown?: {
         winner: string;
@@ -60,7 +61,7 @@ export interface CheckResult {
 }
 export interface EngineEvent {
     turn: number;
-    kind: 'quest_completed' | 'quest_failed' | 'quest_expired' | 'clock_triggered' | 'clock_ticked' | 'tie_break' | 'season_end' | 'quest_abandoned' | 'recruit_departed' | 'showdown' | 'recruit_lured' | 'draft_started' | 'draft_order' | 'draft_pick' | 'draft_invite' | 'draft_closed' | 'engine_warning';
+    kind: 'quest_completed' | 'quest_failed' | 'quest_expired' | 'clock_triggered' | 'clock_ticked' | 'tie_break' | 'season_end' | 'quest_abandoned' | 'recruit_departed' | 'showdown' | 'party_spent' | 'condition_recovered' | 'recruit_lured' | 'draft_started' | 'draft_order' | 'draft_pick' | 'draft_invite' | 'draft_closed' | 'engine_warning';
     summary: string;
     questId?: string;
     clockId?: string;
@@ -78,6 +79,8 @@ export interface RuleError {
 export declare const MAX_ACTIVE_QUESTS = 1;
 export declare const MAX_CHECKS_PER_RESPONSE = 2;
 export declare const MAX_RECRUITS = 2;
+/** A party carrying this many conditions is spent: no checks until it rests */
+export declare const MAX_CONDITIONS = 3;
 /** Sabotage removes at most this much of a rival's progress per check */
 export declare const MAX_SABOTAGE = 1;
 /** After this many opposed clashes over quests, the next one between the same pair is a showdown */
@@ -105,11 +108,15 @@ export declare function itemBonus(world: any, partyId: string, capability: strin
     bonus: number;
     item?: string;
 };
+/** Conditions (wounded, exhausted, shaken ...) that hamper this capability, -1 each */
+export declare function conditionPenalties(world: any, partyId: string, capability: string): string[];
 export declare function checkModifier(world: any, partyId: string, capability: string): {
     modifier: number;
     recruit?: string;
     item?: string;
+    conditions?: string[];
 };
+export declare function conditionCount(party: any): number;
 export declare function rollCheck(world: any, check: CheckDeclaration, requestId: string, index: number, role?: 'GM' | 'Player'): CheckResult;
 export declare function identifyActor(response: any, world: any): Actor | RuleError;
 interface PermissionContext {

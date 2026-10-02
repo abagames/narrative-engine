@@ -9,10 +9,10 @@
 ### 1. パス記法エラー
 ```json
 // ❌ 絶対にNG: 先頭スラッシュ
-{"target": "/parties/emerald_hunters/morale"}
+{"target": "/parties/emerald_hunters/location"}
 
 // ✅ 正しい記法
-{"target": "parties/emerald_hunters/morale"}
+{"target": "parties/emerald_hunters/location"}
 ```
 
 ### 2. 一括設定エラー
@@ -41,8 +41,8 @@
   "outcomes": {
     "success": [{"target": "quests/escort_vell/progress/iron_wolves", "operation": "add", "value": 2}],
     "partial": [{"target": "quests/escort_vell/progress/iron_wolves", "operation": "add", "value": 1},
-                {"target": "parties/iron_wolves/morale", "operation": "add", "value": -1}],
-    "failure": [{"target": "parties/iron_wolves/morale", "operation": "add", "value": -2}]
+                {"target": "parties/iron_wolves/conditions/strained", "operation": "set", "value": {"name": "Strained", "capability": "combat"}}],
+    "failure": [{"target": "parties/iron_wolves/conditions/wounded", "operation": "set", "value": {"name": "Wounded", "capability": "combat"}}]
   }
 }]
 ```
@@ -52,7 +52,7 @@
 // ❌ パーティーが自分の能力値や評判を上げる
 {"target": "parties/iron_wolves/capabilities/combat", "operation": "add", "value": 2}
 // ❌ 対抗checkなしで競合相手に損害を与える
-{"target": "parties/silver_quill/morale", "operation": "add", "value": -2}
+{"target": "parties/silver_quill/conditions/wounded", "operation": "set", "value": {"name": "Wounded", "capability": "investigation"}}
 // ❌ エンジン管理値を設定する（誰であっても）
 {"target": "quests/escort_vell/status", "operation": "set", "value": "completed"}
 ```
@@ -118,8 +118,8 @@
         "outcomes": {
           "success": [{"target": "quests/find_the_heir/progress/emerald_hunters", "operation": "add", "value": 2}],
           "partial": [{"target": "quests/find_the_heir/progress/emerald_hunters", "operation": "add", "value": 1},
-                      {"target": "parties/emerald_hunters/morale", "operation": "add", "value": -1}],
-          "failure": [{"target": "parties/emerald_hunters/morale", "operation": "add", "value": -2}]
+                      {"target": "parties/emerald_hunters/conditions/strained", "operation": "set", "value": {"name": "Strained", "capability": "exploration"}}],
+          "failure": [{"target": "parties/emerald_hunters/conditions/wounded", "operation": "set", "value": {"name": "Wounded", "capability": "exploration"}}]
         }
       }
     ]
@@ -154,7 +154,7 @@
 ### "add" - 値の加算・追加
 ```json
 // 数値加算
-{"target": "parties/party_id/morale", "operation": "add", "value": 2}
+{"target": "clocks/clock_id/filled", "operation": "add", "value": 1}
 {"target": "parties/party_id/resources/currency", "operation": "add", "value": -50}
 
 // オブジェクトのマージ
@@ -167,7 +167,7 @@
 
 ### エンジンが維持する値
 - パーティーを移動させると（`parties/<id>/location`）、`regions/*/occupantParties`は自動で更新されます。手動で書き換えないでください
-- 士気は0〜10、依頼の進捗は0以上に丸められます
+- 依頼の進捗はターン終了時に0以上に丸められます。士気はもうありません: 後退は状態として表します（`parties/<id>/conditions/<key>` = `{name, capability}`。`null`で解除）
 - `quests/*/status`、`quests/*/progress`（check外）、`clocks/*/triggered`、`rng`、`checkLog`、`chronicle`、`guild/standings`、`guild/promoted`は書き込めません
 
 ## 🔍 事前チェック手順

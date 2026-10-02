@@ -197,7 +197,7 @@ strategicConsiderations = {
       "location": "[Placement determined by AI Agent]",
       "resources": { "currency": "[AI determined value]", "materials": {...} },
       "capabilities": { "exploration": "[AI determined value]", ... },
-      "morale": "[AI determined value]",
+      "conditions": {},
       "reputation": 0,
       "goals": ["[What the party wants this season]"],
       "flaws": [{ "name": "[Flaw]", "trigger": "[When it applies]", "effect": "[What the party does]" }],
@@ -394,7 +394,7 @@ AUTONOMOUS_SESSIONS_DIR=./custom_sessions npx tsx src/start_session.ts custom_se
       "location": "[Current location]",
       "resources": { "currency": 120 },
       "capabilities": { "exploration": 8, "combat": 6, "diplomacy": 4 },
-      "morale": 7, "reputation": 0, "inventory": [], "goals": [...], "flaws": [...]
+      "conditions": [{ "key": "wounded", "name": "Wounded", "capability": "combat", "turn": 3 }], "spent": false, "reputation": 0, "inventory": [], "goals": [...], "flaws": [...]
     },
     "checkModifiers": { "exploration": 1, "combat": 0, "diplomacy": 0 },
     "guildBoard": [
@@ -511,9 +511,9 @@ AUTONOMOUS_SESSIONS_DIR=./custom_sessions npx tsx src/start_session.ts custom_se
           "success": [{ "target": "quests/sunken_relic/progress/emerald_hunters", "operation": "add", "value": 2 }],
           "partial": [
             { "target": "quests/sunken_relic/progress/emerald_hunters", "operation": "add", "value": 1 },
-            { "target": "parties/emerald_hunters/morale", "operation": "add", "value": -1 }
+            { "target": "parties/emerald_hunters/conditions/strained", "operation": "set", "value": {"name": "Strained", "capability": "exploration"} }
           ],
-          "failure": [{ "target": "parties/emerald_hunters/morale", "operation": "add", "value": -2 }]
+          "failure": [{ "target": "parties/emerald_hunters/conditions/wounded", "operation": "set", "value": {"name": "Wounded", "capability": "exploration"} }]
         }
       }
     ]
@@ -662,7 +662,7 @@ b) **Analysis of world state changes**:
 - Read the new entries of `chronicle` (quest completions/failures/expirations, clock ticks and triggers, tie-breaks)
 - Identify changes from previous turn:
   - Quest progress and standings
-  - Party state changes (morale, position, reputation, inventory)
+  - Party state changes (conditions, position, reputation, inventory)
   - Relationship, favor and NPC disposition changes
   - Regional situation changes
 
@@ -946,7 +946,7 @@ d) **Narrative structure generation**:
 | 🗡️ Combat Power | [value] |
 | 🏃 Exploration Power | [value] |
 | 🤝 Diplomacy Power | [value] |
-| 📈 Morale | [value] |
+| 🩹 Conditions | [none / list] |
 | 📍 Position | [location] |
 
 **Resources**: [materials list]
@@ -966,13 +966,8 @@ d) **Narrative structure generation**:
 - [icon1][icon2] **[Party1] vs [Party2]**: [event_icon] **[Event Type]** - [detailed description]
   - 🏆 Result: [outcome] (when applicable)
 
-#### 📈 Morale Changes
-```
-
-[Party1]: [from] → [to] ([change]) [arrow] [reason]
-[Party2]: [from] → [to] ([change]) [arrow] [reason]
-
-```
+#### 🩹 Conditions
+- [party_icon] **[Party]**: + [condition] ([capability]) from [check] / − [condition] (rest or healing)
 
 #### 🎒 Resource Changes
 - [party_icon] **[Party]**: [resource] [from]→[to] ([change]) - [reason]
@@ -999,12 +994,9 @@ d) **Narrative structure generation**:
 | Party | Checks | Success | Partial | Failure |
 | ----- | ------ | ------- | ------- | ------- |
 
-### 📈 Morale Fluctuation Graph
-```
-
-[ASCII graph showing morale trends]
-
-```
+### 🩹 Conditions Over Time
+| Turn | [Party1] | [Party2] | [Party3] |
+| ---- | -------- | -------- | -------- |
 
 ### 🎯 Key Event Summary
 - **Turn X**: [major_event_summary]
@@ -1025,7 +1017,7 @@ d) **Narrative structure generation**:
 2. **Turn-by-Turn Detail Section**:
 
    - Process each step in `playlog.jsonl` sequentially
-   - Structure position changes, inter-party events, and morale/resource changes
+   - Structure position changes, inter-party events, quest progress, checks and conditions
    - Classify event types (combat, diplomacy, economy, espionage, etc.) with emojis
    - Describe each turn individually, prohibition of combining multiple turns
 
@@ -1036,7 +1028,7 @@ d) **Narrative structure generation**:
    - Clearly indicate results and impacts
 
 4. **Statistics and Analysis Section**:
-   - Visualize morale fluctuations with ASCII graphs
+   - Tabulate conditions taken and recovered per turn
    - Faction rankings and final evaluation
    - Key event extraction and MVP selection
 

@@ -123,8 +123,22 @@ Dice come from `hash(seed, turn, actor, check index)`. Resubmitting a response y
 | Outcome | Should contain |
 |---|---|
 | `success` | The goal advances cleanly (typically +2 progress, an item, a revealed secret) |
-| `partial` | The goal advances with a cost (+1 progress and lost morale, a witness, a debt, a rival alerted) |
-| `failure` | A real setback: lost morale or resources, worsened relationship, a clock advance, or a position lost |
+| `partial` | The goal advances with a cost (+1 progress and a condition, a witness, a debt, a rival alerted) |
+| `failure` | A real setback: a condition, lost resources, worsened relationship, a clock advance, or a position lost |
+
+## 🩹 Conditions
+
+Setbacks stick to a party as **conditions** (wounded, exhausted, shaken, cursed ...). There is no morale.
+
+```json
+{"target": "parties/iron_wolves/conditions/brask_wounded", "operation": "set", "value": {"name": "Brask wounded", "capability": "combat"}}
+```
+- Each condition gives **-1** on checks with its `capability`
+- Taken only through check outcomes: your own branch, an opposed check by a rival (`opposedBy` = you), or a GM check
+- **Rest** (`proposal.type: "rest"`, no checks, no moving) clears the oldest condition
+- **Treat**: a `healing` check whose outcome sets the condition to `null` clears it, for yourself or another party in the same region. Healer recruits raise `healing`
+- At **3** conditions a party is **spent**: it may roll no checks until it rests. Further conditions beyond 3 are lost
+- Name conditions after what happened to whom: they appear in the novel
 
 ## ⚔️ Sabotage and Showdowns
 

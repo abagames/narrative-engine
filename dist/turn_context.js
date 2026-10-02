@@ -1,6 +1,6 @@
 import * as fs from 'fs/promises';
 import * as path from 'path';
-import { checkModifier, computeStandings, MAX_ACTIVE_QUESTS, SHOWDOWN_AFTER } from './world_rules.js';
+import { checkModifier, computeStandings, MAX_ACTIVE_QUESTS, MAX_CONDITIONS, SHOWDOWN_AFTER } from './world_rules.js';
 import { currentDraftActors, publicDraftView } from './draft.js';
 const GM_INSTRUCTIONS = 'worldStateFileを読み込んで世界状態を分析し、適切なフレームワークを適用してGMとしての最適な行動を決定してください。' +
     '依頼掲示板が手薄なら、パーティー同士が交差する依頼（競合・衝突・共同・隠された真相）を発行してください。' +
@@ -68,6 +68,7 @@ function describeRivals(partyId, worldState) {
         name: rival.name,
         location: rival.location,
         reputation: rival.reputation || 0,
+        conditions: Object.values(rival.conditions || {}).map(c => c.name),
         goals: rival.goals,
         capabilities: rival.capabilities,
         activeQuests: Object.values(worldState.quests || {})
@@ -293,7 +294,8 @@ export function generatePartyContextData(partyId, party, worldState, recentHisto
             location: party.location,
             resources: party.resources || {},
             capabilities: party.capabilities || {},
-            morale: party.morale ?? 5,
+            conditions: Object.entries(party.conditions || {}).map(([key, c]) => ({ key, ...c })),
+            spent: Object.keys(party.conditions || {}).length >= MAX_CONDITIONS,
             reputation: party.reputation || 0,
             inventory: party.inventory || [],
             goals: party.goals,

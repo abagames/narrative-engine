@@ -118,7 +118,6 @@
       "resources": {
         "currency": 40
       },
-      "morale": 7,
       "reputation": 0,
       "inventory": [],
       "capabilities": {
@@ -177,7 +176,8 @@
           "internal": "Terse and loyal",
           "external": "Curt, intimidating"
         }
-      }
+      },
+      "conditions": {}
     },
     "silver_quill": {
       "id": "silver_quill",
@@ -186,7 +186,6 @@
       "resources": {
         "currency": 30
       },
-      "morale": 6,
       "reputation": 0,
       "inventory": [],
       "capabilities": {
@@ -245,7 +244,8 @@
           "internal": "Polite debate",
           "external": "Courteous, probing"
         }
-      }
+      },
+      "conditions": {}
     },
     "ash_lanterns": {
       "id": "ash_lanterns",
@@ -254,7 +254,6 @@
       "resources": {
         "currency": 15
       },
-      "morale": 5,
       "reputation": 0,
       "inventory": [],
       "capabilities": {
@@ -298,7 +297,8 @@
           "internal": "Sardonic",
           "external": "Flattering"
         }
-      }
+      },
+      "conditions": {}
     }
   },
   "npcs": {
@@ -501,7 +501,8 @@
         }
       },
       "unlocks": [
-        "treat_plague_victims"
+        "treat_plague_victims",
+        "treat_wounds"
       ],
       "term": 4,
       "wants": "to save lives; refuses to serve anyone who kills the helpless",

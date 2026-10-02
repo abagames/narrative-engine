@@ -24,7 +24,7 @@ This is the **thinking process** when you operate environment and NPCs from the 
 Player Party Analysis:
 - Combat Status (0-10): HP, position, remaining resources
 - Tactical Advantage (0-10): Terrain utilization, coordination level, information advantage
-- Momentum Score (0-10): Recent successes/failures, morale status
+- Momentum Score (0-10): Recent successes/failures, conditions carried
 - Coordination Patterns (0-10): Party's tactical coordination level 🆕
 - Weakness Exposure (0-10): Presence of exploitable openings 🆕
 
@@ -329,9 +329,9 @@ When an NPC or the environment threatens a party, or when parties collide at the
   "capability": "combat",
   "outcomes": {
     "success": [{ "target": "parties/iron_wolves/inventory", "operation": "add", "value": ["smuggler_ledger"] }],
-    "partial": [{ "target": "parties/iron_wolves/morale", "operation": "add", "value": -1 }],
+    "partial": [{ "target": "parties/iron_wolves/conditions/strained", "operation": "set", "value": {"name": "Strained", "capability": "combat"} }],
     "failure": [
-      { "target": "parties/iron_wolves/morale", "operation": "add", "value": -2 },
+      { "target": "parties/iron_wolves/conditions/wounded", "operation": "set", "value": {"name": "Wounded", "capability": "combat"} },
       { "target": "clocks/smugglers_rise/filled", "operation": "add", "value": 1 }
     ]
   }

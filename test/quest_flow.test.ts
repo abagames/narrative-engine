@@ -174,9 +174,9 @@ describe('quest-driven turn flow (integration)', () => {
               success: [{ target: 'quests/recover_reliquary/progress/red_hounds', operation: 'add', value: 2 }],
               partial: [
                 { target: 'quests/recover_reliquary/progress/red_hounds', operation: 'add', value: 1 },
-                { target: 'parties/red_hounds/morale', operation: 'add', value: -1 }
+                { target: 'parties/red_hounds/conditions/bruised', operation: 'set', value: { name: 'Bruised', capability: 'combat' } }
               ],
-              failure: [{ target: 'parties/red_hounds/morale', operation: 'add', value: -2 }]
+              failure: [{ target: 'parties/red_hounds/conditions/wounded', operation: 'set', value: { name: 'Wounded', capability: 'combat' } }]
             }
           }
         ]
@@ -227,7 +227,7 @@ describe('quest-driven turn flow (integration)', () => {
       proposal: {
         type: 'investigate',
         participants: ['white_owls'],
-        effects: [{ target: 'parties/white_owls/morale', operation: 'add', value: 1 }]
+        effects: [{ target: 'parties/white_owls/knowledge', operation: 'add', value: { text: 'The vault was opened from inside' } }]
       }
     });
     await fs.rm(path.join(responsesDir, 'failed'), { recursive: true, force: true });
@@ -236,7 +236,7 @@ describe('quest-driven turn flow (integration)', () => {
     expect(retried.alreadyProcessed.sort()).toEqual([gmRequestId, houndsRequestId].sort());
     const afterRetry = JSON.parse(await fs.readFile(path.join(sessionDir, 'world_current.json'), 'utf-8'));
     expect(afterRetry.quests.recover_reliquary.progress).toEqual(afterFirst.quests.recover_reliquary.progress);
-    expect(afterRetry.parties.white_owls.morale).toBe(7);
+    expect(afterRetry.parties.white_owls.knowledge).toHaveLength(1);
 
     // One playlog entry for the turn, carrying every action and the dice
     await fs.writeFile(path.join(workspaceDir, 'turn_playlog.json'), JSON.stringify(turnPlaylog(houndsRequestId)));

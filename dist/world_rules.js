@@ -10,6 +10,8 @@
 export const MAX_ACTIVE_QUESTS = 1;
 export const MAX_CHECKS_PER_RESPONSE = 2;
 export const MAX_RECRUITS = 2;
+/** A party carrying this many conditions is spent: no checks until it rests */
+export const MAX_CONDITIONS = 3;
 /** Sabotage removes at most this much of a rival's progress per check */
 export const MAX_SABOTAGE = 1;
 /** After this many opposed clashes over quests, the next one between the same pair is a showdown */
@@ -113,11 +115,26 @@ export function itemBonus(world, partyId, capability) {
     }
     return { bonus: 0 };
 }
+/** Conditions (wounded, exhausted, shaken ...) that hamper this capability, -1 each */
+export function conditionPenalties(world, partyId, capability) {
+    return Object.entries(world.parties?.[partyId]?.conditions || {})
+        .filter(([, c]) => c && c.capability === capability)
+        .map(([key]) => key);
+}
 export function checkModifier(world, partyId, capability) {
     const cap = effectiveCapability(world, partyId, capability);
     const base = capabilityModifier({ capabilities: { [capability]: cap.value } }, capability);
     const item = itemBonus(world, partyId, capability);
-    return { modifier: base + item.bonus, recruit: cap.recruit, item: item.item };
+    const conditions = conditionPenalties(world, partyId, capability);
+    return {
+        modifier: base + item.bonus - conditions.length,
+        recruit: cap.recruit,
+        item: item.item,
+        ...(conditions.length ? { conditions } : {})
+    };
+}
+export function conditionCount(party) {
+    return Object.keys(party?.conditions || {}).length;
 }
 function sum(values) {
     return values.reduce((a, b) => a + b, 0);
@@ -144,8 +161,8 @@ export function rollCheck(world, check, requestId, index, role = 'Player') {
         total,
         outcome: 'failure'
     };
-    if (actorMod.recruit || actorMod.item) {
-        result.bonuses = { recruit: actorMod.recruit, item: actorMod.item };
+    if (actorMod.recruit || actorMod.item || actorMod.conditions) {
+        result.bonuses = { recruit: actorMod.recruit, item: actorMod.item, conditions: actorMod.conditions };
     }
     if (check.opposedBy) {
         const oppRolls = rollDice(seed, `t${turn}:${stream}${check.opposedBy.party}:vs:${check.actor}:c${index}`);
@@ -229,7 +246,25 @@ function denied(effect, reason) {
         details: { target: effect.target, operation: effect.operation, reason }
     };
 }
+const MORALE_REPLACED = 'morale was replaced by conditions: write parties/<id>/conditions/<key> = {name, capability} in a check outcome';
+function checkConditionShape(effect) {
+    if (effect.operation !== 'set')
+        return denied(effect, 'conditions are set ({name, capability}) or cleared (null), not added to');
+    if (effect.value === null)
+        return null;
+    if (!effect.value || typeof effect.value.name !== 'string' || typeof effect.value.capability !== 'string') {
+        return denied(effect, 'a condition needs a name and the capability it hampers');
+    }
+    return null;
+}
 function checkGmPermission(parts, effect, world, ctx) {
+    if (parts[0] === 'parties' && parts[2] === 'morale')
+        return denied(effect, MORALE_REPLACED);
+    if (parts[0] === 'parties' && parts[2] === 'conditions') {
+        if (parts.length !== 4)
+            return denied(effect, 'write one condition at a time: parties/<id>/conditions/<key>');
+        return checkConditionShape(effect);
+    }
     if (parts[0] === 'draft') {
         const status = world.draft?.status;
         if (status && status !== 'pending' && status !== 'closed') {
@@ -292,6 +327,10 @@ function checkPlayerPermission(partyId, parts, effect, world, ctx) {
         return denied(effect, 'engine-managed value');
     }
     if (root === 'parties') {
+        if (field === 'morale')
+            return denied(effect, MORALE_REPLACED);
+        if (field === 'conditions')
+            return checkPlayerCondition(partyId, parts, effect, world, ctx);
         if (id === partyId) {
             if (parts.length < 3) {
                 return denied(effect, 'write individual fields of the party, not the whole party');
@@ -307,9 +346,9 @@ function checkPlayerPermission(partyId, parts, effect, world, ctx) {
             }
             return null;
         }
-        if (opposed && id === opposed && ['morale', 'resources', 'inventory'].includes(field))
+        if (opposed && id === opposed && ['resources', 'inventory'].includes(field))
             return null;
-        return denied(effect, 'parties may only change their own state (or an opponent\'s morale, resources or inventory through an opposed check)');
+        return denied(effect, 'parties may only change their own state (or an opponent\'s conditions, resources or inventory through an opposed check)');
     }
     if (root === 'quests') {
         const quest = world.quests?.[id];
@@ -406,6 +445,34 @@ function checkPlayerPermission(partyId, parts, effect, world, ctx) {
     }
     return denied(effect, 'outside the party\'s sphere of action');
 }
+/**
+ * Conditions come from check outcomes: a party's own setbacks, or an opponent's
+ * opposed check. They are cleared by a healing check (anyone at the same place)
+ * or by resting.
+ */
+function checkPlayerCondition(partyId, parts, effect, world, ctx) {
+    const target = parts[1];
+    if (parts.length !== 4)
+        return denied(effect, 'write one condition at a time: parties/<id>/conditions/<key>');
+    const shape = checkConditionShape(effect);
+    if (shape)
+        return shape;
+    if (!ctx.viaCheck)
+        return denied(effect, 'conditions change only through a check outcome (or by resting)');
+    if (effect.value === null) {
+        if (ctx.viaCheck.capability !== 'healing')
+            return denied(effect, 'clearing a condition takes a healing check');
+        if (target !== partyId && world.parties?.[target]?.location !== world.parties?.[partyId]?.location) {
+            return denied(effect, 'healing another party requires being in the same region');
+        }
+        return null;
+    }
+    if (target === partyId)
+        return null;
+    if (ctx.viaCheck.opposedBy?.party === target)
+        return null;
+    return denied(effect, 'a condition can be inflicted on another party only through a check it opposes');
+}
 // ---------------------------------------------------------------------------
 // Effect application
 // ---------------------------------------------------------------------------
@@ -425,7 +492,7 @@ export function applyEffect(effect, world) {
                 providedPath: effect.target,
                 parsedParts: parts,
                 expectedFormat: 'path/to/property (minimum 2 levels)',
-                examples: ['parties/party_id/morale', 'quests/quest_id/acceptedBy', 'clocks/clock_id/filled']
+                examples: ['parties/party_id/location', 'quests/quest_id/acceptedBy', 'clocks/clock_id/filled']
             }
         };
     }
@@ -483,7 +550,12 @@ export function applyEffect(effect, world) {
         }
     }
     if (effect.operation === 'set') {
-        current[finalKey] = effect.value;
+        if (effect.value === null) {
+            delete current[finalKey];
+        }
+        else {
+            current[finalKey] = effect.value;
+        }
         return null;
     }
     const existing = current[finalKey];
@@ -556,6 +628,14 @@ export function normalizeWorld(world) {
     }
     world.favors = world.favors || {};
     world.npcs = world.npcs || {};
+    for (const party of Object.values(world.parties || {})) {
+        if (!party.conditions || typeof party.conditions !== 'object' || Array.isArray(party.conditions))
+            party.conditions = {};
+        if (!Array.isArray(party.knowledge))
+            party.knowledge = party.knowledge ? [party.knowledge] : [];
+        if (!Array.isArray(party.inventory))
+            party.inventory = party.inventory ? [party.inventory] : [];
+    }
     world.recruits = world.recruits || {};
     for (const [id, recruit] of Object.entries(world.recruits)) {
         world.recruits[id] = { id, status: 'available', term: 4, ...recruit };
@@ -613,8 +693,25 @@ export function enforceInvariants(before, draft, actor) {
                 details: { path: negative.path, value: negative.value }
             };
         }
-        if (typeof party.morale === 'number') {
-            party.morale = Math.max(0, Math.min(10, party.morale));
+        // Conditions: stamp new ones with the turn; beyond the limit they are lost, and the party is spent
+        const prevConditions = before.parties?.[partyId]?.conditions || {};
+        const keys = Object.keys(party.conditions);
+        for (const key of keys) {
+            if (!prevConditions[key] && typeof party.conditions[key].turn !== 'number')
+                party.conditions[key].turn = turn;
+        }
+        if (keys.length > MAX_CONDITIONS) {
+            const fresh = keys.filter(k => !prevConditions[k]);
+            for (const key of fresh.slice(MAX_CONDITIONS - (keys.length - fresh.length)))
+                delete party.conditions[key];
+        }
+        if (conditionCount(party) >= MAX_CONDITIONS && Object.keys(prevConditions).length < MAX_CONDITIONS) {
+            draft.chronicle.push({
+                turn,
+                kind: 'party_spent',
+                parties: [partyId],
+                summary: `${party.name || partyId} is spent (${Object.values(party.conditions).map(c => c.name).join(', ')}) and must rest`
+            });
         }
     }
     // Movement must follow the region graph (parties walk; the GM may relocate anyone)
@@ -774,6 +871,13 @@ export function executeResponse(response, world) {
     if (checks.length > MAX_CHECKS_PER_RESPONSE) {
         return { success: false, error: `Too many checks: at most ${MAX_CHECKS_PER_RESPONSE} per response` };
     }
+    const resting = actor.role === 'Player' && response.proposal.type === 'rest';
+    if (resting && checks.length > 0) {
+        return { success: false, error: 'Resting means no checks this turn' };
+    }
+    if (actor.role === 'Player' && checks.length > 0 && conditionCount(world.parties?.[actor.partyId]) >= MAX_CONDITIONS) {
+        return { success: false, error: `${actor.partyId} is spent (${MAX_CONDITIONS} conditions) and must rest (proposal.type "rest") before any check` };
+    }
     // Validate every effect in every branch before any dice are rolled
     for (const effect of effects) {
         const denial = checkPermission(actor, effect, world);
@@ -830,6 +934,23 @@ export function executeResponse(response, world) {
     // Showdown consequences are the engine's, so they bypass the actor's location rules
     for (const result of showdowns)
         applyShowdown(draft, result);
+    // A rest turn clears the oldest condition; the party must stay where it is
+    if (resting) {
+        const party = draft.parties[actor.partyId];
+        if (party.location !== world.parties[actor.partyId].location) {
+            return { success: false, error: 'Resting means staying in place this turn' };
+        }
+        const oldest = Object.entries(party.conditions).sort(([, a], [, b]) => (a.turn ?? 0) - (b.turn ?? 0))[0];
+        if (oldest) {
+            delete party.conditions[oldest[0]];
+            draft.chronicle.push({
+                turn: Number(draft.turn) || 0,
+                kind: 'condition_recovered',
+                parties: [actor.partyId],
+                summary: `${party.name || actor.partyId} rests and recovers from ${oldest[1].name}`
+            });
+        }
+    }
     draft.checkLog.push(...results);
     // Commit the draft
     for (const key of Object.keys(world))

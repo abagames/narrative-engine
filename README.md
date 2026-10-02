@@ -49,6 +49,7 @@ Parties compete and cooperate over guild quests in a region graph. AI agents dec
 - **Quest Board**: Exclusive races, joint quests split by effort, colliding quests that cannot both succeed, clients with hidden motives
 - **Engine Adjudication**: Uncertain attempts are declared as checks with success / partial / failure effects written before a seeded 2d6 roll. Resubmitting cannot reroll
 - **Permissions & Invariants**: Parties change only their own state; harming a rival requires an opposed check; quest progress comes only from checks; responses apply all-or-nothing
+- **Conditions**: Setbacks stick as named conditions (wounded, exhausted, shaken ...), each -1 to one capability, cleared by rest or healing; three conditions leave a party spent
 - **World Pressure**: Deadlines expire, progress clocks advance and trigger, failed quests escalate; consequences stand
 - **Unequal Information**: Parties see a public quest board, rough rival progress and their own (possibly false) knowledge; the GM sees everything
 - **Season & Standings**: Reputation from quests decides who is promoted at season end

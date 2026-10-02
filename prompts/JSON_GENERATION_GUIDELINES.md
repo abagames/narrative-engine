@@ -9,10 +9,10 @@ This document provides common guidelines for AI Agents when generating decision 
 ### 1. Path Notation Errors
 ```json
 // ❌ Absolutely NG: Leading slash
-{"target": "/parties/emerald_hunters/morale"}
+{"target": "/parties/emerald_hunters/location"}
 
 // ✅ Correct notation
-{"target": "parties/emerald_hunters/morale"}
+{"target": "parties/emerald_hunters/location"}
 ```
 
 ### 2. Batch Setting Errors
@@ -41,8 +41,8 @@ This document provides common guidelines for AI Agents when generating decision 
   "outcomes": {
     "success": [{"target": "quests/escort_vell/progress/iron_wolves", "operation": "add", "value": 2}],
     "partial": [{"target": "quests/escort_vell/progress/iron_wolves", "operation": "add", "value": 1},
-                {"target": "parties/iron_wolves/morale", "operation": "add", "value": -1}],
-    "failure": [{"target": "parties/iron_wolves/morale", "operation": "add", "value": -2}]
+                {"target": "parties/iron_wolves/conditions/strained", "operation": "set", "value": {"name": "Strained", "capability": "combat"}}],
+    "failure": [{"target": "parties/iron_wolves/conditions/wounded", "operation": "set", "value": {"name": "Wounded", "capability": "combat"}}]
   }
 }]
 ```
@@ -52,7 +52,7 @@ This document provides common guidelines for AI Agents when generating decision 
 // ❌ A party raising its own capabilities or reputation
 {"target": "parties/iron_wolves/capabilities/combat", "operation": "add", "value": 2}
 // ❌ A party harming a rival without an opposed check
-{"target": "parties/silver_quill/morale", "operation": "add", "value": -2}
+{"target": "parties/silver_quill/conditions/wounded", "operation": "set", "value": {"name": "Wounded", "capability": "investigation"}}
 // ❌ Anyone setting engine-managed values
 {"target": "quests/escort_vell/status", "operation": "set", "value": "completed"}
 ```
@@ -118,8 +118,8 @@ No resource may go below zero. If any effect would do so, the **whole response**
         "outcomes": {
           "success": [{"target": "quests/find_the_heir/progress/emerald_hunters", "operation": "add", "value": 2}],
           "partial": [{"target": "quests/find_the_heir/progress/emerald_hunters", "operation": "add", "value": 1},
-                      {"target": "parties/emerald_hunters/morale", "operation": "add", "value": -1}],
-          "failure": [{"target": "parties/emerald_hunters/morale", "operation": "add", "value": -2}]
+                      {"target": "parties/emerald_hunters/conditions/strained", "operation": "set", "value": {"name": "Strained", "capability": "exploration"}}],
+          "failure": [{"target": "parties/emerald_hunters/conditions/wounded", "operation": "set", "value": {"name": "Wounded", "capability": "exploration"}}]
         }
       }
     ]
@@ -154,7 +154,7 @@ No resource may go below zero. If any effect would do so, the **whole response**
 ### "add" - Value Addition/Appending
 ```json
 // Numerical addition
-{"target": "parties/party_id/morale", "operation": "add", "value": 2}
+{"target": "clocks/clock_id/filled", "operation": "add", "value": 1}
 {"target": "parties/party_id/resources/currency", "operation": "add", "value": -50}
 
 // Object merging
@@ -167,7 +167,7 @@ No resource may go below zero. If any effect would do so, the **whole response**
 
 ### Values the Engine Maintains
 - Moving a party (`parties/<id>/location`) updates `regions/*/occupantParties` automatically; do not edit occupancy by hand
-- Morale is clamped to 0-10; quest progress to ≥ 0
+- Quest progress is clamped to ≥ 0 at the end of the turn. Morale no longer exists: setbacks are conditions (`parties/<id>/conditions/<key>` = `{name, capability}`; `null` clears one)
 - `quests/*/status`, `quests/*/progress` (outside checks), `clocks/*/triggered`, `rng`, `checkLog`, `chronicle`, `guild/standings`, `guild/promoted` cannot be written
 
 ## 🔍 Pre-Check Procedures

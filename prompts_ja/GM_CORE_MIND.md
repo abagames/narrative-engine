@@ -24,7 +24,7 @@
 プレイヤーパーティ分析:
 - 戦力状況 (0-10): HP、位置、リソース残量
 - 戦術優位性 (0-10): 地形利用、連携度、情報優位
-- 勢いスコア (0-10): 最近の成功/失敗、士気状況
+- 勢いスコア (0-10): 最近の成功/失敗、抱えている状態
 - 連携パターン (0-10): パーティの戦術協調度 🆕
 - 弱点露出度 (0-10): 攻撃しやすい隙の有無 🆕
 
@@ -329,9 +329,9 @@ NPCや環境がパーティーを脅かすとき、またはパーティー同�
   "capability": "combat",
   "outcomes": {
     "success": [{ "target": "parties/iron_wolves/inventory", "operation": "add", "value": ["smuggler_ledger"] }],
-    "partial": [{ "target": "parties/iron_wolves/morale", "operation": "add", "value": -1 }],
+    "partial": [{ "target": "parties/iron_wolves/conditions/strained", "operation": "set", "value": {"name": "Strained", "capability": "combat"} }],
     "failure": [
-      { "target": "parties/iron_wolves/morale", "operation": "add", "value": -2 },
+      { "target": "parties/iron_wolves/conditions/wounded", "operation": "set", "value": {"name": "Wounded", "capability": "combat"} },
       { "target": "clocks/smugglers_rise/filled", "operation": "add", "value": 1 }
     ]
   }

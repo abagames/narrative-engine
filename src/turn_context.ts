@@ -1,6 +1,6 @@
 import * as fs from 'fs/promises';
 import * as path from 'path';
-import { checkModifier, computeStandings, MAX_ACTIVE_QUESTS, SHOWDOWN_AFTER } from './world_rules.js';
+import { checkModifier, computeStandings, MAX_ACTIVE_QUESTS, MAX_CONDITIONS, SHOWDOWN_AFTER } from './world_rules.js';
 import { currentDraftActors, publicDraftView, DraftMode } from './draft.js';
 
 export interface DecisionRequest {
@@ -99,6 +99,7 @@ function describeRivals(partyId: string, worldState: any): any[] {
       name: rival.name,
       location: rival.location,
       reputation: rival.reputation || 0,
+      conditions: Object.values<any>(rival.conditions || {}).map(c => c.name),
       goals: rival.goals,
       capabilities: rival.capabilities,
       activeQuests: Object.values<any>(worldState.quests || {})
@@ -359,7 +360,8 @@ export function generatePartyContextData(
       location: party.location,
       resources: party.resources || {},
       capabilities: party.capabilities || {},
-      morale: party.morale ?? 5,
+      conditions: Object.entries<any>(party.conditions || {}).map(([key, c]) => ({ key, ...c })),
+      spent: Object.keys(party.conditions || {}).length >= MAX_CONDITIONS,
       reputation: party.reputation || 0,
       inventory: party.inventory || [],
       goals: party.goals,

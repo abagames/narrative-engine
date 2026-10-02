@@ -197,7 +197,7 @@ strategicConsiderations = {
       "location": "[AI Agentが決定した配置]",
       "resources": { "currency": "[AI決定値]", "materials": {...} },
       "capabilities": { "exploration": "[AI決定値]", ... },
-      "morale": "[AI決定値]",
+      "conditions": {},
       "reputation": 0,
       "goals": ["[このシーズンにパーティーが望むこと]"],
       "flaws": [{ "name": "[欠点]", "trigger": "[発動する状況]", "effect": "[パーティーが取る行動]" }],
@@ -394,7 +394,7 @@ AUTONOMOUS_SESSIONS_DIR=./custom_sessions npx tsx src/start_session.ts custom_se
       "location": "[現在地]",
       "resources": { "currency": 120 },
       "capabilities": { "exploration": 8, "combat": 6, "diplomacy": 4 },
-      "morale": 7, "reputation": 0, "inventory": [], "goals": [...], "flaws": [...]
+      "conditions": [{ "key": "wounded", "name": "負傷", "capability": "combat", "turn": 3 }], "spent": false, "reputation": 0, "inventory": [], "goals": [...], "flaws": [...]
     },
     "checkModifiers": { "exploration": 1, "combat": 0, "diplomacy": 0 },
     "guildBoard": [
@@ -511,9 +511,9 @@ AUTONOMOUS_SESSIONS_DIR=./custom_sessions npx tsx src/start_session.ts custom_se
           "success": [{ "target": "quests/sunken_relic/progress/emerald_hunters", "operation": "add", "value": 2 }],
           "partial": [
             { "target": "quests/sunken_relic/progress/emerald_hunters", "operation": "add", "value": 1 },
-            { "target": "parties/emerald_hunters/morale", "operation": "add", "value": -1 }
+            { "target": "parties/emerald_hunters/conditions/strained", "operation": "set", "value": {"name": "Strained", "capability": "exploration"} }
           ],
-          "failure": [{ "target": "parties/emerald_hunters/morale", "operation": "add", "value": -2 }]
+          "failure": [{ "target": "parties/emerald_hunters/conditions/wounded", "operation": "set", "value": {"name": "Wounded", "capability": "exploration"} }]
         }
       }
     ]
@@ -662,7 +662,7 @@ b) **世界状態変化の分析**:
 - `chronicle`の新しいエントリを読む（依頼の達成・失敗・期限切れ、クロックの進行と満了、同点のロール）
 - 前ターンからの変化を特定:
   - 依頼の進捗と順位
-  - パーティー状態の変化（士気、位置、評判、所持品）
+  - パーティー状態の変化（状態、位置、評判、所持品）
   - 関係値・貸し借り・NPCの感情の変化
   - 地域状況の変化
 
@@ -946,7 +946,7 @@ d) **ナラティブ構造の生成**:
 | 🗡️ 戦闘力  | [value]    |
 | 🏃 探索力  | [value]    |
 | 🤝 外交力  | [value]    |
-| 📈 士気    | [value]    |
+| 🩹 状態    | [なし / 一覧] |
 | 📍 位置    | [location] |
 
 **リソース**: [materials list]
@@ -966,13 +966,8 @@ d) **ナラティブ構造の生成**:
 - [icon1][icon2] **[Party1] vs [Party2]**: [event_icon] **[イベント種別]** - [詳細説明]
   - 🏆 結果: [outcome]（該当する場合）
 
-#### 📈 士気変化
-```
-
-[Party1]: [from] → [to] ([change]) [arrow] [reason]
-[Party2]: [from] → [to] ([change]) [arrow] [reason]
-
-```
+#### 🩹 状態
+- [party_icon] **[Party]**: + [状態]（[能力]）← [check] / − [状態]（休息または治療）
 
 #### 🎒 リソース変化
 - [party_icon] **[Party]**: [resource] [from]→[to] ([change]) - [reason]
@@ -999,12 +994,9 @@ d) **ナラティブ構造の生成**:
 | パーティー | 判定数 | 成功 | 部分成功 | 失敗 |
 | ---------- | ------ | ---- | -------- | ---- |
 
-### 📈 士気変動グラフ
-```
-
-[ASCII graph showing morale trends]
-
-```
+### 🩹 状態の推移
+| ターン | [Party1] | [Party2] | [Party3] |
+| ------ | -------- | -------- | -------- |
 
 ### 🎯 キーイベント要約
 - **ターン X**: [major_event_summary]
@@ -1025,7 +1017,7 @@ d) **ナラティブ構造の生成**:
 2. **ターン別詳細セクション**:
 
    - `playlog.jsonl` の各 step を順次処理
-   - 位置変更、パーティー間イベント、士気・リソース変化を構造化
+   - 位置変更、パーティー間イベント、依頼の進捗、判定、状態を構造化
    - 戦闘・外交・経済・諜報等のイベント種別を絵文字で分類
    - 1 ターンずつ個別記述、複数ターンまとめ禁止
 
@@ -1036,7 +1028,7 @@ d) **ナラティブ構造の生成**:
    - 結果と影響を明確に表記
 
 4. **統計・分析セクション**:
-   - 士気変動を ASCII グラフで視覚化
+   - ターンごとに受けた状態と回復した状態を表にまとめる
    - 勢力ランキングと最終評価
    - キーイベント抽出と MVP 選定
 

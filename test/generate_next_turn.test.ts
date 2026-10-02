@@ -130,7 +130,7 @@ describe('generate_next_turn.ts', () => {
               location: expect.any(String),
               resources: expect.any(Object),
               capabilities: expect.any(Object),
-              morale: expect.any(Number)
+              conditions: expect.any(Array)
             }),
             visibleRegions: expect.any(Array),
             marketData: expect.objectContaining({
@@ -225,7 +225,7 @@ describe('generate_next_turn.ts', () => {
         location: expect.any(String),
         resources: expect.any(Object),
         capabilities: expect.any(Object),
-        morale: expect.any(Number)
+        conditions: expect.any(Array)
       });
 
       // Visible regions should include current and adjacent

@@ -137,13 +137,14 @@ Wizard最適化：
 |---|---|
 | `accept_quest` | `quests/<id>/acceptedBy`に自分を追加する |
 | `pursue_quest` | 自分の進捗を加算するcheck（依頼の場所にいる必要がある） |
-| `contest` | 競合相手の進捗や士気を減らす対抗check |
+| `contest` | 競合相手の進捗を減らすか、状態を負わせる対抗check |
 | `assist` | 他パーティーの進捗を加算するcheck。通常は貸しと引き換えにする |
 | `investigate` | 依頼の秘密を自分に明かしうるcheck（`secret/revealedTo`） |
 | `negotiate` | 競合相手と条件を決める: 共同依頼の分担、貸しの記録、休戦 |
 | `abandon_quest` | 依頼から降りる。進捗は失われ、依頼主は覚えている |
 | `move` | 隣接地域へ移動する |
-| `rest` | 士気を回復する |
+| `rest` | checkも移動もしない。エンジンが最も古い状態を1つ解除する |
+| `treat` | 結果で状態を解除する`healing`のcheck（自分、または同じ地域にいる他パーティーの状態） |
 
 ドラフト中（`contextData.phase: "draft"`）は、上の行動種別ではなく`DRAFT_SYSTEM.md`に従う。
 
@@ -162,7 +163,7 @@ Wizard最適化：
 - 不確かな試みはすべて**check**にする。依頼の進捗、秘密の解明、アイテムの獲得、競合相手への損害は直接書けない
 - `capability`: そのやり方で実際に使う能力（扉をこじ開ける=combat、古記録を読む=investigation、衛兵を説得する=diplomacy）。エンジンが修正値に変換する（`checkModifiers`）
 - `situational`（-1〜+1）: 物語上の具体的な有利・不利がある場合のみ。理由を`description`に書く
-- 3つの結果をロール前にすべて書く。`partial`は代償つきの成功である。`failure`には実際の損失を伴わせる: 士気、資源、位置、時間、関係のいずれか
+- 3つの結果をロール前にすべて書く。`partial`は代償つきの成功である。`failure`には実際の損失を伴わせる: 状態、資源、位置、時間、関係のいずれか
 - ダイスはワールドのシード、ターン、パーティー、checkの順番だけで決まる。出し直しても変わらない
 
 ## ⚔️ 戦闘における役割特化
@@ -276,7 +277,7 @@ HP危険| 安全度+2 | 安全度+4 | 低 (0.9倍)
 - 「俺が先頭に立つ」
 - 危険な役割を率先して引き受け
 - 単純明快な作戦提案
-- 士気向上のための大胆な行動
+- パーティーを奮い立たせる大胆な行動
 
 サポート意識：
 - Wizardの安全確保が最優先
@@ -437,13 +438,14 @@ GM視点への切り替え：
 ### パーティーが書き込める対象
 | 対象 | 直接のeffect | checkの結果内 |
 |---|---|---|
-| `parties/<自分>/...`（morale、resources、location、knowledge） | ✅ | ✅ |
+| `parties/<自分>/...`（resources、location、knowledge） | ✅ | ✅ |
+| `parties/<自分>/conditions/<key>`（状態を負う。`healing`のcheckでは`null`で解除） | ❌ | ✅ |
 | `parties/<自分>/inventory` | ❌ | ✅ |
 | `parties/<自分>/reputation`、`capabilities` | ❌ | ❌ |
 | `quests/<id>/acceptedBy`、`abandonedBy`（自分を追加） | ✅ | ✅ |
 | `quests/<id>/progress/<自分>` | ❌ | ✅（依頼の場所にいること） |
 | `quests/<id>/progress/<他者>`への加算（支援） | ❌ | ✅（依頼の場所にいること） |
-| `quests/<id>/progress/<競合相手>`の減算（分岐1つにつき最大-1）、`parties/<競合相手>/morale・resources・inventory` | ❌ | ✅ `opposedBy`がその相手の場合のみ（進捗は依頼の場所で） |
+| `quests/<id>/progress/<競合相手>`の減算（分岐1つにつき最大-1）、`parties/<競合相手>/conditions/<key>`・`resources`・`inventory` | ❌ | ✅ `opposedBy`がその相手の場合のみ（進捗は依頼の場所で） |
 | `quests/<id>/secret/revealedTo`（自分を追加） | ❌ | ✅ |
 | `relationships/<自分を含むペア>/...` | ✅ | ✅ |
 | `favors/<id>`（自分が負う借り）、`favors/<id>/status`（自分の借り） | ✅ | ✅ |
@@ -469,10 +471,10 @@ GM視点への切り替え：
     "success": [{"target": "quests/escort_vell/progress/iron_wolves", "operation": "add", "value": 2}],
     "partial": [
       {"target": "quests/escort_vell/progress/iron_wolves", "operation": "add", "value": 1},
-      {"target": "parties/iron_wolves/morale", "operation": "add", "value": -1}
+      {"target": "parties/iron_wolves/conditions/strained", "operation": "set", "value": {"name": "Strained", "capability": "combat"}}
     ],
     "failure": [
-      {"target": "parties/iron_wolves/morale", "operation": "add", "value": -2},
+      {"target": "parties/iron_wolves/conditions/wounded", "operation": "set", "value": {"name": "Wounded", "capability": "combat"}},
       {"target": "parties/iron_wolves/resources/currency", "operation": "add", "value": -10}
     ]
   }
@@ -489,7 +491,7 @@ GM視点への切り替え：
     "partial": [{"target": "quests/escort_vell/progress/iron_wolves", "operation": "add", "value": -1},
                 {"target": "relationships/iron_wolves__silver_quill/hostility", "operation": "add", "value": 2}],
     "failure": [{"target": "relationships/iron_wolves__silver_quill/hostility", "operation": "add", "value": 3},
-                {"target": "parties/silver_quill/morale", "operation": "add", "value": -1}]
+                {"target": "parties/silver_quill/conditions/strained", "operation": "set", "value": {"name": "Strained", "capability": "investigation"}}]
   }
 }]
 

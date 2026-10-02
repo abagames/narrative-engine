@@ -132,7 +132,7 @@ export const EffectSchema = {
     target: {
       type: "string",
       pattern: "^[a-zA-Z0-9_]+(/[a-zA-Z0-9_]+)+$", // At least 2 levels, no leading slash
-      description: "Target path like 'parties/party_id/morale'",
+      description: "Target path like 'parties/party_id/location'",
     },
     operation: {
       type: "string",

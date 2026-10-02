@@ -137,13 +137,14 @@ Read from `contextData`:
 |---|---|
 | `accept_quest` | Add yourself to `quests/<id>/acceptedBy` |
 | `pursue_quest` | A check that adds to your own progress (you must be at the quest's location) |
-| `contest` | An opposed check that reduces a rival's progress or morale |
+| `contest` | An opposed check that reduces a rival's progress or inflicts a condition |
 | `assist` | A check that adds to another party's progress. Usually paid for with a favor |
 | `investigate` | A check that can reveal a quest's secret to you (`secret/revealedTo`) |
 | `negotiate` | Agree terms with a rival: split a joint quest, record a favor, call a truce |
 | `abandon_quest` | Withdraw. Progress is lost and the client remembers |
 | `move` | Move to an adjacent region |
-| `rest` | Recover morale |
+| `rest` | No checks, no moving; the engine clears your oldest condition |
+| `treat` | A `healing` check whose outcomes clear conditions (yours or another party's in the same region) |
 
 During a draft (`contextData.phase: "draft"`), follow `DRAFT_SYSTEM.md` instead of the action types above.
 
@@ -162,7 +163,7 @@ Optimal play is predictable. If `partyState.flaws` lists a flaw whose trigger is
 - Any uncertain attempt is a **check**. You cannot write quest progress, reveal secrets, gain items or harm rivals directly
 - `capability`: the one your approach actually uses (forcing a door = combat, reading old records = investigation, persuading a guard = diplomacy). The engine converts it to a modifier (`checkModifiers`)
 - `situational` (-1 to +1): only for a concrete advantage or handicap in the fiction. State it in `description`
-- Write all three outcomes before the roll. `partial` is success with a cost. `failure` must cost something real: morale, a resource, position, time or a relationship
+- Write all three outcomes before the roll. `partial` is success with a cost. `failure` must cost something real: a condition, a resource, position, time or a relationship
 - The dice depend only on the world seed, the turn, your party and the check's position. Resubmitting does not change them
 
 ## ⚔️ Combat Role Specialization
@@ -276,7 +277,7 @@ Leadership:
 - "I'll take the lead"
 - Proactively take on dangerous roles
 - Propose simple and clear strategies
-- Bold actions to boost morale
+- Bold actions that lift the party's spirits
 
 Support Mindset:
 - Wizard's safety is top priority
@@ -437,13 +438,14 @@ Switch to GM Perspective:
 ### What a Party May Write
 | Target | Direct effect | Inside a check outcome |
 |---|---|---|
-| `parties/<self>/...` (morale, resources, location, knowledge) | ✅ | ✅ |
+| `parties/<self>/...` (resources, location, knowledge) | ✅ | ✅ |
+| `parties/<self>/conditions/<key>` (take one, or clear one with `null` in a `healing` check) | ❌ | ✅ |
 | `parties/<self>/inventory` | ❌ | ✅ |
 | `parties/<self>/reputation`, `capabilities` | ❌ | ❌ |
 | `quests/<id>/acceptedBy`, `abandonedBy` (add yourself) | ✅ | ✅ |
 | `quests/<id>/progress/<self>` | ❌ | ✅ (you must be at the quest location) |
 | `quests/<id>/progress/<other>` positive (assist) | ❌ | ✅ (at the quest location) |
-| `quests/<id>/progress/<rival>` negative (at most -1 per branch), `parties/<rival>/morale/resources/inventory` | ❌ | ✅ only with `opposedBy` = that rival (progress: at the quest location) |
+| `quests/<id>/progress/<rival>` negative (at most -1 per branch), `parties/<rival>/conditions/<key>`, `resources`, `inventory` | ❌ | ✅ only with `opposedBy` = that rival (progress: at the quest location) |
 | `quests/<id>/secret/revealedTo` (add yourself) | ❌ | ✅ |
 | `relationships/<pair containing you>/...` | ✅ | ✅ |
 | `favors/<id>` (a debt you owe), `favors/<id>/status` (your debt) | ✅ | ✅ |
@@ -469,10 +471,10 @@ Switch to GM Perspective:
     "success": [{"target": "quests/escort_vell/progress/iron_wolves", "operation": "add", "value": 2}],
     "partial": [
       {"target": "quests/escort_vell/progress/iron_wolves", "operation": "add", "value": 1},
-      {"target": "parties/iron_wolves/morale", "operation": "add", "value": -1}
+      {"target": "parties/iron_wolves/conditions/strained", "operation": "set", "value": {"name": "Strained", "capability": "combat"}}
     ],
     "failure": [
-      {"target": "parties/iron_wolves/morale", "operation": "add", "value": -2},
+      {"target": "parties/iron_wolves/conditions/wounded", "operation": "set", "value": {"name": "Wounded", "capability": "combat"}},
       {"target": "parties/iron_wolves/resources/currency", "operation": "add", "value": -10}
     ]
   }
@@ -489,7 +491,7 @@ Switch to GM Perspective:
     "partial": [{"target": "quests/escort_vell/progress/iron_wolves", "operation": "add", "value": -1},
                 {"target": "relationships/iron_wolves__silver_quill/hostility", "operation": "add", "value": 2}],
     "failure": [{"target": "relationships/iron_wolves__silver_quill/hostility", "operation": "add", "value": 3},
-                {"target": "parties/silver_quill/morale", "operation": "add", "value": -1}]
+                {"target": "parties/silver_quill/conditions/strained", "operation": "set", "value": {"name": "Strained", "capability": "investigation"}}]
   }
 }]
 
