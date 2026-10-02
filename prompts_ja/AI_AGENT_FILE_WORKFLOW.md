@@ -434,7 +434,9 @@ AUTONOMOUS_SESSIONS_DIR=./custom_sessions npx tsx src/start_session.ts custom_se
 
 **ツール実行**: 世界状態読み込み
 
-- `Read` ツールで `request.worldStateFile` から完全な世界状態を読み込み
+- **GM**: `Read` ツールで `request.worldStateFile` から完全な世界状態を読み込む
+- **プレイヤー**: `request.contextData` だけを使う。`worldStateFile` は読まない（秘密、隠された依頼の衝突、他パーティーの知識を含む）
+- **情報の分離**: 各パーティーは別々のエージェント（パーティーごとのサブエージェントなど）で演じ、そのパーティーのリクエストファイルと規則文書だけを渡す。1つのエージェントが全役を演じると、隠された情報がパーティーの判断に漏れる
 
 **AI Agent 判断処理**: 既読フレームワークによる意思決定
 

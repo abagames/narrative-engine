@@ -5,8 +5,8 @@ import { currentDraftActors, publicDraftView } from './draft.js';
 const GM_INSTRUCTIONS = 'worldStateFileを読み込んで世界状態を分析し、適切なフレームワークを適用してGMとしての最適な行動を決定してください。' +
     '依頼掲示板が手薄なら、パーティー同士が交差する依頼（競合・衝突・共同・隠された真相）を発行してください。' +
     '結果が不確かな出来事はchecksで宣言し、判定はエンジンに任せてください';
-const PLAYER_INSTRUCTIONS = 'worldStateFileを読み込んで世界状態を分析し、適切なフレームワークを適用してパーティーとしての最適な行動を決定してください。' +
-    '行動の目的は依頼（quests）の達成です。依頼の進捗・妨害・秘密の調査はchecksで成功/部分成功/失敗の結果を事前に宣言し、' +
+const PLAYER_INSTRUCTIONS = 'contextDataだけを使い、適切なフレームワークを適用してパーティーとしての最適な行動を決定してください。' +
+    'worldStateFileは読まないでください（パーティーが知らない情報を含みます）。行動の目的は依頼（quests）の達成です。依頼の進捗・妨害・秘密の調査はchecksで成功/部分成功/失敗の結果を事前に宣言し、' +
     'ダイス判定はエンジンに任せてください。guildBoardに見えない情報（他依頼との衝突・依頼主の真意）は知らない前提で判断してください';
 const DRAFT_INSTRUCTIONS = {
     order: 'ドラフトの指名順を決める段階です。自分が貸しを持つ相手（favors）より後に指名する場合、proposal.draft.swap.favorIdでその貸しを使い、順番を入れ替えられます。' +

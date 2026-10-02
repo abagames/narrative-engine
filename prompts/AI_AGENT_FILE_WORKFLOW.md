@@ -434,7 +434,9 @@ AUTONOMOUS_SESSIONS_DIR=./custom_sessions npx tsx src/start_session.ts custom_se
 
 **Tool Execution**: World state reading
 
-- Read complete world state from `request.worldStateFile` with `Read` tool
+- **GM**: Read the complete world state from `request.worldStateFile` with the `Read` tool
+- **Player**: Use only `request.contextData`. Do **not** read `worldStateFile`: it holds secrets, hidden quest conflicts and other parties' knowledge
+- **Information isolation**: Play each party with a separate agent (e.g. a subagent per party) that receives only that party's request file and the rule documents. One agent playing every role leaks hidden information into party decisions
 
 **AI Agent Decision Processing**: Decision making based on previously read frameworks
 
