@@ -1362,6 +1362,7 @@ function tickClock(world: any, clockId: string, amount: number, reason: string, 
 export function checkClocks(world: any): EngineEvent[] {
   const events: EngineEvent[] = [];
   for (const [clockId, clock] of Object.entries<any>(world.clocks || {})) {
+    if (typeof clock.filled === 'number' && clock.filled < 0) clock.filled = 0;
     if (clock.triggered) continue;
     if ((clock.filled || 0) >= (clock.segments || 4)) {
       clock.triggered = true;

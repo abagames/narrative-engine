@@ -1191,6 +1191,8 @@ function tickClock(world, clockId, amount, reason, events) {
 export function checkClocks(world) {
     const events = [];
     for (const [clockId, clock] of Object.entries(world.clocks || {})) {
+        if (typeof clock.filled === 'number' && clock.filled < 0)
+            clock.filled = 0;
         if (clock.triggered)
             continue;
         if ((clock.filled || 0) >= (clock.segments || 4)) {

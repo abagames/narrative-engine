@@ -8,7 +8,7 @@
  * race for it. Picks are public, so each pick is a reaction to the ones before it. The engine enforces the order and
  * the rules; the parties decide what to pick.
  */
-import { computeStandings, ensureSeed, rollDice, normalizeWorld, MAX_ACTIVE_QUESTS, MAX_RECRUITS, applyEffect } from './world_rules.js';
+import { computeStandings, ensureSeed, rollDice, normalizeWorld, MAX_ACTIVE_QUESTS, MAX_RECRUITS, applyEffect, checkClocks } from './world_rules.js';
 export const DEFAULT_PICKS_PER_PARTY = 2;
 const POOL_KINDS = ['quests', 'recruits', 'items', 'intel'];
 function poolKey(kind) {
@@ -400,6 +400,7 @@ function closeDraft(world, events) {
         const quest = world.quests[id];
         events.push(event(world, 'draft_closed', `No party took up "${quest.title || id}"; it stays on the board until its deadline`));
     }
+    events.push(...checkClocks(world));
     draft.leftovers = leftovers;
     draft.status = 'closed';
     draft.awaiting = [];

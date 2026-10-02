@@ -18,6 +18,7 @@ import {
   EngineEvent,
   RuleError,
   applyEffect,
+  checkClocks,
   Effect
 } from './world_rules.js';
 
@@ -483,6 +484,7 @@ function closeDraft(world: any, events: EngineEvent[]): void {
     events.push(event(world, 'draft_closed', `No party took up "${quest.title || id}"; it stays on the board until its deadline`));
   }
 
+  events.push(...checkClocks(world));
   draft.leftovers = leftovers;
   draft.status = 'closed';
   draft.awaiting = [];

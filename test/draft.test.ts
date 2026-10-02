@@ -196,6 +196,16 @@ describe('draft rules', () => {
     expect(world.draft.leftovers.quests).toEqual(['guard_caravan', 'rob_caravan']);
   });
 
+  it('leftover effects never push a clock below zero', () => {
+    const world = draftWorld();
+    world.clocks = { plague: { name: 'Plague', segments: 4, filled: 0 } };
+    world.recruits.grim.ifUnhired = [{ target: 'clocks/plague/filled', operation: 'add', value: -1 }];
+    world.draft.picksPerParty = 1;
+    startDraft(world);
+    for (const p of ['quill', 'lanterns', 'wolves']) pick(world, p, { pick: { kind: 'pass' } });
+    expect(world.clocks.plague.filled).toBe(0);
+  });
+
   it('a creditor can call in a favor to take the debtor\'s place', () => {
     const world = draftWorld();
     world.favors = { f1: { owedBy: 'quill', owedTo: 'wolves', status: 'owed' } };
