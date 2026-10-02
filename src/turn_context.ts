@@ -78,6 +78,7 @@ export async function writeDraftRequests(
         knowledge: base.knowledge,
         clientDispositions: base.clientDispositions,
         rivalries: base.rivalries,
+        relationships: base.relationships,
         regionMap: base.regionMap,
         standings: base.standings,
         seasonEndsAtTurn: base.seasonEndsAtTurn,
@@ -407,6 +408,10 @@ export function generatePartyContextData(
     ),
     standings: computeStandings(worldState),
     seasonEndsAtTurn: worldState.guild?.season?.endsAtTurn,
+    // Relationships the party is part of, including notes and offers other parties left there
+    relationships: Object.fromEntries(
+      Object.entries<any>(worldState.relationships || {}).filter(([key]) => key.split('__').includes(partyId))
+    ),
     rivalries: Object.entries<any>(worldState.rivalries || {})
       .filter(([key]) => key.split('__').includes(partyId))
       .map(([key, r]) => ({

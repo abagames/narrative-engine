@@ -128,6 +128,7 @@ Read from `contextData`:
 - `rivalries`: clash counts with each rival; `nextOpposedClashIsShowdown` warns that the next opposed check over quests decides everything
 - `standings`, `seasonEndsAtTurn`: who leads and how much time is left. Only the top party is promoted
 - `favors`: debts you owe and are owed
+- `relationships`: your relationship values with each party, and any note or offer a party left on that record (write `relationships/<pair>/<note>` to leave one)
 - `knowledge`: what the party believes. It may be wrong
 - `clientDispositions`: how each client feels about you. Clients remember failures
 - `partyState.goals`, `partyState.flaws`: the party's own ambitions and weaknesses

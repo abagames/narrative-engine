@@ -128,6 +128,7 @@ Wizard最適化：
 - `rivalries`: 各競合相手との衝突回数。`nextOpposedClashIsShowdown`がtrueなら、依頼をめぐる次の対抗checkですべてが決まる
 - `standings`、`seasonEndsAtTurn`: 誰が首位か、残り時間はどれだけか。昇格するのは首位のパーティーだけである
 - `favors`: 自分が負っている借りと、相手に貸しているもの
+- `relationships`: 各パーティーとの関係値と、そこに残された伝言や申し出（`relationships/<pair>/<note>`に書けば自分も残せる）
 - `knowledge`: パーティーが信じていること。誤りの場合もある
 - `clientDispositions`: 各依頼主の自分への感情。依頼主は失敗を覚えている
 - `partyState.goals`、`partyState.flaws`: パーティー自身の野心と弱点
